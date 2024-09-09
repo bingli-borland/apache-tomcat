@@ -194,6 +194,8 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     private ApplicationHttpRequest wrappedApplicationHttpRequest;
 
+    private RequestFacade requestFacade;
+
     /**
      * Construct a new wrapped request around the specified servlet request.
      *
@@ -281,7 +283,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public void removeAttribute(String name) {
-        if (!removeSpecial(name)) {
+        if (!removeSpecial(name) || Globals.COMPATIBLEWEBSPHERE) {
             getRequest().removeAttribute(name);
         }
     }
@@ -304,7 +306,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
             return;
         }
 
-        if (!setSpecial(name, value)) {
+        if (!setSpecial(name, value) || Globals.COMPATIBLEWEBSPHERE) {
             getRequest().setAttribute(name, value);
         }
     }
@@ -407,6 +409,9 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public String getParameter(String name) {
+        if(Globals.COMPATIBLEWEBSPHERE) {
+            return requestFacade.getParameter(name);
+        }
         parseParameters();
 
         String[] value = parameters.get(name);
@@ -422,6 +427,9 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public Map<String,String[]> getParameterMap() {
+        if(Globals.COMPATIBLEWEBSPHERE) {
+            return requestFacade.getParameterMap();
+        }
         parseParameters();
         return parameters;
     }
@@ -432,6 +440,9 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public Enumeration<String> getParameterNames() {
+        if(Globals.COMPATIBLEWEBSPHERE) {
+            return requestFacade.getParameterNames();
+        }
         parseParameters();
         return Collections.enumeration(parameters.keySet());
     }
@@ -444,6 +455,9 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public String[] getParameterValues(String name) {
+        if(Globals.COMPATIBLEWEBSPHERE) {
+            return requestFacade.getParameterValues(name);
+        }
         parseParameters();
         return parameters.get(name);
     }
@@ -688,6 +702,19 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
         requestURI = request.getRequestURI();
         servletPath = request.getServletPath();
         mapping = request.getHttpServletMapping();
+        if (Globals.COMPATIBLEWEBSPHERE) {
+            if (request instanceof RequestFacade) {
+                requestFacade = (RequestFacade) request;
+            } else if (request instanceof ApplicationHttpRequest) {
+                ServletRequest tmp = request;
+                while (tmp instanceof ApplicationHttpRequest) {
+                    tmp = ((ApplicationHttpRequest) tmp).getRequest();
+    }
+                if (tmp instanceof RequestFacade) {
+                    requestFacade = (RequestFacade) tmp;
+                }
+            }
+        }
     }
 
 
@@ -749,9 +776,20 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      * @param queryString The query string containing parameters for this request
      */
     void setQueryParams(String queryString) {
-        this.queryParamString = queryString;
+        setQueryParams(queryString, false);
     }
 
+    void setQueryParams(String queryString, boolean setQS) {
+        this.queryParamString = queryString;
+        if(Globals.COMPATIBLEWEBSPHERE) {
+            requestFacade.pushParameterStack();
+            requestFacade.aggregateQueryStringParams(queryString, setQS);
+    }
+    }
+
+    void removeQSFromList(){
+        requestFacade.removeQSFromList();
+    }
 
     void setMapping(HttpServletMapping mapping) {
         this.mapping = mapping;

@@ -26,12 +26,16 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.catalina.Globals;
+import org.apache.catalina.core.ServletRequestThreadData;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.apache.tomcat.util.buf.UDecoder;
+import org.apache.tomcat.util.collections.UnsynchronizedStack;
+import org.apache.tomcat.util.log.UserDataHelper;
 import org.apache.tomcat.util.res.StringManager;
 
 public final class Parameters {
@@ -53,6 +57,8 @@ public final class Parameters {
 
     private int limit = -1;
     private int parameterCount = 0;
+
+    private UnsynchronizedStack _paramStack = new UnsynchronizedStack();
 
     public Parameters() {
         // NO-OP
@@ -103,6 +109,8 @@ public final class Parameters {
         didQueryParameters = false;
         charset = DEFAULT_BODY_CHARSET;
         decodedQuery.recycle();
+        _paramStack.clear();
+        ServletRequestThreadData.getInstance().init(null);
     }
 
 
@@ -111,6 +119,9 @@ public final class Parameters {
     // You must explicitly call handleQueryParameters and the post methods.
 
     public String[] getParameterValues(String name) {
+        if (Globals.COMPATIBLEWEBSPHERE) {
+            return (String[]) getParameters().get(name);
+        }
         handleQueryParameters();
         // no "facade"
         ArrayList<String> values = paramHashValues.get(name);
@@ -121,11 +132,22 @@ public final class Parameters {
     }
 
     public Enumeration<String> getParameterNames() {
+        if (Globals.COMPATIBLEWEBSPHERE) {
+            return ((Hashtable)getParameters()).keys();
+        }
         handleQueryParameters();
         return Collections.enumeration(paramHashValues.keySet());
     }
 
     public String getParameter(String name) {
+        if (Globals.COMPATIBLEWEBSPHERE) {
+            String[] values = (String[]) getParameters().get(name);
+            String value = null;
+            if (values != null && values.length > 0) {
+                value = values[0];
+            }
+            return value;
+        }
         handleQueryParameters();
         ArrayList<String> values = paramHashValues.get(name);
         if (values != null) {
@@ -185,6 +207,253 @@ public final class Parameters {
     public void setURLDecoder(UDecoder u) {
         urlDec = u;
     }
+
+    public Map getParameters(){
+        return ServletRequestThreadData.getInstance().getParameters();
+    }
+
+    public void setParameters(Hashtable<String, String[]> parameters) {
+        ServletRequestThreadData.getInstance().setParameters(parameters);
+    }
+
+    /**
+     * Save the state of the parameters before a call to include or forward.
+     */
+    public void pushParameterStack() {
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        if (reqData.getParameters() == null) {
+            reqData.pushParameterStack(null);
+        } else {
+            _paramStack.push(((Hashtable) reqData.getParameters()).clone());
+        }
+    }
+
+    /**
+     * Revert the state of the parameters which was saved before an include call
+     *
+     */
+    public void popParameterStack() {
+        try {
+            ServletRequestThreadData.getInstance().setParameters((Hashtable) _paramStack.pop());
+        } catch (java.util.EmptyStackException empty) {
+            if (log.isDebugEnabled()) {
+                log.debug("Unable to remove item from stack", empty);
+            }
+        }
+    }
+
+    public void aggregateQueryStringParams(String additionalQueryString, boolean setQS) {
+        QSListItem tmpQS = null;
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        if (reqData.getParameters() == null) {
+            LinkedList queryStringList = ServletRequestThreadData.getInstance().getQueryStringList();
+            if (queryStringList == null || queryStringList.isEmpty()) {
+                if (queryStringList == null) {
+                    queryStringList = new LinkedList();
+                }
+
+                if (queryMB != null && !queryMB.isNull()) {
+                    MessageBytes tmp = MessageBytes.newInstance();
+                    try {
+                        tmp.duplicate(queryMB);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    tmpQS = new QSListItem(tmp, null);
+                    queryStringList.add(tmpQS);
+                }
+                ServletRequestThreadData.getInstance().setQueryStringList(queryStringList);
+
+            }
+            // End 258025, Part 2
+            if (additionalQueryString != null) {
+                MessageBytes qs = MessageBytes.newInstance();
+                qs.setString(additionalQueryString);
+                tmpQS = new QSListItem(qs, null);
+                queryStringList.add(tmpQS);
+            }
+
+        }
+        if (setQS) {
+            queryMB.setString(additionalQueryString);
+        }
+
+        // if _parameters is not null, then this is part of a forward or include...add the additional query parms
+        // if _parameters is null, then the string will be parsed if needed
+        if (reqData.getParameters() != null && additionalQueryString != null) {
+            MessageBytes qs = MessageBytes.newInstance();
+            qs.setString(additionalQueryString);
+            if (qs.getType() != MessageBytes.T_BYTES) {
+                qs.toBytes();
+            }
+            ByteChunk bc = qs.getByteChunk();
+            Hashtable<String, String[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+            // end 249841, 256836
+            String[] valArray;
+            for (Enumeration e = parameters.keys(); e.hasMoreElements(); ) {
+                String key = (String) e.nextElement();
+                String[] newVals = (String[]) parameters.get(key);
+
+                // Check to see if a parameter with the key already exists
+                // and prepend the values since QueryString takes precedence
+                if (reqData.getParameters().containsKey(key)) {
+                    String[] oldVals = (String[]) reqData.getParameters().get(key);
+                    Vector v = new Vector();
+
+                    for (int i = 0; i < newVals.length; i++) {
+                        v.add(newVals[i]);
+                    }
+
+                    for (int i = 0; i < oldVals.length; i++) {
+                        v.add(oldVals[i]);
+                    }
+
+                    valArray = new String[v.size()];
+                    v.toArray(valArray);
+
+                    reqData.getParameters().put(key, valArray);
+                } else {
+                    reqData.getParameters().put(key, newVals);
+                }
+            }
+        }
+    }
+
+    public void parseQueryStringList() {
+
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        Hashtable<String, String[]> tmpQueryParams = null;
+        LinkedList queryStringList = ServletRequestThreadData.getInstance().getQueryStringList();
+        if (queryStringList == null || queryStringList.isEmpty()) { //258025
+            if (queryMB != null && !queryMB.isNull())//PM35450
+            {
+                if (queryMB.getType() != MessageBytes.T_BYTES) {
+                    queryMB.toBytes();
+                }
+                ByteChunk bc = queryMB.getByteChunk();
+                if (reqData.getParameters() == null || reqData.getParameters().isEmpty()) {
+                    reqData.setParameters(parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset));
+                } else {
+                    tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+                    mergeQueryParams(tmpQueryParams);
+                }
+            }
+        } else {
+            Iterator i = queryStringList.iterator();
+            QSListItem qsListItem = null;
+            MessageBytes queryString;
+            while (i.hasNext()) {
+                qsListItem = ((QSListItem) i.next());
+                queryString = qsListItem._qs;
+                if (qsListItem._qsHashtable != null)
+                    mergeQueryParams(qsListItem._qsHashtable);
+                else if (queryString != null && !queryString.isNull()) {
+                    if (queryString.getType() != MessageBytes.T_BYTES) {
+                        queryString.toBytes();
+                    }
+                    ByteChunk bc = queryString.getByteChunk();
+                    if (reqData.getParameters() == null || reqData.getParameters().isEmpty())// 258025
+                    {
+                        qsListItem._qsHashtable = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+                        reqData.setParameters(qsListItem._qsHashtable);
+                        qsListItem._qs = null;
+                    } else {
+                        tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+                        qsListItem._qsHashtable = tmpQueryParams;
+                        qsListItem._qs = null;
+                        mergeQueryParams(tmpQueryParams);
+                    }
+                }
+            }
+        }
+    }
+
+    private void mergeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        if (tmpQueryParams != null) {
+            Enumeration enumeration = tmpQueryParams.keys();
+            while (enumeration.hasMoreElements()) {
+                Object key = enumeration.nextElement();
+                // Check for QueryString parms with the same name
+                // pre-append to postdata values if necessary
+                if (reqData.getParameters() != null && reqData.getParameters().containsKey(key)) {
+                    String postVals[] = (String[]) reqData.getParameters().get(key);
+                    String queryVals[] = (String[]) tmpQueryParams.get(key);
+                    String newVals[] = new String[postVals.length + queryVals.length];
+                    int newValsIndex = 0;
+                    for (int i = 0; i < queryVals.length; i++) {
+                        newVals[newValsIndex++] = queryVals[i];
+                    }
+                    for (int i = 0; i < postVals.length; i++) {
+                        newVals[newValsIndex++] = postVals[i];
+                    }
+                    reqData.getParameters().put(key, newVals);
+                } else {
+                    if (reqData.getParameters() == null) {
+                        reqData.setParameters(new Hashtable());
+                    }
+                    reqData.getParameters().put(key, tmpQueryParams.get(key));
+                }
+            }
+        }
+    }
+
+
+    public void removeQSFromList() {
+
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        LinkedList queryStringList = reqData.getQueryStringList();
+        if (queryStringList != null && !queryStringList.isEmpty()) {
+            Map _tmpParameters = reqData.getParameters();    // Save off reference to current parameters
+            popParameterStack();
+            if (reqData.getParameters() == null && _tmpParameters != null) // Parameters above current inluce/forward were never parsed
+            {
+                reqData.setParameters(_tmpParameters);
+                Hashtable<String, String[]> tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsHashtable;
+                if (tmpQueryParams == null) {
+                    MessageBytes qs = ((QSListItem) queryStringList.getLast())._qs;
+                    if (qs.getType() != MessageBytes.T_BYTES) {
+                        qs.toBytes();
+                    }
+                    ByteChunk bc = qs.getByteChunk();
+                    tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+                }
+                removeQueryParams(tmpQueryParams);
+            }
+            queryStringList.removeLast();
+        } else {
+            //We need to pop parameter stack regardless of whether queryStringList is null
+            //because the queryString parameters could have been added directly to parameter list without
+            // adding ot the queryStringList
+            popParameterStack();
+        }
+    }
+
+    private void removeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
+        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
+        if (tmpQueryParams != null) {
+            Enumeration enumeration = tmpQueryParams.keys();
+            while (enumeration.hasMoreElements()) {
+                Object key = enumeration.nextElement();
+                // Check for QueryString parms with the same name
+                // pre-append to postdata values if necessary
+                if (reqData.getParameters().containsKey(key)) {
+                    String postVals[] = (String[]) reqData.getParameters().get(key);
+                    String queryVals[] = (String[]) tmpQueryParams.get(key);
+                    if (postVals.length - queryVals.length > 0) {
+                        String newVals[] = new String[postVals.length - queryVals.length];
+                        int newValsIndex = 0;
+                        for (int i = queryVals.length; i < postVals.length; i++) {
+                            newVals[newValsIndex++] = postVals[i];
+                        }
+                        reqData.getParameters().put(key, newVals);
+                    } else
+                        reqData.getParameters().remove(key);
+                }
+            }
+        }
+    }
+
 
     // -------------------- Parameter parsing --------------------
     // we are called from a single thread - we can do it the hard way
@@ -360,6 +629,264 @@ public final class Parameters {
         }
     }
 
+    public Hashtable parsePostParameters(byte bytes[], int start, int len) {
+        return parseQueryStringParameters(bytes, start, len, charset);
+    }
+
+    private Hashtable parseQueryStringParameters(byte bytes[], int start, int len, Charset charset) {
+
+        Hashtable<String, String[]> ht = new Hashtable<>();
+
+        if (log.isDebugEnabled()) {
+            log.debug(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
+        }
+
+        int decodeFailCount = 0;
+
+        int pos = start;
+        int end = start + len;
+
+        while (pos < end) {
+            int nameStart = pos;
+            int nameEnd = -1;
+            int valueStart = -1;
+            int valueEnd = -1;
+
+            boolean parsingName = true;
+            boolean decodeName = false;
+            boolean decodeValue = false;
+            boolean parameterComplete = false;
+
+            do {
+                switch (bytes[pos]) {
+                    case '=':
+                        if (parsingName) {
+                            // Name finished. Value starts from next character
+                            nameEnd = pos;
+                            parsingName = false;
+                            valueStart = ++pos;
+                        } else {
+                            // Equals character in value
+                            pos++;
+                        }
+                        break;
+                    case '&':
+                        if (parsingName) {
+                            // Name finished. No value.
+                            nameEnd = pos;
+                        } else {
+                            // Value finished
+                            valueEnd = pos;
+                        }
+                        parameterComplete = true;
+                        pos++;
+                        break;
+                    case '%':
+                    case '+':
+                        // Decoding required
+                        if (parsingName) {
+                            decodeName = true;
+                        } else {
+                            decodeValue = true;
+                        }
+                        pos++;
+                        break;
+                    default:
+                        pos++;
+                        break;
+                }
+            } while (!parameterComplete && pos < end);
+
+            if (pos == end) {
+                if (nameEnd == -1) {
+                    nameEnd = pos;
+                } else if (valueStart > -1 && valueEnd == -1) {
+                    valueEnd = pos;
+                }
+            }
+
+            if (log.isDebugEnabled() && valueStart == -1) {
+                log.debug(sm.getString("parameters.noequal", Integer.valueOf(nameStart), Integer.valueOf(nameEnd),
+                    new String(bytes, nameStart, nameEnd - nameStart, DEFAULT_BODY_CHARSET)));
+            }
+
+            if (nameEnd <= nameStart) {
+                if (valueStart == -1) {
+                    // &&
+                    if (log.isDebugEnabled()) {
+                        log.debug(sm.getString("parameters.emptyChunk"));
+                    }
+                    // Do not flag as error
+                    continue;
+                }
+                // &=foo&
+                UserDataHelper.Mode logMode = userDataLog.getNextMode();
+                if (logMode != null) {
+                    String extract;
+                    if (valueEnd > nameStart) {
+                        extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
+                    } else {
+                        extract = "";
+                    }
+                    String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
+                        Integer.valueOf(valueEnd), extract);
+                    switch (logMode) {
+                        case INFO_THEN_DEBUG:
+                            message += sm.getString("parameters.fallToDebug");
+                            //$FALL-THROUGH$
+                        case INFO:
+                            log.info(message);
+                            break;
+                        case DEBUG:
+                            log.debug(message);
+                    }
+                }
+                setParseFailedReason(FailReason.NO_NAME);
+                continue;
+                // invalid chunk - it's better to ignore
+            }
+
+            tmpName.setBytes(bytes, nameStart, nameEnd - nameStart);
+            if (valueStart >= 0) {
+                tmpValue.setBytes(bytes, valueStart, valueEnd - valueStart);
+            } else {
+                tmpValue.setBytes(bytes, 0, 0);
+            }
+
+            // Take copies as if anything goes wrong originals will be
+            // corrupted. This means original values can be logged.
+            // For performance - only done for debug
+            if (log.isDebugEnabled()) {
+                try {
+                    origName.append(bytes, nameStart, nameEnd - nameStart);
+                    if (valueStart >= 0) {
+                        origValue.append(bytes, valueStart, valueEnd - valueStart);
+                    } else {
+                        origValue.append(bytes, 0, 0);
+                    }
+                } catch (IOException ioe) {
+                    // Should never happen...
+                    log.error(sm.getString("parameters.copyFail"), ioe);
+                }
+            }
+
+            try {
+                String name;
+                String value;
+
+                if (decodeName) {
+                    urlDecode(tmpName);
+                }
+                tmpName.setCharset(charset);
+                name = tmpName.toString();
+
+                if (valueStart >= 0) {
+                    if (decodeValue) {
+                        urlDecode(tmpValue);
+                    }
+                    tmpValue.setCharset(charset);
+                    value = tmpValue.toString();
+                } else {
+                    value = "";
+                }
+
+                try {
+                    if (name == null) {
+                        continue;
+                    }
+
+                    if (limit > -1 && parameterCount >= limit) {
+                        // Processing this parameter will push us over the limit. ISE is
+                        // what Request.parseParts() uses for requests that are too big
+                        setParseFailedReason(FailReason.TOO_MANY_PARAMETERS);
+                        throw new IllegalStateException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
+                    }
+                    parameterCount++;
+
+                    String valArray[] = new String[] { value };
+                    String[] oldVals = (String[]) ht.put(name, valArray);
+                    if (oldVals != null) {
+                        valArray = new String[oldVals.length + 1];
+                        System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
+                        valArray[oldVals.length] = value;
+                        ht.put(name, valArray);
+                    }
+
+                } catch (IllegalStateException ise) {
+                    // Hitting limit stops processing further params but does
+                    // not cause request to fail.
+                    UserDataHelper.Mode logMode = maxParamCountLog.getNextMode();
+                    if (logMode != null) {
+                        String message = ise.getMessage();
+                        switch (logMode) {
+                            case INFO_THEN_DEBUG:
+                                message += sm.getString("parameters.maxCountFail.fallToDebug");
+                                //$FALL-THROUGH$
+                            case INFO:
+                                log.info(message);
+                                break;
+                            case DEBUG:
+                                log.debug(message);
+                        }
+                    }
+                    break;
+                }
+            } catch (IOException e) {
+                setParseFailedReason(FailReason.URL_DECODING);
+                decodeFailCount++;
+                if (decodeFailCount == 1 || log.isDebugEnabled()) {
+                    if (log.isDebugEnabled()) {
+                        log.debug(
+                            sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString()),
+                            e);
+                    } else if (log.isInfoEnabled()) {
+                        UserDataHelper.Mode logMode = userDataLog.getNextMode();
+                        if (logMode != null) {
+                            String message =
+                                sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
+                            switch (logMode) {
+                                case INFO_THEN_DEBUG:
+                                    message += sm.getString("parameters.fallToDebug");
+                                    //$FALL-THROUGH$
+                                case INFO:
+                                    log.info(message);
+                                    break;
+                                case DEBUG:
+                                    log.debug(message);
+                            }
+                        }
+                    }
+                }
+            }
+
+            tmpName.recycle();
+            tmpValue.recycle();
+            // Only recycle copies if we used them
+            if (log.isDebugEnabled()) {
+                origName.recycle();
+                origValue.recycle();
+            }
+        }
+
+        if (decodeFailCount > 1 && !log.isDebugEnabled()) {
+            UserDataHelper.Mode logMode = userDataLog.getNextMode();
+            if (logMode != null) {
+                String message = sm.getString("parameters.multipleDecodingFail", Integer.valueOf(decodeFailCount));
+                switch (logMode) {
+                    case INFO_THEN_DEBUG:
+                        message += sm.getString("parameters.fallToDebug");
+                        //$FALL-THROUGH$
+                    case INFO:
+                        log.info(message);
+                        break;
+                    case DEBUG:
+                        log.debug(message);
+                }
+            }
+        }
+        return ht;
+    }
+
     private void urlDecode(ByteChunk bc) throws IOException {
         if (urlDec == null) {
             urlDec = new UDecoder();
@@ -392,4 +919,14 @@ public final class Parameters {
         }
         return sb.toString();
     }
+
+    class QSListItem {
+        MessageBytes _qs = null;
+        Hashtable _qsHashtable = null;
+        QSListItem(MessageBytes qs, Hashtable qsHashtable){
+            _qs = qs;
+            _qsHashtable = qsHashtable;
+        }
+    }
+
 }

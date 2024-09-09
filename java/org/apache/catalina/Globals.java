@@ -229,6 +229,13 @@ public final class Globals {
      */
     public static final String DEFAULT_MBEAN_DOMAIN = "Catalina";
 
+    public static final String DISPATCH_NESTED_ATTR = "org.apache.catalina.webapp.dispatch_nested";
+
+    public static final boolean USE_ORIGINAL_QS_IN_FORWARD_IF_NULL = Boolean.getBoolean("org.apache.catalina.useoriginalqsinforwardifnull");
+    public static final boolean KEEP_ORIGINAL_PATH_ELEMENTS = Boolean.valueOf(System.getProperty("org.apache.catalina.keeporiginalpathelements", "true")).booleanValue();
+    public static final boolean ALLOW_QUERY_PARAM_WITH_NO_EQUAL = Boolean.getBoolean("org.apache.catalina.allowqueryparamwithnoequal");
+    public static final boolean COMPATIBLEWEBSPHERE = Boolean.valueOf(System.getProperty("org.apache.catalina.compatibleWebsphereHttp10", "true")).booleanValue();
+
 
     // ----------------------------------------- Specification related constants
 
