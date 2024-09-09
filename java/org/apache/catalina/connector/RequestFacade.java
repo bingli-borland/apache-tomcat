@@ -850,6 +850,21 @@ public class RequestFacade implements HttpServletRequest {
         return request.getTrailerFields();
     }
 
+    public void pushParameterStack() {
+        request.pushParameterStack();
+    }
+
+    public void aggregateQueryStringParams(String additionalQueryString, boolean setQS) {
+        request.aggregateQueryStringParams(additionalQueryString, setQS);
+    }
+
+    public void removeQSFromList() {
+        request.removeQSFromList();
+    }
+
+    public void setQueryString(String queryString) {
+        request.setQueryString(queryString);
+    }
 
     private void checkFacade() {
         if (request == null) {

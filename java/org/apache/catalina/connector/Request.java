@@ -1100,6 +1100,12 @@ public class Request implements HttpServletRequest {
      */
     @Override
     public Map<String,String[]> getParameterMap() {
+        if (Globals.COMPATIBLEWEBSPHERE) {
+            if (!parametersParsed) {
+                parseParameters();
+            }
+            return coyoteRequest.getParameters().getParameters();
+        }
 
         if (parameterMap.isLocked()) {
             return parameterMap;
@@ -2539,6 +2545,10 @@ public class Request implements HttpServletRequest {
 
     private void parseParts(boolean explicit) {
 
+        if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
+            coyoteRequest.getParameters().setParameters(new Hashtable());
+            coyoteRequest.getParameters().parseQueryStringList();
+        }
         // Return immediately if the parts have already been parsed
         if (parts != null || partsParseException != null) {
             return;
@@ -2651,7 +2661,23 @@ public class Request implements HttpServletRequest {
                         } catch (UnsupportedEncodingException uee) {
                             // Not possible
                         }
-                        parameters.addParameter(name, value);
+                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                            if (parameters.getParameters().containsKey(name)) {
+
+                                String[] oldValues = (String[]) parameters.getParameters().get(name);
+                                String[] valArray = new String[oldValues.length + 1];
+
+                                System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                valArray[oldValues.length] = value.toString();
+                                parameters.getParameters().put(name, valArray);
+
+                            } else {
+                                String[] values = {value.toString()};
+                                parameters.getParameters().put(name, values);
+                            }
+                        } else {
+                            parameters.addParameter(name, value);
+                        }
                     }
                 }
 
@@ -2914,6 +2940,12 @@ public class Request implements HttpServletRequest {
         parametersParsed = true;
 
         Parameters parameters = coyoteRequest.getParameters();
+        if (parameters.getParameters() != null) {
+            return;
+        }
+
+        parameters.setParameters(new Hashtable());
+
         boolean success = false;
         try {
             // Set this every time in case limit has been changed via JMX
@@ -2935,9 +2967,14 @@ public class Request implements HttpServletRequest {
             // Note: If !useBodyEncodingForURI, the query string encoding is
             // that set towards the start of CoyoteAdapter.service()
 
-            parameters.handleQueryParameters();
+            if (!Globals.COMPATIBLEWEBSPHERE) {
+                parameters.handleQueryParameters();
+            }
 
             if (usingInputStream || usingReader) {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
+                }
                 success = true;
                 return;
             }
@@ -2954,12 +2991,18 @@ public class Request implements HttpServletRequest {
             }
 
             if ("multipart/form-data".equals(contentType)) {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
+                }
                 parseParts(false);
                 success = true;
                 return;
             }
 
             if (!getConnector().isParseBodyMethod(getMethod())) {
+                if (Globals.COMPATIBLEWEBSPHERE) {
+                    parameters.parseQueryStringList();
+                }
                 success = true;
                 return;
             }
@@ -3002,7 +3045,14 @@ public class Request implements HttpServletRequest {
                     parameters.setParseFailedReason(FailReason.CLIENT_DISCONNECT);
                     return;
                 }
-                parameters.processParameters(formData, 0, len);
+                if (Globals.COMPATIBLEWEBSPHERE) {
+                    parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
+                    if (parameters.getParameters() != null) {
+                        parameters.parseQueryStringList();
+                    }
+                } else {
+                    parameters.processParameters(formData, 0, len);
+                }
             } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
                 byte[] formData = null;
                 try {
@@ -3025,8 +3075,18 @@ public class Request implements HttpServletRequest {
                     return;
                 }
                 if (formData != null) {
-                    parameters.processParameters(formData, 0, formData.length);
+                    if (Globals.COMPATIBLEWEBSPHERE) {
+                        parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
+                        if (parameters.getParameters() != null) {
+                            parameters.parseQueryStringList();
+                        }
+                    } else {
+                        parameters.processParameters(formData, 0, formData.length);
+                    }
                 }
+            }
+            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() == null) {
+                parameters.setParameters(new Hashtable<String, String[]>());
             }
             success = true;
         } finally {
@@ -3178,6 +3238,21 @@ public class Request implements HttpServletRequest {
         }
     }
 
+    public void pushParameterStack() {
+        coyoteRequest.getParameters().pushParameterStack();
+    }
+
+    public void aggregateQueryStringParams(String additionalQueryString, boolean setQS) {
+        coyoteRequest.getParameters().aggregateQueryStringParams(additionalQueryString, setQS);
+    }
+
+    public void removeQSFromList(){
+        coyoteRequest.getParameters().removeQSFromList();
+    }
+
+    public void setQueryString(String queryString) {
+        coyoteRequest.queryString().setString(queryString);
+    }
 
     // ----------------------------------------------------- Special attributes handling
 
