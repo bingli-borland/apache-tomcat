@@ -65,9 +65,17 @@ javadoc.failonwarning=false
 
 # ----- Test configuration -----
 execute.test.nio=true
-execute.test.nio2=true
+execute.test.nio2=false
 # Still requires APR/native library to be present
-execute.test.apr=true
+execute.test.apr=false
+
+# test.entry=org.apache.catalina.core.TestAsyncContextImpl
+# test.entry.methods=testCanceledPostChunked,testCanceledPostNoChunking
+test.jvmarg.egd=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000
+
+test.entry=org.apache.coyote.http11.TestHttp11InputBuffer
+#test.entry.methods=testInvalidHeader02
+
 # Stop testing if a failure occurs
 test.haltonfailure=false
 # Activate AccessLog during testing
