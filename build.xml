@@ -55,6 +55,9 @@
 
   <!-- constant to declare a file binary for md5sum -->
   <property name="md5sum.binary-prefix"  value=" *" />
+  <property name="proxy.use"  value="true" />
+  <property name="proxy.host"  value="127.0.0.1" />
+  <property name="proxy.port"  value="9782" />
 
   <!-- Exact spec versions (for the manifests etc.) -->
   <property name="servlet.spec.version"    value="6.1" />
