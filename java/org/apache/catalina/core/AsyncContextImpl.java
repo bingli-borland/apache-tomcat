@@ -152,17 +152,23 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         check();
         String path;
         String cpath;
+        String qs;
         ServletRequest servletRequest = getRequest();
         if (servletRequest instanceof HttpServletRequest) {
             HttpServletRequest sr = (HttpServletRequest) servletRequest;
             path = sr.getRequestURI();
             cpath = sr.getContextPath();
+            qs = sr.getQueryString();
         } else {
             path = request.getRequestURI();
             cpath = request.getContextPath();
+            qs = request.getQueryString();
         }
         if (cpath.length() > 1) {
             path = path.substring(cpath.length());
+        }
+        if (Globals.COMPATIBLEWEBSPHERE && qs.length() > 1) {
+            path = path + "?" + qs;
         }
         if (!context.getDispatchersUseEncodedPaths()) {
             path = UDecoder.URLDecode(path, StandardCharsets.UTF_8);

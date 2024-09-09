@@ -49,6 +49,8 @@ import org.apache.coyote.BadRequestException;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.res.StringManager;
 
+import static javax.servlet.AsyncContext.*;
+
 /**
  * Standard implementation of <code>RequestDispatcher</code> that allows a request to be forwarded to a different
  * resource to create the ultimate response, or to include the output of another resource in the response from this
@@ -289,96 +291,231 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         }
 
         wrapResponse(state);
-        // Handle an HTTP named dispatcher forward
-        if (servletPath == null && pathInfo == null) {
 
-            ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
-            HttpServletRequest hrequest = state.hrequest;
-            wrequest.setRequestURI(hrequest.getRequestURI());
-            wrequest.setContextPath(hrequest.getContextPath());
-            wrequest.setServletPath(hrequest.getServletPath());
-            wrequest.setPathInfo(hrequest.getPathInfo());
-            wrequest.setQueryString(hrequest.getQueryString());
+        ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
+        try {
+            // Handle an HTTP named dispatcher forward
+            if (servletPath == null && pathInfo == null) {
 
-            processRequest(request, response, state);
-        }
+                HttpServletRequest hrequest = state.hrequest;
+                wrequest.setRequestURI(hrequest.getRequestURI());
+                wrequest.setContextPath(hrequest.getContextPath());
+                wrequest.setServletPath(hrequest.getServletPath());
+                wrequest.setPathInfo(hrequest.getPathInfo());
+                wrequest.setQueryString(hrequest.getQueryString());
 
-        // Handle an HTTP path-based forward
-        else {
-
-            ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
-            HttpServletRequest hrequest = state.hrequest;
-            if (hrequest.getAttribute(FORWARD_REQUEST_URI) == null) {
-                wrequest.setAttribute(FORWARD_REQUEST_URI, hrequest.getRequestURI());
-                wrequest.setAttribute(FORWARD_CONTEXT_PATH, hrequest.getContextPath());
-                wrequest.setAttribute(FORWARD_SERVLET_PATH, hrequest.getServletPath());
-                wrequest.setAttribute(FORWARD_PATH_INFO, hrequest.getPathInfo());
-                wrequest.setAttribute(FORWARD_QUERY_STRING, hrequest.getQueryString());
-                wrequest.setAttribute(FORWARD_MAPPING, hrequest.getHttpServletMapping());
+                if (Globals.COMPATIBLEWEBSPHERE) {
+                    clearAttributes(wrequest, DispatcherType.INCLUDE);
+                }
+                processRequest(request, response, state);
             }
 
-            wrequest.setContextPath(context.getEncodedPath());
-            wrequest.setRequestURI(requestURI);
-            wrequest.setServletPath(servletPath);
-            wrequest.setPathInfo(pathInfo);
-            if (queryString != null) {
-                wrequest.setQueryString(queryString);
-                wrequest.setQueryParams(queryString);
+            // Handle an HTTP path-based forward
+            else {
+
+                HttpServletRequest hrequest = state.hrequest;
+                if (hrequest.getAttribute(FORWARD_REQUEST_URI) == null) {
+                    wrequest.setAttribute(FORWARD_REQUEST_URI, hrequest.getRequestURI());
+                    wrequest.setAttribute(FORWARD_CONTEXT_PATH, hrequest.getContextPath());
+                    wrequest.setAttribute(FORWARD_SERVLET_PATH, hrequest.getServletPath());
+                    wrequest.setAttribute(FORWARD_PATH_INFO, hrequest.getPathInfo());
+                    wrequest.setAttribute(FORWARD_QUERY_STRING, hrequest.getQueryString());
+                    wrequest.setAttribute(FORWARD_MAPPING, hrequest.getHttpServletMapping());
+                }
+
+                wrequest.setContextPath(context.getEncodedPath());
+                wrequest.setRequestURI(requestURI);
+                wrequest.setServletPath(servletPath);
+                wrequest.setPathInfo(pathInfo);
+                if (queryString != null) {
+                    wrequest.setQueryString(queryString);
+                    wrequest.setQueryParams(queryString, true);
+                }
+                wrequest.setMapping(mapping);
+
+                if (Globals.COMPATIBLEWEBSPHERE) {
+                    clearAttributes(wrequest, DispatcherType.INCLUDE);
+                }
+                processRequest(request, response, state);
             }
-            wrequest.setMapping(mapping);
 
-            processRequest(request, response, state);
-        }
+            if (request.isAsyncStarted()) {
+                // An async request was started during the forward, don't close the
+                // response as it may be written to during the async handling
+                return;
+            }
 
-        if (request.isAsyncStarted()) {
-            // An async request was started during the forward, don't close the
-            // response as it may be written to during the async handling
-            return;
-        }
+            // This is not a real close in order to support error processing
+            if (wrapper.getLogger().isTraceEnabled()) {
+                wrapper.getLogger().trace(" Disabling the response for further output");
+            }
 
-        // This is not a real close in order to support error processing
-        if (wrapper.getLogger().isTraceEnabled()) {
-            wrapper.getLogger().trace(" Disabling the response for further output");
-        }
-
-        boolean finished = false;
-        if (response instanceof ResponseFacade) {
-            finished = true;
-            ((ResponseFacade) response).finish();
-        } else if (context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
-            ServletResponse baseResponse = response;
-            do {
-                baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
-            } while (baseResponse instanceof ServletResponseWrapper);
-            if (baseResponse instanceof ResponseFacade) {
+            boolean finished = false;
+            if (response instanceof ResponseFacade) {
                 finished = true;
-                ((ResponseFacade) baseResponse).finish();
+                ((ResponseFacade) response).finish();
+            } else if (context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
+                ServletResponse baseResponse = response;
+                do {
+                    baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
+                } while (baseResponse instanceof ServletResponseWrapper);
+                if (baseResponse instanceof ResponseFacade) {
+                    finished = true;
+                    ((ResponseFacade) baseResponse).finish();
+                }
             }
-        }
-        if (!finished) {
-            // Servlet SRV.6.2.2. The Request/Response may have been wrapped
-            // and may no longer be instance of RequestFacade
-            if (wrapper.getLogger().isDebugEnabled()) {
-                wrapper.getLogger().debug(sm.getString("applicationDispatcher.customResponse", response.getClass()));
-            }
-            // Close anyway
-            try {
-                PrintWriter writer = response.getWriter();
-                writer.close();
-            } catch (IllegalStateException e) {
+            if (!finished) {
+                // Servlet SRV.6.2.2. The Request/Response may have been wrapped
+                // and may no longer be instance of RequestFacade
+                if (wrapper.getLogger().isDebugEnabled()) {
+                    wrapper.getLogger().debug(sm.getString("applicationDispatcher.customResponse", response.getClass()));
+                }
+                // Close anyway
                 try {
-                    ServletOutputStream stream = response.getOutputStream();
-                    stream.close();
-                } catch (IllegalStateException | IOException f) {
+                    if (!Globals.COMPATIBLEWEBSPHERE) {
+                        PrintWriter writer = response.getWriter();
+                        writer.close();
+                    }
+                } catch (IllegalStateException e) {
+                    try {
+                        ServletOutputStream stream = response.getOutputStream();
+                        stream.close();
+                    } catch (IllegalStateException | IOException f) {
+                        // Ignore
+                    }
+                } catch (IOException e) {
                     // Ignore
                 }
-            } catch (IOException e) {
-                // Ignore
+            }
+        } finally {
+            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+                wrequest.removeQSFromList();
             }
         }
 
     }
 
+    protected void setAttributes(ServletRequest request, DispatcherType dispatcherType, String requestURI, String servletPath, String pathInfo,
+                                 String contextPath, String queryString) {
+        if (dispatcherType == DispatcherType.INCLUDE) {
+            if (requestURI != null) {
+                request.setAttribute(INCLUDE_REQUEST_URI, requestURI);
+            } else {
+                request.removeAttribute(INCLUDE_REQUEST_URI);
+            }
+
+            if (servletPath != null) {
+                request.setAttribute(INCLUDE_SERVLET_PATH, servletPath);
+            } else {
+                request.removeAttribute(INCLUDE_SERVLET_PATH);
+            }
+
+            if (pathInfo != null) {
+                request.setAttribute(INCLUDE_PATH_INFO, pathInfo);
+            } else {
+                request.removeAttribute(INCLUDE_PATH_INFO);
+            }
+
+            if (contextPath != null) {
+                request.setAttribute(INCLUDE_CONTEXT_PATH, contextPath);
+            } else {
+                request.removeAttribute(INCLUDE_CONTEXT_PATH);
+            }
+
+            if (queryString != null) {
+                request.setAttribute(INCLUDE_QUERY_STRING, queryString);
+            } else {
+                request.removeAttribute(INCLUDE_QUERY_STRING);
+            }
+
+        } else if (dispatcherType == DispatcherType.FORWARD) {
+            if (requestURI != null) {
+                request.setAttribute(FORWARD_REQUEST_URI, requestURI);
+            } else {
+                request.removeAttribute(FORWARD_REQUEST_URI);
+            }
+
+            if (servletPath != null) {
+                request.setAttribute(FORWARD_SERVLET_PATH, servletPath);
+            } else {
+                request.removeAttribute(FORWARD_SERVLET_PATH);
+            }
+
+            if (pathInfo != null) {
+                request.setAttribute(FORWARD_PATH_INFO, pathInfo);
+            } else {
+                request.removeAttribute(FORWARD_PATH_INFO);
+            }
+
+            if (contextPath != null) // can never be null can it???
+            {
+                request.setAttribute(FORWARD_CONTEXT_PATH, contextPath);
+            } else {
+                request.removeAttribute(FORWARD_CONTEXT_PATH);
+            }
+
+            if (queryString != null) {
+                request.setAttribute(FORWARD_QUERY_STRING, queryString);
+            } else {
+                request.removeAttribute(FORWARD_QUERY_STRING);
+            }
+
+        } else if (dispatcherType == DispatcherType.ASYNC) {
+            if (requestURI != null) {
+                request.setAttribute(ASYNC_REQUEST_URI, requestURI);
+            } else {
+                request.removeAttribute(ASYNC_REQUEST_URI);
+            }
+
+            if (servletPath != null) {
+                request.setAttribute(ASYNC_SERVLET_PATH, servletPath);
+            } else {
+                request.removeAttribute(ASYNC_SERVLET_PATH);
+            }
+
+            if (pathInfo != null) {
+                request.setAttribute(ASYNC_PATH_INFO, pathInfo);
+            } else {
+                request.removeAttribute(ASYNC_PATH_INFO);
+            }
+
+            if (contextPath != null) {
+                request.setAttribute(ASYNC_CONTEXT_PATH, contextPath);
+            } else {
+                request.removeAttribute(ASYNC_CONTEXT_PATH);
+            }
+
+            if (queryString != null) {
+                request.setAttribute(ASYNC_QUERY_STRING, queryString);
+            } else {
+                request.removeAttribute(ASYNC_QUERY_STRING);
+            }
+
+        }
+    }
+
+    protected void clearAttributes(ServletRequest request, DispatcherType dispatcherType) {
+        if (dispatcherType == DispatcherType.INCLUDE) {
+            request.removeAttribute(INCLUDE_REQUEST_URI);
+            request.removeAttribute(INCLUDE_SERVLET_PATH);
+            request.removeAttribute(INCLUDE_PATH_INFO);
+            request.removeAttribute(INCLUDE_CONTEXT_PATH);
+            request.removeAttribute(INCLUDE_QUERY_STRING);
+        } else if (dispatcherType == DispatcherType.FORWARD) {
+            request.removeAttribute(FORWARD_REQUEST_URI);
+            request.removeAttribute(FORWARD_SERVLET_PATH);
+            request.removeAttribute(FORWARD_PATH_INFO);
+            request.removeAttribute(FORWARD_CONTEXT_PATH);
+            request.removeAttribute(FORWARD_QUERY_STRING);
+        } else if (dispatcherType == DispatcherType.ASYNC) {
+            request.removeAttribute(ASYNC_REQUEST_URI);
+            request.removeAttribute(ASYNC_SERVLET_PATH);
+            request.removeAttribute(ASYNC_PATH_INFO);
+            request.removeAttribute(ASYNC_CONTEXT_PATH);
+            request.removeAttribute(ASYNC_QUERY_STRING);
+        }
+
+    }
 
     /**
      * Prepare the request based on the filter configuration.
@@ -467,47 +604,67 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         // Create a wrapped response to use for this request
         wrapResponse(state);
 
-        // Handle an HTTP named dispatcher include
-        if (name != null) {
+        String old_req_uri = null;
+        String old_servlet_path = null;
+        String old_path_info = null;
+        String old_context_path = null;
+        String old_query_string = null;
 
-            ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
-            wrequest.setAttribute(Globals.NAMED_DISPATCHER_ATTR, name);
-            if (servletPath != null) {
-                wrequest.setServletPath(servletPath);
-            }
-            wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
-            wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
-            invoke(state.outerRequest, state.outerResponse, state);
-        }
+        ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
+        try {
+            old_req_uri = (String) request.getAttribute(INCLUDE_REQUEST_URI);
+            old_servlet_path = (String) request.getAttribute(INCLUDE_SERVLET_PATH);
+            old_path_info = (String) request.getAttribute(INCLUDE_PATH_INFO);
+            old_context_path = (String) request.getAttribute(INCLUDE_CONTEXT_PATH);
+            old_query_string = (String) request.getAttribute(INCLUDE_QUERY_STRING);
 
-        // Handle an HTTP path based include
-        else {
+            // Handle an HTTP named dispatcher include
+            if (name != null) {
 
-            ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
-            String contextPath = context.getPath();
-            if (requestURI != null) {
-                wrequest.setAttribute(INCLUDE_REQUEST_URI, requestURI);
-            }
-            if (contextPath != null) {
-                wrequest.setAttribute(INCLUDE_CONTEXT_PATH, contextPath);
-            }
-            if (servletPath != null) {
-                wrequest.setAttribute(INCLUDE_SERVLET_PATH, servletPath);
-            }
-            if (pathInfo != null) {
-                wrequest.setAttribute(INCLUDE_PATH_INFO, pathInfo);
-            }
-            if (queryString != null) {
-                wrequest.setAttribute(INCLUDE_QUERY_STRING, queryString);
-                wrequest.setQueryParams(queryString);
-            }
-            if (mapping != null) {
-                wrequest.setAttribute(INCLUDE_MAPPING, mapping);
+                wrequest.setAttribute(Globals.NAMED_DISPATCHER_ATTR, name);
+                if (servletPath != null) {
+                    wrequest.setServletPath(servletPath);
+                }
+                wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
+                wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
+                invoke(state.outerRequest, state.outerResponse, state);
             }
 
-            wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
-            wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
-            invoke(state.outerRequest, state.outerResponse, state);
+            // Handle an HTTP path based include
+            else {
+
+                String contextPath = context.getPath();
+                if (requestURI != null) {
+                    wrequest.setAttribute(INCLUDE_REQUEST_URI, requestURI);
+                }
+                if (contextPath != null) {
+                    wrequest.setAttribute(INCLUDE_CONTEXT_PATH, contextPath);
+                }
+                if (servletPath != null) {
+                    wrequest.setAttribute(INCLUDE_SERVLET_PATH, servletPath);
+                }
+                if (pathInfo != null) {
+                    wrequest.setAttribute(INCLUDE_PATH_INFO, pathInfo);
+                }
+                if (queryString != null) {
+                    wrequest.setAttribute(INCLUDE_QUERY_STRING, queryString);
+                    wrequest.setQueryParams(queryString);
+                }
+                if (mapping != null) {
+                    wrequest.setAttribute(INCLUDE_MAPPING, mapping);
+                }
+
+                wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
+                wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
+                invoke(state.outerRequest, state.outerResponse, state);
+            }
+        } finally {
+            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+                wrequest.removeQSFromList();
+            }
+            if (Globals.COMPATIBLEWEBSPHERE) {
+                setAttributes(request, DispatcherType.INCLUDE, old_req_uri, old_servlet_path, old_path_info, old_context_path, old_query_string);
+            }
         }
 
     }
@@ -541,23 +698,32 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         wrapResponse(state);
 
         ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
-        HttpServletRequest hrequest = state.hrequest;
+        try {
+            HttpServletRequest hrequest = state.hrequest;
 
-        wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.ASYNC);
-        wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
-        wrequest.setAttribute(AsyncContext.ASYNC_MAPPING, hrequest.getHttpServletMapping());
+            wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.ASYNC);
+            wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
+            wrequest.setAttribute(AsyncContext.ASYNC_MAPPING, hrequest.getHttpServletMapping());
 
-        wrequest.setContextPath(context.getEncodedPath());
-        wrequest.setRequestURI(requestURI);
-        wrequest.setServletPath(servletPath);
-        wrequest.setPathInfo(pathInfo);
-        if (queryString != null) {
-            wrequest.setQueryString(queryString);
-            wrequest.setQueryParams(queryString);
+            wrequest.setContextPath(context.getEncodedPath());
+            wrequest.setRequestURI(requestURI);
+            wrequest.setServletPath(servletPath);
+            wrequest.setPathInfo(pathInfo);
+            if (queryString != null) {
+                wrequest.setQueryString(queryString);
+                wrequest.setQueryParams(queryString, true);
+            }
+            wrequest.setMapping(mapping);
+
+            if (Globals.COMPATIBLEWEBSPHERE) {
+                clearAttributes(wrequest, DispatcherType.INCLUDE);
+            }
+            invoke(state.outerRequest, state.outerResponse, state);
+        } finally {
+            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+                wrequest.removeQSFromList();
+            }
         }
-        wrequest.setMapping(mapping);
-
-        invoke(state.outerRequest, state.outerResponse, state);
     }
 
 
