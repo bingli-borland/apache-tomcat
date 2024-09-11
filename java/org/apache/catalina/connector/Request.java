@@ -2954,7 +2954,7 @@ public class Request implements HttpServletRequest {
             }
 
             if (!getConnector().isParseBodyMethod(getMethod())) {
-                if (Globals.COMPATIBLEWEBSPHERE) {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
                     parameters.parseQueryStringList();
                 }
                 success = true;
@@ -2962,6 +2962,9 @@ public class Request implements HttpServletRequest {
             }
 
             if (!("application/x-www-form-urlencoded".equals(contentType))) {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
+                }
                 success = true;
                 return;
             }
@@ -3036,6 +3039,11 @@ public class Request implements HttpServletRequest {
                         }
                     } else {
                         parameters.processParameters(formData, 0, formData.length);
+                    }
+                }
+                if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
+                    if (parameters.getParameters() != null) {
+                        parameters.parseQueryStringList();
                     }
                 }
             }
