@@ -409,6 +409,8 @@ public class ApplicationContext implements ServletContext {
             return null;
         }
 
+        normalizedUri = normalizedUri.trim();
+
         // Mapping is against the normalized uri
 
         if (getContext().getDispatchersUseEncodedPaths()) {
