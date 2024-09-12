@@ -27,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.catalina.Globals;
-import org.apache.catalina.core.ServletRequestThreadData;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.buf.ByteChunk;
@@ -57,6 +56,11 @@ public final class Parameters {
 
     private int limit = -1;
     private int parameterCount = 0;
+
+    private UnsynchronizedStack paramStack = new UnsynchronizedStack();
+
+    private Map _parameters = null;
+    private LinkedList _queryStringList = null;
 
     private UnsynchronizedStack _paramStack = new UnsynchronizedStack();
 
@@ -109,8 +113,12 @@ public final class Parameters {
         didQueryParameters = false;
         charset = DEFAULT_BODY_CHARSET;
         decodedQuery.recycle();
-        _paramStack.clear();
-        ServletRequestThreadData.getInstance().init(null);
+        paramStack.clear();
+        _parameters = null;
+        _queryStringList = null;
+        if (!_paramStack.isEmpty()) {
+            _paramStack.clear();
+        }
     }
 
 
@@ -209,22 +217,21 @@ public final class Parameters {
     }
 
     public Map getParameters(){
-        return ServletRequestThreadData.getInstance().getParameters();
+        return _parameters;
     }
 
     public void setParameters(Hashtable<String, String[]> parameters) {
-        ServletRequestThreadData.getInstance().setParameters(parameters);
+        _parameters = parameters;
     }
 
     /**
      * Save the state of the parameters before a call to include or forward.
      */
     public void pushParameterStack() {
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
-        if (reqData.getParameters() == null) {
-            reqData.pushParameterStack(null);
+        if (getParameters() == null) {
+            _paramStack.push(null);
         } else {
-            _paramStack.push(((Hashtable) reqData.getParameters()).clone());
+            paramStack.push(((Hashtable) getParameters()).clone());
         }
     }
 
@@ -234,7 +241,7 @@ public final class Parameters {
      */
     public void popParameterStack() {
         try {
-            ServletRequestThreadData.getInstance().setParameters((Hashtable) _paramStack.pop());
+            setParameters((Hashtable) paramStack.pop());
         } catch (java.util.EmptyStackException empty) {
             if (log.isDebugEnabled()) {
                 log.debug("Unable to remove item from stack", empty);
@@ -244,9 +251,8 @@ public final class Parameters {
 
     public void aggregateQueryStringParams(String additionalQueryString, boolean setQS) {
         QSListItem tmpQS = null;
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
-        if (reqData.getParameters() == null) {
-            LinkedList queryStringList = ServletRequestThreadData.getInstance().getQueryStringList();
+        if (getParameters() == null) {
+            LinkedList queryStringList = _queryStringList;
             if (queryStringList == null || queryStringList.isEmpty()) {
                 if (queryStringList == null) {
                     queryStringList = new LinkedList();
@@ -262,7 +268,7 @@ public final class Parameters {
                     tmpQS = new QSListItem(tmp, null);
                     queryStringList.add(tmpQS);
                 }
-                ServletRequestThreadData.getInstance().setQueryStringList(queryStringList);
+                _queryStringList = queryStringList;
 
             }
             // End 258025, Part 2
@@ -280,7 +286,7 @@ public final class Parameters {
 
         // if _parameters is not null, then this is part of a forward or include...add the additional query parms
         // if _parameters is null, then the string will be parsed if needed
-        if (reqData.getParameters() != null && additionalQueryString != null) {
+        if (getParameters() != null && additionalQueryString != null) {
             MessageBytes qs = MessageBytes.newInstance();
             qs.setString(additionalQueryString);
             if (qs.getType() != MessageBytes.T_BYTES) {
@@ -296,8 +302,8 @@ public final class Parameters {
 
                 // Check to see if a parameter with the key already exists
                 // and prepend the values since QueryString takes precedence
-                if (reqData.getParameters().containsKey(key)) {
-                    String[] oldVals = (String[]) reqData.getParameters().get(key);
+                if (getParameters().containsKey(key)) {
+                    String[] oldVals = (String[]) getParameters().get(key);
                     Vector v = new Vector();
 
                     for (int i = 0; i < newVals.length; i++) {
@@ -311,9 +317,9 @@ public final class Parameters {
                     valArray = new String[v.size()];
                     v.toArray(valArray);
 
-                    reqData.getParameters().put(key, valArray);
+                    getParameters().put(key, valArray);
                 } else {
-                    reqData.getParameters().put(key, newVals);
+                    getParameters().put(key, newVals);
                 }
             }
         }
@@ -321,9 +327,8 @@ public final class Parameters {
 
     public void parseQueryStringList() {
 
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
         Hashtable<String, String[]> tmpQueryParams = null;
-        LinkedList queryStringList = ServletRequestThreadData.getInstance().getQueryStringList();
+        LinkedList queryStringList = _queryStringList;
         if (queryStringList == null || queryStringList.isEmpty()) { //258025
             if (queryMB != null && !queryMB.isNull())//PM35450
             {
@@ -331,8 +336,8 @@ public final class Parameters {
                     queryMB.toBytes();
                 }
                 ByteChunk bc = queryMB.getByteChunk();
-                if (reqData.getParameters() == null || reqData.getParameters().isEmpty()) {
-                    reqData.setParameters(parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset));
+                if (getParameters() == null || getParameters().isEmpty()) {
+                    setParameters(parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset));
                 } else {
                     tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
                     mergeQueryParams(tmpQueryParams);
@@ -352,10 +357,10 @@ public final class Parameters {
                         queryString.toBytes();
                     }
                     ByteChunk bc = queryString.getByteChunk();
-                    if (reqData.getParameters() == null || reqData.getParameters().isEmpty())// 258025
+                    if (getParameters() == null || getParameters().isEmpty())// 258025
                     {
                         qsListItem._qsHashtable = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
-                        reqData.setParameters(qsListItem._qsHashtable);
+                        setParameters(qsListItem._qsHashtable);
                         qsListItem._qs = null;
                     } else {
                         tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
@@ -369,15 +374,14 @@ public final class Parameters {
     }
 
     private void mergeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
         if (tmpQueryParams != null) {
             Enumeration enumeration = tmpQueryParams.keys();
             while (enumeration.hasMoreElements()) {
                 Object key = enumeration.nextElement();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
-                if (reqData.getParameters() != null && reqData.getParameters().containsKey(key)) {
-                    String postVals[] = (String[]) reqData.getParameters().get(key);
+                if (getParameters() != null && getParameters().containsKey(key)) {
+                    String postVals[] = (String[]) getParameters().get(key);
                     String queryVals[] = (String[]) tmpQueryParams.get(key);
                     String newVals[] = new String[postVals.length + queryVals.length];
                     int newValsIndex = 0;
@@ -387,12 +391,12 @@ public final class Parameters {
                     for (int i = 0; i < postVals.length; i++) {
                         newVals[newValsIndex++] = postVals[i];
                     }
-                    reqData.getParameters().put(key, newVals);
+                    getParameters().put(key, newVals);
                 } else {
-                    if (reqData.getParameters() == null) {
-                        reqData.setParameters(new Hashtable());
+                    if (getParameters() == null) {
+                        setParameters(new Hashtable());
                     }
-                    reqData.getParameters().put(key, tmpQueryParams.get(key));
+                    getParameters().put(key, tmpQueryParams.get(key));
                 }
             }
         }
@@ -401,14 +405,13 @@ public final class Parameters {
 
     public void removeQSFromList() {
 
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
-        LinkedList queryStringList = reqData.getQueryStringList();
+        LinkedList queryStringList = _queryStringList;
         if (queryStringList != null && !queryStringList.isEmpty()) {
-            Map _tmpParameters = reqData.getParameters();    // Save off reference to current parameters
+            Map _tmpParameters = getParameters();    // Save off reference to current parameters
             popParameterStack();
-            if (reqData.getParameters() == null && _tmpParameters != null) // Parameters above current inluce/forward were never parsed
+            if (getParameters() == null && _tmpParameters != null) // Parameters above current inluce/forward were never parsed
             {
-                reqData.setParameters(_tmpParameters);
+                setParameters((Hashtable<String, String[]>) _tmpParameters);
                 Hashtable<String, String[]> tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsHashtable;
                 if (tmpQueryParams == null) {
                     MessageBytes qs = ((QSListItem) queryStringList.getLast())._qs;
@@ -430,15 +433,14 @@ public final class Parameters {
     }
 
     private void removeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
-        ServletRequestThreadData reqData = ServletRequestThreadData.getInstance();
         if (tmpQueryParams != null) {
             Enumeration enumeration = tmpQueryParams.keys();
             while (enumeration.hasMoreElements()) {
                 Object key = enumeration.nextElement();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
-                if (reqData.getParameters().containsKey(key)) {
-                    String postVals[] = (String[]) reqData.getParameters().get(key);
+                if (getParameters().containsKey(key)) {
+                    String postVals[] = (String[]) getParameters().get(key);
                     String queryVals[] = (String[]) tmpQueryParams.get(key);
                     if (postVals.length - queryVals.length > 0) {
                         String newVals[] = new String[postVals.length - queryVals.length];
@@ -446,9 +448,9 @@ public final class Parameters {
                         for (int i = queryVals.length; i < postVals.length; i++) {
                             newVals[newValsIndex++] = postVals[i];
                         }
-                        reqData.getParameters().put(key, newVals);
+                        getParameters().put(key, newVals);
                     } else
-                        reqData.getParameters().remove(key);
+                        getParameters().remove(key);
                 }
             }
         }
