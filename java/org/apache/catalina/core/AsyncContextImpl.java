@@ -99,7 +99,7 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         }
         List<AsyncListenerWrapper> listenersCopy = new ArrayList<>(listeners);
 
-        ClassLoader oldCL = context.bind(null);
+        ClassLoader oldCL = context.bind(Globals.IS_SECURITY_ENABLED, null);
         try {
             for (AsyncListenerWrapper listener : listenersCopy) {
                 try {
@@ -552,25 +552,15 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         private final Runnable wrapped;
         private final Context context;
         private final org.apache.coyote.Request coyoteRequest;
-        private ServletRequestThreadData requestDataOnStartRequestThread;
 
         RunnableWrapper(Runnable wrapped, Context ctxt, org.apache.coyote.Request coyoteRequest) {
             this.wrapped = wrapped;
             this.context = ctxt;
             this.coyoteRequest = coyoteRequest;
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                requestDataOnStartRequestThread = new ServletRequestThreadData();
-                requestDataOnStartRequestThread.init(ServletRequestThreadData.getInstance());
-        }
         }
 
         @Override
         public void run() {
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                // Add the request data from the thread on which dispatch was called to the request data for
-                // the thread of the complete runnable.
-                ServletRequestThreadData.getInstance().init(requestDataOnStartRequestThread);
-            }
             ClassLoader oldCL = context.bind(Globals.IS_SECURITY_ENABLED, null);
             try {
                 wrapped.run();
@@ -583,10 +573,7 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
                 coyoteResponse.setError();
             } finally {
                 context.unbind(oldCL);
-                if (Globals.COMPATIBLEWEBSPHERE) {
-                    ServletRequestThreadData.getInstance().init(null);
                 }
-            }
 
             // Since this runnable is not executing as a result of a socket
             // event, we need to ensure that any registered dispatches are
@@ -602,7 +589,6 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         private final Request request;
         private final ServletRequest servletRequest;
         private final ServletResponse servletResponse;
-        private ServletRequestThreadData requestDataOnDispatchRequestThread;
 
         AsyncRunnable(Request request, AsyncDispatcher applicationDispatcher, ServletRequest servletRequest,
                 ServletResponse servletResponse) {
@@ -610,30 +596,17 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
             this.applicationDispatcher = applicationDispatcher;
             this.servletRequest = servletRequest;
             this.servletResponse = servletResponse;
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                requestDataOnDispatchRequestThread = new ServletRequestThreadData();
-                requestDataOnDispatchRequestThread.init(ServletRequestThreadData.getInstance());
             }
-        }
 
         @Override
         public void run() {
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                // Add the request data from the thread on which dispatch was called to the request data for
-                // the thread of the complete runnable.
-                ServletRequestThreadData.getInstance().init(requestDataOnDispatchRequestThread);
-            }
             request.getCoyoteRequest().action(ActionCode.ASYNC_DISPATCHED, null);
             try {
                 applicationDispatcher.dispatch(servletRequest, servletResponse);
             } catch (Exception e) {
                 throw new RuntimeException(sm.getString("asyncContextImpl.asyncDispatchError"), e);
-            } finally {
-                if (Globals.COMPATIBLEWEBSPHERE) {
-                    ServletRequestThreadData.getInstance().init(null);
                 }
             }
-        }
 
     }
 }

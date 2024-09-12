@@ -16,8 +16,6 @@
  */
 package org.apache.tomcat.util.net;
 
-import org.apache.catalina.Globals;
-import org.apache.catalina.core.ServletRequestThreadData;
 
 import java.util.Objects;
 import java.util.concurrent.locks.Lock;
@@ -54,9 +52,6 @@ public abstract class SocketProcessorBase<S> implements Runnable {
             }
             doRun();
         } finally {
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                ServletRequestThreadData.getInstance().init(null);
-            }
             lock.unlock();
         }
     }
