@@ -3046,6 +3046,10 @@ public class Request implements HttpServletRequest {
                         parameters.parseQueryStringList();
                     }
                 }
+            } else {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
+                }
             }
             if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() == null) {
                 parameters.setParameters(new Hashtable<String, String[]>());
