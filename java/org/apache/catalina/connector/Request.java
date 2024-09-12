@@ -2949,6 +2949,10 @@ public class Request implements HttpServletRequest {
                 } else {
                     parameters.processParameters(formData, 0, formData.length);
                 }
+            } else {
+                if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
+                }
             }
             if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                 if (parameters.getParameters() != null) {
