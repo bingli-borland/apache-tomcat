@@ -16,7 +16,6 @@
  */
 package org.apache.tomcat.util.net;
 
-
 import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 

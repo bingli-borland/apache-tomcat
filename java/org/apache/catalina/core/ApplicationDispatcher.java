@@ -47,7 +47,7 @@ import org.apache.coyote.CloseNowException;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.res.StringManager;
 
-import static javax.servlet.AsyncContext.*;
+import static jakarta.servlet.AsyncContext.*;
 
 /**
  * Standard implementation of <code>RequestDispatcher</code> that allows a request to be forwarded to a different
@@ -275,6 +275,8 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 if (queryString != null) {
                     wrequest.setQueryString(queryString);
                     wrequest.setQueryParams(queryString, true);
+                } else if(Globals.COMPATIBLEWEBSPHERE) {
+                    wrequest.setQueryString(queryString);
                 }
                 wrequest.setMapping(mapping);
 
@@ -617,6 +619,8 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
             if (queryString != null) {
                 wrequest.setQueryString(queryString);
                 wrequest.setQueryParams(queryString, true);
+            } else if(Globals.COMPATIBLEWEBSPHERE) {
+                wrequest.setQueryString(queryString);
             }
             wrequest.setMapping(mapping);
 
