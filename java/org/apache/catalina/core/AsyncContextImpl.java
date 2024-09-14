@@ -36,10 +36,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.AsyncDispatcher;
-import org.apache.catalina.Context;
-import org.apache.catalina.Host;
-import org.apache.catalina.Valve;
+import org.apache.catalina.*;
 import org.apache.catalina.connector.Request;
 import org.apache.coyote.ActionCode;
 import org.apache.coyote.AsyncContextCallback;
@@ -100,7 +97,7 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         }
         List<AsyncListenerWrapper> listenersCopy = new ArrayList<>(listeners);
 
-        ClassLoader oldCL = context.bind(Globals.IS_SECURITY_ENABLED, null);
+        ClassLoader oldCL = context.bind( null);
         try {
             for (AsyncListenerWrapper listener : listenersCopy) {
                 try {
@@ -559,7 +556,7 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
 
         @Override
         public void run() {
-            ClassLoader oldCL = context.bind(Globals.IS_SECURITY_ENABLED, null);
+            ClassLoader oldCL = context.bind( null);
             try {
                 wrapped.run();
             } catch (Throwable t) {
