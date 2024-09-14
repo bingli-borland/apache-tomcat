@@ -360,6 +360,8 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 if (queryString != null) {
                     wrequest.setQueryString(queryString);
                     wrequest.setQueryParams(queryString, true);
+                } else if(Globals.COMPATIBLEWEBSPHERE) {
+                    wrequest.setQueryString(queryString);
                 }
                 wrequest.setMapping(mapping);
 
@@ -742,6 +744,8 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
             if (queryString != null) {
                 wrequest.setQueryString(queryString);
                 wrequest.setQueryParams(queryString, true);
+            } else if(Globals.COMPATIBLEWEBSPHERE) {
+                wrequest.setQueryString(queryString);
             }
             wrequest.setMapping(this.mapping);
 
