@@ -19,11 +19,7 @@ package org.apache.tomcat.util.http;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.catalina.Globals;
 import org.apache.juli.logging.Log;
