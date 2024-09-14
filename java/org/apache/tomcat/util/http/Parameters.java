@@ -20,11 +20,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.catalina.Globals;
 import org.apache.juli.logging.Log;
@@ -638,12 +634,9 @@ public final class Parameters {
     private Hashtable parseQueryStringParameters(byte bytes[], int start, int len, Charset charset) {
 
         Hashtable<String, String[]> ht = new Hashtable<>();
-
-        if (log.isDebugEnabled()) {
-            log.debug(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
+        if (log.isTraceEnabled()) {
+            log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
         }
-
-        int decodeFailCount = 0;
 
         int pos = start;
         int end = start + len;
@@ -722,30 +715,15 @@ public final class Parameters {
                     continue;
                 }
                 // &=foo&
-                UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                if (logMode != null) {
-                    String extract;
-                    if (valueEnd > nameStart) {
-                        extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
-                    } else {
-                        extract = "";
-                    }
-                    String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
-                        Integer.valueOf(valueEnd), extract);
-                    switch (logMode) {
-                        case INFO_THEN_DEBUG:
-                            message += sm.getString("parameters.fallToDebug");
-                            //$FALL-THROUGH$
-                        case INFO:
-                            log.info(message);
-                            break;
-                        case DEBUG:
-                            log.debug(message);
-                    }
+                String extract;
+                if (valueEnd > nameStart) {
+                    extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
+                } else {
+                    extract = "";
                 }
-                setParseFailedReason(FailReason.NO_NAME);
-                continue;
-                // invalid chunk - it's better to ignore
+                String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
+                    Integer.valueOf(valueEnd), extract);
+                throw new InvalidParameterException(message);
             }
 
             tmpName.setBytes(bytes, nameStart, nameEnd - nameStart);
@@ -780,109 +758,47 @@ public final class Parameters {
                     urlDecode(tmpName);
                 }
                 tmpName.setCharset(charset);
-                name = tmpName.toString();
+                name = tmpName.toString(CodingErrorAction.REPORT, CodingErrorAction.REPORT);
 
                 if (valueStart >= 0) {
                     if (decodeValue) {
                         urlDecode(tmpValue);
                     }
                     tmpValue.setCharset(charset);
-                    value = tmpValue.toString();
+                    value = tmpValue.toString(CodingErrorAction.REPORT, CodingErrorAction.REPORT);
                 } else {
                     value = "";
                 }
 
-                try {
-                    if (name == null) {
-                        continue;
-                    }
+                if (limit > -1 && parameterCount >= limit) {
+                    // Processing this parameter will push us over the limit.
+                    throw new InvalidParameterException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
+                }
+                parameterCount++;
 
-                    if (limit > -1 && parameterCount >= limit) {
-                        // Processing this parameter will push us over the limit. ISE is
-                        // what Request.parseParts() uses for requests that are too big
-                        setParseFailedReason(FailReason.TOO_MANY_PARAMETERS);
-                        throw new IllegalStateException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
-                    }
-                    parameterCount++;
-
-                    String valArray[] = new String[] { value };
-                    String[] oldVals = (String[]) ht.put(name, valArray);
-                    if (oldVals != null) {
-                        valArray = new String[oldVals.length + 1];
-                        System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
-                        valArray[oldVals.length] = value;
-                        ht.put(name, valArray);
-                    }
-
-                } catch (IllegalStateException ise) {
-                    // Hitting limit stops processing further params but does
-                    // not cause request to fail.
-                    UserDataHelper.Mode logMode = maxParamCountLog.getNextMode();
-                    if (logMode != null) {
-                        String message = ise.getMessage();
-                        switch (logMode) {
-                            case INFO_THEN_DEBUG:
-                                message += sm.getString("parameters.maxCountFail.fallToDebug");
-                                //$FALL-THROUGH$
-                            case INFO:
-                                log.info(message);
-                                break;
-                            case DEBUG:
-                                log.debug(message);
-                        }
-                    }
-                    break;
+                String valArray[] = new String[] { value };
+                String[] oldVals = (String[]) ht.put(name, valArray);
+                if (oldVals != null) {
+                    valArray = new String[oldVals.length + 1];
+                    System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
+                    valArray[oldVals.length] = value;
+                    ht.put(name, valArray);
                 }
             } catch (IOException e) {
-                setParseFailedReason(FailReason.URL_DECODING);
-                decodeFailCount++;
-                if (decodeFailCount == 1 || log.isDebugEnabled()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(
-                            sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString()),
-                            e);
-                    } else if (log.isInfoEnabled()) {
-                        UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                        if (logMode != null) {
-                            String message =
-                                sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
-                            switch (logMode) {
-                                case INFO_THEN_DEBUG:
-                                    message += sm.getString("parameters.fallToDebug");
-                                    //$FALL-THROUGH$
-                                case INFO:
-                                    log.info(message);
-                                    break;
-                                case DEBUG:
-                                    log.debug(message);
-                            }
-                        }
-                    }
+                String message;
+                if (log.isDebugEnabled()) {
+                    message = sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString());
+                } else {
+                    message = sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
                 }
-            }
-
-            tmpName.recycle();
-            tmpValue.recycle();
-            // Only recycle copies if we used them
-            if (log.isDebugEnabled()) {
-                origName.recycle();
-                origValue.recycle();
-            }
-        }
-
-        if (decodeFailCount > 1 && !log.isDebugEnabled()) {
-            UserDataHelper.Mode logMode = userDataLog.getNextMode();
-            if (logMode != null) {
-                String message = sm.getString("parameters.multipleDecodingFail", Integer.valueOf(decodeFailCount));
-                switch (logMode) {
-                    case INFO_THEN_DEBUG:
-                        message += sm.getString("parameters.fallToDebug");
-                        //$FALL-THROUGH$
-                    case INFO:
-                        log.info(message);
-                        break;
-                    case DEBUG:
-                        log.debug(message);
+                throw new InvalidParameterException(message, e);
+            } finally {
+                tmpName.recycle();
+                tmpValue.recycle();
+                // Only recycle copies if we used them
+                if (log.isDebugEnabled()) {
+                    origName.recycle();
+                    origValue.recycle();
                 }
             }
         }
