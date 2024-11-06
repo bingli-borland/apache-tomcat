@@ -406,7 +406,12 @@ public class Request implements HttpServletRequest {
     public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cachePostBody"));
 
+    public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
+
     private ByteArrayInputStream cachedPostData;
+
+    private byte[] cachedInputStreamBytes;
 
     private ServletInputStream cachedInputStream;
 
@@ -704,6 +709,9 @@ public class Request implements HttpServletRequest {
      * @return the input stream associated with this Request.
      */
     public InputStream getStream() {
+        if (this.cachedInputStreamBytes != null) {
+            return new BufferedInputStream(new ByteArrayInputStream(this.cachedInputStreamBytes));
+        }
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
         }
@@ -1031,6 +1039,19 @@ public class Request implements HttpServletRequest {
         return coyoteRequest.getContentType();
     }
 
+    private String getBareContentType() {
+        String contentType = getContentType();
+        if (contentType == null) {
+            contentType = "";
+        }
+        int semicolon = contentType.indexOf(';');
+        if (semicolon >= 0) {
+            contentType = contentType.substring(0, semicolon).trim();
+        } else {
+            contentType = contentType.trim();
+        }
+        return contentType;
+    }
 
     /**
      * Set the content type for this Request.
@@ -1059,10 +1080,31 @@ public class Request implements HttpServletRequest {
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
         }
+        if (CACHE_INPUT_STREAM) {
+            String contentType = getBareContentType();
+            if ("application/x-www-form-urlencoded".equals(contentType)) {
+                if (this.cachedInputStreamBytes == null) {
+                    this.cachedInputStreamBytes = copyToByteArray((InputStream) this.inputStream);
+                }
+                return new BufferedInputStream(new ByteArrayInputStream(this.cachedInputStreamBytes));
+            }
+        }
         return inputStream;
 
     }
 
+    private byte[] copyToByteArray(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream(8192);
+        int byteCount = 0;
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        while ((bytesRead = in.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+            byteCount += bytesRead;
+        }
+        out.flush();
+        return out.toByteArray();
+    }
 
     @Override
     public Locale getLocale() {
@@ -2939,7 +2981,7 @@ public class Request implements HttpServletRequest {
             parameters.handleQueryParameters();
         }
 
-        if (usingInputStream || usingReader) {
+        if (!CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
             if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
