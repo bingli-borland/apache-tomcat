@@ -503,6 +503,7 @@ public class Request implements HttpServletRequest {
             asyncContext = null;
         }
         this.cachedPostData = null;
+        this.cachedInputStreamBytes = null;
         this.cachedInputStream = null;
         this.cachedReader = null;
     }
