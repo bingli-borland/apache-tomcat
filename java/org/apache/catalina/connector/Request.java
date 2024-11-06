@@ -3060,6 +3060,7 @@ public class Request implements HttpServletRequest {
                 }
                 return;
             }
+            cachedPostBodyForCompatibleWLS(formData, 0, len);
             if (Globals.COMPATIBLEWEBSPHERE) {
                 parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
                 if (parameters.getParameters() != null) {
@@ -3068,7 +3069,6 @@ public class Request implements HttpServletRequest {
             } else {
                 parameters.processParameters(formData, 0, len);
             }
-            cachedPostBodyForCompatibleWLS(formData, 0, len);
         } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
             byte[] formData = null;
             try {
@@ -3118,7 +3118,8 @@ public class Request implements HttpServletRequest {
 
     private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
         if (CACHE_POST_BODY) {
-            this.cachedPostData = new ByteArrayInputStream(data, start, len);
+            byte[] cachedData = Arrays.copyOf(data, data.length);
+            this.cachedPostData = new ByteArrayInputStream(cachedData, start, len);
         }
     }
 
