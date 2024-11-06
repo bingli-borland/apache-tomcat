@@ -409,9 +409,8 @@ public class Request implements HttpServletRequest {
     public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
 
-    private ByteArrayInputStream cachedPostData;
-
-    private byte[] cachedInputStreamBytes;
+    // origin input post data
+    private byte[] cachedPostData;
 
     private ServletInputStream cachedInputStream;
 
@@ -527,7 +526,6 @@ public class Request implements HttpServletRequest {
             asyncContext = null;
         }
         this.cachedPostData = null;
-        this.cachedInputStreamBytes = null;
         this.cachedInputStream = null;
         this.cachedReader = null;
     }
@@ -708,10 +706,12 @@ public class Request implements HttpServletRequest {
 
     /**
      * @return the input stream associated with this Request.
+     * Only called by readChunkedPostBody and readChunkedPostBody for parse post parameter
      */
     public InputStream getStream() {
-        if (this.cachedInputStreamBytes != null) {
-            return new BufferedInputStream(new ByteArrayInputStream(this.cachedInputStreamBytes));
+        // return new ByteArray for each
+        if (this.cachedPostData != null) {
+            return new ByteArrayInputStream(cachedPostData);
         }
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
@@ -1074,7 +1074,7 @@ public class Request implements HttpServletRequest {
         usingInputStream = true;
         if (this.cachedPostData != null) {
             if (this.cachedInputStream == null) {
-                this.cachedInputStream = new BufferedInputStream(this.cachedPostData);
+                this.cachedInputStream = new BufferedInputStream(new ByteArrayInputStream(this.cachedPostData));
             }
             return this.cachedInputStream;
         }
@@ -1084,17 +1084,18 @@ public class Request implements HttpServletRequest {
         if (CACHE_INPUT_STREAM) {
             String contentType = getBareContentType();
             if ("application/x-www-form-urlencoded".equals(contentType)) {
-                if (this.cachedInputStreamBytes == null) {
-                    this.cachedInputStreamBytes = copyToByteArray((InputStream) this.inputStream);
+                if (this.cachedInputStream == null) {
+                    this.cachedPostData = readToByteArray(this.inputStream);
+                    this.cachedInputStream = new BufferedInputStream(new ByteArrayInputStream(this.cachedPostData));
                 }
-                return new BufferedInputStream(new ByteArrayInputStream(this.cachedInputStreamBytes));
-            }
+                return cachedInputStream;
+        }
         }
         return inputStream;
 
     }
 
-    private byte[] copyToByteArray(InputStream in) throws IOException {
+    private byte[] readToByteArray(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream(8192);
         int byteCount = 0;
         byte[] buffer = new byte[8192];
@@ -1220,7 +1221,7 @@ public class Request implements HttpServletRequest {
         usingReader = true;
         if (this.cachedPostData != null) {
             if (this.cachedReader == null) {
-                this.cachedReader = new BufferedReader(new InputStreamReader(this.cachedPostData, getCharacterEncoding()));
+                this.cachedReader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(this.cachedPostData), getCharacterEncoding()));
             }
             return this.cachedReader;
         }
@@ -3118,8 +3119,8 @@ public class Request implements HttpServletRequest {
 
     private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
         if (CACHE_POST_BODY) {
-            byte[] cachedData = Arrays.copyOf(data, data.length);
-            this.cachedPostData = new ByteArrayInputStream(cachedData, start, len);
+            byte[] cachedData = Arrays.copyOfRange(data, start, len);
+            this.cachedPostData = cachedData;
         }
     }
 
@@ -3156,8 +3157,10 @@ public class Request implements HttpServletRequest {
         byte[] buffer = new byte[CACHED_POST_LEN];
 
         int len = 0;
+        // only get once, because the stream was cached
+        InputStream is = getStream();
         while (len > -1) {
-            len = getStream().read(buffer, 0, CACHED_POST_LEN);
+            len = is.read(buffer, 0, CACHED_POST_LEN);
             if (connector.getMaxPostSize() >= 0 && (body.getLength() + len) > connector.getMaxPostSize()) {
                 // Too much data
                 checkSwallowInput();
