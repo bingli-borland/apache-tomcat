@@ -16,13 +16,7 @@
  */
 package org.apache.catalina.connector;
 
-import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
@@ -428,6 +422,14 @@ public class Request implements HttpServletRequest {
 
     private HttpServletRequest applicationRequest = null;
 
+    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
+    private static final boolean disableCachePostBody = Boolean.getBoolean("org.apache.catalina.connector.disableCachePostBody");
+
+    private ByteArrayInputStream cachedPostData;
+
+    private ServletInputStream cachedInputStream;
+
+    private BufferedReader cachedReader;
 
     // --------------------------------------------------------- Public Methods
 
@@ -519,6 +521,9 @@ public class Request implements HttpServletRequest {
             asyncContext.recycle();
             asyncContext = null;
         }
+        this.cachedPostData = null;
+        this.cachedInputStream = null;
+        this.cachedReader = null;
     }
 
 
@@ -1023,6 +1028,12 @@ public class Request implements HttpServletRequest {
         }
 
         usingInputStream = true;
+        if (this.cachedPostData != null) {
+            if (this.cachedInputStream == null) {
+                this.cachedInputStream = new BufferedInputStream(this.cachedPostData);
+            }
+            return this.cachedInputStream;
+        }
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
         }
@@ -1178,7 +1189,12 @@ public class Request implements HttpServletRequest {
         }
 
         usingReader = true;
-
+        if (this.cachedPostData != null) {
+            if (this.cachedReader == null) {
+                this.cachedReader = new BufferedReader(new InputStreamReader(this.cachedPostData, getCharacterEncoding()));
+            }
+            return this.cachedReader;
+        }
         inputBuffer.checkConverter();
         if (reader == null) {
             reader = new CoyoteReader(inputBuffer);
@@ -3045,6 +3061,7 @@ public class Request implements HttpServletRequest {
                 } else {
                     parameters.processParameters(formData, 0, len);
                 }
+                cachedPostBodyForCompatibleWLS(formData, 0, len);
             } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
                 byte[] formData = null;
                 try {
@@ -3075,6 +3092,7 @@ public class Request implements HttpServletRequest {
                     } else {
                         parameters.processParameters(formData, 0, formData.length);
                     }
+                    cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
                 }
                 if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                     if (parameters.getParameters() != null) {
@@ -3098,6 +3116,11 @@ public class Request implements HttpServletRequest {
 
     }
 
+    private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
+        if (COMPATIBLE_WEBLOGIC && !disableCachePostBody) {
+            this.cachedPostData = new ByteArrayInputStream(data, start, len);
+        }
+    }
 
     /**
      * Read post body into an array.
