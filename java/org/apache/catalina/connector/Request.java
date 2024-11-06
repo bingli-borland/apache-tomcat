@@ -402,7 +402,9 @@ public class Request implements HttpServletRequest {
     private HttpServletRequest applicationRequest = null;
 
     private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
-    private static final boolean disableCachePostBody = Boolean.getBoolean("org.apache.catalina.connector.disableCachePostBody");
+
+    public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cachePostBody"));
 
     private ByteArrayInputStream cachedPostData;
 
@@ -3072,7 +3074,7 @@ public class Request implements HttpServletRequest {
     }
 
     private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
-        if (COMPATIBLE_WEBLOGIC && !disableCachePostBody) {
+        if (CACHE_POST_BODY) {
             this.cachedPostData = new ByteArrayInputStream(data, start, len);
         }
     }
