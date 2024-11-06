@@ -3122,7 +3122,7 @@ public class Request implements HttpServletRequest {
                 }
                 if (formData != null) {
                     if (Globals.COMPATIBLEWEBSPHERE) {
-                        parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
+                        parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
                         if (parameters.getParameters() != null) {
                             parameters.parseQueryStringList();
                         }
