@@ -3121,6 +3121,7 @@ public class Request implements HttpServletRequest {
                     return;
                 }
                 if (formData != null) {
+                    cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
                     if (Globals.COMPATIBLEWEBSPHERE) {
                         parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
                         if (parameters.getParameters() != null) {
@@ -3129,7 +3130,6 @@ public class Request implements HttpServletRequest {
                     } else {
                         parameters.processParameters(formData, 0, formData.length);
                     }
-                    cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
                 }
                 if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                     if (parameters.getParameters() != null) {
@@ -3176,8 +3176,9 @@ public class Request implements HttpServletRequest {
     protected int readPostBody(byte[] body, int len) throws IOException {
 
         int offset = 0;
+        InputStream is = getStream();
         do {
-            int inputLen = getStream().read(body, offset, len - offset);
+            int inputLen = is.read(body, offset, len - offset);
             if (inputLen <= 0) {
                 return offset;
             }
@@ -3198,8 +3199,9 @@ public class Request implements HttpServletRequest {
      */
     protected void readPostBodyFully(byte[] body, int len) throws IOException {
         int offset = 0;
+        InputStream is = getStream();
         do {
-            int inputLen = getStream().read(body, offset, len - offset);
+            int inputLen = is.read(body, offset, len - offset);
             if (inputLen <= 0) {
                 throw new EOFException();
             }
