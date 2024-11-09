@@ -84,13 +84,8 @@ import org.apache.tomcat.util.buf.EncodedSolidusHandling;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.apache.tomcat.util.buf.UDecoder;
-import org.apache.tomcat.util.http.CookieProcessor;
-import org.apache.tomcat.util.http.FastHttpDateFormat;
-import org.apache.tomcat.util.http.Parameters;
+import org.apache.tomcat.util.http.*;
 import org.apache.tomcat.util.http.Parameters.FailReason;
-import org.apache.tomcat.util.http.Rfc6265CookieProcessor;
-import org.apache.tomcat.util.http.ServerCookie;
-import org.apache.tomcat.util.http.ServerCookies;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -429,6 +424,9 @@ public class Request implements HttpServletRequest {
 
     public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
+
+    public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
 
     // origin input post data
     private byte[] cachedPostData;
@@ -1133,11 +1131,14 @@ public class Request implements HttpServletRequest {
             parseParameters();
         }
 
-        ByteChunk bc = coyoteRequest.getParameters().getParameter(name);
-        if (bc == null) {
-            return null;
+        if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+            ByteChunk bc = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameter(name);
+            if (bc == null) {
+                return null;
+            }
+            return new String(bc.getBytes(), bc.getStart(), bc.getLength(), getCharset(bc.isQuery()));
         }
-        return new String(bc.getBytes(), bc.getStart(), bc.getLength(), getCharset(bc.isQuery()));
+        return coyoteRequest.getParameters().getParameter(name);
     }
 
     public Charset getCharset(boolean query) {
@@ -1166,15 +1167,17 @@ public class Request implements HttpServletRequest {
             if (!parametersParsed) {
                 parseParameters();
             }
-            Map<String, String[]> parameters = new Hashtable<>();
-            Enumeration<String> enumeration = getParameterNames();
-            while (enumeration.hasMoreElements()) {
-                String name = enumeration.nextElement();
-                String[] values = getParameterValues(name);
-                parameters.put(name, values);
+            if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+                Map<String, String[]> parameters = new Hashtable<>();
+                Enumeration<String> enumeration = getParameterNames();
+                while (enumeration.hasMoreElements()) {
+                    String name = enumeration.nextElement();
+                    String[] values = getParameterValues(name);
+                    parameters.put(name, values);
+                }
+                return parameters;
             }
-            return parameters;
-//            return coyoteRequest.getParameters().getParameters();
+            return coyoteRequest.getParameters().getParameters();
         }
 
         if (parameterMap.isLocked()) {
@@ -1221,22 +1224,23 @@ public class Request implements HttpServletRequest {
         if (!parametersParsed) {
             parseParameters();
         }
-        ByteChunk[] bys = coyoteRequest.getParameters().getParameterValues(name);
-        if (bys == null) {
-            return null;
-        }
-        String[] rets = new String[bys.length];
-        for (int i = 0; i < bys.length; i++) {
-            try {
-                rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
-            } catch (Exception ex) {
-                log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
-                break;
+        if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+            ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues(name);
+            if (bys == null) {
+                return null;
             }
+            String[] rets = new String[bys.length];
+            for (int i = 0; i < bys.length; i++) {
+                try {
+                    rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                } catch (Exception ex) {
+                    log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
+                    break;
+                }
+            }
+            return rets;
         }
-        return rets;
-//        return coyoteRequest.getParameters().getParameterValues(name);
-
+        return coyoteRequest.getParameters().getParameterValues(name);
     }
 
 
@@ -2634,7 +2638,11 @@ public class Request implements HttpServletRequest {
     private void parseParts(boolean explicit) {
 
         if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
-            coyoteRequest.getParameters().setParameters(new Hashtable());
+            if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+                ((WLSParameters) coyoteRequest.getParameters()).setWLSParameters(new Hashtable());
+            } else {
+                coyoteRequest.getParameters().setParameters(new Hashtable());
+            }
             coyoteRequest.getParameters().parseQueryStringList();
         }
         // Return immediately if the parts have already been parsed
@@ -2743,31 +2751,51 @@ public class Request implements HttpServletRequest {
                                 throw new IllegalStateException(sm.getString("coyoteRequest.maxPostSizeExceeded"));
                             }
                         }
-                        ByteChunk value = new ByteChunk();
-                        byte[] itemBytes = item.get();
-                        value.setBytes(itemBytes, 0, itemBytes.length);
-//                        String value = null;
-//                        try {
-//                            value = part.getString(charset.name());
-//                        } catch (UnsupportedEncodingException uee) {
-//                            // Not possible
-//                        }
-                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
-                            if (parameters.getParameters().containsKey(name)) {
+                        if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+                            ByteChunk value = new ByteChunk();
+                            byte[] itemBytes = item.get();
+                            value.setBytes(itemBytes, 0, itemBytes.length);
+                            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                                if (parameters.getParameters().containsKey(name)) {
 
-                                ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
-                                ByteChunk[] valArray = new ByteChunk[oldValues.length + 1];
+                                    ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
+                                    ByteChunk[] valArray = new ByteChunk[oldValues.length + 1];
 
-                                System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
-                                valArray[oldValues.length] = value;
-                                parameters.getParameters().put(name, valArray);
+                                    System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                    valArray[oldValues.length] = value;
+                                    parameters.getParameters().put(name, valArray);
 
+                                } else {
+                                    ByteChunk[] values = {value};
+                                    parameters.getParameters().put(name, values);
+                                }
                             } else {
-                                ByteChunk[] values = {value};
-                                parameters.getParameters().put(name, values);
+                                ((WLSParameters) parameters).addWLSParameter(name, value);
                             }
                         } else {
-                            parameters.addParameter(name, value);
+                            String value = null;
+                            try {
+                                value = part.getString(charset.name());
+                            } catch (UnsupportedEncodingException uee) {
+                                // Not possible
+                            }
+                            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                                if (parameters.getParameters().containsKey(name)) {
+
+                                    String[] oldValues = (String[]) parameters.getParameters().get(name);
+                                    String[] valArray = new String[oldValues.length + 1];
+
+                                    System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                    valArray[oldValues.length] = value.toString();
+                                    parameters.getParameters().put(name, valArray);
+
+                                } else {
+                                    String[] values = {value.toString()};
+                                    parameters.getParameters().put(name, values);
+                                }
+                            } else {
+                                parameters.addParameter(name, value);
+                            }
                         }
                     }
                 }
@@ -3035,7 +3063,11 @@ public class Request implements HttpServletRequest {
             return;
         }
 
-        parameters.setParameters(new Hashtable());
+        if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+            ((WLSParameters) parameters).setWLSParameters(new Hashtable());
+        } else {
+            parameters.setParameters(new Hashtable());
+        }
 
         boolean success = false;
         try {
@@ -3131,13 +3163,24 @@ public class Request implements HttpServletRequest {
                     return;
                 }
                 cachedPostBodyForCompatibleWLS(formData, 0, len);
-                if (Globals.COMPATIBLEWEBSPHERE) {
-                    parameters.setParameters(parameters.parsePostParameters(formData, 0, len, false));
-                    if (parameters.getParameters() != null) {
-                        parameters.parseQueryStringList();
+                if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+                    if (Globals.COMPATIBLEWEBSPHERE) {
+                        ((WLSParameters) parameters).setWLSParameters(((WLSParameters) parameters).parseWLSPostParameters(formData, 0, len, false));
+                        if (parameters.getParameters() != null) {
+                            parameters.parseQueryStringList();
+                        }
+                    } else {
+                        ((WLSParameters) parameters).processWLSParameters(formData, 0, len, false);
                     }
                 } else {
-                    parameters.processParameters(formData, 0, len, false);
+                    if (Globals.COMPATIBLEWEBSPHERE) {
+                        parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
+                        if (parameters.getParameters() != null) {
+                            parameters.parseQueryStringList();
+                        }
+                    } else {
+                        parameters.processParameters(formData, 0, len);
+                    }
                 }
             } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
                 byte[] formData = null;
@@ -3162,14 +3205,26 @@ public class Request implements HttpServletRequest {
                 }
                 if (formData != null) {
                     cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
-                    if (Globals.COMPATIBLEWEBSPHERE) {
-                        parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length, false));
-                        if (parameters.getParameters() != null) {
-                            parameters.parseQueryStringList();
+                    if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+                        if (Globals.COMPATIBLEWEBSPHERE) {
+                            ((WLSParameters) parameters).setWLSParameters(((WLSParameters) parameters).parseWLSPostParameters(formData, 0, formData.length, false));
+                            if (parameters.getParameters() != null) {
+                                parameters.parseQueryStringList();
+                            }
+                        } else {
+                            ((WLSParameters) parameters).processWLSParameters(formData, 0, formData.length, false);
                         }
                     } else {
-                        parameters.processParameters(formData, 0, formData.length, false);
+                        if (Globals.COMPATIBLEWEBSPHERE) {
+                            parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
+                            if (parameters.getParameters() != null) {
+                                parameters.parseQueryStringList();
+                            }
+                        } else {
+                            parameters.processParameters(formData, 0, formData.length);
+                        }
                     }
+
                 }
                 if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                     if (parameters.getParameters() != null) {
