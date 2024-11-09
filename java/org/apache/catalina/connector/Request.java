@@ -389,16 +389,6 @@ public class Request implements HttpServletRequest {
 
     private HttpServletRequest applicationRequest = null;
 
-    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
-
-    public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
-        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cachePostBody"));
-
-    public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
-        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
-
-    public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
-        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
 
     // origin input post data
     private byte[] cachedPostData;
@@ -1024,7 +1014,7 @@ public class Request implements HttpServletRequest {
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
         }
-        if (CACHE_INPUT_STREAM) {
+        if (Globals.CACHE_INPUT_STREAM) {
             String contentType = getBareContentType();
             if ("application/x-www-form-urlencoded".equals(contentType)) {
                 if (this.cachedInputStream == null) {
@@ -1086,7 +1076,7 @@ public class Request implements HttpServletRequest {
     @Override
     public String getParameter(String name) {
         parseParameters();
-        if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
             String[] values = getParameterValues(name);
             String value = null;
             if (values != null && values.length > 0) {
@@ -1117,7 +1107,7 @@ public class Request implements HttpServletRequest {
             if (!parametersParsed) {
                 parseParameters();
             }
-            if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+            if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
                 if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
                     return coyoteRequest.getParameters().getParamHashValues();
                 }
@@ -1168,7 +1158,7 @@ public class Request implements HttpServletRequest {
         if (!parametersParsed) {
             parseParameters();
         }
-        if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
             if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().get(name) != null) {
                 return (String[]) coyoteRequest.getParameters().getParamHashValues().get(name);
             }
@@ -1179,7 +1169,11 @@ public class Request implements HttpServletRequest {
             String[] rets = new String[bys.length];
             for (int i = 0; i < bys.length; i++) {
                 try {
-                    rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    if (bys[i].getBytes() != null) {
+                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    } else {
+                        rets[i] = "";
+                    }
                 } catch (Exception ex) {
                     log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
                     break;
@@ -2638,7 +2632,7 @@ public class Request implements HttpServletRequest {
                             throw new IllegalStateException(sm.getString("coyoteRequest.maxPostSizeExceeded"));
                         }
                     }
-                    if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+                    if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
                         ByteChunk value = new ByteChunk();
                         byte[] itemBytes = item.get();
                         value.setBytes(itemBytes, 0, itemBytes.length);
@@ -2923,6 +2917,9 @@ public class Request implements HttpServletRequest {
      * Parse request parameters.
      */
     protected void parseParameters() {
+        if (parametersParsed) {
+            return;
+        }
         doParseParameters();
 
         if (parametersParseException != null) {
@@ -2967,7 +2964,7 @@ public class Request implements HttpServletRequest {
             parameters.handleQueryParameters();
         }
 
-        if (!CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
+        if (!Globals.CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
             if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
@@ -3104,7 +3101,7 @@ public class Request implements HttpServletRequest {
     }
 
     private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
-        if (CACHE_POST_BODY) {
+        if (Globals.CACHE_POST_BODY) {
             byte[] cachedData = Arrays.copyOfRange(data, start, len);
             this.cachedPostData = cachedData;
         }
@@ -3250,7 +3247,11 @@ public class Request implements HttpServletRequest {
                 String[] rets = new String[bys.length];
                 for (int i = 0; i < bys.length; i++) {
                     try {
-                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                        if (bys[i].getBytes() != null) {
+                            rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                        } else {
+                            rets[i] = "";
+                        }
                     } catch (Exception ex) {
                         log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
                         break;
