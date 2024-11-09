@@ -37,6 +37,7 @@ import org.apache.tomcat.util.buf.UDecoder;
 import org.apache.tomcat.util.http.MimeHeaders;
 import org.apache.tomcat.util.http.Parameters;
 import org.apache.tomcat.util.http.ServerCookies;
+import org.apache.tomcat.util.http.WLSParameters;
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.apache.tomcat.util.net.ApplicationBufferHandler;
 import org.apache.tomcat.util.res.StringManager;
@@ -64,6 +65,9 @@ public final class Request {
 
     private static final StringManager sm = StringManager.getManager(Request.class);
 
+    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
+    public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
     // Expected maximum typical number of cookies per request.
     private static final int INITIAL_COOKIE_SIZE = 4;
 
@@ -149,7 +153,7 @@ public final class Request {
     private boolean expectation = false;
 
     private final ServerCookies serverCookies = new ServerCookies(INITIAL_COOKIE_SIZE);
-    private final Parameters parameters = new Parameters();
+    private final Parameters parameters = ENCODING_EFFECTIVE_IMMEDIATELY ? new WLSParameters() : new Parameters();
 
     private final MessageBytes remoteUser = MessageBytes.newInstance();
     private boolean remoteUserNeedsAuthorization = false;
@@ -560,7 +564,6 @@ public final class Request {
     public Parameters getParameters() {
         return parameters;
     }
-
 
     public void addPathParameter(String name, String value) {
         pathParameters.put(name, value);

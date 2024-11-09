@@ -240,4 +240,9 @@ public final class Globals {
     // ----------------------------------------- Specification related constants
 
     public static final String CONTENT_TYPE_FORM_URL_ENCODING = "application/x-www-form-urlencoded";
+
+    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
+
+    public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
 }
