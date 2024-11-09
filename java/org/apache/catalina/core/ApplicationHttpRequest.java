@@ -48,6 +48,7 @@ import org.apache.catalina.util.RequestUtil;
 import org.apache.catalina.util.URLEncoder;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.buf.B2CConverter;
+import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.http.Parameters;
 import org.apache.tomcat.util.res.StringManager;
@@ -927,7 +928,19 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
         Enumeration<String> dispParamNames = paramParser.getParameterNames();
         while (dispParamNames.hasMoreElements()) {
             String dispParamName = dispParamNames.nextElement();
-            String[] dispParamValues = paramParser.getParameterValues(dispParamName);
+            ByteChunk[] bys = paramParser.getParameterValues(dispParamName);
+            if (bys == null) {
+                return;
+            }
+            String[] dispParamValues = new String[bys.length];
+            for (int i = 0; i < bys.length; i++) {
+                try {
+                    dispParamValues[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), paramParser.getQueryStringCharset());
+                } catch (Exception ex) {
+                    context.getLogger().error(sm.getString("applicationHttpRequest.unsupportedEncoding", paramParser.getQueryStringCharset()), ex);
+                    break;
+                }
+            }
             String[] originalValues = parameters.get(dispParamName);
             if (originalValues == null) {
                 parameters.put(dispParamName, dispParamValues);
