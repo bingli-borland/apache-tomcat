@@ -235,13 +235,19 @@ public final class Globals {
     public static final boolean KEEP_ORIGINAL_PATH_ELEMENTS = Boolean.valueOf(System.getProperty("org.apache.catalina.keeporiginalpathelements", "true")).booleanValue();
     public static final boolean ALLOW_QUERY_PARAM_WITH_NO_EQUAL = Boolean.getBoolean("org.apache.catalina.allowqueryparamwithnoequal");
     public static final boolean COMPATIBLEWEBSPHERE = Boolean.valueOf(System.getProperty("org.apache.catalina.compatibleWebsphereHttp10", "true")).booleanValue();
+    public static final boolean COMPATIBLE_WEBLOGIC = Boolean.valueOf(System.getProperty("org.apache.catalina.connector.compatibleWeblogic", "true")).booleanValue();
 
+    public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cachePostBody"));
 
     // ----------------------------------------- Specification related constants
 
     public static final String CONTENT_TYPE_FORM_URL_ENCODING = "application/x-www-form-urlencoded";
 
     private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
+
+    public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
 
     public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));

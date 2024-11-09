@@ -940,7 +940,11 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
                 dispParamValues = new String[bys.length];
                 for (int i = 0; i < bys.length; i++) {
                     try {
-                        dispParamValues[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), paramParser.getQueryStringCharset());
+                        if (bys[i].getBytes() != null) {
+                            dispParamValues[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), paramParser.getQueryStringCharset());
+                        } else {
+                            dispParamValues[i] = "";
+                        }
                     } catch (Exception ex) {
                         context.getLogger().error(sm.getString("applicationHttpRequest.unsupportedEncoding", paramParser.getQueryStringCharset()), ex);
                         break;

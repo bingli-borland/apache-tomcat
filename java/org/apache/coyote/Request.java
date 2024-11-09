@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletConnection;
 
+import org.apache.catalina.Globals;
 import org.apache.tomcat.util.buf.CharsetHolder;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.UDecoder;
@@ -153,7 +154,7 @@ public final class Request {
     private boolean expectation = false;
 
     private final ServerCookies serverCookies = new ServerCookies(INITIAL_COOKIE_SIZE);
-    private final Parameters parameters = ENCODING_EFFECTIVE_IMMEDIATELY ? new WLSParameters() : new Parameters();
+    private final Parameters parameters = Globals.ENCODING_EFFECTIVE_IMMEDIATELY ? new WLSParameters() : new Parameters();
 
     private final MessageBytes remoteUser = MessageBytes.newInstance();
     private boolean remoteUserNeedsAuthorization = false;
