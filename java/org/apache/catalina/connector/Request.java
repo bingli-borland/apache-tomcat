@@ -84,13 +84,7 @@ import org.apache.tomcat.util.buf.EncodedSolidusHandling;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.apache.tomcat.util.buf.UDecoder;
-import org.apache.tomcat.util.http.CookieProcessor;
-import org.apache.tomcat.util.http.FastHttpDateFormat;
-import org.apache.tomcat.util.http.InvalidParameterException;
-import org.apache.tomcat.util.http.Parameters;
-import org.apache.tomcat.util.http.Rfc6265CookieProcessor;
-import org.apache.tomcat.util.http.ServerCookie;
-import org.apache.tomcat.util.http.ServerCookies;
+import org.apache.tomcat.util.http.*;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -394,14 +388,6 @@ public class Request implements HttpServletRequest {
     protected Boolean asyncSupported = null;
 
     private HttpServletRequest applicationRequest = null;
-
-    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
-
-    public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
-        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cachePostBody"));
-
-    public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
-        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
 
     // origin input post data
     private byte[] cachedPostData;
@@ -1027,7 +1013,7 @@ public class Request implements HttpServletRequest {
         if (inputStream == null) {
             inputStream = new CoyoteInputStream(inputBuffer);
         }
-        if (CACHE_INPUT_STREAM) {
+        if (Globals.CACHE_INPUT_STREAM) {
             String contentType = getBareContentType();
             if ("application/x-www-form-urlencoded".equals(contentType)) {
                 if (this.cachedInputStream == null) {
@@ -1089,15 +1075,52 @@ public class Request implements HttpServletRequest {
     @Override
     public String getParameter(String name) {
         parseParameters();
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            String[] values = getParameterValues(name);
+            String value = null;
+            if (values != null && values.length > 0) {
+                value = values[0];
+            }
+            return value;
+        }
         return coyoteRequest.getParameters().getParameter(name);
     }
 
+    public Charset getCharset(boolean query) {
+        Charset enc = getCharset();
+        if (query) {
+            boolean useBodyEncodingForURI = connector.getUseBodyEncodingForURI();
+            if (useBodyEncodingForURI) {
+                return enc;
+            } else {
+                return coyoteRequest.getParameters().getQueryStringCharset();
+            }
+        } else {
+            return enc;
+        }
+    }
 
     @Override
     public Map<String,String[]> getParameterMap() {
         if (Globals.COMPATIBLEWEBSPHERE) {
             if (!parametersParsed) {
                 parseParameters();
+            }
+            if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
+                Map<String, String[]> parameters = new Hashtable<>();
+                Enumeration<String> enumeration = getParameterNames();
+                while (enumeration.hasMoreElements()) {
+                    String name = enumeration.nextElement();
+                    String[] values = getParameterValues(name);
+                    parameters.put(name, values);
+                }
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
+                return parameters;
             }
             return coyoteRequest.getParameters().getParameters();
         }
@@ -1113,7 +1136,9 @@ public class Request implements HttpServletRequest {
             parameterMap.put(name, values);
         }
 
-        parameterMap.setLocked(true);
+        if (!Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            parameterMap.setLocked(true);
+        }
 
         return parameterMap;
     }
@@ -1128,7 +1153,36 @@ public class Request implements HttpServletRequest {
 
     @Override
     public String[] getParameterValues(String name) {
-        parseParameters();
+
+        if (!parametersParsed) {
+            parseParameters();
+        }
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().get(name) != null) {
+                return (String[]) coyoteRequest.getParameters().getParamHashValues().get(name);
+            }
+            ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues(name);
+            if (bys == null) {
+                return null;
+            }
+            String[] rets = new String[bys.length];
+            for (int i = 0; i < bys.length; i++) {
+                try {
+                    if (bys[i].getBytes() != null) {
+                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    } else {
+                        rets[i] = "";
+                    }
+                } catch (Exception ex) {
+                    log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
+                    break;
+                }
+            }
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+                coyoteRequest.getParameters().getParamHashValues().put(name, rets);
+            }
+            return rets;
+        }
         return coyoteRequest.getParameters().getParameterValues(name);
     }
 
@@ -1489,6 +1543,10 @@ public class Request implements HttpServletRequest {
 
         // Save the validated encoding
         coyoteRequest.setCharsetHolder(charsetHolder);
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY && Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            // reset cache
+            coyoteRequest.getParameters().getParamHashValues().clear();
+        }
     }
 
 
@@ -1501,6 +1559,10 @@ public class Request implements HttpServletRequest {
 
         // Save the validated encoding
         coyoteRequest.setCharsetHolder(CharsetHolder.getInstance(charset));
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY && Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            // reset cache
+            coyoteRequest.getParameters().getParamHashValues().clear();
+        }
     }
 
 
@@ -2469,14 +2531,13 @@ public class Request implements HttpServletRequest {
 
     private void parseParts() {
 
-        // Return immediately if the parts have already been parsed
-        if (parts != null || partsParseException != null) {
-            return;
-        }
-
         if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
             coyoteRequest.getParameters().setParameters(new Hashtable());
             coyoteRequest.getParameters().parseQueryStringList();
+        }
+        // Return immediately if the parts have already been parsed
+        if (parts != null || partsParseException != null) {
+            return;
         }
 
         Context context = getContext();
@@ -2570,31 +2631,55 @@ public class Request implements HttpServletRequest {
                             throw new IllegalStateException(sm.getString("coyoteRequest.maxPostSizeExceeded"));
                         }
                     }
-                    String value = null;
-                    try {
-                        value = part.getString(charset.name());
-                    } catch (UnsupportedEncodingException uee) {
-                        // Not possible
-                    }
-                    if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
-                        if (parameters.getParameters().containsKey(name)) {
+                    if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+                        ByteChunk value = new ByteChunk();
+                        byte[] itemBytes = item.get();
+                        value.setBytes(itemBytes, 0, itemBytes.length);
+                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                            if (parameters.getParameters().containsKey(name)) {
 
-                            String[] oldValues = (String[]) parameters.getParameters().get(name);
-                            String[] valArray = new String[oldValues.length + 1];
+                                ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
+                                ByteChunk[] valArray = new ByteChunk[oldValues.length + 1];
 
-                            System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
-                            valArray[oldValues.length] = value.toString();
-                            parameters.getParameters().put(name, valArray);
+                                System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                valArray[oldValues.length] = value;
+                                parameters.getParameters().put(name, valArray);
 
+                            } else {
+                                ByteChunk[] values = {value};
+                                parameters.getParameters().put(name, values);
+                            }
                         } else {
-                            String[] values = {value.toString()};
-                            parameters.getParameters().put(name, values);
+                            ((WLSParameters) parameters).addWLSParameter(name, value);
                         }
                     } else {
-                        parameters.addParameter(name, value);
+                        String value = null;
+                        try {
+                            value = part.getString(charset.name());
+                        } catch (UnsupportedEncodingException uee) {
+                            // Not possible
+                        }
+                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                            if (parameters.getParameters().containsKey(name)) {
+
+                                String[] oldValues = (String[]) parameters.getParameters().get(name);
+                                String[] valArray = new String[oldValues.length + 1];
+
+                                System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                valArray[oldValues.length] = value.toString();
+                                parameters.getParameters().put(name, valArray);
+
+                            } else {
+                                String[] values = {value.toString()};
+                                parameters.getParameters().put(name, values);
+                            }
+                        } else {
+                            parameters.addParameter(name, value);
+                        }
                     }
                 }
             }
+
         } catch (InvalidContentTypeException e) {
             partsParseException = new ServletException(e);
             return;
@@ -2831,13 +2916,16 @@ public class Request implements HttpServletRequest {
      * Parse request parameters.
      */
     protected void parseParameters() {
+        if (parametersParsed) {
+            return;
+        }
         doParseParameters();
 
         if (parametersParseException != null) {
             throw parametersParseException;
         }
+        cacheParameter();
     }
-
 
     protected void doParseParameters() {
         if (parametersParsed) {
@@ -2875,7 +2963,7 @@ public class Request implements HttpServletRequest {
             parameters.handleQueryParameters();
         }
 
-        if (!CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
+        if (!Globals.CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
             if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
@@ -2923,7 +3011,7 @@ public class Request implements HttpServletRequest {
                 }
                 checkSwallowInput();
                 parametersParseException =
-                        new InvalidParameterException(message, HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE);
+                    new InvalidParameterException(message, HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE);
                 return;
             }
             byte[] formData = null;
@@ -3007,12 +3095,12 @@ public class Request implements HttpServletRequest {
             }
         }
         if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() == null) {
-            parameters.setParameters(new Hashtable<String, String[]>());
+            parameters.setParameters(new Hashtable<>());
         }
     }
 
     private void cachedPostBodyForCompatibleWLS(byte[] data, int start, int len) {
-        if (CACHE_POST_BODY) {
+        if (Globals.CACHE_POST_BODY) {
             byte[] cachedData = Arrays.copyOfRange(data, start, len);
             this.cachedPostData = cachedData;
         }
@@ -3148,6 +3236,29 @@ public class Request implements HttpServletRequest {
 
     public void setQueryString(String queryString) {
         coyoteRequest.queryString().setString(queryString);
+    }
+
+    private void cacheParameter() {
+        if (Globals.ALLOW_MODIFY_PARAMETER_MAP && Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            // must be cache all params firstly
+            for (Object key : coyoteRequest.getParameters().getParameters().keySet()) {
+                ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues((String) key);
+                String[] rets = new String[bys.length];
+                for (int i = 0; i < bys.length; i++) {
+                    try {
+                        if (bys[i].getBytes() != null) {
+                            rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                        } else {
+                            rets[i] = "";
+                        }
+                    } catch (Exception ex) {
+                        log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
+                        break;
+                    }
+                }
+                coyoteRequest.getParameters().getParamHashValues().put(key, rets);
+            }
+        }
     }
 
     // ----------------------------------------------------- Special attributes handling

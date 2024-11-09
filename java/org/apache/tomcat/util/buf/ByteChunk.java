@@ -118,6 +118,8 @@ public final class ByteChunk extends AbstractChunk {
     // byte[]
     private byte[] buff;
 
+    private boolean query;
+
     // transient as serialization is primarily for values via, e.g. JMX
     private transient ByteInputChannel in = null;
     private transient ByteOutputChannel out = null;
@@ -880,6 +882,13 @@ public final class ByteChunk extends AbstractChunk {
         return result;
     }
 
+    public boolean isQuery() {
+        return query;
+    }
+
+    public void setQuery(boolean query) {
+        this.query = query;
+    }
 
     public static class BufferOverflowException extends IOException {
 

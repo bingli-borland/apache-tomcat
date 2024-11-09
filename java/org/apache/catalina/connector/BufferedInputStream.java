@@ -19,7 +19,7 @@ package org.apache.catalina.connector;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
-import org.apache.catalina.tribes.util.StringManager;
+import org.apache.tomcat.util.res.StringManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -91,6 +91,10 @@ public class BufferedInputStream extends ServletInputStream {
         return isFinished();
     }
 
+
+    /**
+     * Can not use readListener when use cache post data and inputstream
+     */
     @Override
     public void setReadListener(ReadListener listener) {
         throw new UnsupportedOperationException();
