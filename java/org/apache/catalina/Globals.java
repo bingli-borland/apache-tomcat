@@ -282,4 +282,12 @@ public final class Globals {
     public static final boolean KEEP_ORIGINAL_PATH_ELEMENTS = Boolean.valueOf(System.getProperty("org.apache.catalina.keeporiginalpathelements", "true")).booleanValue();
     public static final boolean ALLOW_QUERY_PARAM_WITH_NO_EQUAL = Boolean.getBoolean("org.apache.catalina.allowqueryparamwithnoequal");
     public static final boolean COMPATIBLEWEBSPHERE = Boolean.valueOf(System.getProperty("org.apache.catalina.compatibleWebsphereHttp10", "true")).booleanValue();
+
+    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
+
+    public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
+        Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
+
+    public static final boolean ALLOW_MODIFY_PARAMETER_MAP = "".equals(System.getProperty("org.apache.catalina.connector.allowModifyParameterMap", "")) ? COMPATIBLEWEBSPHERE :
+        Boolean.getBoolean("org.apache.catalina.connector.allowModifyParameterMap");
 }
