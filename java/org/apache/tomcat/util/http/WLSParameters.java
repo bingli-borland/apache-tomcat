@@ -1013,6 +1013,14 @@ public final class WLSParameters extends Parameters{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            for (Map.Entry<String, String[]> e : getParamHashValues().entrySet()) {
+                sb.append(e.getKey()).append('=');
+                StringUtils.join(e.getValue(), ',', sb);
+                sb.append('\n');
+            }
+            return sb.toString();
+        }
         for (Map.Entry<String,ArrayList<ByteChunk>> e : paramHashValues.entrySet()) {
             sb.append(e.getKey()).append('=');
             List<ByteChunk> valuesList = e.getValue();
