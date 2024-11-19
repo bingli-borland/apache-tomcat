@@ -1087,11 +1087,12 @@ public class Request implements HttpServletRequest {
     public String getParameter(String name) {
         parseParameters();
         if (ENCODING_EFFECTIVE_IMMEDIATELY) {
-            ByteChunk bc = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameter(name);
-        if (bc == null) {
-            return null;
+            String[] values = getParameterValues(name);
+            String value = null;
+            if (values != null && values.length > 0) {
+                value = values[0];
         }
-        return new String(bc.getBytes(), bc.getStart(), bc.getLength(), getCharset(bc.isQuery()));
+            return value;
     }
         return coyoteRequest.getParameters().getParameter(name);
     }
@@ -1117,6 +1118,9 @@ public class Request implements HttpServletRequest {
                 parseParameters();
             }
             if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
             Map<String, String[]> parameters = new Hashtable<>();
             Enumeration<String> enumeration = getParameterNames();
             while (enumeration.hasMoreElements()) {
@@ -1124,6 +1128,9 @@ public class Request implements HttpServletRequest {
                 String[] values = getParameterValues(name);
                 parameters.put(name, values);
             }
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
             return parameters;
         }
             return coyoteRequest.getParameters().getParameters();
@@ -1140,7 +1147,9 @@ public class Request implements HttpServletRequest {
             parameterMap.put(name, values);
         }
 
+        if (!Globals.ALLOW_MODIFY_PARAMETER_MAP) {
         parameterMap.setLocked(true);
+        }
 
         return parameterMap;
     }
@@ -1160,6 +1169,9 @@ public class Request implements HttpServletRequest {
             parseParameters();
         }
         if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().get(name) != null) {
+                return coyoteRequest.getParameters().getParamHashValues().get(name);
+            }
             ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues(name);
         if (bys == null) {
             return null;
@@ -1173,6 +1185,9 @@ public class Request implements HttpServletRequest {
                 break;
             }
         }
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+                coyoteRequest.getParameters().getParamHashValues().put(name, rets);
+            }
         return rets;
     }
         return coyoteRequest.getParameters().getParameterValues(name);
@@ -1535,6 +1550,10 @@ public class Request implements HttpServletRequest {
 
         // Save the validated encoding
         coyoteRequest.setCharsetHolder(charsetHolder);
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY && Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            // reset cache
+            coyoteRequest.getParameters().getParamHashValues().clear();
+        }
     }
 
 

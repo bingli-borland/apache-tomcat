@@ -39,7 +39,7 @@ public class Parameters {
 
     private static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
 
-    private final Map<String,ArrayList<String>> paramHashValues = new LinkedHashMap<>();
+    protected final Map<String, String[]> paramHashValues = new LinkedHashMap<>();
     private boolean didQueryParameters = false;
 
     private MessageBytes queryMB;
@@ -130,19 +130,22 @@ public class Parameters {
 
     public String[] getParameterValues(String name) {
         if (Globals.COMPATIBLEWEBSPHERE) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && paramHashValues.get(name) != null) {
+                return paramHashValues.get(name);
+            }
             return (String[]) getParameters().get(name);
         }
         handleQueryParameters();
         // no "facade"
-        ArrayList<String> values = paramHashValues.get(name);
-        if (values == null) {
-            return null;
-        }
-        return values.toArray(new String[0]);
+        String[] values = paramHashValues.get(name);
+        return values;
     }
 
     public Enumeration<String> getParameterNames() {
         if (Globals.COMPATIBLEWEBSPHERE) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && paramHashValues.size() > 0) {
+                return Collections.enumeration(paramHashValues.keySet());
+            }
             return ((Hashtable)getParameters()).keys();
         }
         handleQueryParameters();
@@ -151,7 +154,12 @@ public class Parameters {
 
     public String getParameter(String name) {
         if (Globals.COMPATIBLEWEBSPHERE) {
-            String[] values = (String[]) getParameters().get(name);
+            String[] values = null;
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && paramHashValues.get(name) != null) {
+                values = paramHashValues.get(name);
+            } else {
+                values = (String[]) getParameters().get(name);
+            }
             String value = null;
             if (values != null && values.length > 0) {
                 value = values[0];
@@ -159,12 +167,12 @@ public class Parameters {
             return value;
         }
         handleQueryParameters();
-        ArrayList<String> values = paramHashValues.get(name);
+        String[] values = paramHashValues.get(name);
         if (values != null) {
-            if (values.size() == 0) {
+            if (values.length == 0) {
                 return "";
             }
-            return values.get(0);
+            return values[0];
         } else {
             return null;
         }
@@ -211,7 +219,19 @@ public class Parameters {
         }
         parameterCount++;
 
-        paramHashValues.computeIfAbsent(key, k -> new ArrayList<>(1)).add(value);
+        String[] values = null;
+        String[] oldValues = this.paramHashValues.get(key);
+        if (oldValues == null) {
+            values = new String[1];
+            values[0] = value;
+        } else {
+            values = new String[oldValues.length + 1];
+            for (int i = 0; i < oldValues.length; i++) {
+                values[i] = oldValues[i];
+            }
+            values[oldValues.length] = value;
+        }
+        this.paramHashValues.put(key, values);
     }
 
     public void setURLDecoder(UDecoder u) {
@@ -224,6 +244,10 @@ public class Parameters {
 
     public void setParameters(Hashtable<String, String[]> parameters) {
         _parameters = parameters;
+    }
+
+    public Map<String, String[]> getParamHashValues() {
+        return paramHashValues;
     }
 
     /**
@@ -622,8 +646,8 @@ public class Parameters {
                 }
                 throw new InvalidParameterException(message, e);
             } finally {
-            tmpName.recycle();
-            tmpValue.recycle();
+                tmpName.recycle();
+                tmpValue.recycle();
                 // Only recycle copies if we used them
                 if (log.isDebugEnabled()) {
                     origName.recycle();
@@ -800,8 +824,8 @@ public class Parameters {
                 }
                 throw new InvalidParameterException(message, e);
             } finally {
-            tmpName.recycle();
-            tmpValue.recycle();
+                tmpName.recycle();
+                tmpValue.recycle();
                 // Only recycle copies if we used them
                 if (log.isDebugEnabled()) {
                     origName.recycle();
@@ -837,7 +861,7 @@ public class Parameters {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String,ArrayList<String>> e : paramHashValues.entrySet()) {
+        for (Map.Entry<String, String[]> e : paramHashValues.entrySet()) {
             sb.append(e.getKey()).append('=');
             StringUtils.join(e.getValue(), ',', sb);
             sb.append('\n');

@@ -18,6 +18,7 @@ package org.apache.tomcat.util.http;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -63,12 +64,6 @@ public final class WLSParameters extends Parameters{
 
     private UnsynchronizedStack _paramStack = new UnsynchronizedStack();
 
-    /**
-     * Set to the reason for the failure (the first failure if there is more than one) if there were failures during
-     * parameter parsing.
-     */
-    private FailReason parseFailedReason = null;
-
     public WLSParameters() {
         // NO-OP
     }
@@ -106,27 +101,9 @@ public final class WLSParameters extends Parameters{
         }
     }
 
-    public boolean isParseFailed() {
-        return parseFailedReason != null;
-    }
-
-
-    public FailReason getParseFailedReason() {
-        return parseFailedReason;
-    }
-
-
-    public void setParseFailedReason(FailReason failReason) {
-        if (this.parseFailedReason == null) {
-            this.parseFailedReason = failReason;
-        }
-    }
-
-
     public int size() {
         return parameterCount;
     }
-
 
     public void recycle() {
         super.recycle();
@@ -135,7 +112,6 @@ public final class WLSParameters extends Parameters{
         didQueryParameters = false;
         charset = DEFAULT_BODY_CHARSET;
         decodedQuery.recycle();
-        parseFailedReason = null;
         paramStack.clear();
         _parameters = null;
         _queryStringList = null;
@@ -227,9 +203,7 @@ public final class WLSParameters extends Parameters{
         }
 
         if (limit > -1 && parameterCount >= limit) {
-            // Processing this parameter will push us over the limit. ISE is
-            // what Request.parseParts() uses for requests that are too big
-            setParseFailedReason(FailReason.TOO_MANY_PARAMETERS);
+            // Processing this parameter will push us over the limit.
             throw new IllegalStateException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
         }
         parameterCount++;
@@ -501,8 +475,6 @@ public final class WLSParameters extends Parameters{
             log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
         }
 
-        int decodeFailCount = 0;
-
         int pos = start;
         int end = start + len;
 
@@ -584,30 +556,15 @@ public final class WLSParameters extends Parameters{
                     continue;
                 }
                 // &=foo&
-                UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                if (logMode != null) {
-                    String extract;
-                    if (valueEnd > nameStart) {
-                        extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
-                    } else {
-                        extract = "";
-                    }
-                    String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
-                        Integer.valueOf(valueEnd), extract);
-                    switch (logMode) {
-                        case INFO_THEN_DEBUG:
-                            message += sm.getString("parameters.fallToDebug");
-                            //$FALL-THROUGH$
-                        case INFO:
-                            log.info(message);
-                            break;
-                        case DEBUG:
-                            log.debug(message);
-                    }
+                String extract;
+                if (valueEnd > nameStart) {
+                    extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
+                } else {
+                    extract = "";
                 }
-                setParseFailedReason(FailReason.NO_NAME);
-                continue;
-                // invalid chunk - it's better to ignore
+                String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
+                        Integer.valueOf(valueEnd), extract);
+                throw new InvalidParameterException(message);
             }
 
             tmpName.setBytes(bytes, nameStart, nameEnd - nameStart);
@@ -642,7 +599,7 @@ public final class WLSParameters extends Parameters{
                     urlDecode(tmpName);
                 }
                 tmpName.setCharset(charset);
-                name = tmpName.toString();
+                name = tmpName.toString(CodingErrorAction.REPORT, CodingErrorAction.REPORT);
 
                 if (valueStart >= 0) {
                     if (decodeValue) {
@@ -654,75 +611,22 @@ public final class WLSParameters extends Parameters{
                     value = new ByteChunk();
                 }
 
-                try {
-                    addWLSParameter(name, value);
-                } catch (IllegalStateException ise) {
-                    // Hitting limit stops processing further params but does
-                    // not cause request to fail.
-                    UserDataHelper.Mode logMode = maxParamCountLog.getNextMode();
-                    if (logMode != null) {
-                        String message = ise.getMessage();
-                        switch (logMode) {
-                            case INFO_THEN_DEBUG:
-                                message += sm.getString("parameters.maxCountFail.fallToDebug");
-                                //$FALL-THROUGH$
-                            case INFO:
-                                log.info(message);
-                                break;
-                            case DEBUG:
-                                log.debug(message);
-                        }
-                    }
-                    break;
-                }
+                addWLSParameter(name, value);
             } catch (IOException e) {
-                setParseFailedReason(FailReason.URL_DECODING);
-                decodeFailCount++;
-                if (decodeFailCount == 1 || log.isDebugEnabled()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(
-                            sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString()),
-                            e);
-                    } else if (log.isInfoEnabled()) {
-                        UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                        if (logMode != null) {
-                            String message =
-                                sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
-                            switch (logMode) {
-                                case INFO_THEN_DEBUG:
-                                    message += sm.getString("parameters.fallToDebug");
-                                    //$FALL-THROUGH$
-                                case INFO:
-                                    log.info(message);
-                                    break;
-                                case DEBUG:
-                                    log.debug(message);
-                            }
-                        }
-                    }
+                String message;
+                if (log.isDebugEnabled()) {
+                    message = sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString());
+                } else {
+                    message = sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
                 }
-            }
-
-            // Only recycle copies if we used them
-            if (log.isDebugEnabled()) {
-                origName.recycle();
-                origValue.recycle();
-            }
-        }
-
-        if (decodeFailCount > 1 && !log.isDebugEnabled()) {
-            UserDataHelper.Mode logMode = userDataLog.getNextMode();
-            if (logMode != null) {
-                String message = sm.getString("parameters.multipleDecodingFail", Integer.valueOf(decodeFailCount));
-                switch (logMode) {
-                    case INFO_THEN_DEBUG:
-                        message += sm.getString("parameters.fallToDebug");
-                        //$FALL-THROUGH$
-                    case INFO:
-                        log.info(message);
-                        break;
-                    case DEBUG:
-                        log.debug(message);
+                throw new InvalidParameterException(message, e);
+            } finally {
+                tmpName.recycle();
+                tmpValue.recycle();
+                // Only recycle copies if we used them
+                if (log.isDebugEnabled()) {
+                    origName.recycle();
+                    origValue.recycle();
                 }
             }
         }
@@ -736,11 +640,9 @@ public final class WLSParameters extends Parameters{
 
         Hashtable<String, ByteChunk[]> ht = new Hashtable<>();
 
-        if (log.isDebugEnabled()) {
-            log.debug(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
+        if (log.isTraceEnabled()) {
+            log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
         }
-
-        int decodeFailCount = 0;
 
         int pos = start;
         int end = start + len;
@@ -823,30 +725,15 @@ public final class WLSParameters extends Parameters{
                     continue;
                 }
                 // &=foo&
-                UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                if (logMode != null) {
-                    String extract;
-                    if (valueEnd > nameStart) {
-                        extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
-                    } else {
-                        extract = "";
-                    }
-                    String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
-                        Integer.valueOf(valueEnd), extract);
-                    switch (logMode) {
-                        case INFO_THEN_DEBUG:
-                            message += sm.getString("parameters.fallToDebug");
-                            //$FALL-THROUGH$
-                        case INFO:
-                            log.info(message);
-                            break;
-                        case DEBUG:
-                            log.debug(message);
-                    }
+                String extract;
+                if (valueEnd > nameStart) {
+                    extract = new String(bytes, nameStart, valueEnd - nameStart, DEFAULT_BODY_CHARSET);
+                } else {
+                    extract = "";
                 }
-                setParseFailedReason(FailReason.NO_NAME);
-                continue;
-                // invalid chunk - it's better to ignore
+                String message = sm.getString("parameters.invalidChunk", Integer.valueOf(nameStart),
+                    Integer.valueOf(valueEnd), extract);
+                throw new InvalidParameterException(message);
             }
 
             tmpName.setBytes(bytes, nameStart, nameEnd - nameStart);
@@ -881,7 +768,7 @@ public final class WLSParameters extends Parameters{
                     urlDecode(tmpName);
                 }
                 tmpName.setCharset(charset);
-                name = tmpName.toString();
+                name = tmpName.toString(CodingErrorAction.REPORT, CodingErrorAction.REPORT);
 
                 if (valueStart >= 0) {
                     if (decodeValue) {
@@ -893,95 +780,35 @@ public final class WLSParameters extends Parameters{
                     value = new ByteChunk();
                 }
 
-                try {
-                    if (name == null) {
-                        continue;
-                    }
-
-                    if (limit > -1 && parameterCount >= limit) {
-                        // Processing this parameter will push us over the limit. ISE is
-                        // what Request.parseParts() uses for requests that are too big
-                        setParseFailedReason(FailReason.TOO_MANY_PARAMETERS);
-                        throw new IllegalStateException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
-                    }
-                    parameterCount++;
-
-                    ByteChunk valArray[] = new ByteChunk[] { value };
-                    ByteChunk[] oldVals = (ByteChunk[]) ht.put(name, valArray);
-                    if (oldVals != null) {
-                        valArray = new ByteChunk[oldVals.length + 1];
-                        System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
-                        valArray[oldVals.length] = value;
-                        ht.put(name, valArray);
-                    }
-
-                } catch (IllegalStateException ise) {
-                    // Hitting limit stops processing further params but does
-                    // not cause request to fail.
-                    UserDataHelper.Mode logMode = maxParamCountLog.getNextMode();
-                    if (logMode != null) {
-                        String message = ise.getMessage();
-                        switch (logMode) {
-                            case INFO_THEN_DEBUG:
-                                message += sm.getString("parameters.maxCountFail.fallToDebug");
-                                //$FALL-THROUGH$
-                            case INFO:
-                                log.info(message);
-                                break;
-                            case DEBUG:
-                                log.debug(message);
-                        }
-                    }
-                    break;
+                if (limit > -1 && parameterCount >= limit) {
+                    // Processing this parameter will push us over the limit.
+                    throw new InvalidParameterException(sm.getString("parameters.maxCountFail", Integer.valueOf(limit)));
                 }
+                parameterCount++;
+                ByteChunk valArray[] = new ByteChunk[]{value};
+                ByteChunk[] oldVals = (ByteChunk[]) ht.put(name, valArray);
+                if (oldVals != null) {
+                    valArray = new ByteChunk[oldVals.length + 1];
+                    System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
+                    valArray[oldVals.length] = value;
+                    ht.put(name, valArray);
+                }
+
             } catch (IOException e) {
-                setParseFailedReason(FailReason.URL_DECODING);
-                decodeFailCount++;
-                if (decodeFailCount == 1 || log.isDebugEnabled()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(
-                            sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString()),
-                            e);
-                    } else if (log.isInfoEnabled()) {
-                        UserDataHelper.Mode logMode = userDataLog.getNextMode();
-                        if (logMode != null) {
-                            String message =
-                                sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
-                            switch (logMode) {
-                                case INFO_THEN_DEBUG:
-                                    message += sm.getString("parameters.fallToDebug");
-                                    //$FALL-THROUGH$
-                                case INFO:
-                                    log.info(message);
-                                    break;
-                                case DEBUG:
-                                    log.debug(message);
-                            }
-                        }
-                    }
+                String message;
+                if (log.isDebugEnabled()) {
+                    message = sm.getString("parameters.decodeFail.debug", origName.toString(), origValue.toString());
+                } else {
+                    message = sm.getString("parameters.decodeFail.info", tmpName.toString(), tmpValue.toString());
                 }
-            }
-
-            // Only recycle copies if we used them
-            if (log.isDebugEnabled()) {
-                origName.recycle();
-                origValue.recycle();
-            }
-        }
-
-        if (decodeFailCount > 1 && !log.isDebugEnabled()) {
-            UserDataHelper.Mode logMode = userDataLog.getNextMode();
-            if (logMode != null) {
-                String message = sm.getString("parameters.multipleDecodingFail", Integer.valueOf(decodeFailCount));
-                switch (logMode) {
-                    case INFO_THEN_DEBUG:
-                        message += sm.getString("parameters.fallToDebug");
-                        //$FALL-THROUGH$
-                    case INFO:
-                        log.info(message);
-                        break;
-                    case DEBUG:
-                        log.debug(message);
+                throw new InvalidParameterException(message, e);
+            } finally {
+                tmpName.recycle();
+                tmpValue.recycle();
+                // Only recycle copies if we used them
+                if (log.isDebugEnabled()) {
+                    origName.recycle();
+                    origValue.recycle();
                 }
             }
         }
@@ -1013,6 +840,14 @@ public final class WLSParameters extends Parameters{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            for (Map.Entry<String, String[]> e : getParamHashValues().entrySet()) {
+                sb.append(e.getKey()).append('=');
+                StringUtils.join(e.getValue(), ',', sb);
+                sb.append('\n');
+            }
+            return sb.toString();
+        }
         for (Map.Entry<String,ArrayList<ByteChunk>> e : paramHashValues.entrySet()) {
             sb.append(e.getKey()).append('=');
             List<ByteChunk> valuesList = e.getValue();
