@@ -784,7 +784,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
         if(Globals.COMPATIBLEWEBSPHERE) {
             requestFacade.pushParameterStack();
             requestFacade.aggregateQueryStringParams(queryString, setQS);
-    }
+        }
     }
 
     void removeQSFromList(){
