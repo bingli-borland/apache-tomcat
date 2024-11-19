@@ -30,35 +30,34 @@ import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.apache.tomcat.util.buf.UDecoder;
 import org.apache.tomcat.util.collections.UnsynchronizedStack;
-import org.apache.tomcat.util.log.UserDataHelper;
 import org.apache.tomcat.util.res.StringManager;
 
 public class Parameters {
 
-    private static final Log log = LogFactory.getLog(Parameters.class);
+    protected static final Log log = LogFactory.getLog(Parameters.class);
 
-    private static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
+    protected static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
 
-    private final Map<String,ArrayList<String>> paramHashValues = new LinkedHashMap<>();
+    protected final Map<String, String[]> paramHashValues = new LinkedHashMap<>();
     private boolean didQueryParameters = false;
 
-    private MessageBytes queryMB;
+    protected MessageBytes queryMB;
 
     private UDecoder urlDec;
-    private final MessageBytes decodedQuery = MessageBytes.newInstance();
+    protected final MessageBytes decodedQuery = MessageBytes.newInstance();
 
-    private Charset charset = StandardCharsets.ISO_8859_1;
-    private Charset queryStringCharset = StandardCharsets.UTF_8;
+    protected Charset charset = StandardCharsets.ISO_8859_1;
+    protected Charset queryStringCharset = StandardCharsets.UTF_8;
 
-    private int limit = -1;
-    private int parameterCount = 0;
+    protected int limit = -1;
+    protected int parameterCount = 0;
 
-    private UnsynchronizedStack paramStack = new UnsynchronizedStack();
+    protected UnsynchronizedStack paramStack = new UnsynchronizedStack();
 
-    private Map _parameters = null;
-    private LinkedList _queryStringList = null;
+    protected Map _parameters = null;
+    protected LinkedList _queryStringList = null;
 
-    private UnsynchronizedStack _paramStack = new UnsynchronizedStack();
+    protected UnsynchronizedStack _paramStack = new UnsynchronizedStack();
 
     public Parameters() {
         // NO-OP
@@ -134,16 +133,13 @@ public class Parameters {
         }
         handleQueryParameters();
         // no "facade"
-        ArrayList<String> values = paramHashValues.get(name);
-        if (values == null) {
-            return null;
+        String[] values = paramHashValues.get(name);
+        return values;
         }
-        return values.toArray(new String[0]);
-    }
 
     public Enumeration<String> getParameterNames() {
         if (Globals.COMPATIBLEWEBSPHERE) {
-            return ((Hashtable)getParameters()).keys();
+            return ((Hashtable) getParameters()).keys();
         }
         handleQueryParameters();
         return Collections.enumeration(paramHashValues.keySet());
@@ -159,12 +155,12 @@ public class Parameters {
             return value;
         }
         handleQueryParameters();
-        ArrayList<String> values = paramHashValues.get(name);
+        String[] values = paramHashValues.get(name);
         if (values != null) {
             if (values.isEmpty()) {
                 return "";
             }
-            return values.get(0);
+            return values[0];
         } else {
             return null;
         }
@@ -211,7 +207,19 @@ public class Parameters {
         }
         parameterCount++;
 
-        paramHashValues.computeIfAbsent(key, k -> new ArrayList<>(1)).add(value);
+        String[] values = null;
+        String[] oldValues = (String[]) this.paramHashValues.get(key);
+        if (oldValues == null) {
+            values = new String[1];
+            values[0] = value;
+        } else {
+            values = new String[oldValues.length + 1];
+            for (int i = 0; i < oldValues.length; i++) {
+                values[i] = oldValues[i];
+    }
+            values[oldValues.length] = value;
+        }
+        this.paramHashValues.put(key, values);
     }
 
     public void setURLDecoder(UDecoder u) {
@@ -222,8 +230,12 @@ public class Parameters {
         return _parameters;
     }
 
-    public void setParameters(Hashtable<String, String[]> parameters) {
+    public void setParameters(Hashtable parameters) {
         _parameters = parameters;
+    }
+
+    public Map getParamHashValues() {
+        return paramHashValues;
     }
 
     /**
@@ -334,10 +346,16 @@ public class Parameters {
         if (queryStringList == null || queryStringList.isEmpty()) { //258025
             if (queryMB != null && !queryMB.isNull())//PM35450
             {
-                if (queryMB.getType() != MessageBytes.T_BYTES) {
-                    queryMB.toBytes();
+                try {
+                    decodedQuery.duplicate(queryMB);
+                } catch (IOException e) {
+                    // Can't happen, as decodedQuery can't overflow
+                    log.error(sm.getString("parameters.copyFail"), e);
                 }
-                ByteChunk bc = queryMB.getByteChunk();
+                if (decodedQuery.getType() != MessageBytes.T_BYTES) {
+                    decodedQuery.toBytes();
+                }
+                ByteChunk bc = decodedQuery.getByteChunk();
                 if (getParameters() == null || getParameters().isEmpty()) {
                     setParameters(parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset));
                 } else {
@@ -413,8 +431,8 @@ public class Parameters {
             popParameterStack();
             if (getParameters() == null && _tmpParameters != null) // Parameters above current inluce/forward were never parsed
             {
-                setParameters((Hashtable<String, String[]>) _tmpParameters);
-                Hashtable<String, String[]> tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsHashtable;
+                setParameters((Hashtable) _tmpParameters);
+                Hashtable tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsHashtable;
                 if (tmpQueryParams == null) {
                     MessageBytes qs = ((QSListItem) queryStringList.getLast())._qs;
                     if (qs.getType() != MessageBytes.T_BYTES) {
@@ -434,7 +452,7 @@ public class Parameters {
         }
     }
 
-    private void removeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
+    public void removeQueryParams(Hashtable tmpQueryParams) {
         if (tmpQueryParams != null) {
             Enumeration enumeration = tmpQueryParams.keys();
             while (enumeration.hasMoreElements()) {
@@ -451,11 +469,12 @@ public class Parameters {
                             newVals[newValsIndex++] = postVals[i];
                         }
                         getParameters().put(key, newVals);
-                    } else
+                    } else {
                         getParameters().remove(key);
                 }
             }
         }
+    }
     }
 
 
@@ -464,9 +483,9 @@ public class Parameters {
     // if needed
     private final ByteChunk tmpName = new ByteChunk();
     private final ByteChunk tmpValue = new ByteChunk();
-    private final ByteChunk origName = new ByteChunk();
-    private final ByteChunk origValue = new ByteChunk();
-    private static final Charset DEFAULT_BODY_CHARSET = StandardCharsets.ISO_8859_1;
+    protected final ByteChunk origName = new ByteChunk();
+    protected final ByteChunk origValue = new ByteChunk();
+    protected static final Charset DEFAULT_BODY_CHARSET = StandardCharsets.ISO_8859_1;
     private static final Charset DEFAULT_URI_CHARSET = StandardCharsets.UTF_8;
 
 
@@ -812,7 +831,7 @@ public class Parameters {
         return ht;
     }
 
-    private void urlDecode(ByteChunk bc) throws IOException {
+    public void urlDecode(ByteChunk bc) throws IOException {
         if (urlDec == null) {
             urlDec = new UDecoder();
         }
@@ -837,7 +856,7 @@ public class Parameters {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String,ArrayList<String>> e : paramHashValues.entrySet()) {
+        for (Map.Entry<String, String[]> e : paramHashValues.entrySet()) {
             sb.append(e.getKey()).append('=');
             StringUtils.join(e.getValue(), ',', sb);
             sb.append('\n');

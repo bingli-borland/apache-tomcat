@@ -769,7 +769,9 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
             parameters = new ParameterMap<>(requestParameters);
         }
         mergeParameters();
-        ((ParameterMap<String,String[]>) parameters).setLocked(true);
+        if (!Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            ((ParameterMap<String, String[]>) parameters).setLocked(true);
+        }
         parsedParams = true;
     }
 
@@ -788,7 +790,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
         if(Globals.COMPATIBLEWEBSPHERE) {
             requestFacade.pushParameterStack();
             requestFacade.aggregateQueryStringParams(queryString, setQS);
-    }
+        }
     }
 
     void removeQSFromList(){

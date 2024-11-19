@@ -1141,11 +1141,12 @@ public class Request implements HttpServletRequest {
     public String getParameter(String name) {
         parseParameters();
         if (ENCODING_EFFECTIVE_IMMEDIATELY) {
-            ByteChunk bc = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameter(name);
-        if (bc == null) {
-            return null;
+            String[] values = getParameterValues(name);
+            String value = null;
+            if (values != null && values.length > 0) {
+                value = values[0];
         }
-        return new String(bc.getBytes(), bc.getStart(), bc.getLength(), getCharset(bc.isQuery()));
+            return value;
     }
         return coyoteRequest.getParameters().getParameter(name);
     }
@@ -1171,6 +1172,9 @@ public class Request implements HttpServletRequest {
                 parseParameters();
             }
             if(ENCODING_EFFECTIVE_IMMEDIATELY) {
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
             Map<String, String[]> parameters = new Hashtable<>();
             Enumeration<String> enumeration = getParameterNames();
             while (enumeration.hasMoreElements()) {
@@ -1178,6 +1182,9 @@ public class Request implements HttpServletRequest {
                 String[] values = getParameterValues(name);
                 parameters.put(name, values);
             }
+                if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
+                    return coyoteRequest.getParameters().getParamHashValues();
+                }
             return parameters;
         }
             return coyoteRequest.getParameters().getParameters();
@@ -1194,7 +1201,9 @@ public class Request implements HttpServletRequest {
             parameterMap.put(name, values);
         }
 
+        if (!Globals.ALLOW_MODIFY_PARAMETER_MAP) {
         parameterMap.setLocked(true);
+        }
 
         return parameterMap;
     }
@@ -1214,6 +1223,9 @@ public class Request implements HttpServletRequest {
             parseParameters();
         }
         if (ENCODING_EFFECTIVE_IMMEDIATELY) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().get(name) != null) {
+                return (String[]) coyoteRequest.getParameters().getParamHashValues().get(name);
+            }
             ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues(name);
         if (bys == null) {
             return null;
@@ -1227,6 +1239,9 @@ public class Request implements HttpServletRequest {
                 break;
             }
         }
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+                coyoteRequest.getParameters().getParamHashValues().put(name, rets);
+            }
         return rets;
     }
         return coyoteRequest.getParameters().getParameterValues(name);
@@ -1587,6 +1602,10 @@ public class Request implements HttpServletRequest {
 
         // Save the validated encoding
         coyoteRequest.setCharsetHolder(charsetHolder);
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY && Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            // reset cache
+            coyoteRequest.getParameters().getParamHashValues().clear();
+    }
     }
 
 
@@ -1599,6 +1618,10 @@ public class Request implements HttpServletRequest {
 
         // Save the validated encoding
         coyoteRequest.setCharsetHolder(CharsetHolder.getInstance(charset));
+        if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY && Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            // reset cache
+            coyoteRequest.getParameters().getParamHashValues().clear();
+    }
     }
 
 
@@ -2567,11 +2590,7 @@ public class Request implements HttpServletRequest {
     private void parseParts(boolean explicit) {
 
         if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
-            if(ENCODING_EFFECTIVE_IMMEDIATELY) {
-                ((WLSParameters) coyoteRequest.getParameters()).setWLSParameters(new Hashtable());
-            } else {
                 coyoteRequest.getParameters().setParameters(new Hashtable());
-            }
             coyoteRequest.getParameters().parseQueryStringList();
         }
         // Return immediately if the parts have already been parsed
@@ -3003,8 +3022,8 @@ public class Request implements HttpServletRequest {
             }
             throw parametersParseException;
         }
+        cacheParameter();
     }
-
 
     protected void doParseParameters() {
         if (parametersParsed) {
@@ -3037,11 +3056,7 @@ public class Request implements HttpServletRequest {
             return;
         }
 
-        if(ENCODING_EFFECTIVE_IMMEDIATELY) {
-            ((WLSParameters) parameters).setWLSParameters(new Hashtable());
-        } else {
         parameters.setParameters(new Hashtable());
-        }
         parameters.setLimit(maxParameterCount);
 
         // getCharacterEncoding() may have been overridden to search for
@@ -3139,17 +3154,7 @@ public class Request implements HttpServletRequest {
                 return;
             }
             cachedPostBodyForCompatibleWLS(formData, 0, len);
-            if (ENCODING_EFFECTIVE_IMMEDIATELY) {
             if (Globals.COMPATIBLEWEBSPHERE) {
-                    ((WLSParameters) parameters).setWLSParameters(((WLSParameters) parameters).parseWLSPostParameters(formData, 0, len, false));
-                if (parameters.getParameters() != null) {
-                    parameters.parseQueryStringList();
-                }
-            } else {
-                    ((WLSParameters) parameters).processWLSParameters(formData, 0, len, false);
-            }
-            } else {
-                if (Globals.COMPATIBLEWEBSPHERE) {
                     parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
                     if (parameters.getParameters() != null) {
                         parameters.parseQueryStringList();
@@ -3157,7 +3162,6 @@ public class Request implements HttpServletRequest {
                 } else {
                     parameters.processParameters(formData, 0, len);
                 }
-            }
         } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
             byte[] formData = null;
             try {
@@ -3181,27 +3185,15 @@ public class Request implements HttpServletRequest {
             }
             if (formData != null) {
                 cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
-                if (ENCODING_EFFECTIVE_IMMEDIATELY) {
                 if (Globals.COMPATIBLEWEBSPHERE) {
-                        ((WLSParameters) parameters).setWLSParameters(((WLSParameters) parameters).parseWLSPostParameters(formData, 0, formData.length, false));
-                    if (parameters.getParameters() != null) {
-                        parameters.parseQueryStringList();
-                    }
-                } else {
-                        ((WLSParameters) parameters).processWLSParameters(formData, 0, formData.length, false);
-                }
-                } else {
-                    if (Globals.COMPATIBLEWEBSPHERE) {
                         parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
                         if (parameters.getParameters() != null) {
                             parameters.parseQueryStringList();
-            }
+                    }
                     } else {
                         parameters.processParameters(formData, 0, formData.length);
                     }
                 }
-
-            }
             if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                 if (parameters.getParameters() != null) {
                     parameters.parseQueryStringList();
@@ -3354,6 +3346,25 @@ public class Request implements HttpServletRequest {
 
     public void setQueryString(String queryString) {
         coyoteRequest.queryString().setString(queryString);
+    }
+
+    private void cacheParameter() {
+        if (Globals.ALLOW_MODIFY_PARAMETER_MAP && Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            // must be cache all params firstly
+            for (Object key : coyoteRequest.getParameters().getParameters().keySet()) {
+                ByteChunk[] bys = ((WLSParameters) coyoteRequest.getParameters()).getWLSParameterValues((String) key);
+                String[] rets = new String[bys.length];
+                for (int i = 0; i < bys.length; i++) {
+                    try {
+                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    } catch (Exception ex) {
+                        log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
+                        break;
+                    }
+                }
+                coyoteRequest.getParameters().getParamHashValues().put(key, rets);
+            }
+        }
     }
 
     // ----------------------------------------------------- Special attributes handling

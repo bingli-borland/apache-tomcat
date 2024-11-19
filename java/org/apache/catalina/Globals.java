@@ -245,4 +245,7 @@ public final class Globals {
 
     public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
+
+    public static final boolean ALLOW_MODIFY_PARAMETER_MAP = "".equals(System.getProperty("org.apache.catalina.connector.allowModifyParameterMap", "")) ? COMPATIBLEWEBSPHERE :
+        Boolean.getBoolean("org.apache.catalina.connector.allowModifyParameterMap");
 }
