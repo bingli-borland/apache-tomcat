@@ -17,6 +17,7 @@
 package org.apache.coyote.http11.filters;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -281,7 +282,12 @@ public class ChunkedInputFilter implements InputFilter, ApplicationBufferHandler
      * @throws IOException Read error
      */
     protected int readBytes() throws IOException {
-        return buffer.doRead(this);
+        try {
+            return buffer.doRead(this);
+        } catch (SocketTimeoutException ex) {
+            parseState = ParseState.ERROR;
+            throw ex;
+        }
     }
 
 
