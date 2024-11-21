@@ -17,6 +17,7 @@
 package org.apache.coyote.http11.filters;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
@@ -93,7 +94,13 @@ public class IdentityInputFilter implements InputFilter, ApplicationBufferHandle
 
         if (contentLength >= 0) {
             if (remaining > 0) {
-                int nRead = buffer.doRead(handler);
+                int nRead = 0;
+                try {
+                    nRead = buffer.doRead(handler);
+                } catch (SocketTimeoutException ex) {
+                    remaining = -1;
+                    throw ex;
+                }
                 if (nRead > remaining) {
                     // The chunk is longer than the number of bytes remaining
                     // in the body; changing the chunk length to the number
