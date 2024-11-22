@@ -387,10 +387,16 @@ public class Parameters {
         if (queryStringList == null || queryStringList.isEmpty()) { //258025
             if (queryMB != null && !queryMB.isNull())//PM35450
             {
-                if (queryMB.getType() != MessageBytes.T_BYTES) {
-                    queryMB.toBytes();
+                try {
+                    decodedQuery.duplicate(queryMB);
+                } catch (IOException e) {
+                    // Can't happen, as decodedQuery can't overflow
+                    log.error(sm.getString("parameters.copyFail"), e);
                 }
-                ByteChunk bc = queryMB.getByteChunk();
+                if (decodedQuery.getType() != MessageBytes.T_BYTES) {
+                    decodedQuery.toBytes();
+                }
+                ByteChunk bc = decodedQuery.getByteChunk();
                 if (getParameters() == null || getParameters().isEmpty()) {
                     setParameters(parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset));
                 } else {
