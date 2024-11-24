@@ -1244,7 +1244,11 @@ public class Request implements HttpServletRequest {
             String[] rets = new String[bys.length];
             for (int i = 0; i < bys.length; i++) {
                 try {
-                    rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    if (bys[i].getBytes() != null) {
+                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                    } else {
+                        rets[i] = "";
+                    }
                 } catch (Exception ex) {
                     log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
                     break;
@@ -3412,7 +3416,11 @@ public class Request implements HttpServletRequest {
                 String[] rets = new String[bys.length];
                 for (int i = 0; i < bys.length; i++) {
                     try {
-                        rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                        if (bys[i].getBytes() != null) {
+                            rets[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), getCharset(bys[i].isQuery()));
+                        } else {
+                            rets[i] = "";
+                        }
                     } catch (Exception ex) {
                         log.error(sm.getString("applicationHttpRequest.unsupportedEncoding", getCharset(bys[i].isQuery())), ex);
                         break;

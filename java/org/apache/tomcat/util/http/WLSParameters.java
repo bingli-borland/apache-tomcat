@@ -840,7 +840,12 @@ public final class WLSParameters extends Parameters {
     private String[] convert(ByteChunk[] bcs) {
         String[] values = new String[bcs.length];
         for (int i = 0; i < bcs.length; i++) {
-            values[i] = new String(bcs[i].getBytes(), bcs[i].getStart(), bcs[i].getLength(), bcs[i].getCharset());
+            // param value may be null
+            if (bcs[i].getBytes() != null) {
+                values[i] = new String(bcs[i].getBytes(), bcs[i].getStart(), bcs[i].getLength(), bcs[i].getCharset());
+            } else {
+                values[i] = "";
+            }
         }
         return values;
     }
@@ -866,7 +871,11 @@ public final class WLSParameters extends Parameters {
             if (valuesList.size() > 0) {
                 String[] arrays = new String[valuesList.size()];
                 for (int i = 0; i < valuesList.size(); i++) {
-                    arrays[i] = new String(valuesList.get(i).getBytes(), getCharset());
+                    if (valuesList.get(i).getBytes() != null) {
+                        arrays[i] = new String(valuesList.get(i).getBytes(), getCharset());
+                    } else {
+                        arrays[i] = "";
+                    }
                 }
                 StringUtils.join(arrays, ',', sb);
             }
