@@ -287,7 +287,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         if (response instanceof ResponseFacade) {
             finished = true;
             ((ResponseFacade) response).finish();
-        } else if (context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
+            } else if (!Globals.COMPATIBLEWEBSPHERE && context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
             ServletResponse baseResponse = response;
             do {
                 baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
@@ -297,7 +297,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 ((ResponseFacade) baseResponse).finish();
             }
         }
-        if (!finished) {
+            if (!Globals.COMPATIBLEWEBSPHERE && !finished) {
             // Servlet SRV.6.2.2. The Request/Response may have been wrapped
             // and may no longer be an instance of RequestFacade
             if (wrapper.getLogger().isDebugEnabled()) {
