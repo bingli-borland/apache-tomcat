@@ -54,8 +54,10 @@ public final class WLSParameters extends Parameters {
         try {
             Hashtable popParameters = (Hashtable) paramStack.pop();
             setParameters(popParameters);
-            if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+            if (Globals.ALLOW_MODIFY_PARAMETER_MAP && popParameters != null) {
                 getParamHashValues().keySet().removeIf(key -> !popParameters.keySet().contains(key));
+            } else if (Globals.ALLOW_MODIFY_PARAMETER_MAP && popParameters == null) {
+                getParamHashValues().clear();
             }
         } catch (java.util.EmptyStackException empty) {
             if (log.isDebugEnabled()) {
