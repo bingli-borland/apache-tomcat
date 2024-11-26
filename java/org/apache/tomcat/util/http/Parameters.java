@@ -39,7 +39,7 @@ public class Parameters {
     protected static final StringManager sm = StringManager.getManager("org.apache.tomcat.util.http");
 
     protected final Map<String, String[]> paramHashValues = new LinkedHashMap<>();
-    private boolean didQueryParameters = false;
+    protected boolean didQueryParameters = false;
 
     protected MessageBytes queryMB;
 

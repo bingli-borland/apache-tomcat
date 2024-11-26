@@ -318,6 +318,40 @@ public final class WLSParameters extends Parameters {
     }
 
     // -------------------- Parameter parsing --------------------
+
+    @Override
+    public void handleQueryParameters() {
+        if (didQueryParameters) {
+            return;
+        }
+
+        didQueryParameters = true;
+
+        if (queryMB == null || queryMB.isNull()) {
+            return;
+        }
+
+        if (log.isTraceEnabled()) {
+            log.trace("Decoding query " + decodedQuery + " " + queryStringCharset.name());
+        }
+
+        try {
+            decodedQuery.duplicate(queryMB);
+        } catch (IOException e) {
+            // Can't happen, as decodedQuery can't overflow
+            log.error(sm.getString("parameters.copyFail"), e);
+        }
+        if (decodedQuery == null || decodedQuery.isNull() || decodedQuery.getLength() <= 0) {
+            return;
+        }
+
+        if (decodedQuery.getType() != MessageBytes.T_BYTES) {
+            decodedQuery.toBytes();
+        }
+        ByteChunk bc = decodedQuery.getByteChunk();
+        processParameters(bc.getBytes(), bc.getStart(), bc.getLength(), queryStringCharset, true);
+    }
+
     @Override
     public void processParameters(byte bytes[], int start, int len) {
         processParameters(bytes, start, len, charset, false);
