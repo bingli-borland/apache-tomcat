@@ -473,8 +473,6 @@ public final class WLSParameters extends Parameters {
                 }
                 throw new InvalidParameterException(message, e);
             } finally {
-                tmpName.recycle();
-                tmpValue.recycle();
                 // Only recycle copies if we used them
                 if (log.isDebugEnabled()) {
                     origName.recycle();
