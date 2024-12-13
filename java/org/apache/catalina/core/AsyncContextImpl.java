@@ -163,7 +163,7 @@ public class AsyncContextImpl implements AsyncContext, AsyncContextCallback {
         if (cpath.length() > 1) {
             path = path.substring(cpath.length());
         }
-        if (Globals.COMPATIBLEWEBSPHERE && qs.length() > 1) {
+        if (Globals.COMPATIBLEWEBSPHERE && qs != null && qs.length() > 1) {
             path = path + "?" + qs;
         }
         if (!context.getDispatchersUseEncodedPaths()) {
