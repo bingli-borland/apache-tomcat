@@ -139,7 +139,7 @@ public class Parameters {
 
     public Enumeration<String> getParameterNames() {
         if (Globals.COMPATIBLEWEBSPHERE) {
-            return ((Hashtable) getParameters()).keys();
+            return Collections.enumeration(getParameters().keySet());
         }
         handleQueryParameters();
         return Collections.enumeration(paramHashValues.keySet());
@@ -230,7 +230,7 @@ public class Parameters {
         return _parameters;
     }
 
-    public void setParameters(Hashtable parameters) {
+    public void setParameters(Map parameters) {
         _parameters = parameters;
     }
 
@@ -245,7 +245,7 @@ public class Parameters {
         if (getParameters() == null) {
             _paramStack.push(null);
         } else {
-            paramStack.push(((Hashtable) getParameters()).clone());
+            paramStack.push(((HashMap) getParameters()).clone());
         }
     }
 
@@ -255,7 +255,7 @@ public class Parameters {
      */
     public void popParameterStack() {
         try {
-            setParameters((Hashtable) paramStack.pop());
+            setParameters((Map) paramStack.pop());
         } catch (java.util.EmptyStackException empty) {
             if (log.isDebugEnabled()) {
                 log.debug("Unable to remove item from stack", empty);
@@ -307,11 +307,10 @@ public class Parameters {
                 qs.toBytes();
             }
             ByteChunk bc = qs.getByteChunk();
-            Hashtable<String, String[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+            Map<String, String[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
             // end 249841, 256836
             String[] valArray;
-            for (Enumeration e = parameters.keys(); e.hasMoreElements(); ) {
-                String key = (String) e.nextElement();
+            for (String key : parameters.keySet()) {
                 String[] newVals = (String[]) parameters.get(key);
 
                 // Check to see if a parameter with the key already exists
@@ -341,7 +340,7 @@ public class Parameters {
 
     public void parseQueryStringList() {
 
-        Hashtable<String, String[]> tmpQueryParams = null;
+        Map<String, String[]> tmpQueryParams = null;
         LinkedList queryStringList = _queryStringList;
         if (queryStringList == null || queryStringList.isEmpty()) { //258025
             if (queryMB != null && !queryMB.isNull())//PM35450
@@ -370,8 +369,8 @@ public class Parameters {
             while (i.hasNext()) {
                 qsListItem = ((QSListItem) i.next());
                 queryString = qsListItem._qs;
-                if (qsListItem._qsHashtable != null)
-                    mergeQueryParams(qsListItem._qsHashtable);
+                if (qsListItem._qsMap != null)
+                    mergeQueryParams(qsListItem._qsMap);
                 else if (queryString != null && !queryString.isNull()) {
                     if (queryString.getType() != MessageBytes.T_BYTES) {
                         queryString.toBytes();
@@ -379,12 +378,12 @@ public class Parameters {
                     ByteChunk bc = queryString.getByteChunk();
                     if (getParameters() == null || getParameters().isEmpty())// 258025
                     {
-                        qsListItem._qsHashtable = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
-                        setParameters(qsListItem._qsHashtable);
+                        qsListItem._qsMap = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
+                        setParameters(qsListItem._qsMap);
                         qsListItem._qs = null;
                     } else {
                         tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
-                        qsListItem._qsHashtable = tmpQueryParams;
+                        qsListItem._qsMap = tmpQueryParams;
                         qsListItem._qs = null;
                         mergeQueryParams(tmpQueryParams);
                     }
@@ -393,11 +392,9 @@ public class Parameters {
         }
     }
 
-    private void mergeQueryParams(Hashtable<String, String[]> tmpQueryParams) {
+    private void mergeQueryParams(Map<String, String[]> tmpQueryParams) {
         if (tmpQueryParams != null) {
-            Enumeration enumeration = tmpQueryParams.keys();
-            while (enumeration.hasMoreElements()) {
-                Object key = enumeration.nextElement();
+            for (String key : tmpQueryParams.keySet()) {
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters() != null && getParameters().containsKey(key)) {
@@ -414,7 +411,7 @@ public class Parameters {
                     getParameters().put(key, newVals);
                 } else {
                     if (getParameters() == null) {
-                        setParameters(new Hashtable());
+                        setParameters(new HashMap());
                     }
                     getParameters().put(key, tmpQueryParams.get(key));
                 }
@@ -431,8 +428,8 @@ public class Parameters {
             popParameterStack();
             if (getParameters() == null && _tmpParameters != null) // Parameters above current inluce/forward were never parsed
             {
-                setParameters((Hashtable) _tmpParameters);
-                Hashtable tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsHashtable;
+                setParameters(_tmpParameters);
+                Map tmpQueryParams = ((QSListItem) queryStringList.getLast())._qsMap;
                 if (tmpQueryParams == null) {
                     MessageBytes qs = ((QSListItem) queryStringList.getLast())._qs;
                     if (qs.getType() != MessageBytes.T_BYTES) {
@@ -452,11 +449,9 @@ public class Parameters {
         }
     }
 
-    public void removeQueryParams(Hashtable tmpQueryParams) {
+    public void removeQueryParams(Map tmpQueryParams) {
         if (tmpQueryParams != null) {
-            Enumeration enumeration = tmpQueryParams.keys();
-            while (enumeration.hasMoreElements()) {
-                Object key = enumeration.nextElement();
+            for (Object key : tmpQueryParams.keySet()) {
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters().containsKey(key)) {
@@ -652,13 +647,13 @@ public class Parameters {
         }
     }
 
-    public Hashtable parsePostParameters(byte bytes[], int start, int len) {
+    public Map parsePostParameters(byte bytes[], int start, int len) {
         return parseQueryStringParameters(bytes, start, len, charset);
     }
 
-    private Hashtable parseQueryStringParameters(byte bytes[], int start, int len, Charset charset) {
+    private Map parseQueryStringParameters(byte bytes[], int start, int len, Charset charset) {
 
-        Hashtable<String, String[]> ht = new Hashtable<>();
+        Map<String, String[]> hm = new HashMap<>();
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
         }
@@ -802,12 +797,12 @@ public class Parameters {
                 parameterCount++;
 
                 String valArray[] = new String[]{value};
-                String[] oldVals = (String[]) ht.put(name, valArray);
+                String[] oldVals = (String[]) hm.put(name, valArray);
                 if (oldVals != null) {
                     valArray = new String[oldVals.length + 1];
                     System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
                     valArray[oldVals.length] = value;
-                    ht.put(name, valArray);
+                    hm.put(name, valArray);
                 }
 
             } catch (IOException e) {
@@ -828,7 +823,7 @@ public class Parameters {
                 }
             }
         }
-        return ht;
+        return hm;
     }
 
     public void urlDecode(ByteChunk bc) throws IOException {
@@ -866,10 +861,11 @@ public class Parameters {
 
     class QSListItem {
         MessageBytes _qs = null;
-        Hashtable _qsHashtable = null;
-        QSListItem(MessageBytes qs, Hashtable qsHashtable){
+        Map _qsMap = null;
+
+        QSListItem(MessageBytes qs, Map qsMap) {
             _qs = qs;
-            _qsHashtable = qsHashtable;
+            _qsMap = qsMap;
         }
     }
 

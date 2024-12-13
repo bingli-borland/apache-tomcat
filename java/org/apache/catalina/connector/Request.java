@@ -1111,7 +1111,7 @@ public class Request implements HttpServletRequest {
                 if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
                     return coyoteRequest.getParameters().getParamHashValues();
                 }
-                Map<String, String[]> parameters = new Hashtable<>();
+                Map<String, String[]> parameters = new HashMap<>();
                 Enumeration<String> enumeration = getParameterNames();
                 while (enumeration.hasMoreElements()) {
                     String name = enumeration.nextElement();
@@ -2533,7 +2533,7 @@ public class Request implements HttpServletRequest {
     private void parseParts() {
 
         if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
-            coyoteRequest.getParameters().setParameters(new Hashtable());
+            coyoteRequest.getParameters().setParameters(new HashMap());
             coyoteRequest.getParameters().parseQueryStringList();
         }
         // Return immediately if the parts have already been parsed
@@ -2939,7 +2939,7 @@ public class Request implements HttpServletRequest {
             return;
         }
 
-        parameters.setParameters(new Hashtable());
+        parameters.setParameters(new HashMap());
 
         // Set this every time in case limit has been changed via JMX
         int maxParameterCount = getConnector().getMaxParameterCount();
@@ -3096,7 +3096,7 @@ public class Request implements HttpServletRequest {
             }
         }
         if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() == null) {
-            parameters.setParameters(new Hashtable<>());
+            parameters.setParameters(new HashMap());
         }
     }
 

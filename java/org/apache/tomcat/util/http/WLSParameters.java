@@ -19,18 +19,12 @@ package org.apache.tomcat.util.http;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import org.apache.catalina.Globals;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.StringUtils;
-import org.apache.tomcat.util.log.UserDataHelper;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.*;
 
 public final class WLSParameters extends Parameters {
 
@@ -52,7 +46,7 @@ public final class WLSParameters extends Parameters {
     @Override
     public void popParameterStack() {
         try {
-            Hashtable popParameters = (Hashtable) paramStack.pop();
+            Map popParameters = (HashMap) paramStack.pop();
             setParameters(popParameters);
             if (Globals.ALLOW_MODIFY_PARAMETER_MAP && popParameters != null) {
                 getParamHashValues().keySet().removeIf(key -> !popParameters.keySet().contains(key));
@@ -89,7 +83,7 @@ public final class WLSParameters extends Parameters {
             if (Globals.ALLOW_MODIFY_PARAMETER_MAP && getParamHashValues().size() > 0) {
                 return Collections.enumeration(getParamHashValues().keySet());
             }
-            return ((Hashtable) getParameters()).keys();
+            return Collections.enumeration(getParameters().keySet());
         }
         handleQueryParameters();
         return Collections.enumeration(wlsParamHashValues.keySet());
@@ -158,11 +152,10 @@ public final class WLSParameters extends Parameters {
                 qs.toBytes();
             }
             ByteChunk bc = qs.getByteChunk();
-            Hashtable<String, ByteChunk[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
+            Map<String, ByteChunk[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
             // end 249841, 256836
             ByteChunk[] valArray;
-            for (Enumeration e = parameters.keys(); e.hasMoreElements(); ) {
-                String key = (String) e.nextElement();
+            for (String key : parameters.keySet()) {
                 ByteChunk[] newVals = (ByteChunk[]) parameters.get(key);
 
                 // Check to see if a parameter with the key already exists
@@ -199,7 +192,7 @@ public final class WLSParameters extends Parameters {
     @Override
     public void parseQueryStringList() {
 
-        Hashtable<String, ByteChunk[]> tmpQueryParams = null;
+        Map<String, ByteChunk[]> tmpQueryParams = null;
         LinkedList queryStringList = _queryStringList;
         if (queryStringList == null || queryStringList.isEmpty()) { //258025
             if (queryMB != null && !queryMB.isNull())//PM35450
@@ -228,7 +221,7 @@ public final class WLSParameters extends Parameters {
             while (i.hasNext()) {
                 qsListItem = ((QSListItem) i.next());
                 queryString = qsListItem._qs;
-                if (qsListItem._qsHashtable != null) mergeQueryParams(qsListItem._qsHashtable);
+                if (qsListItem._qsMap != null) mergeQueryParams(qsListItem._qsMap);
                 else if (queryString != null && !queryString.isNull()) {
                     if (queryString.getType() != MessageBytes.T_BYTES) {
                         queryString.toBytes();
@@ -236,12 +229,12 @@ public final class WLSParameters extends Parameters {
                     ByteChunk bc = queryString.getByteChunk();
                     if (getParameters() == null || getParameters().isEmpty())// 258025
                     {
-                        qsListItem._qsHashtable = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
-                        setParameters(qsListItem._qsHashtable);
+                        qsListItem._qsMap = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
+                        setParameters(qsListItem._qsMap);
                         qsListItem._qs = null;
                     } else {
                         tmpQueryParams = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
-                        qsListItem._qsHashtable = tmpQueryParams;
+                        qsListItem._qsMap = tmpQueryParams;
                         qsListItem._qs = null;
                         mergeQueryParams(tmpQueryParams);
                     }
@@ -250,11 +243,9 @@ public final class WLSParameters extends Parameters {
         }
     }
 
-    private void mergeQueryParams(Hashtable<String, ByteChunk[]> tmpQueryParams) {
+    private void mergeQueryParams(Map<String, ByteChunk[]> tmpQueryParams) {
         if (tmpQueryParams != null) {
-            Enumeration enumeration = tmpQueryParams.keys();
-            while (enumeration.hasMoreElements()) {
-                Object key = enumeration.nextElement();
+            for (String key : tmpQueryParams.keySet()) {
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters() != null && getParameters().containsKey(key)) {
@@ -274,7 +265,7 @@ public final class WLSParameters extends Parameters {
                     }
                 } else {
                     if (getParameters() == null) {
-                        setParameters(new Hashtable());
+                        setParameters(new HashMap());
                     }
                     getParameters().put(key, tmpQueryParams.get(key));
                     if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
@@ -286,11 +277,9 @@ public final class WLSParameters extends Parameters {
     }
 
     @Override
-    public void removeQueryParams(Hashtable tmpQueryParams) {
+    public void removeQueryParams(Map tmpQueryParams) {
         if (tmpQueryParams != null) {
-            Enumeration enumeration = tmpQueryParams.keys();
-            while (enumeration.hasMoreElements()) {
-                Object key = enumeration.nextElement();
+            for (Object key : tmpQueryParams.keySet()) {
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters().containsKey(key)) {
@@ -517,12 +506,10 @@ public final class WLSParameters extends Parameters {
     }
 
     @Override
-    public Hashtable parsePostParameters(byte bytes[], int start, int len) {
-        Hashtable<String, ByteChunk[]> parameters = parseQueryStringParameters(bytes, start, len, charset, false);
+    public Map parsePostParameters(byte bytes[], int start, int len) {
+        Map<String, ByteChunk[]> parameters = parseQueryStringParameters(bytes, start, len, charset, false);
         if (Globals.ALLOW_MODIFY_PARAMETER_MAP && parameters != null) {
-            Enumeration enumeration = parameters.keys();
-            while (enumeration.hasMoreElements()) {
-                Object key = enumeration.nextElement();
+            for (String key : parameters.keySet()) {
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters() != null && getParameters().containsKey(key)) {
@@ -546,9 +533,9 @@ public final class WLSParameters extends Parameters {
 
     }
 
-    private Hashtable parseQueryStringParameters(byte bytes[], int start, int len, Charset charset, boolean queryParams) {
+    private Map parseQueryStringParameters(byte bytes[], int start, int len, Charset charset, boolean queryParams) {
 
-        Hashtable<String, ByteChunk[]> ht = new Hashtable<>();
+        Map<String, ByteChunk[]> hm = new HashMap<>();
 
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));
@@ -694,12 +681,12 @@ public final class WLSParameters extends Parameters {
                 }
                 parameterCount++;
                 ByteChunk valArray[] = new ByteChunk[]{value};
-                ByteChunk[] oldVals = ht.put(name, valArray);
+                ByteChunk[] oldVals = hm.put(name, valArray);
                 if (oldVals != null) {
                     valArray = new ByteChunk[oldVals.length + 1];
                     System.arraycopy(oldVals, 0, valArray, 0, oldVals.length);
                     valArray[oldVals.length] = value;
-                    ht.put(name, valArray);
+                    hm.put(name, valArray);
                 }
 
             } catch (IOException e) {
@@ -718,7 +705,7 @@ public final class WLSParameters extends Parameters {
                 }
             }
         }
-        return ht;
+        return hm;
     }
 
     private String[] convert(ByteChunk[] bcs) {
