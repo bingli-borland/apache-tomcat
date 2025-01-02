@@ -242,7 +242,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 wrequest.setPathInfo(hrequest.getPathInfo());
                 wrequest.setQueryString(hrequest.getQueryString());
 
-                if (Globals.COMPATIBLEWEBSPHERE) {
+                if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                     clearAttributes(wrequest, DispatcherType.INCLUDE);
                 }
                 processRequest(request, response, state);
@@ -275,12 +275,12 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 if (queryString != null) {
                     wrequest.setQueryString(queryString);
                     wrequest.setQueryParams(queryString, true);
-                } else if(Globals.COMPATIBLEWEBSPHERE) {
+                } else if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                     wrequest.setQueryString(queryString);
                 }
                 wrequest.setMapping(mapping);
 
-                if (Globals.COMPATIBLEWEBSPHERE) {
+                if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                     clearAttributes(wrequest, DispatcherType.INCLUDE);
                 }
                 processRequest(request, response, state);
@@ -301,7 +301,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
             if (response instanceof ResponseFacade) {
                 finished = true;
                 ((ResponseFacade) response).finish();
-            } else if (!Globals.COMPATIBLEWEBSPHERE && context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
+            } else if (!Globals.PARSE_DISPATCH_QUERY_PARAM && context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
                 ServletResponse baseResponse = response;
                 do {
                     baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
@@ -311,7 +311,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                     ((ResponseFacade) baseResponse).finish();
                 }
             }
-            if (!Globals.COMPATIBLEWEBSPHERE && !finished) {
+            if (!Globals.PARSE_DISPATCH_QUERY_PARAM && !finished) {
                 // Servlet SRV.6.2.2. The Request/Response may have been wrapped
                 // and may no longer be instance of RequestFacade
                 if (wrapper.getLogger().isDebugEnabled()) {
@@ -333,7 +333,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 }
             }
         } finally {
-            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && queryString != null) {
                 wrequest.removeQSFromList();
             }
         }
@@ -585,10 +585,10 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 invoke(state.outerRequest, state.outerResponse, state);
             }
         } finally {
-            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && queryString != null) {
                 wrequest.removeQSFromList();
             }
-            if (Globals.COMPATIBLEWEBSPHERE) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                 setAttributes(request, DispatcherType.INCLUDE, old_req_uri, old_servlet_path, old_path_info, old_context_path, old_query_string);
             }
         }
@@ -619,17 +619,17 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
             if (queryString != null) {
                 wrequest.setQueryString(queryString);
                 wrequest.setQueryParams(queryString, true);
-            } else if(Globals.COMPATIBLEWEBSPHERE) {
+            } else if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                 wrequest.setQueryString(queryString);
             }
             wrequest.setMapping(mapping);
 
-            if (Globals.COMPATIBLEWEBSPHERE) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                 clearAttributes(wrequest, DispatcherType.INCLUDE);
             }
             invoke(state.outerRequest, state.outerResponse, state);
         } finally {
-            if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && queryString != null) {
                 wrequest.removeQSFromList();
             }
         }

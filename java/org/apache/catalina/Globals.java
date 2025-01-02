@@ -242,7 +242,7 @@ public final class Globals {
     public static final boolean USE_ORIGINAL_QS_IN_FORWARD_IF_NULL = Boolean.getBoolean("org.apache.catalina.useoriginalqsinforwardifnull");
     public static final boolean KEEP_ORIGINAL_PATH_ELEMENTS = Boolean.valueOf(System.getProperty("org.apache.catalina.keeporiginalpathelements", "true")).booleanValue();
     public static final boolean ALLOW_QUERY_PARAM_WITH_NO_EQUAL = Boolean.getBoolean("org.apache.catalina.allowqueryparamwithnoequal");
-    public static final boolean COMPATIBLEWEBSPHERE = Boolean.valueOf(System.getProperty("org.apache.catalina.compatibleWebsphereHttp10", "true")).booleanValue();
+    public static final boolean COMPATIBLE_WEBSPHERE = Boolean.valueOf(System.getProperty("org.apache.catalina.connector.compatibleWebsphere", "true")).booleanValue();
     public static final boolean COMPATIBLE_WEBLOGIC = Boolean.valueOf(System.getProperty("org.apache.catalina.connector.compatibleWeblogic", "true")).booleanValue();
 
     public static final boolean CACHE_POST_BODY = "".equals(System.getProperty("org.apache.catalina.connector.cachePostBody", "")) ? COMPATIBLE_WEBLOGIC :
@@ -254,6 +254,10 @@ public final class Globals {
     public static final boolean ENCODING_EFFECTIVE_IMMEDIATELY = "".equals(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.encoding.effective.immediately"));
 
-    public static final boolean ALLOW_MODIFY_PARAMETER_MAP = "".equals(System.getProperty("org.apache.catalina.connector.allowModifyParameterMap", "")) ? COMPATIBLEWEBSPHERE :
+    public static final boolean ALLOW_MODIFY_PARAMETER_MAP = "".equals(System.getProperty("org.apache.catalina.connector.allowModifyParameterMap", "")) ? COMPATIBLE_WEBSPHERE :
         Boolean.getBoolean("org.apache.catalina.connector.allowModifyParameterMap");
+
+    public static final boolean PARSE_DISPATCH_QUERY_PARAM = "".equals(System.getProperty("org.apache.catalina.connector.parseDispatchQueryParam", "")) ? COMPATIBLE_WEBSPHERE :
+
+        Boolean.getBoolean("org.apache.catalina.connector.parseDispatchQueryParam");
 }

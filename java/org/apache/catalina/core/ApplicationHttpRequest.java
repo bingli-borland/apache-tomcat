@@ -287,7 +287,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public void removeAttribute(String name) {
-        if (!removeSpecial(name) || Globals.COMPATIBLEWEBSPHERE) {
+        if (!removeSpecial(name) || Globals.PARSE_DISPATCH_QUERY_PARAM) {
             getRequest().removeAttribute(name);
         }
     }
@@ -310,7 +310,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
             return;
         }
 
-        if (!setSpecial(name, value) || Globals.COMPATIBLEWEBSPHERE) {
+        if (!setSpecial(name, value) || Globals.PARSE_DISPATCH_QUERY_PARAM) {
             getRequest().setAttribute(name, value);
         }
     }
@@ -413,7 +413,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public String getParameter(String name) {
-        if(Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             return requestFacade.getParameter(name);
         }
         parseParameters();
@@ -431,7 +431,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public Map<String,String[]> getParameterMap() {
-        if(Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             return requestFacade.getParameterMap();
         }
         parseParameters();
@@ -444,7 +444,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public Enumeration<String> getParameterNames() {
-        if(Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             return requestFacade.getParameterNames();
         }
         parseParameters();
@@ -459,7 +459,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
      */
     @Override
     public String[] getParameterValues(String name) {
-        if(Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             return requestFacade.getParameterValues(name);
         }
         parseParameters();
@@ -710,7 +710,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
         requestURI = request.getRequestURI();
         servletPath = request.getServletPath();
         mapping = request.getHttpServletMapping();
-        if (Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             if (request instanceof RequestFacade) {
                 requestFacade = (RequestFacade) request;
             } else if (request instanceof ApplicationHttpRequest) {
@@ -786,7 +786,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
 
     void setQueryParams(String queryString, boolean setQS) {
         this.queryParamString = queryString;
-        if(Globals.COMPATIBLEWEBSPHERE) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
             requestFacade.pushParameterStack();
             requestFacade.aggregateQueryStringParams(queryString, setQS);
         }

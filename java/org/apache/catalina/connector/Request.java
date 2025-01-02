@@ -1103,15 +1103,13 @@ public class Request implements HttpServletRequest {
 
     @Override
     public Map<String,String[]> getParameterMap() {
-        if (Globals.COMPATIBLEWEBSPHERE) {
-            if (!parametersParsed) {
-                parseParameters();
-            }
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
+            parseParameters();
             if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
                 if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().size() > 0) {
                     return coyoteRequest.getParameters().getParamHashValues();
                 }
-                Map<String, String[]> parameters = new Hashtable<>();
+                Map<String, String[]> parameters = new LinkedHashMap<>();
                 Enumeration<String> enumeration = getParameterNames();
                 while (enumeration.hasMoreElements()) {
                     String name = enumeration.nextElement();
@@ -1154,10 +1152,7 @@ public class Request implements HttpServletRequest {
 
     @Override
     public String[] getParameterValues(String name) {
-
-        if (!parametersParsed) {
-            parseParameters();
-        }
+        parseParameters();
         if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
             if (Globals.ALLOW_MODIFY_PARAMETER_MAP && coyoteRequest.getParameters().getParamHashValues().get(name) != null) {
                 return (String[]) coyoteRequest.getParameters().getParamHashValues().get(name);
@@ -2532,8 +2527,8 @@ public class Request implements HttpServletRequest {
 
     private void parseParts() {
 
-        if (Globals.COMPATIBLEWEBSPHERE && coyoteRequest.getParameters().getParameters() == null) {
-            coyoteRequest.getParameters().setParameters(new Hashtable());
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM && coyoteRequest.getParameters().getParameters() == null) {
+            coyoteRequest.getParameters().setParameters(new LinkedHashMap());
             coyoteRequest.getParameters().parseQueryStringList();
         }
         // Return immediately if the parts have already been parsed
@@ -2636,7 +2631,7 @@ public class Request implements HttpServletRequest {
                         ByteChunk value = new ByteChunk();
                         byte[] itemBytes = item.get();
                         value.setBytes(itemBytes, 0, itemBytes.length);
-                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                        if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                             if (parameters.getParameters().containsKey(name)) {
 
                                 ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
@@ -2660,7 +2655,7 @@ public class Request implements HttpServletRequest {
                         } catch (UnsupportedEncodingException uee) {
                             // Not possible
                         }
-                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                        if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                             if (parameters.getParameters().containsKey(name)) {
 
                                 String[] oldValues = (String[]) parameters.getParameters().get(name);
@@ -2939,7 +2934,7 @@ public class Request implements HttpServletRequest {
             return;
         }
 
-        parameters.setParameters(new Hashtable());
+        parameters.setParameters(new LinkedHashMap());
 
         // Set this every time in case limit has been changed via JMX
         int maxParameterCount = getConnector().getMaxParameterCount();
@@ -2960,12 +2955,12 @@ public class Request implements HttpServletRequest {
         // Note: If !useBodyEncodingForURI, the query string encoding is
         // that set towards the start of CoyoteAdapter.service()
 
-        if (!Globals.COMPATIBLEWEBSPHERE) {
+        if (!Globals.PARSE_DISPATCH_QUERY_PARAM) {
             parameters.handleQueryParameters();
         }
 
         if (!Globals.CACHE_INPUT_STREAM && (usingInputStream || usingReader)) {
-            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
             return;
@@ -2974,7 +2969,7 @@ public class Request implements HttpServletRequest {
         String mediaType = MediaType.parseMediaTypeOnly(getContentType());
 
         if ("multipart/form-data".equals(mediaType)) {
-            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
             parseParts();
@@ -2987,14 +2982,14 @@ public class Request implements HttpServletRequest {
         }
 
         if (!getConnector().isParseBodyMethod(getMethod())) {
-            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
             return;
         }
 
         if (!("application/x-www-form-urlencoded".equals(mediaType))) {
-            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
             return;
@@ -3043,7 +3038,7 @@ public class Request implements HttpServletRequest {
                 return;
             }
             cachedPostBodyForCompatibleWLS(formData, 0, len);
-            if (Globals.COMPATIBLEWEBSPHERE) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                 parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
                 if (parameters.getParameters() != null) {
                     parameters.parseQueryStringList();
@@ -3076,7 +3071,7 @@ public class Request implements HttpServletRequest {
             }
             if (formData != null) {
                 cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
-                if (Globals.COMPATIBLEWEBSPHERE) {
+                if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
                     parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
                     if (parameters.getParameters() != null) {
                         parameters.parseQueryStringList();
@@ -3085,18 +3080,18 @@ public class Request implements HttpServletRequest {
                     parameters.processParameters(formData, 0, formData.length);
                 }
             }
-            if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && formData == null) {
                 if (parameters.getParameters() != null) {
                     parameters.parseQueryStringList();
                 }
             }
         } else {
-            if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+            if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() != null) {
                 parameters.parseQueryStringList();
             }
         }
-        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() == null) {
-            parameters.setParameters(new Hashtable<>());
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameters() == null) {
+            parameters.setParameters(new LinkedHashMap<>());
         }
     }
 
