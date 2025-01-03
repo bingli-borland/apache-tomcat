@@ -165,8 +165,11 @@ public final class WLSParameters extends Parameters {
             LinkedHashMap<String, ByteChunk[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset, true);
             // end 249841, 256836
             ByteChunk[] valArray;
-            for (String key : parameters.keySet()) {
-                ByteChunk[] newVals = parameters.get(key);
+            Iterator<Map.Entry<String, ByteChunk[]>> iterator = parameters.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, ByteChunk[]> entry = iterator.next();
+                String key = entry.getKey();
+                ByteChunk[] newVals = entry.getValue();
 
                 // Check to see if a parameter with the key already exists
                 // and prepend the values since QueryString takes precedence
@@ -255,12 +258,15 @@ public final class WLSParameters extends Parameters {
 
     private void mergeQueryParams(LinkedHashMap<String, ByteChunk[]> tmpQueryParams) {
         if (tmpQueryParams != null) {
-            for (String key : tmpQueryParams.keySet()) {
+            Iterator<Map.Entry<String, ByteChunk[]>> iterator = tmpQueryParams.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, ByteChunk[]> entry = iterator.next();
+                String key = entry.getKey();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters() != null && getParameters().containsKey(key)) {
                     ByteChunk postVals[] = (ByteChunk[]) getParameters().get(key);
-                    ByteChunk queryVals[] = tmpQueryParams.get(key);
+                    ByteChunk queryVals[] = entry.getValue();
                     ByteChunk newVals[] = new ByteChunk[postVals.length + queryVals.length];
                     int newValsIndex = 0;
                     for (int i = 0; i < queryVals.length; i++) {
@@ -289,7 +295,10 @@ public final class WLSParameters extends Parameters {
     @Override
     public void removeQueryParams(Map tmpQueryParams) {
         if (tmpQueryParams != null) {
-            for (Object key : tmpQueryParams.keySet()) {
+            Iterator<Map.Entry<String, ByteChunk[]>> iterator = tmpQueryParams.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, ByteChunk[]> entry = iterator.next();
+                String key = entry.getKey();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters().containsKey(key)) {
@@ -304,6 +313,11 @@ public final class WLSParameters extends Parameters {
                         getParameters().put(key, newVals);
                         if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
                             getParamHashValues().put((String) key, convert(newVals));
+                        }
+                    } else if (tmpQueryParams == getParameters()) {
+                        iterator.remove();
+                        if (Globals.ALLOW_MODIFY_PARAMETER_MAP) {
+                            getParamHashValues().remove(key);
                         }
                     } else {
                         getParameters().remove(key);

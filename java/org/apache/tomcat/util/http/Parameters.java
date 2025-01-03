@@ -300,8 +300,11 @@ public class Parameters {
             LinkedHashMap<String, String[]> parameters = parseQueryStringParameters(bc.getBytes(), bc.getOffset(), bc.getLength(), queryStringCharset);
             // end 249841, 256836
             String[] valArray;
-            for (String key : parameters.keySet()) {
-                String[] newVals = parameters.get(key);
+            Iterator<Map.Entry<String, String[]>> iterator = parameters.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String[]> entry = iterator.next();
+                String key = entry.getKey();
+                String[] newVals = entry.getValue();
 
                 // Check to see if a parameter with the key already exists
                 // and prepend the values since QueryString takes precedence
@@ -384,7 +387,10 @@ public class Parameters {
 
     private void mergeQueryParams(Map<String, String[]> tmpQueryParams) {
         if (tmpQueryParams != null) {
-            for (String key : tmpQueryParams.keySet()) {
+            Iterator<Map.Entry<String, String[]>> iterator = tmpQueryParams.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String[]> entry = iterator.next();
+                String key = entry.getKey();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters() != null && getParameters().containsKey(key)) {
@@ -441,7 +447,10 @@ public class Parameters {
 
     public void removeQueryParams(Map tmpQueryParams) {
         if (tmpQueryParams != null) {
-            for (Object key : tmpQueryParams.keySet()) {
+            Iterator<Map.Entry<String, String[]>> iterator = tmpQueryParams.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String[]> entry = iterator.next();
+                String key = entry.getKey();
                 // Check for QueryString parms with the same name
                 // pre-append to postdata values if necessary
                 if (getParameters().containsKey(key)) {
@@ -454,6 +463,8 @@ public class Parameters {
                             newVals[newValsIndex++] = postVals[i];
                         }
                         getParameters().put(key, newVals);
+                    } else if (tmpQueryParams == getParameters()) {
+                        iterator.remove();
                     } else {
                         getParameters().remove(key);
                     }
