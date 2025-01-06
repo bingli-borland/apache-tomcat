@@ -1098,6 +1098,20 @@ public class Request implements HttpServletRequest {
 
     @Override
     public Map<String,String[]> getParameterMap() {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM) {
+            parseParameters();
+            if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+                Map<String, String[]> parameters = new LinkedHashMap<>();
+                Enumeration<String> enumeration = getParameterNames();
+                while (enumeration.hasMoreElements()) {
+                    String name = enumeration.nextElement();
+                    String[] values = getParameterValues(name);
+                    parameters.put(name, values);
+                }
+                return parameters;
+            }
+            return coyoteRequest.getParameters().getParameterMap();
+        }
         if (parameterMap.isLocked()) {
             return parameterMap;
         }
