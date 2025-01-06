@@ -228,6 +228,10 @@ public class Parameters {
         return _parameters;
     }
 
+    public void setParamHashValues(Map paramHashValues) {
+        this._parameters = paramHashValues;
+    }
+
     /**
      * Save the state of the parameters before a call to include or forward.
      */

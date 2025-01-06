@@ -28,7 +28,7 @@ import org.apache.tomcat.util.buf.StringUtils;
 
 public final class WLSParameters extends Parameters {
 
-    private final Map<String, String[]> wlsParamHashValues = new LinkedHashMap<>();
+    private Map<String, String[]> wlsParamHashValues = new LinkedHashMap<>();
 
     public WLSParameters() {
         // NO-OP
@@ -43,6 +43,11 @@ public final class WLSParameters extends Parameters {
     @Override
     public Map<String, String[]> getParamHashValues() {
         return wlsParamHashValues;
+    }
+
+    @Override
+    public void setParamHashValues(Map paramHashValues) {
+        this.wlsParamHashValues = paramHashValues;
     }
 
     /**

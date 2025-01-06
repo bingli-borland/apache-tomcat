@@ -39,9 +39,9 @@ public final class ParameterMap<K, V> implements Map<K,V>, Serializable {
 
     private static final long serialVersionUID = 2L;
 
-    private final Map<K,V> delegatedMap;
+    private Map<K, V> delegatedMap;
 
-    private final Map<K,V> unmodifiableDelegatedMap;
+    private Map<K, V> unmodifiableDelegatedMap;
 
 
     /**
@@ -99,6 +99,9 @@ public final class ParameterMap<K, V> implements Map<K,V>, Serializable {
         unmodifiableDelegatedMap = Collections.unmodifiableMap(delegatedMap);
     }
 
+    public Map getDelegatedMap() {
+        return delegatedMap;
+    }
 
     /**
      * The current lock state of this parameter map.

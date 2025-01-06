@@ -2530,6 +2530,8 @@ public class Request implements HttpServletRequest {
         if (Globals.PARSE_DISPATCH_QUERY_PARAM && coyoteRequest.getParameters().getParameters() == null) {
             coyoteRequest.getParameters().setParameters(new LinkedHashMap());
             coyoteRequest.getParameters().parseQueryStringList();
+        } else if (Globals.ALLOW_MODIFY_PARAMETER_MAP && Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            coyoteRequest.getParameters().setParamHashValues(parameterMap.getDelegatedMap());
         }
         // Return immediately if the parts have already been parsed
         if (parts != null || partsParseException != null) {
@@ -2933,7 +2935,9 @@ public class Request implements HttpServletRequest {
         if (parameters.getParameters() != null) {
             return;
         }
-
+        if (Globals.ALLOW_MODIFY_PARAMETER_MAP && Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
+            parameters.setParamHashValues(parameterMap.getDelegatedMap());
+        }
         parameters.setParameters(new LinkedHashMap());
 
         // Set this every time in case limit has been changed via JMX
