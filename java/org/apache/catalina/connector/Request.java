@@ -2887,7 +2887,7 @@ public class Request implements HttpServletRequest {
         parametersParsed = true;
 
         Parameters parameters = coyoteRequest.getParameters();
-        if (parameters.getParameterMap() != null) {
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameterMap() != null) {
             return;
         }
 
