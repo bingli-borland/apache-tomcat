@@ -56,8 +56,6 @@ public class Parameters {
     protected Map parameters = Globals.PARSE_DISPATCH_QUERY_PARAM ? null : new LinkedHashMap();
     protected LinkedList _queryStringList = null;
 
-    protected UnsynchronizedStack _paramStack = new UnsynchronizedStack();
-
     public Parameters() {
         // NO-OP
     }
@@ -119,9 +117,6 @@ public class Parameters {
             parameters.clear();
         }
         _queryStringList = null;
-        if (!_paramStack.isEmpty()) {
-            _paramStack.clear();
-        }
     }
 
 
@@ -236,9 +231,7 @@ public class Parameters {
      * Save the state of the parameters before a call to include or forward.
      */
     public void pushParameterStack() {
-        if (getParameterMap() == null) {
-            _paramStack.push(null);
-        } else {
+        if (getParameterMap() != null) {
             paramStack.push(((LinkedHashMap) getParameterMap()).clone());
         }
     }
