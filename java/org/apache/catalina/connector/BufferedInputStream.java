@@ -19,14 +19,11 @@ package org.apache.catalina.connector;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
-import org.apache.catalina.tribes.util.StringManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class BufferedInputStream extends ServletInputStream {
-
-    protected static final StringManager sm = StringManager.getManager(BufferedInputStream.class);
 
     private ByteArrayInputStream postCached;
 
