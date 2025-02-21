@@ -20,9 +20,7 @@ import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -51,6 +49,7 @@ public class TLSClientHelloExtractor {
     private static final int TLS_EXTENSION_SERVER_NAME = 0;
     private static final int TLS_EXTENSION_ALPN = 16;
     private static final int TLS_EXTENSION_SUPPORTED_VERSION = 43;
+    private final Map<String, String> httpHeaders = new HashMap();
 
     public static byte[] USE_TLS_RESPONSE =
             ("HTTP/1.1 400 \r\n" + "Content-Type: text/plain;charset=UTF-8\r\n" + "Connection: close\r\n" + "\r\n" +
@@ -67,7 +66,7 @@ public class TLSClientHelloExtractor {
      *
      * @throws IOException If the client hello message is malformed
      */
-    public TLSClientHelloExtractor(ByteBuffer netInBuffer) throws IOException {
+    public TLSClientHelloExtractor(ByteBuffer netInBuffer, boolean httpsAutoRedirect) throws IOException {
         // Buffer is in write mode at this point. Record the current position so
         // the buffer state can be restored at the end of this method.
         int pos = netInBuffer.position();
@@ -92,7 +91,12 @@ public class TLSClientHelloExtractor {
             if (!isTLSHandshake(netInBuffer)) {
                 // Is the client trying to use clear text HTTP?
                 if (isHttp(netInBuffer)) {
-                    result = ExtractorResult.NON_SECURE;
+                    if (httpsAutoRedirect) {
+                        parseHttpRequest(netInBuffer);
+                        result = ExtractorResult.HTTPS_AUTO_REDIRECT;
+                    } else {
+                        result = ExtractorResult.NON_SECURE;
+                    }
                 }
                 return;
             }
@@ -412,12 +416,52 @@ public class TLSClientHelloExtractor {
         }
     }
 
+    private void parseHttpRequest(ByteBuffer netInBuffer) {
+        int originalPos = netInBuffer.position();
+        netInBuffer.position(0);
+        String requestData = StandardCharsets.ISO_8859_1.decode(netInBuffer).toString();
+        if (!"".equals(requestData)) {
+            String[] lines = requestData.split("\r\n");
+            Arrays.stream(lines).forEach(line -> {
+                if (line.contains(" ") && !line.contains(":")) {
+                    String[] strings = line.split(" ");
+                    this.httpHeaders.put("REQUESTPATH", strings[1].trim());
+                } else if (line.contains(":")) {
+                    String[] strings = line.split(":");
+                    if (strings[0].equalsIgnoreCase("host")) {
+                        if (strings.length == 2) {
+                            this.httpHeaders.put("HOST", strings[1].trim());
+                        } else if (strings.length == 3) {
+                            this.httpHeaders.put("HOST", (strings[1] + ":" + strings[2]).trim());
+                        }
+                    }
+                }
+            });
+            netInBuffer.position(originalPos);
+        }
+    }
+
+    public void httpsAutoRedirectResponse(ByteBuffer netOutBuffer) {
+        netOutBuffer.clear();
+        String host = this.httpHeaders.get("HOST");
+        String requestpath = this.httpHeaders.get("REQUESTPATH");
+        if (host != null && !"".equals(host) && requestpath != null && !"".equals(requestpath)) {
+            String url = host + (requestpath.startsWith("/") ? requestpath : "/" + requestpath);
+            byte[] bytes = ("HTTP/1.1 302 \r\nLocation: https://" + url + " \r\nContent-Length: 0 \r\n").getBytes(StandardCharsets.UTF_8);
+            netOutBuffer.put(bytes);
+        } else {
+            netOutBuffer.put(USE_TLS_RESPONSE);
+        }
+
+        netOutBuffer.flip();
+    }
 
     public enum ExtractorResult {
         COMPLETE,
         NOT_PRESENT,
         UNDERFLOW,
         NEED_READ,
-        NON_SECURE
+        NON_SECURE,
+        HTTPS_AUTO_REDIRECT
     }
 }

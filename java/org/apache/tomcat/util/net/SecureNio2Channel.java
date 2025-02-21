@@ -389,7 +389,7 @@ public class SecureNio2Channel extends Nio2Channel {
             return 1;
         }
 
-        TLSClientHelloExtractor extractor = new TLSClientHelloExtractor(netInBuffer);
+        TLSClientHelloExtractor extractor = new TLSClientHelloExtractor(netInBuffer, endpoint.isHttpsAutoRedirect());
 
         if (extractor.getResult() == ExtractorResult.UNDERFLOW &&
                 netInBuffer.capacity() < endpoint.getSniParseLimit()) {
@@ -431,6 +431,10 @@ public class SecureNio2Channel extends Nio2Channel {
                 netOutBuffer.clear();
                 netOutBuffer.put(TLSClientHelloExtractor.USE_TLS_RESPONSE);
                 netOutBuffer.flip();
+                flush();
+                throw new IOException(sm.getString("channel.nio.ssl.foundHttp"));
+            case HTTPS_AUTO_REDIRECT:
+                extractor.httpsAutoRedirectResponse(this.netOutBuffer);
                 flush();
                 throw new IOException(sm.getString("channel.nio.ssl.foundHttp"));
         }
