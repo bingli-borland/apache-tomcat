@@ -198,6 +198,16 @@ public abstract class AbstractEndpoint<S, U> {
      */
     private volatile LimitLatch connectionLimitLatch = null;
 
+    private boolean httpsAutoRedirect = true;
+
+    public boolean isHttpsAutoRedirect() {
+        return httpsAutoRedirect;
+    }
+
+    public void setHttpsAutoRedirect(boolean httpsAutoRedirect) {
+        this.httpsAutoRedirect = httpsAutoRedirect;
+    }
+
     /**
      * Socket properties
      */
