@@ -19,6 +19,7 @@ package org.apache.catalina.core;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -944,7 +945,8 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
                 for (int i = 0; i < bys.length; i++) {
                     try {
                         if (bys[i].getBytes() != null) {
-                            dispParamValues[i] = new String(bys[i].getBytes(), bys[i].getStart(), bys[i].getLength(), paramParser.getQueryStringCharset());
+                            bys[i].setCharset(paramParser.getQueryStringCharset());
+                            dispParamValues[i] = bys[i].toStringInternal(CodingErrorAction.REPLACE, CodingErrorAction.REPLACE);
                         } else {
                             dispParamValues[i] = "";
                         }
