@@ -2891,7 +2891,9 @@ public class Request implements HttpServletRequest {
             return;
         }
 
-        parameters.setParameterMap(new LinkedHashMap());
+        if (Globals.PARSE_DISPATCH_QUERY_PARAM && parameters.getParameterMap() == null) {
+            parameters.setParameterMap(new LinkedHashMap());
+        }
 
         // Set this every time in case limit has been changed via JMX
         int maxParameterCount = getConnector().getMaxParameterCount();
