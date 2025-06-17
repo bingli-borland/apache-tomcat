@@ -318,6 +318,9 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 // Ignore
             }
         }
+            if(Globals.COMPATIBLEWEBSPHERE && response instanceof ServletResponseWrapper) {
+                response.getWriter().flush();
+            }
         } finally {
             if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
                 wrequest.removeQSFromList();
