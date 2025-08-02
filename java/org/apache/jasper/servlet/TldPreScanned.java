@@ -20,7 +20,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Collection;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.jasper.compiler.Localizer;
 import org.apache.tomcat.util.descriptor.tld.TldResourcePath;

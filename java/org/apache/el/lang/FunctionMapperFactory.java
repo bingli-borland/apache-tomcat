@@ -18,7 +18,7 @@ package org.apache.el.lang;
 
 import java.lang.reflect.Method;
 
-import javax.el.FunctionMapper;
+import jakarta.el.FunctionMapper;
 
 import org.apache.el.util.MessageFactory;
 

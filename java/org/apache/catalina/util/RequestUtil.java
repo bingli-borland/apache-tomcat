@@ -16,7 +16,7 @@
  */
 package org.apache.catalina.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.catalina.connector.Request;
 
@@ -30,7 +30,7 @@ public final class RequestUtil {
 
     /**
      * Build an appropriate return value for {@link HttpServletRequest#getRequestURL()} based on the provided request
-     * object. Note that this will also work for instances of {@link javax.servlet.http.HttpServletRequestWrapper}.
+     * object. Note that this will also work for instances of {@link jakarta.servlet.http.HttpServletRequestWrapper}.
      *
      * @param request The request object for which the URL should be built
      *

@@ -16,11 +16,11 @@
  */
 package org.apache.jasper.compiler;
 
-import javax.el.ELContext;
-import javax.el.ELManager;
-import javax.el.ExpressionFactory;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.TesterPageContext;
+import jakarta.el.ELContext;
+import jakarta.el.ELManager;
+import jakarta.el.ExpressionFactory;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.TesterPageContext;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -49,7 +49,7 @@ public class TestNonstandardTagPerformance {
     private ELManager manager;
     public PageContext pageContext;
 
-    public javax.el.ExpressionFactory _jsp_getExpressionFactory() {
+    public jakarta.el.ExpressionFactory _jsp_getExpressionFactory() {
         return factory;
     }
 
@@ -58,10 +58,10 @@ public class TestNonstandardTagPerformance {
 //        return instanceManager;
 //    }
 
-    private void newCode(javax.servlet.jsp.PageContext _jspx_page_context) throws java.lang.Throwable {
+    private void newCode(jakarta.servlet.jsp.PageContext _jspx_page_context) throws java.lang.Throwable {
         JspRuntimeLibrary.nonstandardSetTag(_jspx_page_context, null, _jspx_page_context,
-                javax.servlet.jsp.PageContext.PAGE_SCOPE);
-        _jspx_page_context.setAttribute("groupName", new Object(), javax.servlet.jsp.PageContext.PAGE_SCOPE);
+                jakarta.servlet.jsp.PageContext.PAGE_SCOPE);
+        _jspx_page_context.setAttribute("groupName", new Object(), jakarta.servlet.jsp.PageContext.PAGE_SCOPE);
     }
 
 //    /**
@@ -73,26 +73,26 @@ public class TestNonstandardTagPerformance {
 //     * @return whether to continue execution
 //     * @throws java.lang.Throwable unknown error
 //     */
-//    private boolean oldCode(javax.servlet.jsp.tagext.JspTag _jspx_th_c_005fwhen_005f11,
-//            javax.servlet.jsp.PageContext _jspx_page_context) throws java.lang.Throwable {
-//        javax.servlet.jsp.PageContext pageContext = _jspx_page_context;
-//        javax.servlet.jsp.JspWriter out = _jspx_page_context.getOut();
+//    private boolean oldCode(jakarta.servlet.jsp.tagext.JspTag _jspx_th_c_005fwhen_005f11,
+//            jakarta.servlet.jsp.PageContext _jspx_page_context) throws java.lang.Throwable {
+//        jakarta.servlet.jsp.PageContext pageContext = _jspx_page_context;
+//        jakarta.servlet.jsp.JspWriter out = _jspx_page_context.getOut();
 //        // c:set
 //        org.apache.taglibs.standard.tag.rt.core.SetTag _jspx_th_c_005fset_005f39 = new org.apache.taglibs.standard.tag.rt.core.SetTag();
 //        _jsp_getInstanceManager().newInstance(_jspx_th_c_005fset_005f39);
 //        try {
 //            _jspx_th_c_005fset_005f39.setPageContext(_jspx_page_context);
-//            _jspx_th_c_005fset_005f39.setParent((javax.servlet.jsp.tagext.Tag) _jspx_th_c_005fwhen_005f11);
+//            _jspx_th_c_005fset_005f39.setParent((jakarta.servlet.jsp.tagext.Tag) _jspx_th_c_005fwhen_005f11);
 //            // /WEB-INF/views/jsp/features/buybox/offerDisplayGroupLayout.jsp(230,12) name = var type = java.lang.String
 //            // reqTime = false required = false fragment = false deferredValue = false expectedTypeName = null
 //            // deferredMethod = false methodSignature = null
 //            _jspx_th_c_005fset_005f39.setVar("groupName");
 //            // /WEB-INF/views/jsp/features/buybox/offerDisplayGroupLayout.jsp(230,12) name = value type =
-//            // javax.el.ValueExpression reqTime = true required = false fragment = false deferredValue = true
+//            // jakarta.el.ValueExpression reqTime = true required = false fragment = false deferredValue = true
 //            // expectedTypeName = java.lang.Object deferredMethod = false methodSignature = null
 //            _jspx_th_c_005fset_005f39.setValue(new Object());
 //            int _jspx_eval_c_005fset_005f39 = _jspx_th_c_005fset_005f39.doStartTag();
-//            if (_jspx_th_c_005fset_005f39.doEndTag() == javax.servlet.jsp.tagext.Tag.SKIP_PAGE) {
+//            if (_jspx_th_c_005fset_005f39.doEndTag() == jakarta.servlet.jsp.tagext.Tag.SKIP_PAGE) {
 //                return true;
 //            }
 //        } finally {

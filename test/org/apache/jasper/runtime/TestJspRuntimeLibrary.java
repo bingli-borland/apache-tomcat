@@ -16,9 +16,9 @@
  */
 package org.apache.jasper.runtime;
 
-import javax.el.ELManager;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.TesterPageContextWithAttributes;
+import jakarta.el.ELManager;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.TesterPageContextWithAttributes;
 
 import org.junit.Assert;
 import org.junit.Before;

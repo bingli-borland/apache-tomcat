@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContainerInitializer;
+import jakarta.servlet.ServletContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -44,7 +44,7 @@ import org.easymock.IMocksControl;
 
 public class TestWebappServiceLoader {
     private static final String CONFIG_FILE =
-            "META-INF/services/javax.servlet.ServletContainerInitializer";
+            "META-INF/services/jakarta.servlet.ServletContainerInitializer";
     private IMocksControl control;
     private ClassLoader cl;
     private ClassLoader parent;

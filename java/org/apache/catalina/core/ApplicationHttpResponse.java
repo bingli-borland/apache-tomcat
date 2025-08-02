@@ -19,15 +19,15 @@ package org.apache.catalina.core;
 import java.io.IOException;
 import java.util.Locale;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 
 /**
- * Wrapper around a <code>javax.servlet.http.HttpServletResponse</code> that transforms an application response object
+ * Wrapper around a <code>jakarta.servlet.http.HttpServletResponse</code> that transforms an application response object
  * (which might be the original one passed to a servlet, or might be based on the 2.3
- * <code>javax.servlet.http.HttpServletResponseWrapper</code> class) back into an internal
+ * <code>jakarta.servlet.http.HttpServletResponseWrapper</code> class) back into an internal
  * <code>org.apache.catalina.HttpResponse</code>.
  * <p>
  * <strong>WARNING</strong>: Due to Java's lack of support for multiple inheritance, all of the logic in

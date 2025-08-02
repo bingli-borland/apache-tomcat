@@ -19,7 +19,7 @@ package org.apache.jasper.runtime;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import javax.servlet.jsp.el.FunctionMapper;
+import jakarta.servlet.jsp.el.FunctionMapper;
 
 /**
  * Maps EL functions to their Java method counterparts. Keeps the actual Method objects protected so that JSP pages
@@ -29,7 +29,7 @@ import javax.servlet.jsp.el.FunctionMapper;
  * @author Kin-man Chung
  */
 @SuppressWarnings("deprecation") // Have to support old JSP EL API
-public final class ProtectedFunctionMapper extends javax.el.FunctionMapper implements FunctionMapper {
+public final class ProtectedFunctionMapper extends jakarta.el.FunctionMapper implements FunctionMapper {
 
     /**
      * Maps "prefix:name" to java.lang.Method objects.

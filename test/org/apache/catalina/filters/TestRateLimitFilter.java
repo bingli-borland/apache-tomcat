@@ -20,9 +20,9 @@ package org.apache.catalina.filters;
 import java.io.IOException;
 import java.time.Instant;
 
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
 
 import org.junit.Assert;
 import org.junit.Test;

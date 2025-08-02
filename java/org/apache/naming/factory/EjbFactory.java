@@ -43,7 +43,7 @@ public class EjbFactory extends FactoryBase {
     protected ObjectFactory getDefaultFactory(Reference ref) throws NamingException {
 
         ObjectFactory factory;
-        String javaxEjbFactoryClassName = System.getProperty("javax.ejb.Factory", Constants.OPENEJB_EJB_FACTORY);
+        String javaxEjbFactoryClassName = System.getProperty("jakarta.ejb.Factory", Constants.OPENEJB_EJB_FACTORY);
         try {
             factory = (ObjectFactory) Class.forName(javaxEjbFactoryClassName).getConstructor().newInstance();
         } catch (Throwable t) {

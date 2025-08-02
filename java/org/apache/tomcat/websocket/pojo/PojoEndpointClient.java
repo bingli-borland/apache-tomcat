@@ -19,16 +19,16 @@ package org.apache.tomcat.websocket.pojo;
 import java.util.Collections;
 import java.util.List;
 
-import javax.websocket.Decoder;
-import javax.websocket.DeploymentException;
-import javax.websocket.EndpointConfig;
-import javax.websocket.Session;
+import jakarta.websocket.Decoder;
+import jakarta.websocket.DeploymentException;
+import jakarta.websocket.EndpointConfig;
+import jakarta.websocket.Session;
 
 import org.apache.tomcat.InstanceManager;
 
 /**
- * Wrapper class for instances of POJOs annotated with {@link javax.websocket.ClientEndpoint} so they appear as standard
- * {@link javax.websocket.Endpoint} instances.
+ * Wrapper class for instances of POJOs annotated with {@link jakarta.websocket.ClientEndpoint} so they appear as standard
+ * {@link jakarta.websocket.Endpoint} instances.
  */
 public class PojoEndpointClient extends PojoEndpointBase {
 

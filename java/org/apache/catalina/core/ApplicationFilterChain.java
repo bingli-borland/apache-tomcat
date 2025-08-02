@@ -22,14 +22,14 @@ import java.security.PrivilegedActionException;
 import java.util.Arrays;
 import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.Globals;
 import org.apache.catalina.security.SecurityUtil;
@@ -37,7 +37,7 @@ import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.res.StringManager;
 
 /**
- * Implementation of <code>javax.servlet.FilterChain</code> used to manage the execution of a set of filters for a
+ * Implementation of <code>jakarta.servlet.FilterChain</code> used to manage the execution of a set of filters for a
  * particular request. When the set of defined filters has all been executed, the next call to <code>doFilter()</code>
  * will execute the servlet's <code>service()</code> method itself.
  *

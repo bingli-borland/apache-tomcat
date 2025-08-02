@@ -26,9 +26,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.servlet.http.WebConnection;
-import javax.websocket.SendHandler;
-import javax.websocket.SendResult;
+import jakarta.servlet.http.WebConnection;
+import jakarta.websocket.SendHandler;
+import jakarta.websocket.SendResult;
 
 import org.apache.coyote.http11.upgrade.UpgradeInfo;
 import org.apache.juli.logging.Log;
@@ -41,7 +41,7 @@ import org.apache.tomcat.websocket.Transformation;
 import org.apache.tomcat.websocket.WsRemoteEndpointImplBase;
 
 /**
- * This is the server side {@link javax.websocket.RemoteEndpoint} implementation - i.e. what the server uses to send
+ * This is the server side {@link jakarta.websocket.RemoteEndpoint} implementation - i.e. what the server uses to send
  * data to the client.
  */
 public class WsRemoteEndpointImplServer extends WsRemoteEndpointImplBase {
@@ -341,7 +341,7 @@ public class WsRemoteEndpointImplServer extends WsRemoteEndpointImplBase {
     /**
      * @param t           The throwable associated with any error that occurred
      * @param useDispatch Should {@link SendHandler#onResult(SendResult)} be called from a new thread, keeping in mind
-     *                        the requirements of {@link javax.websocket.RemoteEndpoint.Async}
+     *                        the requirements of {@link jakarta.websocket.RemoteEndpoint.Async}
      */
     void clearHandler(Throwable t, boolean useDispatch) {
         // Setting the result marks this (partial) message as

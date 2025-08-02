@@ -18,7 +18,7 @@ package org.apache.el.parser;
 
 import java.math.BigDecimal;
 
-import javax.el.ELProcessor;
+import jakarta.el.ELProcessor;
 
 import org.junit.Assert;
 import org.junit.Test;

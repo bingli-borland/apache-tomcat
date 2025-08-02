@@ -136,34 +136,34 @@ public final class Globals {
      * The request attribute under which we store the array of X509Certificate objects representing the certificate
      * chain presented by our client, if any.
      */
-    public static final String CERTIFICATES_ATTR = "javax.servlet.request.X509Certificate";
+    public static final String CERTIFICATES_ATTR = "jakarta.servlet.request.X509Certificate";
 
 
     /**
      * The request attribute under which we store the name of the cipher suite being used on an SSL connection (as an
      * object of type {@link String}).
      */
-    public static final String CIPHER_SUITE_ATTR = "javax.servlet.request.cipher_suite";
+    public static final String CIPHER_SUITE_ATTR = "jakarta.servlet.request.cipher_suite";
 
 
     /**
      * The request attribute under which we store the key size being used for this SSL connection (as an object of type
      * {@link Integer}).
      */
-    public static final String KEY_SIZE_ATTR = "javax.servlet.request.key_size";
+    public static final String KEY_SIZE_ATTR = "jakarta.servlet.request.key_size";
 
 
     /**
      * The request attribute under which we store the session id being used for this SSL connection (as an object of
      * type {@link String}).
      */
-    public static final String SSL_SESSION_ID_ATTR = "javax.servlet.request.ssl_session_id";
+    public static final String SSL_SESSION_ID_ATTR = "jakarta.servlet.request.ssl_session_id";
 
 
     /**
      * The request attribute key for the session manager. This one is a Tomcat extension to the Servlet spec.
      */
-    public static final String SSL_SESSION_MGR_ATTR = "javax.servlet.request.ssl_session_mgr";
+    public static final String SSL_SESSION_MGR_ATTR = "jakarta.servlet.request.ssl_session_mgr";
 
 
     // ------------------------------------------------- Session attribute names

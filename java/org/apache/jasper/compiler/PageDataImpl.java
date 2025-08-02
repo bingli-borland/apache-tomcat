@@ -21,7 +21,7 @@ import java.io.CharArrayWriter;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import javax.servlet.jsp.tagext.PageData;
+import jakarta.servlet.jsp.tagext.PageData;
 
 import org.apache.jasper.JasperException;
 import org.apache.tomcat.util.security.Escape;
@@ -29,7 +29,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * An implementation of <code>javax.servlet.jsp.tagext.PageData</code> which builds the XML view of a given page. The
+ * An implementation of <code>jakarta.servlet.jsp.tagext.PageData</code> which builds the XML view of a given page. The
  * XML view is built in two passes: During the first pass, the FirstPassVisitor collects the attributes of the top-level
  * jsp:root and those of the jsp:root elements of any included pages, and adds them to the jsp:root element of the XML
  * view. In addition, any taglib directives are converted into xmlns: attributes and added to the jsp:root element of

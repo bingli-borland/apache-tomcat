@@ -37,3 +37,4 @@ To release do the following:
 
 To install in your maven repo:
 1 - ant -f mvn-pub.xml generic-install
+2 - mvn install:install-file -Dfile=E:\project\tomcat9\output\release\v9.0.109-jakarta\bin\apache-tomcat-9.0.109-jakarta.zip -DgroupId=org.apache.tomcat -DartifactId=tomcat -Dversion=9.0.109-jakarta  -Dpackaging=zip

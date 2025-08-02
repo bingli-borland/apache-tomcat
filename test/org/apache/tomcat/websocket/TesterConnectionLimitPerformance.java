@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.websocket.ContainerProvider;
-import javax.websocket.DeploymentException;
-import javax.websocket.WebSocketContainer;
+import jakarta.websocket.ContainerProvider;
+import jakarta.websocket.DeploymentException;
+import jakarta.websocket.WebSocketContainer;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -94,7 +94,7 @@ public class TesterConnectionLimitPerformance extends TomcatBaseTest {
             try {
                 while (true) {
                     wsContainer.connectToServer(TesterProgrammaticEndpoint.class,
-                            javax.websocket.ClientEndpointConfig.Builder.create().build(), uri);
+                            jakarta.websocket.ClientEndpointConfig.Builder.create().build(), uri);
                     count = counter.incrementAndGet();
                     if (count % 100 == 0) {
                         System.out.println(count + " and counting...");

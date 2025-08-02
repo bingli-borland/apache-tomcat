@@ -498,7 +498,7 @@
   <subsection name="Jasper">
     <changelog>
       <fix>
-        <bug>69635</bug>: Add support to <code>javax.el.ImportHandler</code>
+        <bug>69635</bug>: Add support to <code>jakarta.el.ImportHandler</code>
         for resolving inner classes. (markt)
       </fix>
       <add>
@@ -1086,7 +1086,7 @@
       </fix>
       <fix>
         <bug>69444</bug>: Ensure that the
-        <code>javax.servlet.error.message</code> request attribute is set when
+        <code>jakarta.servlet.error.message</code> request attribute is set when
         an application defined error page is called. (markt)
       </fix>
       <fix>
@@ -3021,7 +3021,7 @@
     <changelog>
       <fix>
         If an application or library sets both a non-500 error code and the
-        <code>javax.servlet.error.exception</code> request attribute, use the
+        <code>jakarta.servlet.error.exception</code> request attribute, use the
         provided error code during error page processing rather than assuming an
         error code of 500. (markt)
       </fix>
@@ -10572,7 +10572,7 @@
       <fix>
         When running under a <code>SecurityManager</code>, ensure that the
         <code>ServiceLoader</code> look-up for the default
-        <code>javax.websocket.server.ServerEndpointConfig.Configurator</code>
+        <code>jakarta.websocket.server.ServerEndpointConfig.Configurator</code>
         implementation completes correctly rather than silently using the
         hard-coded fall-back. (markt)
       </fix>
@@ -12704,7 +12704,7 @@
       </fix>
       <fix>
         Improve concurrency by reducing the scope of the synchronisation for
-        <code>javax.security.auth.message.config.AuthConfigFactory</code> in the
+        <code>jakarta.security.auth.message.config.AuthConfigFactory</code> in the
         JASPIC API implementation. Based on a patch by Pavan Kumar. (markt)
       </fix>
       <fix>
@@ -13910,7 +13910,7 @@
       </update>
       <fix>
         <bug>61065</bug>: Ensure that once the class is resolved by
-        <code>javax.el.ImportHandler#resolveClass</code> it will be cached with
+        <code>jakarta.el.ImportHandler#resolveClass</code> it will be cached with
         the proper name. (violetagg)
       </fix>
     </changelog>
@@ -14017,14 +14017,14 @@
         the unit tests. (markt)
       </fix>
       <fix>
-        When there is no <code>javax.servlet.WriteListener</code> registered
-        then a call to <code>javax.servlet.ServletOutputStream#isReady</code>
+        When there is no <code>jakarta.servlet.WriteListener</code> registered
+        then a call to <code>jakarta.servlet.ServletOutputStream#isReady</code>
         will return <code>false</code> instead of throwing
         <code>IllegalStateException</code>. (violetagg)
       </fix>
       <fix>
-        When there is no <code>javax.servlet.ReadListener</code> registered
-        then a call to <code>javax.servlet.ServletInputStream#isReady</code>
+        When there is no <code>jakarta.servlet.ReadListener</code> registered
+        then a call to <code>jakarta.servlet.ServletInputStream#isReady</code>
         will return <code>false</code> instead of throwing
         <code>IllegalStateException</code>. (violetagg)
       </fix>
@@ -16109,11 +16109,11 @@
         request. (remm)
       </fix>
       <fix>
-        Ensure that <code>javax.servlet.ServletRequest</code> and
-        <code>javax.servlet.ServletResponse</code> provided during
-        <code>javax.servlet.AsyncListener</code> registration are made
-        available via <code>javax.servlet.AsyncEvent.getSuppliedRequest</code>
-        and <code>javax.servlet.AsyncEvent.getSuppliedResponse</code>
+        Ensure that <code>jakarta.servlet.ServletRequest</code> and
+        <code>jakarta.servlet.ServletResponse</code> provided during
+        <code>jakarta.servlet.AsyncListener</code> registration are made
+        available via <code>jakarta.servlet.AsyncEvent.getSuppliedRequest</code>
+        and <code>jakarta.servlet.AsyncEvent.getSuppliedResponse</code>
         (violetagg)
       </fix>
       <fix>
@@ -16662,7 +16662,7 @@
       </update>
       <fix>
         <bug>57583</bug>: Improve the performance of
-        <code>javax.servlet.jsp.el.ScopedAttributeELResolver</code> when
+        <code>jakarta.servlet.jsp.el.ScopedAttributeELResolver</code> when
         resolving attributes that do not exist. This improvement only works when
         Jasper is used with Tomcat's EL implementation. (markt)
       </fix>

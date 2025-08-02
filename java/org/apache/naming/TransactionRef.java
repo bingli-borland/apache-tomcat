@@ -47,7 +47,7 @@ public class TransactionRef extends AbstractRef {
      * @param factoryLocation The factory location
      */
     public TransactionRef(String factory, String factoryLocation) {
-        super("javax.transaction.UserTransaction", factory, factoryLocation);
+        super("jakarta.transaction.UserTransaction", factory, factoryLocation);
     }
 
 

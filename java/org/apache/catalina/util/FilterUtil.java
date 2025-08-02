@@ -16,7 +16,7 @@
  */
 package org.apache.catalina.util;
 
-import javax.servlet.ServletRequest;
+import jakarta.servlet.ServletRequest;
 
 import org.apache.catalina.Globals;
 import org.apache.tomcat.util.descriptor.web.FilterMap;

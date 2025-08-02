@@ -16,7 +16,7 @@
  */
 package org.apache.jasper.compiler;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * Provides {@link StringInterpreter} instances for JSP compilation. The search order is as follows:

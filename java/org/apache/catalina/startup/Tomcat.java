@@ -39,9 +39,9 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 
 import org.apache.catalina.Container;
 import org.apache.catalina.Context;
@@ -114,7 +114,7 @@ import org.apache.tomcat.util.res.StringManager;
  * provided by <code>conf/web.xml</code> (see {@link #initWebappDefaults(String)} for details) and add the Context to a
  * Host. These methods do not use a global default web.xml; rather, they add a {@link LifecycleListener} to configure
  * the defaults. Any WEB-INF/web.xml and META-INF/context.xml packaged with the application will be processed normally.
- * Normal web fragment and {@link javax.servlet.ServletContainerInitializer} processing will be applied.
+ * Normal web fragment and {@link jakarta.servlet.ServletContainerInitializer} processing will be applied.
  * <p>
  * In complex cases, you may prefer to use the ordinary Tomcat API to create webapp contexts; for example, you might
  * need to install a custom Loader before the call to {@link Host#addChild(Container)}. To replicate the basic behavior
@@ -209,7 +209,7 @@ public class Tomcat {
      * {@link #initWebappDefaults(String)}). This may be prevented by calling
      * {@link #setAddDefaultWebXmlToWebapp(boolean)} with {@code false}. Any <code>WEB-INF/web.xml</code> and
      * <code>META-INF/context.xml</code> packaged with the application will always be processed and normal web fragment
-     * and {@link javax.servlet.ServletContainerInitializer} processing will always be applied.
+     * and {@link jakarta.servlet.ServletContainerInitializer} processing will always be applied.
      *
      * @param contextPath The context mapping to use, "" for root context.
      * @param docBase     Base directory for the context, for static files. Must exist and be an absolute path.
@@ -272,9 +272,9 @@ public class Tomcat {
     /**
      * Add a context - programmatic mode, no default web.xml used. This means that there is no JSP support (no JSP
      * servlet), no default servlet and no web socket support unless explicitly enabled via the programmatic interface.
-     * There is also no {@link javax.servlet.ServletContainerInitializer} processing and no annotation processing. If a
-     * {@link javax.servlet.ServletContainerInitializer} is added programmatically, there will still be no scanning for
-     * {@link javax.servlet.annotation.HandlesTypes} matches.
+     * There is also no {@link jakarta.servlet.ServletContainerInitializer} processing and no annotation processing. If a
+     * {@link jakarta.servlet.ServletContainerInitializer} is added programmatically, there will still be no scanning for
+     * {@link jakarta.servlet.annotation.HandlesTypes} matches.
      * <p>
      * API calls equivalent with web.xml:
      *
@@ -660,7 +660,7 @@ public class Tomcat {
      * {@link #initWebappDefaults(String)}). This may be prevented by calling
      * {@link #setAddDefaultWebXmlToWebapp(boolean)} with {@code false}. Any <code>WEB-INF/web.xml</code> and
      * <code>META-INF/context.xml</code> packaged with the application will always be processed and normal web fragment
-     * and {@link javax.servlet.ServletContainerInitializer} processing will always be applied.
+     * and {@link jakarta.servlet.ServletContainerInitializer} processing will always be applied.
      *
      * @param host        The host in which the context will be deployed
      * @param contextPath The context mapping to use, "" for root context.
@@ -689,7 +689,7 @@ public class Tomcat {
      * {@link #initWebappDefaults(String)}). This may be prevented by calling
      * {@link #setAddDefaultWebXmlToWebapp(boolean)} with {@code false}. Any <code>WEB-INF/web.xml</code> and
      * <code>META-INF/context.xml</code> packaged with the application will always be processed and normal web fragment
-     * and {@link javax.servlet.ServletContainerInitializer} processing will always be applied.
+     * and {@link jakarta.servlet.ServletContainerInitializer} processing will always be applied.
      *
      * @param host        The host in which the context will be deployed
      * @param contextPath The context mapping to use, "" for root context.
@@ -1120,7 +1120,7 @@ public class Tomcat {
         @SuppressWarnings("deprecation")
         public ExistingStandardWrapper(Servlet existing) {
             this.existing = existing;
-            if (existing instanceof javax.servlet.SingleThreadModel) {
+            if (existing instanceof jakarta.servlet.SingleThreadModel) {
                 singleThreadModel = true;
                 instancePool = new Stack<>();
             }

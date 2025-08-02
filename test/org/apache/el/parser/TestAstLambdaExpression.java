@@ -16,8 +16,8 @@
  */
 package org.apache.el.parser;
 
-import javax.el.ELException;
-import javax.el.ELProcessor;
+import jakarta.el.ELException;
+import jakarta.el.ELProcessor;
 
 import org.junit.Assert;
 import org.junit.Test;

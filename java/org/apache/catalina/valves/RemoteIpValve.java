@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import org.apache.catalina.AccessLog;
 import org.apache.catalina.Globals;
@@ -138,7 +138,7 @@ import org.apache.tomcat.util.http.parser.Host;
  * </tr>
  * <tr>
  * <td>httpServerPort</td>
- * <td>Value returned by {@link javax.servlet.ServletRequest#getServerPort()} when the <code>protocolHeader</code>
+ * <td>Value returned by {@link jakarta.servlet.ServletRequest#getServerPort()} when the <code>protocolHeader</code>
  * indicates <code>http</code> protocol</td>
  * <td>N/A</td>
  * <td>integer</td>
@@ -146,7 +146,7 @@ import org.apache.tomcat.util.http.parser.Host;
  * </tr>
  * <tr>
  * <td>httpsServerPort</td>
- * <td>Value returned by {@link javax.servlet.ServletRequest#getServerPort()} when the <code>protocolHeader</code>
+ * <td>Value returned by {@link jakarta.servlet.ServletRequest#getServerPort()} when the <code>protocolHeader</code>
  * indicates <code>https</code> protocol</td>
  * <td>N/A</td>
  * <td>integer</td>

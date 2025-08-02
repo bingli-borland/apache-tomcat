@@ -133,7 +133,7 @@ public enum ActionCode {
     ASYNC_START,
 
     /**
-     * Callback for an async call to {@link javax.servlet.AsyncContext#dispatch()}.
+     * Callback for an async call to {@link jakarta.servlet.AsyncContext#dispatch()}.
      */
     ASYNC_DISPATCH,
 
@@ -143,12 +143,12 @@ public enum ActionCode {
     ASYNC_DISPATCHED,
 
     /**
-     * Callback for an async call to {@link javax.servlet.AsyncContext#start(Runnable)}.
+     * Callback for an async call to {@link jakarta.servlet.AsyncContext#start(Runnable)}.
      */
     ASYNC_RUN,
 
     /**
-     * Callback for an async call to {@link javax.servlet.AsyncContext#complete()}.
+     * Callback for an async call to {@link jakarta.servlet.AsyncContext#complete()}.
      */
     ASYNC_COMPLETE,
 
@@ -163,7 +163,7 @@ public enum ActionCode {
     ASYNC_ERROR,
 
     /**
-     * Callback for an async call to {@link javax.servlet.AsyncContext#setTimeout(long)}
+     * Callback for an async call to {@link jakarta.servlet.AsyncContext#setTimeout(long)}
      */
     ASYNC_SETTIMEOUT,
 

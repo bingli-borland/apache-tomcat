@@ -21,14 +21,14 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import javax.el.ELContext;
-import javax.el.ELException;
-import javax.el.FunctionMapper;
-import javax.el.PropertyNotFoundException;
-import javax.el.PropertyNotWritableException;
-import javax.el.ValueExpression;
-import javax.el.ValueReference;
-import javax.el.VariableMapper;
+import jakarta.el.ELContext;
+import jakarta.el.ELException;
+import jakarta.el.FunctionMapper;
+import jakarta.el.PropertyNotFoundException;
+import jakarta.el.PropertyNotWritableException;
+import jakarta.el.ValueExpression;
+import jakarta.el.ValueReference;
+import jakarta.el.VariableMapper;
 
 import org.apache.el.lang.EvaluationContext;
 import org.apache.el.lang.ExpressionBuilder;
@@ -48,28 +48,28 @@ import org.apache.el.util.ReflectionUtil;
  * <code>isReadOnly()</code>.
  * </p>
  * <p>
- * The {@link javax.el.ExpressionFactory#createValueExpression} method can be used to parse an expression string and
+ * The {@link jakarta.el.ExpressionFactory#createValueExpression} method can be used to parse an expression string and
  * return a concrete instance of <code>ValueExpression</code> that encapsulates the parsed expression. The
  * {@link FunctionMapper} is used at parse time, not evaluation time, so one is not needed to evaluate an expression
  * using this class. However, the {@link ELContext} is needed at evaluation time.
  * </p>
  * <p>
  * The {@link #getValue}, {@link #setValue}, {@link #isReadOnly} and {@link #getType} methods will evaluate the
- * expression each time they are called. The {@link javax.el.ELResolver} in the <code>ELContext</code> is used to
+ * expression each time they are called. The {@link jakarta.el.ELResolver} in the <code>ELContext</code> is used to
  * resolve the top-level variables and to determine the behavior of the <code>.</code> and <code>[]</code> operators.
- * For any of the four methods, the {@link javax.el.ELResolver#getValue} method is used to resolve all properties up to
+ * For any of the four methods, the {@link jakarta.el.ELResolver#getValue} method is used to resolve all properties up to
  * but excluding the last one. This provides the <code>base</code> object. At the last resolution, the
- * <code>ValueExpression</code> will call the corresponding {@link javax.el.ELResolver#getValue},
- * {@link javax.el.ELResolver#setValue}, {@link javax.el.ELResolver#isReadOnly} or {@link javax.el.ELResolver#getType}
+ * <code>ValueExpression</code> will call the corresponding {@link jakarta.el.ELResolver#getValue},
+ * {@link jakarta.el.ELResolver#setValue}, {@link jakarta.el.ELResolver#isReadOnly} or {@link jakarta.el.ELResolver#getType}
  * method, depending on which was called on the <code>ValueExpression</code>.
  * </p>
  * <p>
- * See the notes about comparison, serialization and immutability in the {@link javax.el.Expression} javadocs.
+ * See the notes about comparison, serialization and immutability in the {@link jakarta.el.Expression} javadocs.
  *
- * @see javax.el.ELResolver
- * @see javax.el.Expression
- * @see javax.el.ExpressionFactory
- * @see javax.el.ValueExpression
+ * @see jakarta.el.ELResolver
+ * @see jakarta.el.Expression
+ * @see jakarta.el.ExpressionFactory
+ * @see jakarta.el.ValueExpression
  *
  * @author Jacob Hookom [jacob@hookom.net]
  */
@@ -121,7 +121,7 @@ public final class ValueExpressionImpl extends ValueExpression implements Extern
      * @return the <code>expectedType</code> passed to the <code>ExpressionFactory.createValueExpression</code> method
      *             that created this <code>ValueExpression</code>.
      *
-     * @see javax.el.Expression#getExpressionString()
+     * @see jakarta.el.Expression#getExpressionString()
      */
     @Override
     public String getExpressionString() {

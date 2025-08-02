@@ -18,7 +18,7 @@ package org.apache.catalina.startup;
 
 import java.lang.reflect.Method;
 
-import javax.servlet.MultipartConfigElement;
+import jakarta.servlet.MultipartConfigElement;
 
 import org.junit.Assert;
 import org.junit.Test;

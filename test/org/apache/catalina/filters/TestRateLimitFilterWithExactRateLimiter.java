@@ -18,7 +18,7 @@ package org.apache.catalina.filters;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
+import jakarta.servlet.FilterChain;
 
 import org.junit.Assert;
 import org.junit.Test;

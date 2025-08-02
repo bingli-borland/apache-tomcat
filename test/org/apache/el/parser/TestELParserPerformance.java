@@ -22,10 +22,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
-import javax.el.ELContext;
-import javax.el.ELManager;
-import javax.el.ExpressionFactory;
-import javax.el.ValueExpression;
+import jakarta.el.ELContext;
+import jakarta.el.ELManager;
+import jakarta.el.ExpressionFactory;
+import jakarta.el.ValueExpression;
 
 import org.junit.Assert;
 import org.junit.Ignore;

@@ -24,7 +24,7 @@ import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.Test;

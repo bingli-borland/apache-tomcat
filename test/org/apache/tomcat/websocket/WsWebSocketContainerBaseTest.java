@@ -18,10 +18,10 @@ package org.apache.tomcat.websocket;
 
 import java.net.URI;
 
-import javax.websocket.ClientEndpointConfig;
-import javax.websocket.Endpoint;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
+import jakarta.websocket.ClientEndpointConfig;
+import jakarta.websocket.Endpoint;
+import jakarta.websocket.Session;
+import jakarta.websocket.WebSocketContainer;
 
 public class WsWebSocketContainerBaseTest extends WebSocketBaseTest {
 

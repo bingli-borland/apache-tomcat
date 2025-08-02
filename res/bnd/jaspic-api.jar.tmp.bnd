@@ -18,7 +18,7 @@
 Bundle-Name: tomcat-jaspic-api
 Bundle-SymbolicName: org.apache.tomcat-jaspic-api
 Export-Package: \
-    javax.security.auth.message.*;version=1.1
+    jakarta.security.auth.message.*;version=1.1
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}
 
@@ -26,13 +26,13 @@ Provide-Capability: \
     osgi.contract;\
         osgi.contract=JavaJASPIC;\
         version:List<Version>="1.1,1";\
-        uses:='${packages;NAMED;javax.security.auth.message.*}'
+        uses:='${packages;NAMED;jakarta.security.auth.message.*}'
 
--namesection: javax/security/auth/message*/;\
+-namesection: jakarta/security/auth/message*/;\
     Specification-Title='Java Authentication SPI for Containers';\
     Specification-Version=1.1;\
     Specification-Vendor='Sun Microsystems, Inc.';\
-    Implementation-Title=javax.security.auth.message;\
+    Implementation-Title=jakarta.security.auth.message;\
     Implementation-Version=1.1.${jaspic.revision};\
     Implementation-Vendor='Apache Software Foundation'
 

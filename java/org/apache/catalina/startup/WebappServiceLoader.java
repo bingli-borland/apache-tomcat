@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.JarFactory;
@@ -53,7 +53,7 @@ import org.apache.tomcat.util.scan.JarFactory;
  *
  * @param <T> The type of service to load
  *
- * @see javax.servlet.ServletContainerInitializer
+ * @see jakarta.servlet.ServletContainerInitializer
  * @see java.util.ServiceLoader
  */
 public class WebappServiceLoader<T> {

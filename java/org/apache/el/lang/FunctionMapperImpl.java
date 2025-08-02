@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.el.FunctionMapper;
+import jakarta.el.FunctionMapper;
 
 import org.apache.el.util.MessageFactory;
 import org.apache.el.util.ReflectionUtil;

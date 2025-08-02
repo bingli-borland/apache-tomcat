@@ -18,13 +18,13 @@ package org.apache.el;
 
 import java.util.function.Function;
 
-import javax.el.ELContext;
-import javax.el.ELProcessor;
-import javax.el.ExpressionFactory;
-import javax.el.MethodExpression;
-import javax.el.MethodInfo;
-import javax.el.MethodNotFoundException;
-import javax.el.ValueExpression;
+import jakarta.el.ELContext;
+import jakarta.el.ELProcessor;
+import jakarta.el.ExpressionFactory;
+import jakarta.el.MethodExpression;
+import jakarta.el.MethodInfo;
+import jakarta.el.MethodNotFoundException;
+import jakarta.el.ValueExpression;
 
 import org.junit.Assert;
 import org.junit.Before;

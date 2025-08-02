@@ -49,7 +49,7 @@ public class Constants {
      * These classes/packages are automatically imported by the generated code.
      */
     private static final String[] PRIVATE_STANDARD_IMPORTS =
-            { "javax.servlet.*", "javax.servlet.http.*", "javax.servlet.jsp.*" };
+            { "jakarta.servlet.*", "jakarta.servlet.http.*", "jakarta.servlet.jsp.*" };
     public static final List<String> STANDARD_IMPORTS =
             Collections.unmodifiableList(Arrays.asList(PRIVATE_STANDARD_IMPORTS));
 

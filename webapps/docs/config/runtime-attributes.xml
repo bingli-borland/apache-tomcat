@@ -44,27 +44,27 @@
   <p>Request attributes are made available to web applications via a call to
   <code>ServletRequest.getAttribute(String)</code>.</p>
   <properties>
-    <property name="javax.servlet.request.cipher_suite">
+    <property name="jakarta.servlet.request.cipher_suite">
       <p>The Servlet specification defined attribute for the name of the cipher
       suite being used on an SSL connection.</p>
     </property>
-    <property name="javax.servlet.request.key_size">
+    <property name="jakarta.servlet.request.key_size">
       <p>The Servlet specification defined attribute for the key size being used
       on an SSL connection.</p>
     </property>
-    <property name="javax.servlet.request.secure_protocol">
+    <property name="jakarta.servlet.request.secure_protocol">
       <p>The Servlet specification defined attribute for the name of the
       security protocol (e.g. TLSv1.3) being used on a secured connection.</p>
     </property>
-    <property name="javax.servlet.request.ssl_session_id">
+    <property name="jakarta.servlet.request.ssl_session_id">
       <p>The Servlet specification defined attribute for the session ID being
       used for an SSL connection.</p>
     </property>
-    <property name="javax.servlet.request.ssl_session_mgr">
+    <property name="jakarta.servlet.request.ssl_session_mgr">
       <p>A Tomcat specific extension to the Servlet specification that provides
       the session manager being used for an SSL connection.</p>
     </property>
-    <property name="javax.servlet.request.X509Certificate">
+    <property name="jakarta.servlet.request.X509Certificate">
       <p>The Servlet specification defined attribute for the array of
       X509Certificate objects representing the certificate chain presented by
       our client, if any.</p>

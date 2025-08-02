@@ -18,7 +18,7 @@ package org.apache.catalina.valves;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import org.junit.Assert;
 import org.junit.Test;

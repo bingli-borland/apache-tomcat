@@ -3,7 +3,7 @@
 package org.apache.el.parser;
 
 import java.io.StringReader;
-import javax.el.ELException;
+import jakarta.el.ELException;
 
 @SuppressWarnings("all") // Ignore warnings in generated code
 public class ELParser/* @bgen(jjtree) */ implements ELParserTreeConstants, ELParserConstants {/* @bgen(jjtree) */

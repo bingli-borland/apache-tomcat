@@ -16,7 +16,7 @@
  */
 package org.apache.tomcat.dbcp.dbcp2.managed;
 
-import javax.transaction.Synchronization;
+import jakarta.transaction.Synchronization;
 
 /**
  * Implements {@link Synchronization} for subclasses.

@@ -18,7 +18,7 @@
 Bundle-Name: tomcat-embed-jasper-el
 Bundle-SymbolicName: org.apache.tomcat-embed-jasper-el
 Export-Package: \
-    javax.el;version=3.0,\
+    jakarta.el;version=3.0,\
     org.apache.el,\
     org.apache.el.lang,\
     org.apache.el.parser
@@ -35,22 +35,22 @@ Provide-Capability: \
     osgi.contract;\
         osgi.contract=JavaEL;\
         version:List<Version>="3.0,2.2,2.1";\
-        uses:='${packages;NAMED;javax.el.*}'
+        uses:='${packages;NAMED;jakarta.el.*}'
 
 Require-Capability: \
     osgi.extender;\
         filter:="(&(osgi.extender=osgi.serviceloader.processor)(version>=1.0.0)(!(version>=2.0.0)))",\
     osgi.serviceloader;\
-        filter:="(osgi.serviceloader=javax.el.ExpressionFactory)";\
-        osgi.serviceloader="javax.el.ExpressionFactory",\
+        filter:="(osgi.serviceloader=jakarta.el.ExpressionFactory)";\
+        osgi.serviceloader="jakarta.el.ExpressionFactory",\
     osgi.ee;\
         filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 
--namesection: javax/el*/;\
+-namesection: jakarta/el*/;\
     Specification-Title='Expression Language';\
     Specification-Version=3.0;\
     Specification-Vendor='Sun Microsystems, Inc.';\
-    Implementation-Title=javax.el;\
+    Implementation-Title=jakarta.el;\
     Implementation-Version=3.0.${el.revision};\
     Implementation-Vendor='Apache Software Foundation'
 

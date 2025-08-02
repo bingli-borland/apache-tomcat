@@ -16,7 +16,7 @@
  */
 package org.apache.catalina.util;
 
-import javax.servlet.FilterConfig;
+import jakarta.servlet.FilterConfig;
 
 public interface RateLimiter {
 

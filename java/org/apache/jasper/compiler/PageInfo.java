@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.el.ExpressionFactory;
-import javax.servlet.jsp.tagext.TagLibraryInfo;
+import jakarta.el.ExpressionFactory;
+import jakarta.servlet.jsp.tagext.TagLibraryInfo;
 
 import org.apache.jasper.Constants;
 import org.apache.jasper.JasperException;

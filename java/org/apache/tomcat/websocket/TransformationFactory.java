@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.websocket.Extension;
+import jakarta.websocket.Extension;
 
 import org.apache.tomcat.util.res.StringManager;
 

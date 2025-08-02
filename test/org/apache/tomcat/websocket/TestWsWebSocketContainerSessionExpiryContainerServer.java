@@ -18,10 +18,10 @@ package org.apache.tomcat.websocket;
 
 import java.util.Set;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.websocket.ContainerProvider;
-import javax.websocket.Session;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.websocket.ContainerProvider;
+import jakarta.websocket.Session;
 
 import org.junit.Assert;
 import org.junit.Test;

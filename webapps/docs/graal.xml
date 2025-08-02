@@ -172,7 +172,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
     using the native-image tool.
     <source>$JAVA_HOME/bin/native-image --report-unsupported-elements-at-runtime\
         --enable-http --enable-https --enable-url-protocols=http,https,jar,jrt\
-        --initialize-at-build-time=org.eclipse.jdt,org.apache.el.parser.SimpleNode,javax.servlet.jsp.JspFactory,org.apache.jasper.servlet.JasperInitializer,org.apache.jasper.runtime.JspFactoryImpl\
+        --initialize-at-build-time=org.eclipse.jdt,org.apache.el.parser.SimpleNode,jakarta.servlet.jsp.JspFactory,org.apache.jasper.servlet.JasperInitializer,org.apache.jasper.runtime.JspFactoryImpl\
         -H:+UnlockExperimentalVMOptions\
         -H:+JNI -H:+ReportExceptionStackTraces\
         -H:ConfigurationFileDirectories=$TOMCAT_STUFFED/target/\

@@ -21,7 +21,7 @@ import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.el.ELResolver;
+import jakarta.el.ELResolver;
 
 import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.compiler.ELInterpreter;

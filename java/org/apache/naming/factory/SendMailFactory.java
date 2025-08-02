@@ -22,10 +22,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimePartDataSource;
+import jakarta.mail.Session;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimePartDataSource;
 import javax.naming.Context;
 import javax.naming.Name;
 import javax.naming.RefAddr;
@@ -61,7 +61,7 @@ import org.apache.tomcat.util.ExceptionUtils;
 
 public class SendMailFactory implements ObjectFactory {
     // The class name for the javamail MimeMessageDataSource
-    protected static final String DataSourceClassName = "javax.mail.internet.MimePartDataSource";
+    protected static final String DataSourceClassName = "jakarta.mail.internet.MimePartDataSource";
 
     @Override
     public Object getObjectInstance(Object refObj, Name name, Context ctx, Hashtable<?,?> env) throws Exception {

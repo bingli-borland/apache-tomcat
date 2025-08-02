@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.coyote.AbstractProcessor;
 import org.apache.coyote.ActionCode;
@@ -129,10 +129,10 @@ public class AjpProcessor extends AbstractProcessor {
 
         // Build the Set of javax attributes
         Set<String> s2 = new HashSet<>();
-        s2.add("javax.servlet.request.cipher_suite");
-        s2.add("javax.servlet.request.key_size");
-        s2.add("javax.servlet.request.ssl_session");
-        s2.add("javax.servlet.request.X509Certificate");
+        s2.add("jakarta.servlet.request.cipher_suite");
+        s2.add("jakarta.servlet.request.key_size");
+        s2.add("jakarta.servlet.request.ssl_session");
+        s2.add("jakarta.servlet.request.X509Certificate");
         javaxAttributes = Collections.unmodifiableSet(s2);
 
         Set<String> s = new HashSet<>();

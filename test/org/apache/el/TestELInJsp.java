@@ -20,7 +20,7 @@ import java.io.File;
 import java.math.RoundingMode;
 import java.util.Collections;
 
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -438,7 +438,7 @@ public class TestELInJsp extends TomcatBaseTest {
 
 
     /*
-     * BZ https://bz.apache.org/bugzilla/show_bug.cgi?id=57142 javax.servlet, javax.servlet.http and javax.servlet.jsp
+     * BZ https://bz.apache.org/bugzilla/show_bug.cgi?id=57142 jakarta.servlet, javax.servlet.http and jakarta.servlet.jsp
      * should be imported by default.
      */
     @Test
@@ -448,11 +448,11 @@ public class TestELInJsp extends TomcatBaseTest {
         ByteChunk res = getUrl("http://localhost:" + getPort() + "/test/bug5nnnn/bug57142.jsp");
 
         String result = res.toString();
-        // javax.servlet
+        // jakarta.servlet
         assertEcho(result, "00-" + DispatcherType.ASYNC);
-        // No obvious static fields for javax.servlet.http
+        // No obvious static fields for jakarta.servlet.http
         // Could hack something with HttpUtils...
-        // No obvious static fields for javax.servlet.jsp
+        // No obvious static fields for jakarta.servlet.jsp
         // Wild card (package) import
         assertEcho(result, "01-" + RoundingMode.HALF_UP);
         // Class import

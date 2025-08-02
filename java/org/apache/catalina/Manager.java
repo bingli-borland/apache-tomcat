@@ -358,10 +358,10 @@ public interface Manager {
 
     /**
      * When an attribute that is already present in the session is added again under the same name and the attribute
-     * implements {@link javax.servlet.http.HttpSessionBindingListener}, should
-     * {@link javax.servlet.http.HttpSessionBindingListener#valueUnbound(javax.servlet.http.HttpSessionBindingEvent)} be
+     * implements {@link jakarta.servlet.http.HttpSessionBindingListener}, should
+     * {@link jakarta.servlet.http.HttpSessionBindingListener#valueUnbound(jakarta.servlet.http.HttpSessionBindingEvent)} be
      * called followed by
-     * {@link javax.servlet.http.HttpSessionBindingListener#valueBound(javax.servlet.http.HttpSessionBindingEvent)}?
+     * {@link jakarta.servlet.http.HttpSessionBindingListener#valueBound(jakarta.servlet.http.HttpSessionBindingEvent)}?
      * <p>
      * The default value is {@code false}.
      *
@@ -374,11 +374,11 @@ public interface Manager {
 
     /**
      * Configure if
-     * {@link javax.servlet.http.HttpSessionBindingListener#valueUnbound(javax.servlet.http.HttpSessionBindingEvent)} be
+     * {@link jakarta.servlet.http.HttpSessionBindingListener#valueUnbound(jakarta.servlet.http.HttpSessionBindingEvent)} be
      * called followed by
-     * {@link javax.servlet.http.HttpSessionBindingListener#valueBound(javax.servlet.http.HttpSessionBindingEvent)} when
+     * {@link jakarta.servlet.http.HttpSessionBindingListener#valueBound(jakarta.servlet.http.HttpSessionBindingEvent)} when
      * an attribute that is already present in the session is added again under the same name and the attribute
-     * implements {@link javax.servlet.http.HttpSessionBindingListener}.
+     * implements {@link jakarta.servlet.http.HttpSessionBindingListener}.
      *
      * @param notifyBindingListenerOnUnchangedValue {@code true} the listener will be called, {@code
      *                                              false} it will not
@@ -388,8 +388,8 @@ public interface Manager {
 
     /**
      * When an attribute that is already present in the session is added again under the same name and a
-     * {@link javax.servlet.http.HttpSessionAttributeListener} is configured for the session should
-     * {@link javax.servlet.http.HttpSessionAttributeListener#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)}
+     * {@link jakarta.servlet.http.HttpSessionAttributeListener} is configured for the session should
+     * {@link jakarta.servlet.http.HttpSessionAttributeListener#attributeReplaced(jakarta.servlet.http.HttpSessionBindingEvent)}
      * be called?
      * <p>
      * The default value is {@code true}.
@@ -403,9 +403,9 @@ public interface Manager {
 
     /**
      * Configure if
-     * {@link javax.servlet.http.HttpSessionAttributeListener#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)}
+     * {@link jakarta.servlet.http.HttpSessionAttributeListener#attributeReplaced(jakarta.servlet.http.HttpSessionBindingEvent)}
      * when an attribute that is already present in the session is added again under the same name and a
-     * {@link javax.servlet.http.HttpSessionAttributeListener} is configured for the session.
+     * {@link jakarta.servlet.http.HttpSessionAttributeListener} is configured for the session.
      *
      * @param notifyAttributeListenerOnUnchangedValue {@code true} the listener will be called, {@code
      *                                                false} it will not

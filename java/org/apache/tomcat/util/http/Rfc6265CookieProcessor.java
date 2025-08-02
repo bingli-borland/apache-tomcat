@@ -22,7 +22,7 @@ import java.text.FieldPosition;
 import java.util.BitSet;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -98,13 +98,13 @@ public class Rfc6265CookieProcessor extends CookieProcessorBase {
 
 
     @Override
-    public String generateHeader(javax.servlet.http.Cookie cookie) {
+    public String generateHeader(jakarta.servlet.http.Cookie cookie) {
         return generateHeader(cookie, null);
     }
 
 
     @Override
-    public String generateHeader(javax.servlet.http.Cookie cookie, HttpServletRequest request) {
+    public String generateHeader(jakarta.servlet.http.Cookie cookie, HttpServletRequest request) {
 
         // Can't use StringBuilder due to DateFormat
         StringBuffer header = new StringBuffer();

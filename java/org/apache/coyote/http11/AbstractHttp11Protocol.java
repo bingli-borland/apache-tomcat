@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
-import javax.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.HttpUpgradeHandler;
 
 import org.apache.coyote.AbstractProtocol;
 import org.apache.coyote.CompressionConfig;
@@ -687,7 +687,7 @@ public abstract class AbstractHttp11Protocol<S> extends AbstractProtocol<S> {
     /**
      * Map of upgrade protocol name to {@link UpgradeGroupInfo} instance.
      * <p>
-     * HTTP upgrades via {@link javax.servlet.http.HttpServletRequest#upgrade(Class)} do not have to depend on an
+     * HTTP upgrades via {@link jakarta.servlet.http.HttpServletRequest#upgrade(Class)} do not have to depend on an
      * {@code UpgradeProtocol}. To enable basic statistics to be made available for these protocols, a map of protocol
      * name to {@link UpgradeGroupInfo} instances is maintained here.
      */

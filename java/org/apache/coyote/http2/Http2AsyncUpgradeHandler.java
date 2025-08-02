@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.servlet.http.WebConnection;
+import jakarta.servlet.http.WebConnection;
 
 import org.apache.coyote.Adapter;
 import org.apache.coyote.ProtocolException;

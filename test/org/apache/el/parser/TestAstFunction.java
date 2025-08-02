@@ -16,10 +16,10 @@
  */
 package org.apache.el.parser;
 
-import javax.el.ELContext;
-import javax.el.ELProcessor;
-import javax.el.ExpressionFactory;
-import javax.el.StandardELContext;
+import jakarta.el.ELContext;
+import jakarta.el.ELProcessor;
+import jakarta.el.ExpressionFactory;
+import jakarta.el.StandardELContext;
 
 import org.junit.Assert;
 import org.junit.Test;

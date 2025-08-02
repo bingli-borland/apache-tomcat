@@ -17,8 +17,8 @@
 package org.apache.tomcat.websocket;
 
 import javax.naming.NamingException;
-import javax.websocket.DeploymentException;
-import javax.websocket.Endpoint;
+import jakarta.websocket.DeploymentException;
+import jakarta.websocket.Endpoint;
 
 import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.util.res.StringManager;

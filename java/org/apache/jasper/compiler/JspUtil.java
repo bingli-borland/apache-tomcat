@@ -355,7 +355,7 @@ public class JspUtil {
         targetType = toJavaSourceType(targetType);
         StringBuilder call = new StringBuilder("(" + returnType + ") " +
                 "org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate" + "(" + Generator.quote(expression) +
-                ", " + targetType + ".class, " + "(javax.servlet.jsp.PageContext)" + jspCtxt + ", " + fnmapvar + ")");
+                ", " + targetType + ".class, " + "(jakarta.servlet.jsp.PageContext)" + jspCtxt + ", " + fnmapvar + ")");
 
         /*
          * Add the primitive converter method if we need to.

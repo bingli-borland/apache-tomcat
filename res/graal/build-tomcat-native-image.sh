@@ -48,7 +48,7 @@ native-image \
 --no-server \
 -H:EnableURLProtocols=http \
 --report-unsupported-elements-at-runtime \
---initialize-at-run-time=org.apache,javax.servlet \
+--initialize-at-run-time=org.apache,jakarta.servlet \
 -H:TraceClassInitialization=org.* \
 -H:+PrintClassInitialization \
 -H:+PrintAnalysisCallTree \
