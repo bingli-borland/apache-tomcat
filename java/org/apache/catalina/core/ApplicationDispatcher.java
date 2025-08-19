@@ -519,13 +519,14 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         String old_context_path = null;
         String old_query_string = null;
 
+        old_req_uri = (String) request.getAttribute(INCLUDE_REQUEST_URI);
+        old_servlet_path = (String) request.getAttribute(INCLUDE_SERVLET_PATH);
+        old_path_info = (String) request.getAttribute(INCLUDE_PATH_INFO);
+        old_context_path = (String) request.getAttribute(INCLUDE_CONTEXT_PATH);
+        old_query_string = (String) request.getAttribute(INCLUDE_QUERY_STRING);
+
         ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
         try {
-            old_req_uri = (String) request.getAttribute(INCLUDE_REQUEST_URI);
-            old_servlet_path = (String) request.getAttribute(INCLUDE_SERVLET_PATH);
-            old_path_info = (String) request.getAttribute(INCLUDE_PATH_INFO);
-            old_context_path = (String) request.getAttribute(INCLUDE_CONTEXT_PATH);
-            old_query_string = (String) request.getAttribute(INCLUDE_QUERY_STRING);
 
             // Handle an HTTP named dispatcher include
 
