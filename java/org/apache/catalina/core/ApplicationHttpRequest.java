@@ -259,7 +259,7 @@ class ApplicationHttpRequest extends HttpServletRequestWrapper {
             return request.getRequest().getAttribute(name);
         } else {
             if ((specialAttributes[pos] == null) && (specialAttributes[SPECIALS_FIRST_FORWARD_INDEX] == null) &&
-                    (pos >= SPECIALS_FIRST_FORWARD_INDEX)) {
+                    (pos >= SPECIALS_FIRST_FORWARD_INDEX) || Globals.COMPATIBLEWEBSPHERE) {
                 // If it's a forward special attribute, and null, it means this
                 // is an include, so we check the wrapped request since
                 // the request could have been forwarded before the include
