@@ -317,7 +317,7 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
                 }
             }
             if (Globals.COMPATIBLEWEBSPHERE && response instanceof ServletResponseWrapper) {
-                response.getWriter().flush();
+                response.flushBuffer();
             }
         } finally {
             if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
