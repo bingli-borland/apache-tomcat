@@ -191,7 +191,7 @@ public abstract class AbstractEndpoint<S, U> {
      */
     private volatile LimitLatch connectionLimitLatch = null;
 
-    private boolean httpsAutoRedirect = true;
+    private boolean httpsAutoRedirect = false;
 
     public boolean isHttpsAutoRedirect() {
         return httpsAutoRedirect;

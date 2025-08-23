@@ -382,7 +382,7 @@ public class ApplicationContext implements ServletContext {
                     context.getEncodedReverseSolidusHandlingEnum());
         }
 
-        normalizedUri = normalizedUri.trim();
+        uriToMap = uriToMap.trim();
         // Then normalize
         uriToMap = RequestUtil.normalize(uriToMap);
         if (uriToMap == null) {

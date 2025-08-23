@@ -244,8 +244,6 @@ public final class Globals {
 
     public static final String CONTENT_TYPE_FORM_URL_ENCODING = "application/x-www-form-urlencoded";
 
-    private static final boolean COMPATIBLE_WEBLOGIC = Boolean.getBoolean("org.apache.catalina.connector.compatibleWeblogic");
-
     public static final boolean CACHE_INPUT_STREAM = "".equals(System.getProperty("org.apache.catalina.connector.cacheInputStream", "")) ? COMPATIBLE_WEBLOGIC :
         Boolean.parseBoolean(System.getProperty("org.apache.catalina.connector.cacheInputStream"));
 

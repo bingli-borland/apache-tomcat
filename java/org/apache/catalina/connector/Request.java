@@ -2723,24 +2723,24 @@ public class Request implements HttpServletRequest {
                         }
                     }
                     if (Globals.ENCODING_EFFECTIVE_IMMEDIATELY) {
-                    ByteChunk value = new ByteChunk();
-                    byte[] itemBytes = item.get();
-                    value.setBytes(itemBytes, 0, itemBytes.length);
-                    if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
-                        if (parameters.getParameters().containsKey(name)) {
+                        ByteChunk value = new ByteChunk();
+                        byte[] itemBytes = item.get();
+                        value.setBytes(itemBytes, 0, itemBytes.length);
+                        if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {
+                            if (parameters.getParameters().containsKey(name)) {
 
-                            ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
-                            ByteChunk[] valArray = new ByteChunk[oldValues.length + 1];
+                                ByteChunk[] oldValues = (ByteChunk[]) parameters.getParameters().get(name);
+                                ByteChunk[] valArray = new ByteChunk[oldValues.length + 1];
 
-                            System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
-                            valArray[oldValues.length] = value;
-                            parameters.getParameters().put(name, valArray);
+                                System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
+                                valArray[oldValues.length] = value;
+                                parameters.getParameters().put(name, valArray);
 
+                            } else {
+                                ByteChunk[] values = {value};
+                                parameters.getParameters().put(name, values);
+                            }
                         } else {
-                            ByteChunk[] values = {value};
-                            parameters.getParameters().put(name, values);
-                        }
-                    } else {
                             ((WLSParameters) parameters).addWLSParameter(name, value);
                         }
                     } else {
@@ -2759,13 +2759,13 @@ public class Request implements HttpServletRequest {
                                 System.arraycopy(oldValues, 0, valArray, 0, oldValues.length);
                                 valArray[oldValues.length] = value.toString();
                                 parameters.getParameters().put(name, valArray);
-
                             } else {
                                 String[] values = {value.toString()};
                                 parameters.getParameters().put(name, values);
                             }
                         } else {
-                        parameters.addParameter(name, value);
+                            parameters.addParameter(name, value);
+                        }
                     }
                 } else {
                     // Adjust the limit to account for a file part which is not added to the parameter map.
@@ -2773,8 +2773,6 @@ public class Request implements HttpServletRequest {
                 }
                 parts.add(part);
             }
-            }
-
         } catch (InvalidContentTypeException e) {
             partsParseException = new ServletException(e);
         } catch (SizeException | FileCountLimitExceededException e) {
@@ -3152,13 +3150,13 @@ public class Request implements HttpServletRequest {
             }
             cachedPostBodyForCompatibleWLS(formData, 0, len);
             if (Globals.COMPATIBLEWEBSPHERE) {
-                    parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
-                    if (parameters.getParameters() != null) {
-                        parameters.parseQueryStringList();
-                    }
-                } else {
-                    parameters.processParameters(formData, 0, len);
+                parameters.setParameters(parameters.parsePostParameters(formData, 0, len));
+                if (parameters.getParameters() != null) {
+                    parameters.parseQueryStringList();
                 }
+            } else {
+                parameters.processParameters(formData, 0, len);
+            }
         } else if ("chunked".equalsIgnoreCase(coyoteRequest.getHeader("transfer-encoding"))) {
             byte[] formData = null;
             try {
@@ -3183,18 +3181,18 @@ public class Request implements HttpServletRequest {
             if (formData != null) {
                 cachedPostBodyForCompatibleWLS(formData, 0, formData.length);
                 if (Globals.COMPATIBLEWEBSPHERE) {
-                        parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
-                        if (parameters.getParameters() != null) {
-                            parameters.parseQueryStringList();
+                    parameters.setParameters(parameters.parsePostParameters(formData, 0, formData.length));
+                    if (parameters.getParameters() != null) {
+                        parameters.parseQueryStringList();
                     }
-                    } else {
-                        parameters.processParameters(formData, 0, formData.length);
-                    }
+                } else {
+                    parameters.processParameters(formData, 0, formData.length);
                 }
+            }
             if (Globals.COMPATIBLEWEBSPHERE && formData == null) {
                 if (parameters.getParameters() != null) {
                     parameters.parseQueryStringList();
-        }
+                }
             }
         } else {
             if (Globals.COMPATIBLEWEBSPHERE && parameters.getParameters() != null) {

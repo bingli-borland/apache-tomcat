@@ -157,7 +157,7 @@ public class Parameters {
         handleQueryParameters();
         String[] values = paramHashValues.get(name);
         if (values != null) {
-            if (values.isEmpty()) {
+            if (values.length == 0) {
                 return "";
             }
             return values[0];
@@ -489,11 +489,11 @@ public class Parameters {
     private static final Charset DEFAULT_URI_CHARSET = StandardCharsets.UTF_8;
 
 
-    public void processParameters(byte[] bytes, int start, int len, boolean queryParams) {
-        processParameters(bytes, start, len, charset, queryParams);
+    public void processParameters(byte[] bytes, int start, int len) {
+        processParameters(bytes, start, len, charset);
     }
 
-    private void processParameters(byte[] bytes, int start, int len, Charset charset, boolean queryParams) {
+    private void processParameters(byte[] bytes, int start, int len, Charset charset) {
 
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("parameters.bytes", new String(bytes, start, len, DEFAULT_BODY_CHARSET)));

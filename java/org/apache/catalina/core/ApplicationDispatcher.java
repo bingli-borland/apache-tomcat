@@ -220,105 +220,103 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         wrapResponse(state);
         ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
         HttpServletRequest hrequest = state.hrequest;
-        if (servletPath == null && pathInfo == null) {
-            // Handle an HTTP named dispatcher forward
+        try {
+            if (servletPath == null && pathInfo == null) {
+                // Handle an HTTP named dispatcher forward
 
-            // All ERROR dispatches must be GET requests. Use the presence of ERROR_METHOD to determine if this is an
-            // error dispatch as not all components (JSP) set the dispatcher type.
-            if (request.getAttribute(ERROR_METHOD) != null) {
-                wrequest.setMethod("GET");
-            }
-            wrequest.setRequestURI(hrequest.getRequestURI());
-            wrequest.setContextPath(hrequest.getContextPath());
-            wrequest.setServletPath(hrequest.getServletPath());
-            wrequest.setPathInfo(hrequest.getPathInfo());
-            wrequest.setQueryString(hrequest.getQueryString());
+                // All ERROR dispatches must be GET requests. Use the presence of ERROR_METHOD to determine if this is an
+                // error dispatch as not all components (JSP) set the dispatcher type.
+                if (request.getAttribute(ERROR_METHOD) != null) {
+                    wrequest.setMethod("GET");
+                }
+                wrequest.setRequestURI(hrequest.getRequestURI());
+                wrequest.setContextPath(hrequest.getContextPath());
+                wrequest.setServletPath(hrequest.getServletPath());
+                wrequest.setPathInfo(hrequest.getPathInfo());
+                wrequest.setQueryString(hrequest.getQueryString());
 
-            if (Globals.COMPATIBLEWEBSPHERE) {
-                clearAttributes(wrequest, DispatcherType.INCLUDE);
-            }
-        } else {
-            // Handle an HTTP path-based forward
+            } else {
+                // Handle an HTTP path-based forward
 
-            if (hrequest.getAttribute(FORWARD_REQUEST_URI) == null) {
-                wrequest.setAttribute(FORWARD_REQUEST_URI, hrequest.getRequestURI());
-                wrequest.setAttribute(FORWARD_CONTEXT_PATH, hrequest.getContextPath());
-                wrequest.setAttribute(FORWARD_SERVLET_PATH, hrequest.getServletPath());
-                wrequest.setAttribute(FORWARD_PATH_INFO, hrequest.getPathInfo());
-                wrequest.setAttribute(FORWARD_QUERY_STRING, hrequest.getQueryString());
-                wrequest.setAttribute(FORWARD_MAPPING, hrequest.getHttpServletMapping());
-            }
+                if (hrequest.getAttribute(FORWARD_REQUEST_URI) == null) {
+                    wrequest.setAttribute(FORWARD_REQUEST_URI, hrequest.getRequestURI());
+                    wrequest.setAttribute(FORWARD_CONTEXT_PATH, hrequest.getContextPath());
+                    wrequest.setAttribute(FORWARD_SERVLET_PATH, hrequest.getServletPath());
+                    wrequest.setAttribute(FORWARD_PATH_INFO, hrequest.getPathInfo());
+                    wrequest.setAttribute(FORWARD_QUERY_STRING, hrequest.getQueryString());
+                    wrequest.setAttribute(FORWARD_MAPPING, hrequest.getHttpServletMapping());
+                }
 
-            // All ERROR dispatches must be GET requests. Use the presence of ERROR_METHOD to determine if this is an
-            // error dispatch as not all components (JSP) set the dispatcher type.
-            if (request.getAttribute(ERROR_METHOD) != null) {
-                wrequest.setMethod("GET");
-            }
-            wrequest.setContextPath(context.getEncodedPath());
-            wrequest.setRequestURI(requestURI);
-            wrequest.setServletPath(servletPath);
-            wrequest.setPathInfo(pathInfo);
-            if (queryString != null) {
-                wrequest.setQueryString(queryString);
-                    wrequest.setQueryParams(queryString, true);
-                } else if(Globals.COMPATIBLEWEBSPHERE) {
+                // All ERROR dispatches must be GET requests. Use the presence of ERROR_METHOD to determine if this is an
+                // error dispatch as not all components (JSP) set the dispatcher type.
+                if (request.getAttribute(ERROR_METHOD) != null) {
+                    wrequest.setMethod("GET");
+                }
+                wrequest.setContextPath(context.getEncodedPath());
+                wrequest.setRequestURI(requestURI);
+                wrequest.setServletPath(servletPath);
+                wrequest.setPathInfo(pathInfo);
+                if (queryString != null) {
                     wrequest.setQueryString(queryString);
-            }
-            wrequest.setMapping(mapping);
+                    wrequest.setQueryParams(queryString, true);
+                } else if (Globals.COMPATIBLEWEBSPHERE) {
+                    wrequest.setQueryString(queryString);
+                }
+                wrequest.setMapping(mapping);
 
+            }
             if (Globals.COMPATIBLEWEBSPHERE) {
                 clearAttributes(wrequest, DispatcherType.INCLUDE);
             }
-        }
-        processRequest(request, response, state);
+            processRequest(request, response, state);
 
-        if (request.isAsyncStarted()) {
-            // An async request was started during the forward, don't close the
-            // response as it may be written to during the async handling
-            return;
-        }
+            if (request.isAsyncStarted()) {
+                // An async request was started during the forward, don't close the
+                // response as it may be written to during the async handling
+                return;
+            }
 
-        // This is not a real close in order to support error processing
-        if (wrapper.getLogger().isTraceEnabled()) {
-            wrapper.getLogger().trace(" Disabling the response for further output");
-        }
+            // This is not a real close in order to support error processing
+            if (wrapper.getLogger().isTraceEnabled()) {
+                wrapper.getLogger().trace(" Disabling the response for further output");
+            }
 
-        boolean finished = false;
-        if (response instanceof ResponseFacade) {
-            finished = true;
-            ((ResponseFacade) response).finish();
-            } else if (!Globals.COMPATIBLEWEBSPHERE && context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
-            ServletResponse baseResponse = response;
-            do {
-                baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
-            } while (baseResponse instanceof ServletResponseWrapper);
-            if (baseResponse instanceof ResponseFacade) {
+            boolean finished = false;
+            if (response instanceof ResponseFacade) {
                 finished = true;
-                ((ResponseFacade) baseResponse).finish();
+                ((ResponseFacade) response).finish();
+            } else if (!Globals.COMPATIBLEWEBSPHERE && context.getSuspendWrappedResponseAfterForward() && response instanceof ServletResponseWrapper) {
+                ServletResponse baseResponse = response;
+                do {
+                    baseResponse = ((ServletResponseWrapper) baseResponse).getResponse();
+                } while (baseResponse instanceof ServletResponseWrapper);
+                if (baseResponse instanceof ResponseFacade) {
+                    finished = true;
+                    ((ResponseFacade) baseResponse).finish();
+                }
             }
-        }
             if (!Globals.COMPATIBLEWEBSPHERE && !finished) {
-            // Servlet SRV.6.2.2. The Request/Response may have been wrapped
-            // and may no longer be an instance of RequestFacade
-            if (wrapper.getLogger().isDebugEnabled()) {
-                wrapper.getLogger().debug(sm.getString("applicationDispatcher.customResponse", response.getClass()));
-            }
-            // Close anyway
-            try {
-                PrintWriter writer = response.getWriter();
-                writer.close();
-            } catch (IllegalStateException e) {
+                // Servlet SRV.6.2.2. The Request/Response may have been wrapped
+                // and may no longer be an instance of RequestFacade
+                if (wrapper.getLogger().isDebugEnabled()) {
+                    wrapper.getLogger().debug(sm.getString("applicationDispatcher.customResponse", response.getClass()));
+                }
+                // Close anyway
                 try {
-                    ServletOutputStream stream = response.getOutputStream();
-                    stream.close();
-                } catch (IllegalStateException | IOException f) {
+                    PrintWriter writer = response.getWriter();
+                    writer.close();
+                } catch (IllegalStateException e) {
+                    try {
+                        ServletOutputStream stream = response.getOutputStream();
+                        stream.close();
+                    } catch (IllegalStateException | IOException f) {
+                        // Ignore
+                    }
+                } catch (IOException ignore) {
                     // Ignore
                 }
-            } catch (IOException ignore) {
-                // Ignore
             }
-        }
-            if(Globals.COMPATIBLEWEBSPHERE && response instanceof ServletResponseWrapper) {
+            if (Globals.COMPATIBLEWEBSPHERE && response instanceof ServletResponseWrapper) {
                 response.getWriter().flush();
             }
         } finally {
@@ -513,55 +511,50 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
         // Create a wrapped response to use for this request
         wrapResponse(state);
 
-        String old_req_uri = null;
-        String old_servlet_path = null;
-        String old_path_info = null;
-        String old_context_path = null;
-        String old_query_string = null;
 
-        old_req_uri = (String) request.getAttribute(INCLUDE_REQUEST_URI);
-        old_servlet_path = (String) request.getAttribute(INCLUDE_SERVLET_PATH);
-        old_path_info = (String) request.getAttribute(INCLUDE_PATH_INFO);
-        old_context_path = (String) request.getAttribute(INCLUDE_CONTEXT_PATH);
-        old_query_string = (String) request.getAttribute(INCLUDE_QUERY_STRING);
+        String old_req_uri = (String) request.getAttribute(INCLUDE_REQUEST_URI);
+        String old_servlet_path = (String) request.getAttribute(INCLUDE_SERVLET_PATH);
+        String old_path_info = (String) request.getAttribute(INCLUDE_PATH_INFO);
+        String old_context_path = (String) request.getAttribute(INCLUDE_CONTEXT_PATH);
+        String old_query_string = (String) request.getAttribute(INCLUDE_QUERY_STRING);
 
         ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
         try {
+            if (name != null) {
+                // Handle an HTTP named dispatcher include
 
-            // Handle an HTTP named dispatcher include
+                wrequest.setAttribute(Globals.NAMED_DISPATCHER_ATTR, name);
+                if (servletPath != null) {
+                    wrequest.setServletPath(servletPath);
+                }
+            } else {
+                // Handle an HTTP path based include
 
-            wrequest.setAttribute(Globals.NAMED_DISPATCHER_ATTR, name);
-            if (servletPath != null) {
-                wrequest.setServletPath(servletPath);
-            }
-        } else {
-            // Handle an HTTP path based include
+                String contextPath = context.getPath();
+                if (requestURI != null) {
+                    wrequest.setAttribute(INCLUDE_REQUEST_URI, requestURI);
+                }
+                if (contextPath != null) {
+                    wrequest.setAttribute(INCLUDE_CONTEXT_PATH, contextPath);
+                }
+                if (servletPath != null) {
+                    wrequest.setAttribute(INCLUDE_SERVLET_PATH, servletPath);
+                }
+                if (pathInfo != null) {
+                    wrequest.setAttribute(INCLUDE_PATH_INFO, pathInfo);
+                }
+                if (queryString != null) {
+                    wrequest.setAttribute(INCLUDE_QUERY_STRING, queryString);
+                    wrequest.setQueryParams(queryString);
+                }
+                if (mapping != null) {
+                    wrequest.setAttribute(INCLUDE_MAPPING, mapping);
+                }
 
-            String contextPath = context.getPath();
-            if (requestURI != null) {
-                wrequest.setAttribute(INCLUDE_REQUEST_URI, requestURI);
             }
-            if (contextPath != null) {
-                wrequest.setAttribute(INCLUDE_CONTEXT_PATH, contextPath);
-            }
-            if (servletPath != null) {
-                wrequest.setAttribute(INCLUDE_SERVLET_PATH, servletPath);
-            }
-            if (pathInfo != null) {
-                wrequest.setAttribute(INCLUDE_PATH_INFO, pathInfo);
-            }
-            if (queryString != null) {
-                wrequest.setAttribute(INCLUDE_QUERY_STRING, queryString);
-                wrequest.setQueryParams(queryString);
-            }
-            if (mapping != null) {
-                wrequest.setAttribute(INCLUDE_MAPPING, mapping);
-            }
-
-        }
-        wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
-        wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
-        invoke(state.outerRequest, state.outerResponse, state);
+            wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.INCLUDE);
+            wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
+            invoke(state.outerRequest, state.outerResponse, state);
         } finally {
             if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
                 wrequest.removeQSFromList();
@@ -584,32 +577,32 @@ final class ApplicationDispatcher implements AsyncDispatcher, RequestDispatcher 
 
         ApplicationHttpRequest wrequest = (ApplicationHttpRequest) wrapRequest(state);
         try {
-        HttpServletRequest hrequest = state.hrequest;
+            HttpServletRequest hrequest = state.hrequest;
 
-        wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.ASYNC);
-        wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
-        wrequest.setAttribute(AsyncContext.ASYNC_MAPPING, hrequest.getHttpServletMapping());
+            wrequest.setAttribute(Globals.DISPATCHER_TYPE_ATTR, DispatcherType.ASYNC);
+            wrequest.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR, getCombinedPath());
+            wrequest.setAttribute(AsyncContext.ASYNC_MAPPING, hrequest.getHttpServletMapping());
 
-        wrequest.setContextPath(context.getEncodedPath());
-        wrequest.setRequestURI(requestURI);
-        wrequest.setServletPath(servletPath);
-        wrequest.setPathInfo(pathInfo);
-        if (queryString != null) {
-            wrequest.setQueryString(queryString);
-                wrequest.setQueryParams(queryString, true);
-            } else if(Globals.COMPATIBLEWEBSPHERE) {
+            wrequest.setContextPath(context.getEncodedPath());
+            wrequest.setRequestURI(requestURI);
+            wrequest.setServletPath(servletPath);
+            wrequest.setPathInfo(pathInfo);
+            if (queryString != null) {
                 wrequest.setQueryString(queryString);
-        }
-        wrequest.setMapping(mapping);
+                wrequest.setQueryParams(queryString, true);
+            } else if (Globals.COMPATIBLEWEBSPHERE) {
+                wrequest.setQueryString(queryString);
+            }
+            wrequest.setMapping(mapping);
 
             if (Globals.COMPATIBLEWEBSPHERE) {
                 clearAttributes(wrequest, DispatcherType.INCLUDE);
             }
-        invoke(state.outerRequest, state.outerResponse, state);
+            invoke(state.outerRequest, state.outerResponse, state);
         } finally {
             if (Globals.COMPATIBLEWEBSPHERE && queryString != null) {
                 wrequest.removeQSFromList();
-    }
+            }
         }
     }
 
