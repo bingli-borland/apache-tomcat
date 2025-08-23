@@ -85,6 +85,7 @@ public class ChunkedOutputFilter implements OutputFilter {
 
     private Response response;
 
+    private boolean ended = false;
 
     public ChunkedOutputFilter() {
         chunkHeader.put(8, (byte) '\r');
@@ -197,11 +198,16 @@ public class ChunkedOutputFilter implements OutputFilter {
             crlfChunk.position(0).limit(crlfChunk.capacity());
         }
         buffer.end();
+        ended = true;
     }
 
+    public boolean isEnded() {
+        return ended;
+    }
 
     @Override
     public void recycle() {
         response = null;
+        ended = false;
     }
 }
