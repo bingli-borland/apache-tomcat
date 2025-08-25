@@ -20,11 +20,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-import org.apache.catalina.Globals;
 import org.apache.coyote.ActionCode;
 import org.apache.coyote.CloseNowException;
 import org.apache.coyote.Response;
-import org.apache.coyote.http11.filters.ChunkedOutputFilter;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.net.SocketWrapperBase;
@@ -222,12 +220,8 @@ public class Http11OutputBuffer implements HttpOutputBuffer {
 
     @Override
     public void end() throws IOException {
-        if (responseFinished){
-            if (!(Globals.COMPATIBLEWEBSPHERE && (lastActiveFilter != -1
-                && activeFilters[lastActiveFilter] == filterLibrary[Constants.CHUNKED_FILTER])
-                && !((ChunkedOutputFilter) activeFilters[lastActiveFilter]).isEnded())) {
-                return;
-            }
+        if (responseFinished) {
+            return;
         }
 
         if (lastActiveFilter == -1) {
