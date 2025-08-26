@@ -28,7 +28,6 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Globals;
 import org.apache.tomcat.util.res.StringManager;
 
 /**
@@ -432,22 +431,6 @@ public class ResponseFacade implements HttpServletResponse {
 
     private void checkCommitted(String messageKey) {
         if (isCommitted()) {
-            if (Globals.COMPATIBLEWEBSPHERE ) {
-                // Close anyway
-                try {
-                    PrintWriter writer = response.getWriter();
-                    writer.close();
-                } catch (IllegalStateException e) {
-                    try {
-                        ServletOutputStream stream = response.getOutputStream();
-                        stream.close();
-                    } catch (IllegalStateException | IOException f) {
-                        // Ignore
-                    }
-                } catch (IOException ignore) {
-                    // Ignore
-                }
-            }
             throw new IllegalStateException(sm.getString(messageKey));
         }
     }
