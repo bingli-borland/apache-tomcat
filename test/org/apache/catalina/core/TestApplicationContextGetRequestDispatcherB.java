@@ -445,7 +445,7 @@ public class TestApplicationContextGetRequestDispatcherB extends TomcatBaseTest 
                             req.getAttribute("jakarta.servlet." + name + ".query_string"));
                     HttpServletMapping dispatcherMapping =
                             (HttpServletMapping) req.getAttribute(
-                                    "javax.servlet." + name + ".mapping");
+                                    "jakarta.servlet." + name + ".mapping");
                     Assert.assertNotNull(dispatcherMapping);
                     Assert.assertEquals(expectedDispatcherMappingMatch, dispatcherMapping.getMappingMatch());
                     Assert.assertEquals(expectedDispatcherMappingPattern, dispatcherMapping.getPattern());

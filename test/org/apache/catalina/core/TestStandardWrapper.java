@@ -591,7 +591,7 @@ public class TestStandardWrapper extends TomcatBaseTest {
      */
     @SuppressWarnings("deprecation")
     public static class Bug51445Servlet extends HttpServlet
-            implements javax.servlet.SingleThreadModel {
+            implements jakarta.servlet.SingleThreadModel {
 
         private static final long serialVersionUID = 1L;
         private static final long LATCH_TIMEOUT = 60;

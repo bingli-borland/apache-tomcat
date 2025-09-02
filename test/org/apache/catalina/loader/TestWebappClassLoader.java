@@ -69,25 +69,12 @@ public class TestWebappClassLoader extends TomcatBaseTest {
         String[] prefixes = new String[] { "", "resources", "WEB-INF", "WEB-INF.classes", "WEB-INF.lib", "org",
                 "org.apache", "javax", "com.mycorp" };
 
-        String[] prefixesPermit = new String[]{
-            "org.apache.tomcat.jdbc",
-            "javax.servlet.jsp.jstl",
-        };
+        String[] prefixesPermit = new String[] { "org.apache.tomcat.jdbc", "jakarta.servlet.jsp.jstl", };
 
-        String[] prefixesDeny = new String[]{
-            "org.apache.catalina",
-            "org.apache.coyote",
-            "org.apache.el",
-            "org.apache.jasper",
-            "org.apache.juli",
-            "org.apache.naming",
-            "org.apache.tomcat",
-            "javax.annotation",
-            "javax.el",
-            "javax.servlet",
-            "javax.websocket",
-            "javax.security.auth.message"
-        };
+        String[] prefixesDeny = new String[] { "org.apache.catalina", "org.apache.coyote", "org.apache.el",
+            "org.apache.jasper", "org.apache.juli", "org.apache.naming", "org.apache.tomcat", "jakarta.annotation",
+            "jakarta.el", "jakarta.servlet", "jakarta.websocket", "jakarta.security.auth.message" };
+
 
         try (WebappClassLoader loader = new WebappClassLoader()) {
             String name;
