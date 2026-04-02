@@ -17,6 +17,7 @@
 package org.apache.tomcat.websocket;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -1072,5 +1073,22 @@ public class WsSession implements Session {
      */
     public void resume() {
         wsFrame.resume();
+    }
+
+
+    public InetSocketAddress getLocalAddress() {
+        try {
+            return wsRemoteEndpoint.getLocalAddress();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public InetSocketAddress getRemoteAddress() {
+        try {
+            return wsRemoteEndpoint.getRemoteAddress();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -18,6 +18,8 @@ package org.apache.tomcat.util.net;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
@@ -77,9 +79,11 @@ public abstract class SocketWrapperBase<E> {
     /*
      * Following cached for speed / reduced GC
      */
+    protected SocketAddress localAddress;
     protected String localAddr = null;
     protected String localName = null;
     protected int localPort = -1;
+    protected SocketAddress remoteAddress;
     protected String remoteAddr = null;
     protected String remoteHost = null;
     protected int remotePort = -1;
@@ -142,6 +146,20 @@ public abstract class SocketWrapperBase<E> {
 
     public E getSocket() {
         return socket;
+    }
+
+    public InetSocketAddress getLocalAddress() throws IOException {
+        if (localAddress == null) {
+            populateLocalAddr();
+        }
+        return (InetSocketAddress) localAddress;
+    }
+
+    public InetSocketAddress getRemoteAddress() throws IOException {
+        if (remoteAddress == null) {
+            populateRemoteAddr();
+        }
+        return (InetSocketAddress) remoteAddress;
     }
 
     protected void reset(E closedSocket) {

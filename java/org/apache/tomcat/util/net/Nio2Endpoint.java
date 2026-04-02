@@ -1489,10 +1489,10 @@ public class Nio2Endpoint extends AbstractNetworkChannelEndpoint<Nio2Channel,Asy
                 }
                 if (socketAddress instanceof InetSocketAddress) {
                     remoteAddr = ((InetSocketAddress) socketAddress).getAddress().getHostAddress();
+                    remoteAddress = socketAddress;
                 }
             }
         }
-
 
         @Override
         protected void populateRemoteHost() {
@@ -1560,6 +1560,7 @@ public class Nio2Endpoint extends AbstractNetworkChannelEndpoint<Nio2Channel,Asy
                 }
                 if (socketAddress instanceof InetSocketAddress) {
                     localAddr = ((InetSocketAddress) socketAddress).getAddress().getHostAddress();
+                    localAddress = socketAddress;
                 }
             }
         }

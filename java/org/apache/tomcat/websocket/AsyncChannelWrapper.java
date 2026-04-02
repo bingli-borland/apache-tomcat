@@ -45,4 +45,6 @@ public interface AsyncChannelWrapper {
     Future<Void> handshake() throws SSLException;
 
     SocketAddress getLocalAddress() throws IOException;
+
+    SocketAddress getRemoteAddress() throws IOException;
 }

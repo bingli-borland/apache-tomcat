@@ -17,6 +17,7 @@
 package org.apache.tomcat.websocket;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -88,5 +89,15 @@ public class WsRemoteEndpointImplClient extends WsRemoteEndpointImplBase {
     @Override
     protected ReentrantLock getLock() {
         return lock;
+    }
+
+    @Override
+    public InetSocketAddress getLocalAddress() throws IOException {
+        return channel.getLocalAddress() instanceof InetSocketAddress ? (InetSocketAddress) channel.getLocalAddress() : null;
+    }
+
+    @Override
+    public InetSocketAddress getRemoteAddress() throws IOException {
+        return channel.getRemoteAddress() instanceof InetSocketAddress ? (InetSocketAddress) channel.getRemoteAddress() : null;
     }
 }
