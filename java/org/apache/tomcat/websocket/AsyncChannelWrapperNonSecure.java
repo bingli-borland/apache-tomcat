@@ -81,6 +81,10 @@ public class AsyncChannelWrapperNonSecure implements AsyncChannelWrapper {
         return socketChannel.getLocalAddress();
     }
 
+    @Override
+    public SocketAddress getRemoteAddress() throws IOException {
+        return socketChannel.getRemoteAddress();
+    }
 
     private static final class NoOpFuture implements Future<Void> {
 

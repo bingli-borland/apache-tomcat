@@ -2608,7 +2608,6 @@ public class AprEndpoint extends AbstractEndpoint<Long,Long> implements SNICallB
             }
         }
 
-
         @Override
         protected void populateRemoteHost() {
             Lock lock = getLock();

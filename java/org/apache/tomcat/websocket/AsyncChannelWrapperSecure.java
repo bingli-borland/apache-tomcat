@@ -162,6 +162,10 @@ public class AsyncChannelWrapperSecure implements AsyncChannelWrapper {
         return socketChannel.getLocalAddress();
     }
 
+    @Override
+    public SocketAddress getRemoteAddress() throws IOException {
+        return socketChannel.getRemoteAddress();
+    }
 
     private class WriteTask implements Runnable {
 

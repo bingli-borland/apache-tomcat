@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -810,6 +811,10 @@ public abstract class WsRemoteEndpointImplBase implements RemoteEndpoint {
             headerBuffer.put(mask[3]);
         }
     }
+
+    public abstract InetSocketAddress getLocalAddress() throws IOException;
+
+    public abstract InetSocketAddress getRemoteAddress() throws IOException;
 
 
     private class TextMessageSendHandler implements SendHandler {

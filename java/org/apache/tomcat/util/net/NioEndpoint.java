@@ -1576,9 +1576,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 if (inetAddr != null) {
                     remoteAddr = inetAddr.getHostAddress();
                 }
+                remoteAddress = sc.socket().getRemoteSocketAddress();
             }
         }
-
 
         @Override
         protected void populateRemoteHost() {
@@ -1624,6 +1624,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 if (inetAddr != null) {
                     localAddr = inetAddr.getHostAddress();
                 }
+                localAddress = sc.socket().getLocalSocketAddress();
             }
         }
 

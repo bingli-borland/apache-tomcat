@@ -18,6 +18,7 @@ package org.apache.tomcat.websocket.server;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
@@ -381,6 +382,16 @@ public class WsRemoteEndpointImplServer extends WsRemoteEndpointImplBase {
     @Override
     protected Lock getLock() {
         return socketWrapper.getLock();
+    }
+
+    @Override
+    public InetSocketAddress getLocalAddress() throws IOException {
+        return socketWrapper.getLocalAddress();
+    }
+
+    @Override
+    public InetSocketAddress getRemoteAddress() throws IOException {
+        return socketWrapper.getRemoteAddress();
     }
 
 
