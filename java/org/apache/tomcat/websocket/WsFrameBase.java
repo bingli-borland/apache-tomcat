@@ -32,9 +32,15 @@ import jakarta.websocket.Extension;
 import jakarta.websocket.MessageHandler;
 import jakarta.websocket.PongMessage;
 
+import org.apache.tomcat.websocket.io.netty.buffer.ByteBuf;
+import org.apache.tomcat.websocket.io.netty.buffer.PooledByteBufAllocator;
+import org.apache.tomcat.websocket.io.netty.util.ReferenceCountUtil;
 import org.apache.juli.logging.Log;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.res.StringManager;
+
+import static org.apache.tomcat.websocket.Constants.BUFFER_TYPE;
+import static org.apache.tomcat.websocket.Constants.NETTY_INIT_SIZE;
 
 /**
  * Takes the ServletInputStream, processes the WebSocket frames it contains and extracts the messages. WebSocket Pings
@@ -63,6 +69,11 @@ public abstract class WsFrameBase {
     private boolean textMessage = false;
     private ByteBuffer messageBufferBinary;
     private CharBuffer messageBufferText;
+    private ByteBuf messageBufBinary;
+    private StringBuilder messageTextBuilder;
+    private static PooledByteBufAllocator getAllocator() {
+        return PooledByteBufAllocator.DEFAULT;
+    }
     // Cache the message handler in force when the message starts so it is used
     // consistently for the entire message
     private MessageHandler binaryMsgHandler = null;
@@ -86,10 +97,18 @@ public abstract class WsFrameBase {
     private volatile ReadState readState = ReadState.WAITING;
 
     public WsFrameBase(WsSession wsSession, Transformation transformation) {
-        inputBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+        if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            inputBuffer = ByteBuffer.allocate(NETTY_INIT_SIZE);
+            messageBufBinary = getAllocator().buffer(NETTY_INIT_SIZE, wsSession.getMaxBinaryMessageBufferSize());
+            messageTextBuilder = new StringBuilder();
+            messageBufferText = CharBuffer.allocate(NETTY_INIT_SIZE);
+        } else {
+            inputBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+            messageBufferBinary = ByteBuffer.allocate(wsSession.getMaxBinaryMessageBufferSize());
+            messageBufferText = CharBuffer.allocate(wsSession.getMaxTextMessageBufferSize());
+        }
         inputBuffer.position(0).limit(0);
-        messageBufferBinary = ByteBuffer.allocate(wsSession.getMaxBinaryMessageBufferSize());
-        messageBufferText = CharBuffer.allocate(wsSession.getMaxTextMessageBufferSize());
+
         wsSession.setWsFrame(this);
         this.wsSession = wsSession;
         Transformation finalTransformation;
@@ -172,18 +191,31 @@ public abstract class WsFrameBase {
                     if (opCode == Constants.OPCODE_BINARY) {
                         // New binary message
                         textMessage = false;
-                        int size = wsSession.getMaxBinaryMessageBufferSize();
-                        if (size != messageBufferBinary.capacity()) {
-                            messageBufferBinary = ByteBuffer.allocate(size);
+                        if (BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+                            int size = wsSession.getMaxBinaryMessageBufferSize();
+                            if (size != messageBufferBinary.capacity()) {
+                                messageBufferBinary = ByteBuffer.allocate(size);
+                            }
+                        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+                            if (messageBufBinary != null) {
+                                if (messageBufBinary.refCnt() > 0) {
+                                    ReferenceCountUtil.release(messageBufBinary);
+                                }
+                                messageBufBinary = getAllocator().buffer(NETTY_INIT_SIZE, wsSession.getMaxBinaryMessageBufferSize());
+                            }
                         }
                         binaryMsgHandler = wsSession.getBinaryMessageHandler();
                         textMsgHandler = null;
                     } else if (opCode == Constants.OPCODE_TEXT) {
                         // New text message
                         textMessage = true;
-                        int size = wsSession.getMaxTextMessageBufferSize();
-                        if (size != messageBufferText.capacity()) {
-                            messageBufferText = CharBuffer.allocate(size);
+                        if (BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+                            int size = wsSession.getMaxTextMessageBufferSize();
+                            if (size != messageBufferText.capacity()) {
+                                messageBufferText = CharBuffer.allocate(size);
+                            }
+                        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+                            messageTextBuilder = new StringBuilder(2048);
                         }
                         binaryMsgHandler = null;
                         textMsgHandler = wsSession.getTextMessageHandler();
@@ -376,11 +408,19 @@ public abstract class WsFrameBase {
 
     @SuppressWarnings("unchecked")
     protected void sendMessageText(boolean last) throws WsIOException {
+        if(BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+            sendMessageTextTomcat(last);
+        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            sendMessageTextNetty(last);
+        }
+    }
+
+    protected void sendMessageTextTomcat(boolean last) throws WsIOException {
         if (textMsgHandler instanceof WrappedMessageHandler) {
             long maxMessageSize = ((WrappedMessageHandler) textMsgHandler).getMaxMessageSize();
             if (maxMessageSize > -1 && messageBufferText.remaining() > maxMessageSize) {
                 throw new WsIOException(new CloseReason(CloseCodes.TOO_BIG, sm.getString("wsFrame.messageTooBig",
-                        Long.valueOf(messageBufferText.remaining()), Long.valueOf(maxMessageSize))));
+                    Long.valueOf(messageBufferText.remaining()), Long.valueOf(maxMessageSize))));
             }
         }
 
@@ -397,9 +437,41 @@ public abstract class WsFrameBase {
             messageBufferText.clear();
         }
     }
+    protected void sendMessageTextNetty(boolean last) throws WsIOException {
+        String msg = messageTextBuilder.toString();
+        if (textMsgHandler instanceof WrappedMessageHandler) {
+            long maxMessageSize = ((WrappedMessageHandler) textMsgHandler).getMaxMessageSize();
+            if (maxMessageSize > -1 && msg.length() > maxMessageSize) {
+                throw new WsIOException(new CloseReason(CloseCodes.TOO_BIG, sm.getString("wsFrame.messageTooBig",
+                    Long.valueOf(msg.length()), Long.valueOf(maxMessageSize))));
+            }
+        }
+
+        try {
+            if (textMsgHandler instanceof MessageHandler.Partial<?>) {
+                ((MessageHandler.Partial<String>) textMsgHandler).onMessage(msg, last);
+            } else {
+                // Caller ensures last == true if this branch is used
+                ((MessageHandler.Whole<String>) textMsgHandler).onMessage(msg);
+            }
+        } catch (Throwable t) {
+            handleThrowableOnSend(t);
+        } finally {
+            messageTextBuilder.setLength(0);
+        }
+    }
 
 
     private boolean processDataText() throws IOException {
+        if(BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+            return processDataTextTomcat();
+        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            return processDataTextNetty();
+        }
+        return false;
+    }
+
+    private boolean processDataTextTomcat() throws IOException {
         // Copy the available data to the buffer
         TransformationResult tr = transformation.getMoreData(opCode, fin, rsv, messageBufferBinary);
         while (!TransformationResult.END_OF_FRAME.equals(tr)) {
@@ -491,8 +563,149 @@ public abstract class WsFrameBase {
         }
     }
 
+    private boolean processDataTextNetty() throws IOException {
+        ByteBuffer byteBuffer;
+        // Copy the available data to the buffer
+        TransformationResult tr = transformation.getMoreData(opCode, fin, rsv, messageBufBinary);
+        while (!TransformationResult.END_OF_FRAME.equals(tr)) {
+            // Frame not complete - we ran out of something
+            // Convert bytes to UTF-8
+            while (messageBufBinary.isReadable()) {
+                messageBufferText.clear();
+                byteBuffer = messageBufBinary.nioBuffer(messageBufBinary.readerIndex(), messageBufBinary.readableBytes());
+                CoderResult cr = utf8DecoderMessage.decode(byteBuffer, messageBufferText, false);
+                if (cr.isError()) {
+                    throw new WsIOException(
+                        new CloseReason(CloseCodes.NOT_CONSISTENT, sm.getString("wsFrame.invalidUtf8")));
+                } else if (cr.isOverflow()) {
+                    messageBufferText.flip();
+                    if (messageBufferText.hasRemaining()) {
+                        messageTextBuilder.append(messageBufferText);
+                    }
+                    // Ran out of space in text buffer - flush it
+                    if (usePartial()) {
+                        sendMessageText(false);
+                    } else {
+                        checkTextMessageSize(messageTextBuilder.length());
+                    }
+                    messageTextBuilder.setLength(0);
+                } else if (cr.isUnderflow()) {
+                    messageBufferText.flip();
+                    if (messageBufferText.hasRemaining()) {
+                        messageTextBuilder.append(messageBufferText);
+                    }
+                    break;
+                }
+            }
+            messageBufBinary.clear();
+            // Need more input
+            // What did we run out of?
+            if (TransformationResult.OVERFLOW.equals(tr)) {
+                // Ran out of message buffer - exit inner loop and
+                // refill
+                // Read more input data
+                tr = transformation.getMoreData(opCode, fin, rsv, messageBufBinary);
+            } else {
+                // TransformationResult.UNDERFLOW
+                // Ran out of input data - get some more
+                return false;
+            }
+        }
+
+        // Frame is fully received
+        // Convert bytes to UTF-8
+        boolean endOfMessage = false;
+        while (!endOfMessage) {
+            messageBufferText.clear();
+            byteBuffer = messageBufBinary.nioBuffer(messageBufBinary.readerIndex(), messageBufBinary.readableBytes());
+            boolean last = !continuationExpected && !messageBufBinary.isReadable();
+            CoderResult cr = utf8DecoderMessage.decode(byteBuffer, messageBufferText, last);
+            int bytesRead = byteBuffer.position();
+            if (bytesRead == 0 && messageBufBinary.isReadable()) {
+                throw new WsIOException(
+                    new CloseReason(CloseCodes.NOT_CONSISTENT, sm.getString("wsFrame.invalidUtf8")));
+            }
+            messageBufBinary.skipBytes(bytesRead);
+            messageBufferText.flip();
+            messageTextBuilder.append(messageBufferText);
+            if (cr.isError()) {
+                throw new WsIOException(
+                    new CloseReason(CloseCodes.NOT_CONSISTENT, sm.getString("wsFrame.invalidUtf8")));
+            } else if (cr.isOverflow()) {
+                // Ran out of space in text buffer - flush it
+                if (usePartial()) {
+                    sendMessageText(false);
+                } else {
+                    checkTextMessageSize(messageTextBuilder.length());
+                }
+            } else if (cr.isUnderflow()) {
+                // End of frame and possible message as well.
+
+                if (continuationExpected) {
+                    // If partial messages are supported, send what we have
+                    // managed to decode
+                    if (usePartial()) {
+                        sendMessageText(false);
+                    }
+                    newFrame();
+                    // Process next frame
+                    return true;
+                } else {
+                    if (!messageBufBinary.isReadable()) {
+                        endOfMessage = true;
+                    }
+                }
+            } else {
+               endOfMessage = true;
+            }
+        }
+        messageBufferText.clear();
+        CoderResult cr = utf8DecoderMessage.decode(ByteBuffer.allocate(0), messageBufferText, true);
+        if (cr.isError()) {
+            throw new WsIOException(
+                new CloseReason(CloseCodes.NOT_CONSISTENT, sm.getString("wsFrame.invalidUtf8")));
+        }
+        messageBufferText.flip();
+        if (messageBufferText.hasRemaining()) {
+            messageTextBuilder.append(messageBufferText);
+        }
+        messageBufferText.clear();
+        CoderResult finalCr = utf8DecoderMessage.flush(messageBufferText);
+        if (finalCr.isError()) {
+            throw new WsIOException(
+                new CloseReason(CloseCodes.NOT_CONSISTENT, sm.getString("wsFrame.invalidUtf8")));
+        }
+        messageBufferText.flip();
+        if (messageBufferText.hasRemaining()) {
+            messageTextBuilder.append(messageBufferText);
+        }
+        sendMessageText(true);
+        newMessage();
+        return true;
+    }
+
+    private void checkTextMessageSize(int length) throws WsIOException {
+        long maxMessageSize = wsSession.getMaxTextMessageBufferSize();
+        if (usePartial()) {
+            if (length > NETTY_INIT_SIZE) {
+                sendMessageText(false);
+            }
+        } else if (length > maxMessageSize) {
+            throw new WsIOException(
+                new CloseReason(CloseCodes.TOO_BIG, sm.getString("wsFrame.textMessageTooBig")));
+        }
+    }
 
     private boolean processDataBinary() throws IOException {
+        if(BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+            return processDataBinaryTomcat();
+        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            return processDataBinaryNetty();
+        }
+        return false;
+    }
+
+    private boolean processDataBinaryTomcat() throws IOException {
         // Copy the available data to the buffer
         TransformationResult tr = transformation.getMoreData(opCode, fin, rsv, messageBufferBinary);
         while (!TransformationResult.END_OF_FRAME.equals(tr)) {
@@ -542,6 +755,63 @@ public abstract class WsFrameBase {
         return true;
     }
 
+    private boolean processDataBinaryNetty() throws IOException {
+        // Copy the available data to the buffer
+        TransformationResult tr = transformation.getMoreData(opCode, fin, rsv, messageBufBinary);
+        while (!TransformationResult.END_OF_FRAME.equals(tr)) {
+            // Frame not complete - what did we run out of?
+            if (TransformationResult.UNDERFLOW.equals(tr)) {
+                // Ran out of input data - get some more
+                return false;
+            }
+
+            // Ran out of message buffer - flush it
+            if (!usePartial()) {
+                long requiredCapacity = messageBufBinary.readableBytes() + payloadLength - payloadWritten;
+                long maxCapacity = wsSession.getMaxBinaryMessageBufferSize();
+                if (requiredCapacity > maxCapacity) {
+                    CloseReason cr = new CloseReason(CloseCodes.TOO_BIG, sm.getString("wsFrame.bufferTooSmall",
+                        Integer.valueOf(messageBufBinary.capacity()), Long.valueOf(payloadLength)));
+                    throw new WsIOException(cr);
+                }
+
+                int newCapacity = (int) Math.min(requiredCapacity, maxCapacity);
+                newCapacity = Math.max(newCapacity, messageBufBinary.capacity() * 2);
+
+                ByteBuf newBuffer = getAllocator().buffer(newCapacity);
+                if (messageBufBinary.readableBytes() > 0) {
+                    newBuffer.writeBytes(messageBufBinary);
+                }
+                ReferenceCountUtil.release(messageBufBinary);
+                messageBufBinary = newBuffer;
+            }
+            sendMessageBinary(messageBufBinary.nioBuffer(messageBufBinary.readerIndex(), messageBufBinary.readableBytes()), false);
+            messageBufBinary.clear();
+            // Read more data
+            tr = transformation.getMoreData(opCode, fin, rsv, messageBufBinary);
+        }
+
+        // Frame is fully received
+        // Send the message if either:
+        // - partial messages are supported
+        // - the message is complete
+        if (usePartial() || !continuationExpected) {
+            sendMessageBinary(messageBufBinary.nioBuffer(messageBufBinary.readerIndex(), messageBufBinary.readableBytes()), !continuationExpected);
+            messageBufBinary.clear();
+        }
+
+        if (continuationExpected) {
+            // More data for this message expected, start a new frame
+            messageBufBinary.clear();
+            newFrame();
+        } else {
+            // Message is complete, start a new message
+            newMessage();
+        }
+
+        return true;
+    }
+
 
     private void handleThrowableOnSend(Throwable t) throws WsIOException {
         ExceptionUtils.handleThrowable(t);
@@ -574,11 +844,27 @@ public abstract class WsFrameBase {
 
 
     private void newMessage() {
-        messageBufferBinary.clear();
-        messageBufferText.clear();
-        utf8DecoderMessage.reset();
-        continuationExpected = false;
-        newFrame();
+        if (BUFFER_TYPE == Constants.BufferType.TOMCAT) {
+            messageBufferBinary.clear();
+            messageBufferText.clear();
+            utf8DecoderMessage.reset();
+            continuationExpected = false;
+            newFrame();
+        } else if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            if (messageBufferBinary != null) {
+                messageBufBinary.clear();
+                if (messageBufBinary.refCnt() > 0) {
+                    ReferenceCountUtil.release(messageBufBinary);
+                }
+                messageBufBinary = getAllocator().buffer(NETTY_INIT_SIZE, wsSession.getMaxBinaryMessageBufferSize());
+            }
+            if (messageTextBuilder != null) {
+                messageTextBuilder.setLength(0);
+            }
+            utf8DecoderMessage.reset();
+            continuationExpected = false;
+            newFrame();
+        }
     }
 
 
@@ -868,6 +1154,20 @@ public abstract class WsFrameBase {
      */
     protected abstract void resumeProcessing();
 
+    public void close() {
+        if (BUFFER_TYPE == Constants.BufferType.NETTY) {
+            if (messageBufBinary != null) {
+                messageBufBinary.clear();
+                if (messageBufBinary.refCnt() > 0) {
+                    ReferenceCountUtil.release(messageBufBinary);
+                }
+                messageBufBinary = null;
+            }
+            if (messageTextBuilder != null) {
+                messageTextBuilder.setLength(0);
+            }
+        }
+    }
 
     private abstract static class TerminalTransformation implements Transformation {
 
@@ -903,6 +1203,19 @@ public abstract class WsFrameBase {
         public void close() {
             // NO-OP for the terminal transformations
         }
+
+        @Override
+        public TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuf dest) throws IOException {
+            dest.retain();
+            try {
+                ByteBuffer byteBuffer = dest.nioBuffer(dest.readerIndex(), dest.readableBytes());
+                TransformationResult result = getMoreData(opCode, fin, rsv, byteBuffer);
+                dest.writerIndex(dest.writerIndex() + byteBuffer.position());
+                return result;
+            } finally {
+                dest.release();
+            }
+        }
     }
 
 
@@ -932,6 +1245,35 @@ public abstract class WsFrameBase {
             } else {
                 // !dest.hasRemaining()
                 return TransformationResult.OVERFLOW;
+            }
+        }
+
+        @Override
+        public TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuf dest) throws IOException {
+            dest.retain();
+            try {
+                // opCode is ignored as the transformation is the same for all
+                // opCodes
+                // rsv is ignored as it known to be zero at this point
+                long toWrite = Math.min(payloadLength - payloadWritten, inputBuffer.remaining());
+                toWrite = Math.min(toWrite, dest.writableBytes());
+
+                int orgLimit = inputBuffer.limit();
+                inputBuffer.limit(inputBuffer.position() + (int) toWrite);
+                dest.writeBytes(inputBuffer);
+                inputBuffer.limit(orgLimit);
+                payloadWritten += toWrite;
+
+                if (payloadWritten == payloadLength) {
+                    return TransformationResult.END_OF_FRAME;
+                } else if (inputBuffer.remaining() == 0) {
+                    return TransformationResult.UNDERFLOW;
+                } else {
+                    // !dest.hasRemaining()
+                    return TransformationResult.OVERFLOW;
+                }
+            } finally {
+                dest.release();
             }
         }
 
@@ -972,6 +1314,35 @@ public abstract class WsFrameBase {
             } else {
                 // !dest.hasRemaining()
                 return TransformationResult.OVERFLOW;
+            }
+        }
+
+        @Override
+        public TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuf dest) throws IOException {
+            dest.retain();
+            try {
+                // opCode is ignored as the transformation is the same for all
+                // opCodes
+                // rsv is ignored as it known to be zero at this point
+                while (payloadWritten < payloadLength && inputBuffer.remaining() > 0 && dest.writableBytes() > 0) {
+                    byte b = (byte) ((inputBuffer.get() ^ mask[maskIndex]) & 0xFF);
+                    maskIndex++;
+                    if (maskIndex == 4) {
+                        maskIndex = 0;
+                    }
+                    payloadWritten++;
+                    dest.writeByte(b);
+                }
+                if (payloadWritten == payloadLength) {
+                    return TransformationResult.END_OF_FRAME;
+                } else if (inputBuffer.remaining() == 0) {
+                    return TransformationResult.UNDERFLOW;
+                } else {
+                    // !dest.hasRemaining()
+                    return TransformationResult.OVERFLOW;
+                }
+            } finally {
+                dest.release();
             }
         }
 

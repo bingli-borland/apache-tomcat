@@ -16,6 +16,8 @@
  */
 package org.apache.tomcat.websocket;
 
+import org.apache.tomcat.websocket.io.netty.buffer.ByteBuf;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -67,6 +69,8 @@ public interface Transformation {
      * @throws IOException If an I/O error occurs while reading data from the transform
      */
     TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuffer dest) throws IOException;
+
+    TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuf dest) throws IOException;
 
     /**
      * Validates the RSV and opcode combination (assumed to have been extracted from a WebSocket Frame) for this

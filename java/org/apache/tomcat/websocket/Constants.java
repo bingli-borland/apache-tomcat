@@ -127,6 +127,14 @@ public class Constants {
 
     public static final List<Extension> INSTALLED_EXTENSIONS = List.of(new WsExtension("permessage-deflate"));
 
+    public enum BufferType {
+        TOMCAT,
+        NETTY
+    }
+
+    public static volatile BufferType BUFFER_TYPE = BufferType.valueOf(System.getProperty("org.apache.tomcat.websocket.bufferType", "NETTY"));
+    public static int NETTY_INIT_SIZE = Integer.getInteger("org.apache.tomcat.websocket.buffer.netty.initSize", 8192);
+
     private Constants() {
         // Hide default constructor
     }

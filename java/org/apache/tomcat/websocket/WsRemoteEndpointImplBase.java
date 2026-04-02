@@ -79,14 +79,24 @@ public abstract class WsRemoteEndpointImplBase implements RemoteEndpoint {
 
     // Max size of WebSocket header is 14 bytes
     private final ByteBuffer headerBuffer = ByteBuffer.allocate(14);
-    private final ByteBuffer outputBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+    private final ByteBuffer outputBuffer;
     private final CharsetEncoder encoder = new Utf8Encoder();
-    private final ByteBuffer encoderBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+    private final ByteBuffer encoderBuffer;
     private final AtomicBoolean batchingAllowed = new AtomicBoolean(false);
     private volatile long sendTimeout = -1;
     private WsSession wsSession;
     private final List<EncoderEntry> encoderEntries = new ArrayList<>();
 
+
+    public WsRemoteEndpointImplBase() {
+        if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
+            outputBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+            encoderBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+        } else {
+            outputBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+            encoderBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+        }
+    }
 
     protected void setTransformation(Transformation transformation) {
         this.transformation = transformation;

@@ -28,6 +28,7 @@ import jakarta.websocket.Extension;
 import jakarta.websocket.Extension.Parameter;
 import jakarta.websocket.SendHandler;
 
+import org.apache.tomcat.websocket.io.netty.buffer.ByteBuf;
 import org.apache.tomcat.util.res.StringManager;
 
 public class PerMessageDeflate implements Transformation {
@@ -57,13 +58,13 @@ public class PerMessageDeflate implements Transformation {
     private final int clientMaxWindowBits;
     private final boolean isServer;
     private final Inflater inflater = new Inflater(true);
-    private final ByteBuffer readBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+    private final ByteBuffer readBuffer;
     private final Deflater deflater = new Deflater(Deflater.DEFAULT_COMPRESSION, true);
     private final byte[] EOM_BUFFER = new byte[EOM_BYTES.length + 1];
 
     private volatile Transformation next;
     private volatile boolean skipDecompression = false;
-    private volatile ByteBuffer writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+    private volatile ByteBuffer writeBuffer;
     private volatile boolean firstCompressedFrameWritten = false;
     // Flag to track if a message is completely empty
     private volatile boolean emptyMessage = true;
@@ -171,6 +172,13 @@ public class PerMessageDeflate implements Transformation {
         this.clientContextTakeover = clientContextTakeover;
         this.clientMaxWindowBits = clientMaxWindowBits;
         this.isServer = isServer;
+        if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
+            readBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+            writeBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+        } else {
+            readBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+            writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+        }
     }
 
 
@@ -241,6 +249,84 @@ public class PerMessageDeflate implements Transformation {
         }
 
         return TransformationResult.OVERFLOW;
+    }
+
+    @Override
+    public TransformationResult getMoreData(byte opCode, boolean fin, int rsv, ByteBuf dest) throws IOException {
+        dest.retain();
+        try {
+            // Control frames are never compressed and may appear in the middle of
+            // a WebSocket method. Pass them straight through.
+            if (Util.isControl(opCode)) {
+                return next.getMoreData(opCode, fin, rsv, dest);
+            }
+
+            if (!Util.isContinuation(opCode)) {
+                // First frame in new message
+                skipDecompression = (rsv & RSV_BITMASK) == 0;
+            }
+
+            // Pass uncompressed frames straight through.
+            if (skipDecompression) {
+                return next.getMoreData(opCode, fin, rsv, dest);
+            }
+
+            int written;
+            boolean usedEomBytes = false;
+
+            while (dest.isWritable() || usedEomBytes) {
+                // Space available in destination. Try and fill it.
+                try {
+                    int maxWritable = dest.writableBytes();
+                    byte[] tmp = new byte[Math.min(8192, maxWritable > 0 ? maxWritable : 8192)];
+                    written = inflater.inflate(tmp, 0, tmp.length);
+                    if (written > 0) {
+                        dest.writeBytes(tmp, 0, written);
+                    }
+                } catch (DataFormatException e) {
+                    throw new IOException(sm.getString("perMessageDeflate.deflateFailed"), e);
+                } catch (IllegalStateException | NullPointerException e) {
+                    // As of Java 25, the JRE throws an ISE rather than an NPE
+                    throw new IOException(sm.getString("perMessageDeflate.alreadyClosed"), e);
+                }
+
+                if (inflater.needsInput() && !usedEomBytes) {
+                    readBuffer.clear();
+                    TransformationResult nextResult = next.getMoreData(opCode, fin, (rsv ^ RSV_BITMASK), readBuffer);
+                    inflater.setInput(readBuffer.array(), readBuffer.arrayOffset(), readBuffer.position());
+                    if (dest.isWritable()) {
+                        if (TransformationResult.UNDERFLOW.equals(nextResult)) {
+                            return nextResult;
+                        } else if (TransformationResult.END_OF_FRAME.equals(nextResult) && readBuffer.position() == 0) {
+                            if (fin) {
+                                inflater.setInput(EOM_BYTES);
+                                usedEomBytes = true;
+                            } else {
+                                return TransformationResult.END_OF_FRAME;
+                            }
+                        }
+                    } else if (readBuffer.position() > 0) {
+                        return TransformationResult.OVERFLOW;
+                    } else if (fin) {
+                        inflater.setInput(EOM_BYTES);
+                        usedEomBytes = true;
+                    }
+                } else if (written == 0) {
+                    if (fin && (isServer && !clientContextTakeover || !isServer && !serverContextTakeover)) {
+                        try {
+                            inflater.reset();
+                        } catch (NullPointerException e) {
+                            throw new IOException(sm.getString("perMessageDeflate.alreadyClosed"), e);
+                        }
+                    }
+                    return TransformationResult.END_OF_FRAME;
+                }
+            }
+
+            return TransformationResult.OVERFLOW;
+        } finally {
+            dest.release();
+        }
     }
 
 
@@ -379,8 +465,11 @@ public class PerMessageDeflate implements Transformation {
                     MessagePart compressedPart;
 
                     // .. and a new writeBuffer will be required.
-                    writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
-
+                    if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
+                        writeBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+                    } else {
+                        writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+                    }
                     // Flip the compressed payload ready for writing
                     compressedPayload.flip();
 
