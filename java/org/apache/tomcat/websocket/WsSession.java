@@ -752,6 +752,10 @@ public class WsSession implements Session {
          * tracking the session close timeout.
          */
         webSocketContainer.unregisterSession(getSessionMapKey(), this);
+
+        if (wsFrame != null) {
+            wsFrame.close();
+        }
     }
 
 

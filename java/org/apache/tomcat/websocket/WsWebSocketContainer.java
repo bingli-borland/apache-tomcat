@@ -273,7 +273,12 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
 
         // Set-up
         // Same size as the WsFrame input buffer
-        ByteBuffer response = ByteBuffer.allocate(getDefaultMaxBinaryMessageBufferSize());
+        ByteBuffer response;
+        if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
+            response = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+        } else {
+            response = ByteBuffer.allocate(getDefaultMaxBinaryMessageBufferSize());
+        }
         String subProtocol;
         boolean success = false;
         List<Extension> extensionsAgreed = new ArrayList<>();

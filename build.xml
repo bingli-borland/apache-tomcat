@@ -55,7 +55,9 @@
 
   <!-- constant to declare a file binary for md5sum -->
   <property name="md5sum.binary-prefix"  value=" *" />
-
+  <property name="proxy.use"  value="true" />
+  <property name="proxy.host"  value="127.0.0.1" />
+  <property name="proxy.port"  value="9782" />
   <!-- Exact spec versions (for the manifests etc.) -->
   <property name="servlet.spec.version"    value="4.0" />
   <property name="servlet.revision"        value="FR" />
@@ -237,6 +239,7 @@
     <pathelement location="${jdt.jar}"/>
     <pathelement location="${jaxrpc-lib.jar}"/>
     <pathelement location="${wsdl4j-lib.jar}"/>
+    <pathelement location="D:\java\jdk8u432-b06\jre\lib\rt.jar"/>
   </path>
 
   <path id="tomcat.classpath">
