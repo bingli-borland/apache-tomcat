@@ -24,6 +24,7 @@ import javax.websocket.DecodeException;
 import javax.websocket.MessageHandler;
 import javax.websocket.Session;
 
+import org.apache.tomcat.websocket.Constants;
 import org.apache.tomcat.websocket.WsSession;
 
 /**
@@ -58,7 +59,13 @@ public abstract class PojoMessageHandlerPartialBase<T> extends PojoMessageHandle
             parameters[indexSession] = session;
         }
         if (convert) {
-            parameters[indexPayload] = ((ByteBuffer) message).array();
+            if(Constants.BUFFER_TYPE == Constants.BufferType.TOMCAT && ((ByteBuffer) message).hasArray()) {
+                parameters[indexPayload] = ((ByteBuffer) message).array();
+            } else if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY && !((ByteBuffer) message).hasArray()){
+                byte[] bytes = new byte[((ByteBuffer) message).remaining()];
+                ((ByteBuffer) message).get(bytes);
+                parameters[indexPayload] = bytes;
+            }
         } else {
             parameters[indexPayload] = message;
         }

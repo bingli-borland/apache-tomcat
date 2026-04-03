@@ -802,7 +802,6 @@ public abstract class WsFrameBase {
 
         if (continuationExpected) {
             // More data for this message expected, start a new frame
-            messageBufBinary.clear();
             newFrame();
         } else {
             // Message is complete, start a new message
