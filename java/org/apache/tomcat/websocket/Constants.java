@@ -168,6 +168,7 @@ public class Constants {
 
     public static volatile BufferType BUFFER_TYPE = BufferType.valueOf(System.getProperty("org.apache.tomcat.websocket.bufferType", "NETTY"));
     public static int NETTY_INIT_SIZE = Integer.getInteger("org.apache.tomcat.websocket.buffer.netty.initSize", 8192);
+    public static final String CLIENT_IP_ADDRESS = System.getProperty("org.apache.tomcat.websocket.client.ip.address");
 
     static {
         if (DISABLE_BUILTIN_EXTENSIONS) {

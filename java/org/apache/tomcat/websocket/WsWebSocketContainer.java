@@ -21,12 +21,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.SocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousChannelGroup;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -36,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -175,6 +181,40 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
         return connectToServerRecursive(holder, clientEndpointConfiguration, path, new HashSet<>());
     }
 
+    private void bindToBestNetworkInterface(AsynchronousSocketChannel channel, SocketAddress sa) throws IOException {
+        if (Constants.CLIENT_IP_ADDRESS != null) {
+            InetAddress addr = InetAddress.getByName(Constants.CLIENT_IP_ADDRESS);
+            channel.bind(new InetSocketAddress(addr, 0));
+            return;
+        }
+        boolean ipv4 = true;
+        boolean isLoopback = false;
+        if (sa instanceof InetSocketAddress) {
+            InetSocketAddress inetSocketAddress = (InetSocketAddress) sa;
+            if (inetSocketAddress.getAddress().isLoopbackAddress()) {
+                isLoopback = true;
+            }
+            ipv4 = inetSocketAddress.getAddress() instanceof Inet4Address;
+        }
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
+            boolean isValidInterface = isLoopback ? iface.isLoopback() : (iface.isUp() && !iface.isLoopback());
+            if (!isValidInterface) {
+                continue;
+            }
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                InetAddress addr = addresses.nextElement();
+                boolean isMatchAddress = ipv4 ? (addr instanceof Inet4Address)
+                    : (addr instanceof Inet6Address);
+                if (isMatchAddress) {
+                    channel.bind(new InetSocketAddress(addr, 0));
+                    return;
+                }
+            }
+        }
+    }
 
     private Session connectToServerRecursive(ClientEndpointHolder clientEndpointHolder,
             ClientEndpointConfig clientEndpointConfiguration, URI path, Set<URI> redirectSet)
@@ -284,6 +324,14 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
         List<Extension> extensionsAgreed = new ArrayList<>();
         Transformation transformation = null;
         AsyncChannelWrapper channel = null;
+
+        try {
+            bindToBestNetworkInterface(socketChannel, sa);
+        } catch (IOException e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage(), e);
+            }
+        }
 
         try {
             // Open the connection
