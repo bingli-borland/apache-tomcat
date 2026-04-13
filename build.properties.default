@@ -29,12 +29,12 @@
 # -----------------------------------------------------------------------------
 
 # ----- Version Control Flags -----
-version.major=11
+version.major=1
 version.minor=0
-version.build=21
+version.build=0
 version.patch=0
 version.suffix=
-version.dev=-dev
+version.dev=
 
 # ----- Build tools -----
 ant.version.required=1.10.2

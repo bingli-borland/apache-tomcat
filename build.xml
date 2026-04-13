@@ -45,7 +45,7 @@
   </fail>
 
   <!-- Project Name -->
-  <property name="project"               value="apache-tomcat" />
+  <property name="project"               value="ALX-APPSERVER-SPRINGBOOT" />
 
   <!-- Version numbers -->
   <!-- Keep in sync with webapps/docs/tomcat-docs.xsl -->
@@ -55,6 +55,10 @@
 
   <!-- constant to declare a file binary for md5sum -->
   <property name="md5sum.binary-prefix"  value=" *" />
+
+  <property name="proxy.use"  value="true" />
+  <property name="proxy.host"  value="127.0.0.1" />
+  <property name="proxy.port"  value="9782" />
 
   <!-- Exact spec versions (for the manifests etc.) -->
   <property name="servlet.spec.version"    value="6.1" />
@@ -1885,12 +1889,15 @@
           description="Creates the embedded release"
           depends="embed-jars,embed-sources,embed-programmatic-jar" >
 
+    <copydir src="${basedir}/package/"
+             dest="${tomcat.embed}"/>
+
     <fixcrlf srcdir="${tomcat.embed}" eol="crlf"
         encoding="ISO-8859-1" fixlast="false" >
       <patternset refid="text.files" />
     </fixcrlf>
 
-    <zip destfile="${tomcat.embed}/${final.name}-embed.zip"
+    <zip destfile="${tomcat.embed}/${final.name}.zip"
          modificationtime="${tstamp.iso.release}"
          encoding="UTF8">
       <fileset dir="${tomcat.embed}">
@@ -1901,7 +1908,7 @@
         <exclude name="*.tar.gz" />
       </fileset>
     </zip>
-    <hashAndSign file="${tomcat.embed}/${final.name}-embed.zip" />
+    <hashAndSign file="${tomcat.embed}/${final.name}.zip" />
 
     <fixcrlf srcdir="${tomcat.embed}" eol="lf"
         encoding="ISO-8859-1" fixlast="false" >
@@ -1914,8 +1921,8 @@
     </touch>
 
     <tar longfile="gnu" compression="gzip"
-         tarfile="${tomcat.embed}/${final.name}-embed.tar.gz">
-      <tarfileset dir="${tomcat.embed}" prefix="${final.name}-embed">
+         tarfile="${tomcat.embed}/${final.name}.tar.gz">
+      <tarfileset dir="${tomcat.embed}" prefix="${final.name}">
         <include name="**" />
         <exclude name="*.asc" />
         <exclude name="*.sha512" />
@@ -1923,7 +1930,7 @@
         <exclude name="*.tar.gz" />
       </tarfileset>
     </tar>
-    <hashAndSign file="${tomcat.embed}/${final.name}-embed.tar.gz" />
+    <hashAndSign file="${tomcat.embed}/${final.name}.tar.gz" />
 
   </target>
 
