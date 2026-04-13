@@ -185,12 +185,15 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
         }
         boolean ipv4 = true;
         boolean isLoopback = false;
+        boolean targetIsLinkLocal = false;
+
         if (sa instanceof InetSocketAddress) {
-            InetSocketAddress inetSocketAddress = (InetSocketAddress) sa;
-            if (inetSocketAddress.getAddress().isLoopbackAddress()) {
-                isLoopback = true;
+            InetAddress remoteAddr = ((InetSocketAddress) sa).getAddress();
+            isLoopback = remoteAddr.isLoopbackAddress();
+            ipv4 = remoteAddr instanceof Inet4Address;
+            if (!ipv4 && remoteAddr.isLinkLocalAddress()) {
+                targetIsLinkLocal = true;
             }
-            ipv4 = inetSocketAddress.getAddress() instanceof Inet4Address;
         }
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
         while (interfaces.hasMoreElements()) {
@@ -202,12 +205,17 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
             Enumeration<InetAddress> addresses = iface.getInetAddresses();
             while (addresses.hasMoreElements()) {
                 InetAddress addr = addresses.nextElement();
-                boolean isMatchAddress = ipv4 ? (addr instanceof Inet4Address)
-                    : (addr instanceof Inet6Address);
-                if (isMatchAddress) {
-                    channel.bind(new InetSocketAddress(addr, 0));
-                    return;
+                boolean isMatchFamily = ipv4 ? (addr instanceof Inet4Address) : (addr instanceof Inet6Address);
+                if (!isMatchFamily) {
+                    continue;
                 }
+
+                if (!ipv4 && (targetIsLinkLocal != addr.isLinkLocalAddress() || addr.isMulticastAddress())) {
+                    continue;
+                }
+
+                channel.bind(new InetSocketAddress(addr, 0));
+                return;
             }
         }
     }
