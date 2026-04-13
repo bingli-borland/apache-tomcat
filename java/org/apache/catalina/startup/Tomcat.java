@@ -70,6 +70,7 @@ import org.apache.catalina.realm.RealmBase;
 import org.apache.catalina.security.SecurityClassLoad;
 import org.apache.catalina.util.ContextName;
 import org.apache.catalina.util.IOTools;
+import org.apache.catalina.util.ServerInfo;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.buf.UriUtil;
 import org.apache.tomcat.util.compat.JreCompat;
@@ -174,6 +175,11 @@ public class Tomcat {
      * Constructs a new embedded Tomcat instance with default settings.
      */
     public Tomcat() {
+
+        System.out.println();
+        ServerInfo.main(null);
+        System.out.println();
+
         ExceptionUtils.preload();
     }
 
@@ -626,7 +632,7 @@ public class Tomcat {
         server.setPort(-1);
 
         Service service = new StandardService();
-        service.setName("Tomcat");
+        service.setName("ALX AS");
         server.addService(service);
         return server;
     }
