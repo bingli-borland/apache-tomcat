@@ -597,7 +597,7 @@ public abstract class WsFrameBase {
                     break;
                 }
             }
-            messageBufBinary.clear();
+            messageBufBinary.discardReadBytes();
             // Need more input
             // What did we run out of?
             if (TransformationResult.OVERFLOW.equals(tr)) {
