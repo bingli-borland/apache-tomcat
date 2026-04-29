@@ -26,7 +26,8 @@ X-Compile-Target-JDK: ${compile.release}
 
 -includepackage: \
     org.apache.tomcat.websocket.pojo,\
-    org.apache.tomcat.websocket.io.netty.*
+    org.apache.tomcat.websocket.io.netty.*,\
+    org.apache.tomcat.websocket.jetty.*
 
 -includeresource.meta-inf: /META-INF/=${tomcat.output}/manifests/tomcat-websocket.jar/
 
