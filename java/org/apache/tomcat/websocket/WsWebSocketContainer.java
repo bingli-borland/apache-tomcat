@@ -31,7 +31,6 @@ import java.net.ProxySelector;
 import java.net.SocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousChannelGroup;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -323,7 +322,9 @@ public class WsWebSocketContainer implements WebSocketContainer, BackgroundProce
         // Same size as the WsFrame input buffer
         ByteBuffer response;
         if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
-            response = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+            response = ByteBuffer.allocate(Constants.INIT_SIZE);
+        } else if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+            response = ByteBuffer.allocate(Constants.INIT_SIZE);
         } else {
             response = ByteBuffer.allocate(getDefaultMaxBinaryMessageBufferSize());
         }

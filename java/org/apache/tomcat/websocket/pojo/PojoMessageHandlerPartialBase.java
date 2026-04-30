@@ -61,6 +61,8 @@ public abstract class PojoMessageHandlerPartialBase<T> extends PojoMessageHandle
         if (convert) {
             if(Constants.BUFFER_TYPE == Constants.BufferType.TOMCAT && ((ByteBuffer) message).hasArray()) {
                 parameters[indexPayload] = ((ByteBuffer) message).array();
+            } else if(Constants.BUFFER_TYPE == Constants.BufferType.JETTY && ((ByteBuffer) message).hasArray()) {
+                parameters[indexPayload] = ((ByteBuffer) message).array();
             } else if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY && !((ByteBuffer) message).hasArray()){
                 byte[] bytes = new byte[((ByteBuffer) message).remaining()];
                 ((ByteBuffer) message).get(bytes);

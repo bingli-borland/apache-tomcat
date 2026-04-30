@@ -41,6 +41,8 @@ import org.apache.tomcat.websocket.Constants;
 import org.apache.tomcat.websocket.Transformation;
 import org.apache.tomcat.websocket.WsRemoteEndpointImplBase;
 
+import static org.apache.tomcat.websocket.Constants.getByteBufferPool;
+
 /**
  * This is the server side {@link javax.websocket.RemoteEndpoint} implementation - i.e. what the server uses to send
  * data to the client.
@@ -311,6 +313,7 @@ public class WsRemoteEndpointImplServer extends WsRemoteEndpointImplBase {
             }
         }
         wsWriteTimeout.unregister(this);
+        super.doClose();
     }
 
 

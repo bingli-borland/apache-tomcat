@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.websocket.Extension;
+import org.apache.tomcat.websocket.jetty.io.ArrayByteBufferPool;
+import org.apache.tomcat.websocket.jetty.io.ByteBufferPool;
 
 /**
  * Internal implementation constants.
@@ -163,11 +165,12 @@ public class Constants {
 
     public enum BufferType {
         TOMCAT,
-        NETTY
+        NETTY,
+        JETTY
     }
 
-    public static volatile BufferType BUFFER_TYPE = BufferType.valueOf(System.getProperty("org.apache.tomcat.websocket.bufferType", "NETTY"));
-    public static int NETTY_INIT_SIZE = Integer.getInteger("org.apache.tomcat.websocket.buffer.netty.initSize", 2048);
+    public static volatile BufferType BUFFER_TYPE = BufferType.valueOf(System.getProperty("org.apache.tomcat.websocket.bufferType", "JETTY"));
+    public static int INIT_SIZE = Integer.getInteger("org.apache.tomcat.websocket.buffer.initSize", 8192);
     public static final String CLIENT_IP_ADDRESS = System.getProperty("org.apache.tomcat.websocket.client.ip.address");
 
     static {
@@ -182,5 +185,11 @@ public class Constants {
 
     private Constants() {
         // Hide default constructor
+    }
+
+    private static final ByteBufferPool BYTE_BUFFER_POOL = new ArrayByteBufferPool(-1, -1, 2 * 1024 * 1024);
+
+    public static ByteBufferPool getByteBufferPool() {
+        return BYTE_BUFFER_POOL;
     }
 }

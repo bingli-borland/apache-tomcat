@@ -54,6 +54,8 @@ import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.buf.Utf8Encoder;
 import org.apache.tomcat.util.res.StringManager;
 
+import static org.apache.tomcat.websocket.Constants.getByteBufferPool;
+
 public abstract class WsRemoteEndpointImplBase implements RemoteEndpoint {
 
     protected static final StringManager sm = StringManager.getManager(WsRemoteEndpointImplBase.class);
@@ -91,8 +93,11 @@ public abstract class WsRemoteEndpointImplBase implements RemoteEndpoint {
 
     public WsRemoteEndpointImplBase() {
         if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
-            outputBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
-            encoderBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
+            outputBuffer = ByteBuffer.allocate(Constants.INIT_SIZE);
+            encoderBuffer = ByteBuffer.allocate(Constants.INIT_SIZE);
+        } else if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+            outputBuffer = getByteBufferPool().acquire(Constants.INIT_SIZE, false);
+            encoderBuffer = getByteBufferPool().acquire(Constants.INIT_SIZE, false);
         } else {
             outputBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
             encoderBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
@@ -764,7 +769,12 @@ public abstract class WsRemoteEndpointImplBase implements RemoteEndpoint {
 
     protected abstract boolean isMasked();
 
-    protected abstract void doClose();
+    protected void doClose() {
+        if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+            getByteBufferPool().release(outputBuffer);
+            getByteBufferPool().release(encoderBuffer);
+        }
+    }
 
     protected abstract Lock getLock();
 

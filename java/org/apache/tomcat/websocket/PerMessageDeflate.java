@@ -31,6 +31,8 @@ import javax.websocket.SendHandler;
 import org.apache.tomcat.websocket.io.netty.buffer.ByteBuf;
 import org.apache.tomcat.util.res.StringManager;
 
+import static org.apache.tomcat.websocket.Constants.getByteBufferPool;
+
 public class PerMessageDeflate implements Transformation {
 
     private static final StringManager sm = StringManager.getManager(PerMessageDeflate.class);
@@ -172,12 +174,15 @@ public class PerMessageDeflate implements Transformation {
         this.clientContextTakeover = clientContextTakeover;
         this.clientMaxWindowBits = clientMaxWindowBits;
         this.isServer = isServer;
-        if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
-            readBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
-            writeBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
-        } else {
+        if (Constants.BUFFER_TYPE == Constants.BufferType.TOMCAT) {
             readBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
             writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+        } else if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+            readBuffer = getByteBufferPool().acquire(Constants.INIT_SIZE, false);
+            writeBuffer = getByteBufferPool().acquire(Constants.INIT_SIZE, false);
+        } else {
+            readBuffer = ByteBuffer.allocate(Constants.INIT_SIZE);
+            writeBuffer = ByteBuffer.allocate(Constants.INIT_SIZE);
         }
     }
 
@@ -465,10 +470,15 @@ public class PerMessageDeflate implements Transformation {
                     MessagePart compressedPart;
 
                     // .. and a new writeBuffer will be required.
-                    if (Constants.BUFFER_TYPE == Constants.BufferType.NETTY) {
-                        writeBuffer = ByteBuffer.allocate(Constants.NETTY_INIT_SIZE);
-                    } else {
+                    if (Constants.BUFFER_TYPE == Constants.BufferType.TOMCAT) {
                         writeBuffer = ByteBuffer.allocate(Constants.DEFAULT_BUFFER_SIZE);
+                    } else if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+                        if (writeBuffer != null) {
+                            getByteBufferPool().release(writeBuffer);
+                        }
+                        writeBuffer = getByteBufferPool().acquire(Constants.INIT_SIZE, false);
+                    } else {
+                        writeBuffer = ByteBuffer.allocate(Constants.INIT_SIZE);
                     }
                     // Flip the compressed payload ready for writing
                     compressedPayload.flip();
@@ -585,5 +595,9 @@ public class PerMessageDeflate implements Transformation {
         next.close();
         inflater.end();
         deflater.end();
+        if (Constants.BUFFER_TYPE == Constants.BufferType.JETTY) {
+            getByteBufferPool().release(readBuffer);
+            getByteBufferPool().release(writeBuffer);
+        }
     }
 }
