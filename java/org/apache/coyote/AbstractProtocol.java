@@ -437,6 +437,14 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler, MBeanRegis
     }
 
 
+    public void setBacklog(int backlog) {
+        endpoint.setAcceptCount(backlog);
+    }
+
+    public int getBacklog() {
+        return endpoint.getAcceptCount();
+    }
+
     /**
      * Gets whether TCP no-delay is enabled.
      *

@@ -805,6 +805,7 @@
   <!-- Every standard pattern set above should be included in an embedded JAR -->
   <patternset id="files.tomcat-embed-core" >
     <patternset refid="files.catalina" />
+    <patternset refid="files.annotations-api" />
     <patternset refid="files.servlet-api" />
     <patternset refid="files.jaspic-api" />
     <patternset refid="files.tomcat-api" />
@@ -1729,7 +1730,6 @@
       failonerror="false"/>
     <copy file="${jdt.jar}" todir="${tomcat.embed}" />
     <copy file="${annotations-api.jar}" todir="${tomcat.embed}" />
-
     <!-- Note the meta-inf below will work as long as there is only one JAR
          that needs to add entries. If there is more than one a more complex
          solution will be required. -->
@@ -1742,6 +1742,7 @@
            addGraal="true"
            graalPrefix="org.apache.tomcat.embed/tomcat-embed-core"
            graalFiles="res/graal/tomcat-embed-core/native-image"
+           zipfileset="${annotations-api.jar}"
            libs="embed/*.jar"/>
     <jarIt jarfile="${tomcat-embed-el.jar}"
            filesDir="${tomcat.classes}"
@@ -4472,6 +4473,8 @@ Read the Building page on the Apache Tomcat documentation site for details on ho
                default="" />
     <attribute name="libs" description="libraries to use for bnd classpath analysis relative to ${tomcat.output}"
                default="build/lib/*.jar,build/bin/tomcat-juli.jar" />
+    <attribute name="zipfileset" description="additional ZIP/JAR file to include in the output JAR"
+               default="" />
     <sequential>
       <local name="jar.uptodate"/>
       <uptodate property="jar.uptodate" targetfile="@{jarfile}" >
@@ -4488,6 +4491,10 @@ Read the Building page on the Apache Tomcat documentation site for details on ho
         <jar jarfile="@{jarfile}"
              manifest="@{manifest}"
              modificationtime="${tstamp.iso.release}">
+          <zipfileset src="@{zipfileset}"
+                      includes="javax/annotation/**"
+                      erroronmissingarchive="true"
+                      if:set="zipfileset" />
           <fileset dir="@{filesDir}">
             <patternset refid="@{filesId}"/>
             <!-- Javadoc exclusions -->
