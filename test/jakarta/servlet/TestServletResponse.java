@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import org.apache.catalina.filters.TesterHttpServletResponse;
+import com.alx.enterprise.webtier.filters.TesterHttpServletResponse;
 
 public class TestServletResponse {
 

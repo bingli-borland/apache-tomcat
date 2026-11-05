@@ -31,8 +31,8 @@
 
 <section name="Preface">
 
-<p>This section of the Tomcat documentation attempts to explain
-the architecture and design of the Tomcat server.  It includes significant
+<p>This section of the Alx documentation attempts to explain
+the architecture and design of the Alx server.  It includes significant
 contributions from several tomcat developers:
 </p>
 <ul>
@@ -48,13 +48,13 @@ contributions from several tomcat developers:
 <p>The information presented is divided into the following sections:</p>
 <ul>
 <li><a href="overview.html"><strong>Overview</strong></a> -
-    An overview of the Tomcat server architecture with key terms
+    An overview of the Alx server architecture with key terms
     and concepts.</li>
 <li><a href="startup.html"><strong>Server Startup</strong></a> -
-    A detailed description, with sequence diagrams, of how the Tomcat
+    A detailed description, with sequence diagrams, of how the Alx
     server starts up.</li>
 <li><a href="requestProcess.html"><strong>Request Process Flow</strong></a> -
-    A detailed description of how Tomcat handles a request.</li>
+    A detailed description of how Alx handles a request.</li>
 </ul>
 
 </section>

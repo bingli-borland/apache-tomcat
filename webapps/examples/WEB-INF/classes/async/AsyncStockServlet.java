@@ -30,8 +30,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import com.alx.enterprise.logging.internal.Log;
+import com.alx.enterprise.logging.internal.LogFactory;
 
 import async.Stockticker.Stock;
 import async.Stockticker.TickListener;

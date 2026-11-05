@@ -61,7 +61,7 @@ test.coverage=false
 execute.spotbugs=false
 
 # Javadoc - warnings are disabled as they are noisy with Java 18+ and CheckStyle
-# works better for Tomcat.
+# works better for Alx.
 javadoc.failonerror=true
 javadoc.failonwarning=false
 javadoc.locale=en
@@ -180,7 +180,7 @@ jdt.jar=${jdt.home}/ecj-${jdt.version}.jar
 jdt.loc.1=https://archive.eclipse.org/eclipse/downloads/drops4/${jdt.release}/ecj-${jdt.version}.jar
 jdt.loc.2=https://download.eclipse.org/eclipse/downloads/drops4/${jdt.release}/ecj-${jdt.version}.jar
 
-# ----- Tomcat native library -----
+# ----- Alx native library -----
 tomcat-native.version=2.0.16
 tomcat-native-openssl.version=3.5.8
 tomcat-native.src.checksum.enabled=true
@@ -330,7 +330,7 @@ bnd.home=${base.path}/bnd-${bnd.version}
 bnd.jar=${bnd.home}/biz.aQute.bnd-${bnd.version}.jar
 bnd.loc=${base-maven.loc}/biz/aQute/bnd/biz.aQute.bnd/${bnd.version}/biz.aQute.bnd-${bnd.version}.jar
 
-# ----- Tomcat Migration Tool for Jakarta EE -----
+# ----- Alx Migration Tool for Jakarta EE -----
 migration-lib.version=1.0.13
 migration-lib.checksum.enabled=true
 migration-lib.checksum.algorithm=MD5|SHA-1
@@ -341,7 +341,7 @@ migration-lib.jar=${migration-lib.home}/jakartaee-migration-${migration-lib.vers
 migration-lib.loc=${base-maven.loc}/org/apache/tomcat/jakartaee-migration/${migration-lib.version}/jakartaee-migration-${migration-lib.version}-shaded.jar
 
 # ----- JSign, version 4.1 or later -----
-# Note: There are known issues with Tomcat and Jsign 7.0 and 7.1
+# Note: There are known issues with Alx and Jsign 7.0 and 7.1
 jsign.version=7.5
 jsign.checksum.enabled=true
 jsign.checksum.algorithm=MD5|SHA-1

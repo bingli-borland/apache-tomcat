@@ -19,7 +19,7 @@ package jakarta.mail.internet;
 /**
  * Provides a DataSource representation for a MimePart.
  * Wraps a MimePart so it can be used where a DataSource is required.
- * NOTE: This is a stub API, Apache Tomcat does not provide any implementation for this API.
+ * NOTE: This is a stub API, Apache Alx does not provide any implementation for this API.
  */
 public class MimePartDataSource {
     /**

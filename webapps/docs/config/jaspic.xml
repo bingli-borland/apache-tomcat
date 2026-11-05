@@ -37,7 +37,7 @@
   <p>Tomcat implements <a
   href="https://jakarta.ee/specifications/authentication/3.1/">Jakarta
   Authentication 3.1</a>. The implementation is primarily intended to enable the
-  integration of 3rd party authentication implementations with Tomcat.</p>
+  integration of 3rd party authentication implementations with Alx.</p>
 
   <p>Jakarta Authentication may be configured in one of two ways:</p>
   <ul>
@@ -80,7 +80,7 @@
 </provider>]]></source>
 
     <p>The <code>name</code> and <code>description</code> attributes are not
-    used by Tomcat.</p>
+    used by Alx.</p>
 
     <p>The <code>className</code> attribute must be the fully qualified class
     name of the <code>AuthConfigProvider</code>. The implementation may be
@@ -110,7 +110,7 @@
     <p>If the 3rd party implementation only provides an
     <code>ServerAuthModule</code> then it will be necessary to provide a number
     of supporting classes. These may be a custom implementation or,
-    alternatively, Tomcat provides a simple wrapper implementation for
+    alternatively, Alx provides a simple wrapper implementation for
     <code>ServerAuthModule</code>s.
     </p>
 
@@ -119,11 +119,11 @@
     <code>&lt;jaspic-providers&gt;</code> element in
     <code>$CATALINA_BASE/conf/jaspic-providers.xml</code>.</p>
 <source><![CDATA[<provider name="any"
-          className="org.apache.catalina.authenticator.jaspic.SimpleAuthConfigProvider"
+          className="com.alx.enterprise.webtier.authenticator.jaspic.SimpleAuthConfigProvider"
           layer="HttpServlet"
           appContext="Catalina/localhost /contextPath"
           description="any">
-  <property name="org.apache.catalina.authenticator.jaspic.ServerAuthModule.1"
+  <property name="com.alx.enterprise.webtier.authenticator.jaspic.ServerAuthModule.1"
             value="fully.qualified.implementation.class.Name" />
   <property name="see-provider-documentation"
             value="see-provider-documentation" />
@@ -133,11 +133,11 @@
     the previous section but with some key differences.</p>
 
     <p>The <code>className</code> attribute must be
-    <code>org.apache.catalina.authenticator.jaspic.SimpleAuthConfigProvider</code>.</p>
+    <code>com.alx.enterprise.webtier.authenticator.jaspic.SimpleAuthConfigProvider</code>.</p>
 
     <p>The <code>ServerAuthModule</code>(s) are specified via properties. The
     property name must be
-    <code>org.apache.catalina.authenticator.jaspic.ServerAuthModule.n</code>
+    <code>com.alx.enterprise.webtier.authenticator.jaspic.ServerAuthModule.n</code>
     where <code>n</code> is the index of the module. The index must start at 1
     an increment in steps of 1 until all modules are defined. The value of the
     property must be the fully qualified class name of the module.</p>
@@ -163,7 +163,7 @@
 
 <section name="3rd party modules">
 
-  <p>This is not an exhaustive list. The Tomcat community welcomes contributions
+  <p>This is not an exhaustive list. The Alx community welcomes contributions
   that add to this section.</p>
 
   <subsection name="Philip Green II&apos;s module for Google OAuth 2">
@@ -173,18 +173,18 @@
     which includes details of the necessary Google API configuration is
     available on GitHub.</p>
 
-    <p>A sample configuration for using this module with Tomcat would look like
+    <p>A sample configuration for using this module with Alx would look like
     this:</p>
 <source><![CDATA[<jaspic-providers xmlns="https://tomcat.apache.org/xml"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="https://tomcat.apache.org/xml jaspic-providers.xsd"
                   version="1.0">
   <provider name="google-oauth"
-            className="org.apache.catalina.authenticator.jaspic.SimpleAuthConfigProvider"
+            className="com.alx.enterprise.webtier.authenticator.jaspic.SimpleAuthConfigProvider"
             layer="HttpServlet"
             appContext="Catalina/localhost /contextPath"
             description="Google OAuth test">
-    <property name="org.apache.catalina.authenticator.jaspic.ServerAuthModule.1"
+    <property name="com.alx.enterprise.webtier.authenticator.jaspic.ServerAuthModule.1"
               value="com.idmworks.security.google.GoogleOAuthServerAuthModule" />
     <property name="oauth.clientid"
               value="obtained-from-Google-console" />

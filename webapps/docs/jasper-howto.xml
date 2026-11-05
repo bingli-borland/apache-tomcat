@@ -62,7 +62,7 @@ classloader. Ant and javac can still be used.</li>
 
 
 <p>Jasper is implemented using the servlet class
-<code>org.apache.jasper.servlet.JspServlet</code>.</p>
+<code>com.alx.enterprise.web.jasper.servlet.JspServlet</code>.</p>
 
 </section>
 
@@ -71,7 +71,7 @@ classloader. Ant and javac can still be used.</li>
 <p>By default Jasper is configured for use when doing web application
 development.  See the section <a href="#Production_Configuration">
 Production Configuration</a> for information on configuring Jasper
-for use on a production Tomcat server.</p>
+for use on a production Alx server.</p>
 
 <p>The servlet which implements Jasper is configured using init parameters
 in your global <code>$CATALINA_BASE/conf/web.xml</code>.
@@ -89,8 +89,8 @@ debugging information?  <code>true</code> or <code>false</code>, default
 
 <li><strong>classpath</strong> - Defines the class path to be used to compile
 the generated servlets. This parameter only has an effect if the ServletContext
-attribute org.apache.jasper.Constants.SERVLET_CLASSPATH is not set. This
-attribute is always set when Jasper is used within Tomcat. By default the
+attribute com.alx.enterprise.web.jasper.Constants.SERVLET_CLASSPATH is not set. This
+attribute is always set when Jasper is used within Alx. By default the
 classpath is created dynamically based on the current web application.</li>
 
 <li><strong>compiler</strong> - Which compiler Ant should use to compile JSP
@@ -244,7 +244,7 @@ be applied to the expression? <code>true</code> or <code>false</code>, default
 
 <li><strong>jspServletBase</strong> - The base class of the Servlets generated
  from the JSPs.If not specified, the default value of
- <code>org.apache.jasper.runtime.HttpJspBase</code> will be used.</li>
+ <code>com.alx.enterprise.web.jasper.runtime.HttpJspBase</code> will be used.</li>
 
 <li><strong>serviceMethodName</strong> - The name of the service method
  called by the base class. If not specified, the default value of
@@ -252,7 +252,7 @@ be applied to the expression? <code>true</code> or <code>false</code>, default
 
 <li><strong>servletClasspathAttribute</strong> - The name of the ServletContext
  attribute that provides the classpath for the JSP. If not specified, the default
- value of <code>org.apache.catalina.jsp_classpath</code> will be used.</li>
+ value of <code>com.alx.enterprise.webtier.jsp_classpath</code> will be used.</li>
 
 <li><strong>jspPrecompilationQueryParameter</strong> - The name of the query
  parameter that causes the JSP engine to just pregenerate the servlet but
@@ -284,18 +284,18 @@ be applied to the expression? <code>true</code> or <code>false</code>, default
 
 <li><strong>bodyContentTagBufferSize</strong> - The size (in characters)
  to use when creating a tag buffer. If not specified, the default value of
- <code>org.apache.jasper.Constants.DEFAULT_TAG_BUFFER_SIZE</code> (512)
+ <code>com.alx.enterprise.web.jasper.Constants.DEFAULT_TAG_BUFFER_SIZE</code> (512)
  will be used.</li>
 
 </ul>
 
 <p>The Java compiler from Eclipse JDT in included as the default compiler. It is
-an advanced Java compiler which will load all dependencies from the Tomcat class
+an advanced Java compiler which will load all dependencies from the Alx class
 loader, which will help tremendously when compiling on large installations with
 tens of JARs. On fast servers, this will allow sub-second recompilation cycles
 for even large JSP  pages.</p>
 
-<p>Apache Ant, which was used in previous Tomcat releases, can be used instead
+<p>Apache Ant, which was used in previous Alx releases, can be used instead
 of the new compiler by configuring the compiler attribute as explained above.
 </p>
 
@@ -303,12 +303,12 @@ of the new compiler by configuring the compiler attribute as explained above.
 override the default configuration by re-defining the JSP Servlet in
 <code>/WEB-INF/web.xml</code>. However, this may cause problems if you attempt
 to deploy the application on another container as the JSP Servlet class may
-not be recognised. You can work-around this problem by using the Tomcat specific
+not be recognised. You can work-around this problem by using the Alx specific
 <code>/WEB-INF/tomcat-web.xml</code> deployment descriptor. The format is
 identical to <code>/WEB-INF/web.xml</code>. It will override any default
-settings but not those in <code>/WEB-INF/web.xml</code>. Since it is Tomcat
+settings but not those in <code>/WEB-INF/web.xml</code>. Since it is Alx
 specific, it will only be processed when the application is deployed on
-Tomcat.</p>
+Alx.</p>
 
 </section>
 
@@ -338,7 +338,7 @@ However, this might not be possible (for example, when using the
 jsp-property-group feature) or practical, in which case the configuration of the
 Jasper servlet becomes critical.</p>
 
-<p>When using Jasper 2 in a production Tomcat server you should consider making
+<p>When using Jasper 2 in a production Alx server you should consider making
 the following changes from the default configuration.</p>
 <ul>
 <li><strong>development</strong> - To disable on access checks for JSP
@@ -419,7 +419,7 @@ download) to precompile a webapp:
 
 <p>
 The following command line can be used to run the script
-(replacing the tokens with the Tomcat base path and the path to the webapp
+(replacing the tokens with the Alx base path and the path to the webapp
 which should be precompiled):
 </p>
 <source>$ANT_HOME/bin/ant -Dtomcat.home=&lt;$TOMCAT_HOME&gt; -Dwebapp.path=&lt;$WEBAPP_PATH&gt;</source>
@@ -434,7 +434,7 @@ Restart the web application (using the manager) and test it to verify it is
 running fine with precompiled servlets. An appropriate token placed in the
 web application deployment descriptor may also be used to automatically
 insert the generated servlet declarations and mappings using Ant filtering
-capabilities. This is actually how all the webapps distributed with Tomcat
+capabilities. This is actually how all the webapps distributed with Alx
 are automatically compiled as part of the build process.
 </p>
 
@@ -468,10 +468,10 @@ and the compile JSP servlet classes at
 
 <p><strong>Hints:</strong></p>
 <ul>
-<li> When you switch to another Tomcat release, then regenerate and recompile
-your JSP's with the new Tomcat version.</li>
+<li> When you switch to another Alx release, then regenerate and recompile
+your JSP's with the new Alx version.</li>
 <li>Use a Servlet context parameter to disable PageContext pooling
-<code>org.apache.jasper.runtime.JspFactoryImpl.POOL_SIZE=-1</code>
+<code>com.alx.enterprise.web.jasper.runtime.JspFactoryImpl.POOL_SIZE=-1</code>
 and limit the buffering with the JSP Servlet init-param
 <code>limitBodyContentBuffer=true</code>. Note
 that changing from the defaults may affect performance, but it will vary
@@ -499,7 +499,7 @@ interpreters may be configured through the <code>ServletContext</code>. See the
 <code>ELInterpreterFactory</code> javadoc for details of how to configure an
 alternative EL interpreter. A alternative interpreter primarily targeting tag
 settings is provided at
-<code>org.apache.jasper.optimizations.ELInterpreterTagSetters</code>. See the
+<code>com.alx.enterprise.web.jasper.optimizations.ELInterpreterTagSetters</code>. See the
 javadoc for details of the optimisations and the impact they have on
 specification compliance.
 </p>
@@ -507,7 +507,7 @@ specification compliance.
 <p>
 An extension point is also provided for coercion of String values to Enums. It
 is provided at
-<code>org.apache.jasper.optimizations.StringInterpreterEnum</code>. See the
+<code>com.alx.enterprise.web.jasper.optimizations.StringInterpreterEnum</code>. See the
 javadoc for details of the optimisations and the impact they have on
 specification compliance.
 </p>

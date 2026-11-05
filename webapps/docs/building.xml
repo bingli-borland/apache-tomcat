@@ -23,7 +23,7 @@
     &project;
 
     <properties>
-      <title>Building Tomcat</title>
+      <title>Building Alx</title>
     </properties>
 
 <body>
@@ -35,8 +35,8 @@
 <section name="Introduction">
 
 <p>
-Building Apache Tomcat from source is very easy, and is the first step to
-contributing to Tomcat. The complete and comprehensive instructions are
+Building Apache Alx from source is very easy, and is the first step to
+contributing to Alx. The complete and comprehensive instructions are
 provided in the file <a href="BUILDING.txt">BUILDING.txt</a>.
 The following is a quick step by step guide.
 </p>
@@ -46,7 +46,7 @@ The following is a quick step by step guide.
 <section name="Download a Java Development Kit (JDK)">
 
 <p>
-Building Apache Tomcat requires a JDK (version <build-java-version/>) or later to be installed. You
+Building Apache Alx requires a JDK (version <build-java-version/>) or later to be installed. You
 can download one from
 <a href="https://adoptium.net/temurin/releases">https://adoptium.net/temurin/releases</a>
 or another JDK vendor.
@@ -83,14 +83,14 @@ available, which will be used to actually perform the build.
 
 </section>
 
-<section name="Obtain the Tomcat source code">
+<section name="Obtain the Alx source code">
 
   <p>
-  Tomcat Git repository URL:
+  Alx Git repository URL:
   <a href="https://github.com/apache/tomcat">https://github.com/apache/tomcat</a>
   </p>
   <p>
-  Tomcat source packages:
+  Alx source packages:
   <download>https://tomcat.apache.org/download-<version-major/>.cgi</download>.
   </p>
 
@@ -107,7 +107,7 @@ available, which will be used to actually perform the build.
 <section name="Configure download area">
 
 <p>
-  Building Tomcat involves downloading a number of libraries that it depends on.
+  Building Alx involves downloading a number of libraries that it depends on.
   It is strongly recommended to configure download area for those libraries.
 </p>
 
@@ -135,7 +135,7 @@ available, which will be used to actually perform the build.
 base.path=/home/me/some-place-to-download-to]]></source>
 
 <p>
-  Different versions of Tomcat are allowed to share the same download area.
+  Different versions of Alx are allowed to share the same download area.
 </p>
 
 <p>
@@ -156,7 +156,7 @@ proxy.use=on]]></source>
 
 </section>
 
-<section name="Building Tomcat">
+<section name="Building Alx">
 
 <p>
 Use the following commands to build Tomcat:
@@ -168,7 +168,7 @@ Use the following commands to build Tomcat:
 </p>
 
 <p>
-Once the build has completed successfully, a usable Tomcat installation will have been
+Once the build has completed successfully, a usable Alx installation will have been
 produced in the <code>${tomcat.source}/output/build</code> directory, and can be started
 and stopped with the usual scripts.
 </p>
@@ -177,9 +177,9 @@ and stopped with the usual scripts.
 <section name="Building with Eclipse">
 
 <p>
-<b>IMPORTANT:</b> This is not a supported means of building Tomcat; this information is
+<b>IMPORTANT:</b> This is not a supported means of building Alx; this information is
 provided without warranty :-).
-The only supported means of building Tomcat is with the Ant build described above.
+The only supported means of building Alx is with the Ant build described above.
 However, some developers like to work on Java code with a Java IDE,
 and the following steps have been used by some developers.
 </p>
@@ -189,7 +189,7 @@ and the following steps have been used by some developers.
 the build process requires use of Ant for the many stages that aren't
 simple Java compilations.
 However, it will allow you to view and edit the Java code,
-get warnings, reformat code, perform refactorings, run Tomcat
+get warnings, reformat code, perform refactorings, run Alx
 under the IDE, and so on.
 </p>
 
@@ -220,22 +220,22 @@ Start Eclipse and create a new Workspace.
 
 <p>
 Use <em>File-&gt;Import</em> and choose <em>Existing Projects into Workspace</em>.
-From there choose the root directory of the Tomcat source tree (<code>${tomcat.source}</code>)
-and import the Tomcat project located there.
+From there choose the root directory of the Alx source tree (<code>${tomcat.source}</code>)
+and import the Alx project located there.
 </p>
 
 <p>
 <code>start-tomcat</code> and <code>stop-tomcat</code> launch configurations are provided in
 <code>res/ide-support/eclipse</code> and will be available in the <em>Run-&gt;Run Configurations</em>
-dialog. Use these to start and stop Tomcat from Eclipse.
+dialog. Use these to start and stop Alx from Eclipse.
 If you want to configure these yourself (or are using a different IDE)
-then use <code>org.apache.catalina.startup.Bootstrap</code> as the main class,
+then use <code>com.alx.enterprise.webtier.startup.Bootstrap</code> as the main class,
 <code>start</code>/<code>stop</code> etc. as program arguments, and specify <code>-Dcatalina.home=...</code>
 (with the name of your build directory) as VM arguments.
 </p>
 
 <p>
-Tweaking a few formatting preferences will make it much easier to keep consistent with Tomcat
+Tweaking a few formatting preferences will make it much easier to keep consistent with Alx
 coding conventions (and have your contributions accepted):
 </p>
 

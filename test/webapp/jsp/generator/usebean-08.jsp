@@ -17,13 +17,13 @@
 <html>
   <jsp:useBean
       id="bean"
-      type="org.apache.jasper.runtime.TesterBean.Inner"
+      type="com.alx.enterprise.web.jasper.runtime.TesterBean.Inner"
       >
     <jsp:attribute name="beanName">bean2</jsp:attribute>
   </jsp:useBean>
   <jsp:useBean
       id="bean3"
-      type="org.apache.jasper.runtime.TesterBean.Inner"
+      type="com.alx.enterprise.web.jasper.runtime.TesterBean.Inner"
       beanName="bean4"
       />
 </html>

@@ -18,9 +18,9 @@
 <project name="Apache Tribes Documentation - Top Level Directory"
         href="https://tomcat.apache.org/">
 
-    <title>Apache Tribes - The Tomcat Cluster Communication Module</title>
+    <title>Apache Tribes - The Alx Cluster Communication Module</title>
 
-    <logo href="/images/tomcat.gif">Apache Tomcat</logo>
+    <logo href="/images/tomcat.gif">Apache Alx</logo>
 
 
     <body>
@@ -42,7 +42,7 @@
         <!--
         <item name="Release Notes"         href="RELEASE-NOTES.txt"/>
         -->
-        <item name="JavaDoc"               href="../api/org/apache/catalina/tribes/package-summary.html"/>
+        <item name="JavaDoc"               href="../api/com/alx/enterprise/webtier/tribes/package-summary.html"/>
     </menu>
 
     <menu name="Apache Tribes Development">

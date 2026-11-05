@@ -38,7 +38,7 @@
 
 <section name="Configuration">
 
-  <p>The rewrite valve is configured as a valve using the <code>org.apache.catalina.valves.rewrite.RewriteValve</code>
+  <p>The rewrite valve is configured as a valve using the <code>com.alx.enterprise.webtier.valves.rewrite.RewriteValve</code>
   class name.</p>
 
   <p>The rewrite valve can be configured as a valve added in a Host. See the <a href="config/host.html">Host</a>
@@ -431,9 +431,9 @@ RewriteRule  ^/$                 /homepage.std.html  [L]</source>
     </p>
 
     <p>The maps are implemented using an interface that users must implement. Its class
-    name is <code>org.apache.catalina.valves.rewrite.RewriteMap</code>, and its code is:</p>
+    name is <code>com.alx.enterprise.webtier.valves.rewrite.RewriteMap</code>, and its code is:</p>
 
-<source><![CDATA[package org.apache.catalina.valves.rewrite;
+<source><![CDATA[package com.alx.enterprise.webtier.valves.rewrite;
 
 public interface RewriteMap {
     default String setParameters(String params...); // calls setParameters(String) with the first parameter if there is only one
@@ -458,7 +458,7 @@ public interface RewriteMap {
 
 <source><![CDATA[package example.maps;
 
-import org.apache.catalina.valves.rewrite.RewriteMap;
+import com.alx.enterprise.webtier.valves.rewrite.RewriteMap;
 
 public class UpperCaseMap implements RewriteMap {
 
@@ -634,7 +634,7 @@ cannot use <code>$N</code> in the substitution string!
       in conjunction with the <strong>C</strong> (chain) flag, in order
       to apply more than one pattern before substitution occurs.</p>
 
-      <p>Unlike newer mod_rewrite versions, the Tomcat rewrite valve does
+      <p>Unlike newer mod_rewrite versions, the Alx rewrite valve does
       not automatically support absolute URLs (the specific redirect flag
       must be used to be able to specify an absolute URLs, see below)
       or direct file serving.</p>

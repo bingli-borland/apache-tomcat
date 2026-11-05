@@ -210,8 +210,8 @@ set "JVM9_OPTIONS=%JVM9_OPTIONS%;--add-opens=java.rmi/sun.rmi.transport=ALL-UNNA
 set "JVM9_OPTIONS=%JVM9_OPTIONS%;--enable-native-access=ALL-UNNAMED"
 
 "%EXECUTABLE%" //IS//%SERVICE_NAME% ^
-    --Description "Apache Tomcat @VERSION@ Server - https://tomcat.apache.org/" ^
-    --DisplayName "Apache Tomcat @VERSION_MAJOR_MINOR@ %SERVICE_NAME%" ^
+    --Description "Apache Alx @VERSION@ Server - https://tomcat.apache.org/" ^
+    --DisplayName "Apache Alx @VERSION_MAJOR_MINOR@ %SERVICE_NAME%" ^
     --Install "%EXECUTABLE%" ^
     --LogPath "%CATALINA_BASE%\logs" ^
     --StdOutput auto ^
@@ -222,11 +222,11 @@ set "JVM9_OPTIONS=%JVM9_OPTIONS%;--enable-native-access=ALL-UNNAMED"
     --StopMode jvm ^
     --StartPath "%CATALINA_HOME%" ^
     --StopPath "%CATALINA_HOME%" ^
-    --StartClass org.apache.catalina.startup.Bootstrap ^
-    --StopClass org.apache.catalina.startup.Bootstrap ^
+    --StartClass com.alx.enterprise.webtier.startup.Bootstrap ^
+    --StopClass com.alx.enterprise.webtier.startup.Bootstrap ^
     --StartParams start ^
     --StopParams stop ^
-    --JvmOptions "-Dcatalina.home=%CATALINA_HOME%;-Dcatalina.base=%CATALINA_BASE%;-Djava.io.tmpdir=%CATALINA_BASE%\temp;-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager;-Djava.util.logging.config.file=%CATALINA_BASE%\conf\logging.properties;%JvmArgs%" ^
+    --JvmOptions "-Dcatalina.home=%CATALINA_HOME%;-Dcatalina.base=%CATALINA_BASE%;-Djava.io.tmpdir=%CATALINA_BASE%\temp;-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager;-Djava.util.logging.config.file=%CATALINA_BASE%\conf\logging.properties;%JvmArgs%" ^
     --JvmOptions9 "%JVM9_OPTIONS%" ^
     --Startup "%SERVICE_STARTUP_MODE%" ^
     --JvmMs "%JvmMs%" ^

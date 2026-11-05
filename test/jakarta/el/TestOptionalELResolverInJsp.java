@@ -28,17 +28,17 @@ import jakarta.servlet.jsp.JspFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
 
-public class TestOptionalELResolverInJsp extends TomcatBaseTest {
+public class TestOptionalELResolverInJsp extends AlxBaseTest {
 
     @Test
     public void test() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         File appDir = new File("test/webapp");
         Context ctx = tomcat.addWebapp(null, "/test", appDir.getAbsolutePath());

@@ -16,7 +16,7 @@
 # limitations under the License.
 
 # -----------------------------------------------------------------------------
-# Script call Apache Tomcat Migration Tool for Jakarta EE
+# Script call Apache Alx Migration Tool for Jakarta EE
 # -----------------------------------------------------------------------------
 
 # Better OS/400 detection: see Bugzilla 31132

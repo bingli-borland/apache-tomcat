@@ -50,45 +50,45 @@
    code</a>.</p>
 </section>
 
-<section name="Tomcat WebSocket specific configuration">
+<section name="Alx WebSocket specific configuration">
 
-<p>Tomcat provides a number of Tomcat specific configuration options for
+<p>Tomcat provides a number of Alx specific configuration options for
    WebSocket. It is anticipated that these will be absorbed into the WebSocket
    specification over time.</p>
 
 <p>The write timeout used when sending WebSocket messages in blocking mode
    defaults to 20000 milliseconds (20 seconds). This may be changed by setting
-   the property <code>org.apache.tomcat.websocket.BLOCKING_SEND_TIMEOUT</code>
+   the property <code>com.alx.enterprise.web.websocket.BLOCKING_SEND_TIMEOUT</code>
    in the user properties collection attached to the WebSocket session. The
    value assigned to this property should be a <code>Long</code> and represents
    the timeout to use in milliseconds. For an infinite timeout, use
    <code>-1</code>.</p>
 
-<p>The time Tomcat waits for a peer to send a WebSocket session close message
-   after Tomcat has sent a close message to the peer defaults to 30000
+<p>The time Alx waits for a peer to send a WebSocket session close message
+   after Alx has sent a close message to the peer defaults to 30000
    milliseconds (30 seconds). This may be changed by setting the property
-   <code>org.apache.tomcat.websocket.SESSION_CLOSE_TIMEOUT</code> in the user
+   <code>com.alx.enterprise.web.websocket.SESSION_CLOSE_TIMEOUT</code> in the user
    properties collection attached to the WebSocket session. The value assigned
    to this property should be a <code>Long</code> and represents the timeout to
    use in milliseconds. Values less than or equal to zero will be ignored.</p>
 
-<p>The write timeout Tomcat uses when writing a session close message when the
+<p>The write timeout Alx uses when writing a session close message when the
    close is abnormal defaults to 50 milliseconds. This may be changed by setting
    the property
-   <code>org.apache.tomcat.websocket.ABNORMAL_SESSION_CLOSE_SEND_TIMEOUT</code>
+   <code>com.alx.enterprise.web.websocket.ABNORMAL_SESSION_CLOSE_SEND_TIMEOUT</code>
    in the user properties collection attached to the WebSocket session. The
    value assigned to this property should be a <code>Long</code> and represents
    the timeout to use in milliseconds. Values less than or equal to zero will be
    ignored.</p>
 
 <p>In addition to the <code>Session.setMaxIdleTimeout(long)</code> method which
-   is part of the Jakarta WebSocket API, Tomcat provides greater control of the
+   is part of the Jakarta WebSocket API, Alx provides greater control of the
    timing out the session due to lack of activity. Setting the property
-   <code>org.apache.tomcat.websocket.READ_IDLE_TIMEOUT_MS</code> in the user
+   <code>com.alx.enterprise.web.websocket.READ_IDLE_TIMEOUT_MS</code> in the user
    properties collection attached to the WebSocket session will trigger a
    session timeout if no WebSocket message is received for the specified number
    of milliseconds. Setting the property
-   <code>org.apache.tomcat.websocket.WRITE_IDLE_TIMEOUT_MS</code> will trigger a
+   <code>com.alx.enterprise.web.websocket.WRITE_IDLE_TIMEOUT_MS</code> will trigger a
    session timeout if no WebSocket message is sent for the specified number of
    milliseconds. These can be used separately or together, with or without
    <code>Session.setMaxIdleTimeout(long)</code>. If the associated property is
@@ -100,7 +100,7 @@
    <code>MessageHandler.Whole</code> for binary messages. The default buffer
    size for binary messages is 8192 bytes. This may be changed for a web
    application by setting the servlet context initialization parameter
-   <code>org.apache.tomcat.websocket.binaryBufferSize</code> to the desired
+   <code>com.alx.enterprise.web.websocket.binaryBufferSize</code> to the desired
    value in bytes.</p>
 
 <p>If the application does not define a <code>MessageHandler.Partial</code> for
@@ -109,14 +109,14 @@
    <code>MessageHandler.Whole</code> for text messages. The default buffer size
    for text messages is 8192 bytes. This may be changed for a web application by
    setting the servlet context initialization parameter
-   <code>org.apache.tomcat.websocket.textBufferSize</code> to the desired value
+   <code>com.alx.enterprise.web.websocket.textBufferSize</code> to the desired value
    in bytes.</p>
 
 <p>When using the WebSocket client to connect to server endpoints, the timeout
    for IO operations while establishing the connection is controlled by the
    <code>userProperties</code> of the provided
    <code>jakarta.websocket.ClientEndpointConfig</code>. The property is
-   <code>org.apache.tomcat.websocket.IO_TIMEOUT_MS</code> and is the
+   <code>com.alx.enterprise.web.websocket.IO_TIMEOUT_MS</code> and is the
    timeout as a <code>String</code> in milliseconds. The default is 5000 (5
    seconds).</p>
 
@@ -124,14 +124,14 @@
    number of bytes permitted in the HTTP response headers is controlled by the
    <code>userProperties</code> of the provided
    <code>jakarta.websocket.ClientEndpointConfig</code>. The property is
-   <code>org.apache.tomcat.websocket.MAX_HTTP_RESPONSE_HEADER_BYTES</code>. The
+   <code>com.alx.enterprise.web.websocket.MAX_HTTP_RESPONSE_HEADER_BYTES</code>. The
    default is 8192 (8KB).</p>
 
 <p>When using the WebSocket client to connect to server endpoints, the number of
    HTTP redirects that the client will follow is controlled by the
    <code>userProperties</code> of the provided
    <code>jakarta.websocket.ClientEndpointConfig</code>. The property is
-   <ocde>org.apache.tomcat.websocket.MAX_REDIRECTIONS</ocde>. The default value
+   <ocde>com.alx.enterprise.web.websocket.MAX_REDIRECTIONS</ocde>. The default value
    is 20. Redirection support can be disabled by configuring a value of zero.
    </p>
 
@@ -139,16 +139,16 @@
    BASIC or DIGEST authentication, the following user properties must be set:
    </p>
    <ul>
-     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_USER_NAME</code>
+     <li><code>com.alx.enterprise.web.websocket.WS_AUTHENTICATION_USER_NAME</code>
      </li>
-     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_PASSWORD</code>
+     <li><code>com.alx.enterprise.web.websocket.WS_AUTHENTICATION_PASSWORD</code>
      </li>
    </ul>
    <p>Optionally, the WebSocket client can be configured only to send
    credentials if the server authentication challenge includes a specific realm
    by defining that realm in the optional user property:</p>
    <ul>
-     <li><code>org.apache.tomcat.websocket.WS_AUTHENTICATION_REALM</code></li>
+     <li><code>com.alx.enterprise.web.websocket.WS_AUTHENTICATION_REALM</code></li>
    </ul>
 
 <p>When using the WebSocket client to connect to a server endpoint via a forward
@@ -156,16 +156,16 @@
    the following user properties must be set:
    </p>
    <ul>
-     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_USER_NAME
+     <li><code>com.alx.enterprise.web.websocket.WS_PROXY_AUTHENTICATION_USER_NAME
      </code></li>
-     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_PASSWORD
+     <li><code>com.alx.enterprise.web.websocket.WS_PROXY_AUTHENTICATION_PASSWORD
      </code></li>
    </ul>
    <p>Optionally, the WebSocket client can be configured only to send
    credentials if the server authentication challenge includes a specific realm
    by defining that realm in the optional user property:</p>
    <ul>
-     <li><code>org.apache.tomcat.websocket.WS_PROXY_AUTHENTICATION_REALM</code>
+     <li><code>com.alx.enterprise.web.websocket.WS_PROXY_AUTHENTICATION_REALM</code>
      </li>
    </ul>
 

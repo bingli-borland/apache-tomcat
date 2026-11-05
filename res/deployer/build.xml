@@ -40,7 +40,7 @@
   </path>
 
   <!-- Configure the custom Ant tasks for the Manager application -->
-  <taskdef resource="org/apache/catalina/ant/catalina.tasks"
+  <taskdef resource="com/alx/enterprise/webtier/ant/catalina.tasks"
            classpathref="deployer.classpath"/>
 
   <!-- Executable Targets -->

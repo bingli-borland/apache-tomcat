@@ -53,6 +53,6 @@ shift
 goto setArgs
 :doneSetArgs
 
-call "%EXECUTABLE%" -server org.apache.catalina.realm.RealmBase %CMD_LINE_ARGS%
+call "%EXECUTABLE%" -server com.alx.enterprise.webtier.realm.RealmBase %CMD_LINE_ARGS%
 
 :end

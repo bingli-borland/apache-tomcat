@@ -24,7 +24,7 @@
   <short-name>Ignored</short-name>
   <tag>
     <name>Foo</name>
-    <tag-class>org.apache.tomcat.ignored.Anything.class</tag-class>
+    <tag-class>com.alx.enterprise.web.ignored.Anything.class</tag-class>
     <body-content>empty</body-content>
   </tag>
 </taglib>

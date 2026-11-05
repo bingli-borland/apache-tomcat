@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BeanELResolver extends ELResolver {
 
     private static final int CACHE_SIZE;
-    private static final String CACHE_SIZE_PROP = "org.apache.el.BeanELResolver.CACHE_SIZE";
+    private static final String CACHE_SIZE_PROP = "com.alx.enterprise.el.BeanELResolver.CACHE_SIZE";
 
     static {
         CACHE_SIZE = Integer.getInteger(CACHE_SIZE_PROP, 1000).intValue();

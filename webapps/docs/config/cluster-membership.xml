@@ -36,8 +36,8 @@
   <p>
     The membership component in the Apache Tribes <a href="cluster-channel.html">Channel</a> is responsible
     for dynamic discovery of other members(nodes) in the cluster.
-    There are currently two different membership service, the <code>org.apache.catalina.tribes.membership.McastService</code>
-    and the <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+    There are currently two different membership service, the <code>com.alx.enterprise.webtier.tribes.membership.McastService</code>
+    and the <code>com.alx.enterprise.webtier.tribes.membership.StaticMembershipService</code>.
     The <code>McastService</code> builds a multicast based membership service
     that sends UDP packets to multicast IP addresses.
     The <code>StaticMembershipService</code> builds  a unicast based membership
@@ -65,8 +65,8 @@
       <attribute name="className" required="true">
         <p>
         The implementation of the membership component.
-        Two implementations available, <code>org.apache.catalina.tribes.membership.McastService</code>
-        and <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+        Two implementations available, <code>com.alx.enterprise.webtier.tribes.membership.McastService</code>
+        and <code>com.alx.enterprise.webtier.tribes.membership.StaticMembershipService</code>.
         </p>
       </attribute>
     </attributes>
@@ -77,7 +77,7 @@
 
     <attribute name="className" required="true">
       <p>
-      The value is <code>org.apache.catalina.tribes.membership.McastService</code>.
+      The value is <code>com.alx.enterprise.webtier.tribes.membership.McastService</code>.
       This implementation uses multicast heartbeats for member discovery.
       </p>
     </attribute>
@@ -112,7 +112,7 @@
       a give time. The default value is <code>3000</code> ms. This means, that if a heartbeat is not received from a
       member in that timeframe, the membership component will notify the cluster of this.<br/>
       On a high latency network you may wish to increase this value, to protect against false positives.<br/>
-      Apache Tribes also provides a <a href="cluster-interceptor.html#org.apache.catalina.tribes.group.interceptors.TcpFailureDetector_Attributes"><code>TcpFailureDetector</code></a> that will
+      Apache Tribes also provides a <a href="cluster-interceptor.html#com.alx.enterprise.webtier.tribes.group.interceptors.TcpFailureDetector_Attributes"><code>TcpFailureDetector</code></a> that will
       verify a timeout using a TCP connection when a heartbeat timeout has occurred. This protects against false positives.
       </p>
     </attribute>
@@ -132,7 +132,7 @@
     <attribute name="domain" required="false">
       <p>
       Apache Tribes has the ability to logically group members into domains, by using this domain attribute.
-      The <code>org.apache.catalina.tribes.Member.getDomain()</code> method returns the value specified here.
+      The <code>com.alx.enterprise.webtier.tribes.Member.getDomain()</code> method returns the value specified here.
       </p>
     </attribute>
     <attribute name="soTimeout" required="false">
@@ -186,7 +186,7 @@
     <attributes>
       <attribute name="className" required="true">
         <p>
-        The value is <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>.
+        The value is <code>com.alx.enterprise.webtier.tribes.membership.StaticMembershipService</code>.
         </p>
       </attribute>
       <attribute name="connectTimeout" required="false">
@@ -237,11 +237,11 @@
     </p>
     <p><strong>Note:</strong> It is not necessary to explicitly configure the local member using the
     <strong>&lt;LocalMember&gt;</strong> element. All cluster members, including the local member, may be defined using
-    the <strong>&lt;Member&gt;</strong> element and Tomcat work out which one is the local member.
+    the <strong>&lt;Member&gt;</strong> element and Alx work out which one is the local member.
     </p>
     <attributes>
       <attribute name="className" required="true">
-        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+        Only one implementation available:<code>com.alx.enterprise.webtier.tribes.membership.StaticMember</code>
       </attribute>
       <attribute name="port" required="false">
         There is no need to set.
@@ -274,7 +274,7 @@
     </p>
     <attributes>
       <attribute name="className" required="true">
-        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+        Only one implementation available:<code>com.alx.enterprise.webtier.tribes.membership.StaticMember</code>
       </attribute>
       <attribute name="port" required="true">
         The port that this static member listens to for cluster messages
@@ -307,12 +307,12 @@
 
   <subsection name="Setting">
      <p>
-      <source><![CDATA[     <Membership className="org.apache.catalina.tribes.membership.StaticMembershipService">
-       <Member className="org.apache.catalina.tribes.membership.StaticMember"
+      <source><![CDATA[     <Membership className="com.alx.enterprise.webtier.tribes.membership.StaticMembershipService">
+       <Member className="com.alx.enterprise.webtier.tribes.membership.StaticMember"
                   port="4004"
                   host="tomcat01.mydomain.com"
                   uniqueId="{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}"/>
-       <Member className="org.apache.catalina.tribes.membership.StaticMember"
+       <Member className="com.alx.enterprise.webtier.tribes.membership.StaticMember"
                   port="4004"
                   host="tomcat02.mydomain.com"
                   uniqueId="{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1}"/>

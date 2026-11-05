@@ -15,6 +15,6 @@
   limitations under the License.
 --%>
 <html>
-  <jsp:useBean id="bean" class="org.apache.jasper.runtime.TesterBean$Inner2" />
+  <jsp:useBean id="bean" class="com.alx.enterprise.web.jasper.runtime.TesterBean$Inner2" />
 </html>
 

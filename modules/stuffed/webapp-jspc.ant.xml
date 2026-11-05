@@ -19,7 +19,7 @@
 
   <property name="webapp.name" value="examples" />
 
-  <typedef name="jasper" classname="org.apache.jasper.JspC">
+  <typedef name="jasper" classname="com.alx.enterprise.web.jasper.JspC">
     <classpath>
       <fileset file="${basedir}/target/tomcat-stuffed-1.0.jar" />
       <fileset dir="${basedir}/webapps/${webapp.name}/WEB-INF/lib" includes="*.jar" erroronmissingdir="false" />

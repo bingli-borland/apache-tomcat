@@ -23,9 +23,9 @@ import java.security.Principal;
 
 import jakarta.servlet.ServletException;
 
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
-import org.apache.catalina.valves.ValveBase;
+import com.alx.enterprise.webtier.connector.Request;
+import com.alx.enterprise.webtier.connector.Response;
+import com.alx.enterprise.webtier.valves.ValveBase;
 
 
 /**

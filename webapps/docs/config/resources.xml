@@ -130,7 +130,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use. This class must
-        implement the <code>org.apache.catalina.WebResourceRoot</code>
+        implement the <code>com.alx.enterprise.webtier.WebResourceRoot</code>
         interface. If not specified, the standard value (defined below) will be
         used.</p>
       </attribute>
@@ -171,13 +171,13 @@
     <h3>Standard Root Implementation</h3>
 
     <p>The standard implementation of <strong>Resources</strong> is
-    <strong>org.apache.catalina.webresources.StandardRoot</strong>. It does not
+    <strong>com.alx.enterprise.webtier.webresources.StandardRoot</strong>. It does not
     support any additional attributes.</p>
 
     <h3>Extracting Root Implementation</h3>
 
     <p>The extracting implementation of <strong>Resources</strong> is
-    <strong>org.apache.catalina.webresources.ExtractingRoot</strong>. It does not
+    <strong>com.alx.enterprise.webtier.webresources.ExtractingRoot</strong>. It does not
     support any additional attributes.</p>
 
     <p>When deploying web applications as packed WAR files, the extracting root
@@ -226,19 +226,19 @@
 
     <attribute name="base" required="true">
       <p>Identifies where the resources to be used are located. This attribute
-      is required by the <code>org.apache.catalina.WebResourceSet</code>
-      implementations provided by Tomcat and should specify the absolute path to
+      is required by the <code>com.alx.enterprise.webtier.WebResourceSet</code>
+      implementations provided by Alx and should specify the absolute path to
       the file, directory or JAR where the resources are located. Custom
       implementations may not require it.</p>
     </attribute>
 
     <attribute name="className" required="true">
       <p>Java class name of the implementation to use. This class must
-      implement the <code>org.apache.catalina.WebResourceSet</code> interface.
-      Tomcat provides three standard implementations:
-      <code>org.apache.catalina.webresources.DirResourceSet</code>,
-      <code>org.apache.catalina.webresources.FileResourceSet</code> and
-      <code>org.apache.catalina.webresources.JarResourceSet</code>. Custom
+      implement the <code>com.alx.enterprise.webtier.WebResourceSet</code> interface.
+      Alx provides three standard implementations:
+      <code>com.alx.enterprise.webtier.webresources.DirResourceSet</code>,
+      <code>com.alx.enterprise.webtier.webresources.FileResourceSet</code> and
+      <code>com.alx.enterprise.webtier.webresources.JarResourceSet</code>. Custom
       implementations may also be used.
       </p>
     </attribute>
@@ -248,26 +248,26 @@
       resources are to be found. This is typically only used with JAR files when
       the resources are not located at the root of the JAR as is the case with
       resource JARs. This attribute is required by the
-      <code>org.apache.catalina.WebResourceSet</code> implementations provided
-      by Tomcat and must start with '/'. Custom implementations may not require
+      <code>com.alx.enterprise.webtier.WebResourceSet</code> implementations provided
+      by Alx and must start with '/'. Custom implementations may not require
       it. If not specified, the default value '/' will be used.</p>
     </attribute>
 
     <attribute name="readOnly" required="false">
       <p>If <code>true</code>, resources within this resource set may not be
       deleted, created or modified. For instance of
-      <code>org.apache.catalina.webresources.JarResourceSet</code>, this
+      <code>com.alx.enterprise.webtier.webresources.JarResourceSet</code>, this
       attribute is hard-coded to <code>true</code> and may not be changed. For
-      instances of <code>org.apache.catalina.webresources.DirResourceSet</code>
-      and <code>org.apache.catalina.webresources.FileResourceSet</code> the
+      instances of <code>com.alx.enterprise.webtier.webresources.DirResourceSet</code>
+      and <code>com.alx.enterprise.webtier.webresources.FileResourceSet</code> the
       default value of this attribute is <code>false</code>.</p>
     </attribute>
 
     <attribute name="webAppMount" required="false">
       <p>Identifies the path within the web application that these resources
       will be made available. For the
-      <code>org.apache.catalina.WebResourceSet</code> implementations provided
-      by Tomcat, this attribute is required and must start with '/'. Custom
+      <code>com.alx.enterprise.webtier.WebResourceSet</code> implementations provided
+      by Alx, this attribute is required and must start with '/'. Custom
       implementations may not require it. If not specified, the default value of
       '/' will be used.</p>
     </attribute>
@@ -322,10 +322,10 @@
 
   <source><![CDATA[<Resources>
   <PostResources base="D:\Projects\external\classes"
-                 className="org.apache.catalina.webresources.DirResourceSet"
+                 className="com.alx.enterprise.webtier.webresources.DirResourceSet"
                  webAppMount="/WEB-INF/classes"/>
   <PostResources base="D:\Projects\lib\library1.jar"
-                 className="org.apache.catalina.webresources.FileResourceSet"
+                 className="com.alx.enterprise.webtier.webresources.FileResourceSet"
                  webAppMount="/WEB-INF/lib/library1.jar"/>
 </Resources>]]></source>
 
@@ -343,10 +343,10 @@
 
   <source><![CDATA[<Resources>
   <PostResources base="D:\Projects\external\classes"
-                 className="org.apache.catalina.webresources.DirResourceSet"
+                 className="com.alx.enterprise.webtier.webresources.DirResourceSet"
                  webAppMount="/WEB-INF/classes"/>
   <PostResources base="D:\Projects\lib\library1.jar"
-                 className="org.apache.catalina.webresources.JarResourceSet"
+                 className="com.alx.enterprise.webtier.webresources.JarResourceSet"
                  webAppMount="/WEB-INF/classes"/>
 </Resources>]]></source>
 
@@ -366,7 +366,7 @@
 
     <attribute name="className" required="true">
       <p>Java class name of the implementation to use. This class must implement
-      the <code>org.apache.catalina.WebResourceRoot$CacheStrategy</code>
+      the <code>com.alx.enterprise.webtier.WebResourceRoot$CacheStrategy</code>
       interface.</p>
     </attribute>
 

@@ -42,9 +42,9 @@
 
     <p><em>This description uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 </section>
 
@@ -70,7 +70,7 @@
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Add Default Character Set Filter is
-    <strong><code>org.apache.catalina.filters.AddDefaultCharsetFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.AddDefaultCharsetFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -110,7 +110,7 @@
     <p>The minimal configuration required to use this filter is:</p>
     <source><![CDATA[<filter>
   <filter-name>CorsFilter</filter-name>
-  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+  <filter-class>com.alx.enterprise.webtier.filters.CorsFilter</filter-class>
 </filter>
 <filter-mapping>
   <filter-name>CorsFilter</filter-name>
@@ -128,7 +128,7 @@
   </subsection>
   <subsection name="Filter Class Name">
     <p>The filter class name for the CORS Filter is
-    <strong><code>org.apache.catalina.filters.CorsFilter</code></strong>.</p>
+    <strong><code>com.alx.enterprise.webtier.filters.CorsFilter</code></strong>.</p>
   </subsection>
   <subsection name="Initialisation parameters">
     <p>The CORS Filter supports following initialisation parameters:</p>
@@ -192,7 +192,7 @@
     defaults:</p>
     <source><![CDATA[<filter>
   <filter-name>CorsFilter</filter-name>
-  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+  <filter-class>com.alx.enterprise.webtier.filters.CorsFilter</filter-class>
   <init-param>
     <param-name>cors.allowed.origins</param-name>
     <param-value>https://www.apache.org</param-value>
@@ -274,7 +274,7 @@
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the CSRF Prevention Filter is
-    <strong><code>org.apache.catalina.filters.CsrfPreventionFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.CsrfPreventionFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -316,7 +316,7 @@
 
       <attribute name="nonceRequestParameterName" required="false">
         <p>The name of the request parameter used for the nonce. If not set, the
-        default value of <code>org.apache.catalina.filters.CSRF_NONCE</code>
+        default value of <code>com.alx.enterprise.webtier.filters.CSRF_NONCE</code>
         will be used.</p>
       </attribute>
 
@@ -403,7 +403,7 @@
     </ul>
       <source><![CDATA[<filter>
   <filter-name>RestCSRF</filter-name>
-  <filter-class>org.apache.catalina.filters.RestCsrfPreventionFilter</filter-class>
+  <filter-class>com.alx.enterprise.webtier.filters.RestCsrfPreventionFilter</filter-class>
 </filter>
 <filter-mapping>
   <filter-name>RestCSRF</filter-name>
@@ -467,7 +467,7 @@ HTTP/1.1 200 OK
 
     <source><![CDATA[<filter>
   <filter-name>RestCSRF</filter-name>
-  <filter-class>org.apache.catalina.filters.RestCsrfPreventionFilter</filter-class>
+  <filter-class>com.alx.enterprise.webtier.filters.RestCsrfPreventionFilter</filter-class>
   <init-param>
     <param-name>pathsAcceptingParams</param-name>
     <param-value>/resources/removeResource,/resources/addResource</param-value>
@@ -483,7 +483,7 @@ HTTP/1.1 200 OK
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the CSRF Prevention Filter for REST APIs is
-    <strong><code>org.apache.catalina.filters.RestCsrfPreventionFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RestCsrfPreventionFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -561,7 +561,7 @@ HTTP/1.1 200 OK
 
     <source><![CDATA[<filter>
  <filter-name>ExpiresFilter</filter-name>
- <filter-class>org.apache.catalina.filters.ExpiresFilter</filter-class>
+ <filter-class>com.alx.enterprise.webtier.filters.ExpiresFilter</filter-class>
  <init-param>
     <param-name>ExpiresByType image</param-name>
     <param-value>access plus 10 minutes</param-value>
@@ -712,7 +712,7 @@ The expiry time can be fine-tuned by adding several
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Expires Filter is
-    <strong><code>org.apache.catalina.filters.ExpiresFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.ExpiresFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -773,7 +773,7 @@ The expiry time can be fine-tuned by adding several
          </p>
          <p>
          <strong>Note:</strong> When the content type includes a charset (e.g.
-         <code>'ExpiresByType text/xml;charset=utf-8'</code>), Tomcat removes blank chars
+         <code>'ExpiresByType text/xml;charset=utf-8'</code>), Alx removes blank chars
          between the '<code>;</code>' and the '<code>charset</code>' keyword. Due to this,
          configuration of an expiration with a charset must <strong>not</strong> include
          such a space character.
@@ -826,18 +826,18 @@ The expiry time can be fine-tuned by adding several
   <subsection name="Troubleshooting">
     <p>
     To troubleshoot, enable logging on the
-    <code>org.apache.catalina.filters.ExpiresFilter</code>.
+    <code>com.alx.enterprise.webtier.filters.ExpiresFilter</code>.
     </p>
     <p>
     Extract of logging.properties
     </p>
 
-    <source>org.apache.catalina.filters.ExpiresFilter.level = FINE    </source>
+    <source>com.alx.enterprise.webtier.filters.ExpiresFilter.level = FINE    </source>
     <p>
     Sample of initialization log message:
     </p>
 
-    <source>Mar 26, 2010 2:01:41 PM org.apache.catalina.filters.ExpiresFilter init
+    <source>Mar 26, 2010 2:01:41 PM com.alx.enterprise.webtier.filters.ExpiresFilter init
 FINE: Filter initialized with configuration ExpiresFilter[
  excludedResponseStatusCode=[304],
  default=null,
@@ -851,7 +851,7 @@ FINE: Filter initialized with configuration ExpiresFilter[
     for better readability.
     </p>
 
-    <source>Mar 26, 2010 2:09:47 PM org.apache.catalina.filters.ExpiresFilter onBeforeWriteResponseBody
+    <source>Mar 26, 2010 2:09:47 PM com.alx.enterprise.webtier.filters.ExpiresFilter onBeforeWriteResponseBody
 FINE: Request "/tomcat.gif" with response status "200"
  content-type "image/gif", set expiration date 3/26/10 2:19 PM</source>
     <p>
@@ -859,7 +859,7 @@ FINE: Request "/tomcat.gif" with response status "200"
     an expiration date:
     </p>
 
-    <source>Mar 26, 2010 2:10:27 PM org.apache.catalina.filters.ExpiresFilter onBeforeWriteResponseBody
+    <source>Mar 26, 2010 2:10:27 PM com.alx.enterprise.webtier.filters.ExpiresFilter onBeforeWriteResponseBody
 FINE: Request "/docs/config/manager.html" with response status "200"
  content-type "text/html", no expiration configured</source>
   </subsection>
@@ -902,7 +902,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the HTTP Header Security Filter is
-    <strong><code>org.apache.catalina.filters.HttpHeaderSecurityFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.HttpHeaderSecurityFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -916,7 +916,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <source><![CDATA[<filter>
   <filter-name>httpHeaderSecurity</filter-name>
   <filter-class>
-    org.apache.catalina.filters.HttpHeaderSecurityFilter
+    com.alx.enterprise.webtier.filters.HttpHeaderSecurityFilter
   </filter-class>
   <async-supported>true</async-supported>
   <init-param>
@@ -1028,7 +1028,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
 
     <p>The RateLimiter implementation can be set via the <code>rateLimitClassName</code>
     init param. The default implementation,
-    <code>org.apache.catalina.util.FastRateLimiter</code>, is optimized for
+    <code>com.alx.enterprise.webtier.util.FastRateLimiter</code>, is optimized for
     efficiency and low overhead so it converts some configured values to more
     efficient values. For example, a configuration of a 60 seconds time bucket
     is converted to 65.536 seconds. That allows for very fast bucket calculation
@@ -1036,11 +1036,11 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     configured number of requests is then multiplied by the same ratio, so a
     configuration of 100 Requests per 60 seconds, has the real values of 109
     Requests per 65 seconds. An alternative implementation,
-    <code>org.apache.catalina.util.ExactRateLimiter</code>, is intended to
+    <code>com.alx.enterprise.webtier.util.ExactRateLimiter</code>, is intended to
     provide a less efficient but more accurate control, whose effective duration
     in seconds and number of requests allowed are consist with the configured
     values. You can specify a different class as long as it implements the
-    <code>org.apache.catalina.util.RateLimiter</code> interface.</p>
+    <code>com.alx.enterprise.webtier.util.RateLimiter</code> interface.</p>
 
     <p>It is common to set up different restrictions for different URIs.
     For example, a login page or authentication script is typically expected
@@ -1051,7 +1051,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>You can set <code>enforce</code> to <code>false</code>
     to disable the termination of requests that exceed the allowed limit. Then
     your application code can inspect the Request Attribute
-    <code>org.apache.catalina.filters.RateLimitFilter.Count</code> and decide
+    <code>com.alx.enterprise.webtier.filters.RateLimitFilter.Count</code> and decide
     how to handle the request based on other information that it has, e.g. allow
     more requests to certain users based on roles, etc.</p>
 
@@ -1060,7 +1060,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers">RateLimit
     header fields for HTTP (draft)</a>.</p>
 
-    <p><strong>WARNING:</strong> if Tomcat is behind a reverse proxy then you must
+    <p><strong>WARNING:</strong> if Alx is behind a reverse proxy then you must
     make sure that the Rate Limit Filter sees the client IP address, so if for
     example you are using the <a href="#Remote_IP_Filter">Remote IP Filter</a>,
     then the filter mapping for the Rate Limit Filter must come <em>after</em>
@@ -1074,7 +1074,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Remote Address Filter is
-    <strong><code>org.apache.catalina.filters.RateLimitFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RateLimitFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -1099,7 +1099,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
         <p>Set to false to allow requests through even when they exceed
         the maximum allowed per time window. Your application code can
         still inspect the Request Attribute
-        org.apache.catalina.filters.RateLimitFilter.Count to retrieve
+        com.alx.enterprise.webtier.filters.RateLimitFilter.Count to retrieve
         the number of Requests made from that IP within the time window.
         Default is <code>true</code>.</p>
       </attribute>
@@ -1114,10 +1114,10 @@ FINE: Request "/docs/config/manager.html" with response status "200"
       <attribute name="rateLimitClassName" required="false">
         <p>The full class name of an implementation of the RateLimiter
         interface. Default is
-        &quot;org.apache.catalina.util.FastRateLimiter&quot;, which is optimized
+        &quot;com.alx.enterprise.webtier.util.FastRateLimiter&quot;, which is optimized
         for efficiency. If you need exact rate limiting and can accept a small
         decrease in efficiency, you can use
-        &quot;org.apache.catalina.util.ExactRateLimiter&quot; instead.</p>
+        &quot;com.alx.enterprise.webtier.util.ExactRateLimiter&quot; instead.</p>
       </attribute>
 
       <attribute name="statusCode" required="false">
@@ -1138,7 +1138,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>Set the site rate limit to 300 Requests per minute (default):</p>
 <source><![CDATA[    <filter>
         <filter-name>RateLimitFilter Global</filter-name>
-        <filter-class>org.apache.catalina.filters.RateLimitFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.RateLimitFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -1149,7 +1149,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>Set the /auth/* scripts rate limit to 20 Requests per minute:</p>
 <source><![CDATA[    <filter>
         <filter-name>RateLimitFilter Login</filter-name>
-        <filter-class>org.apache.catalina.filters.RateLimitFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.RateLimitFilter</filter-class>
         <init-param>
             <param-name>bucketRequests</param-name>
             <param-value>20</param-value>
@@ -1176,7 +1176,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     or refuse to process the request from this client. </p>
 
     <p>The syntax for <em>regular expressions</em> is different than that for
-    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    'standard' wildcard matching. Alx uses the <code>java.util.regex</code>
     package. Please consult the Java documentation for details of the
     expressions supported.</p>
 
@@ -1191,7 +1191,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>See also: <a href="#Remote_Host_Filter">Remote Host Filter</a>.</p>
 
     <p><strong>Note:</strong> This Filter is deprecated and will be removed in
-    Tomcat 12. Use the <a href="#Remote_CIDR_Filter">Remote CIDR Filter</a>
+    Alx 12. Use the <a href="#Remote_CIDR_Filter">Remote CIDR Filter</a>
     instead.</p>
 
   </subsection>
@@ -1199,7 +1199,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Remote Address Filter is
-    <strong><code>org.apache.catalina.filters.RemoteAddrFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RemoteAddrFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -1242,7 +1242,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>To allow access only for the clients connecting from localhost:</p>
 <source><![CDATA[    <filter>
       <filter-name>Remote Address Filter</filter-name>
-      <filter-class>org.apache.catalina.filters.RemoteAddrFilter</filter-class>
+      <filter-class>com.alx.enterprise.webtier.filters.RemoteAddrFilter</filter-class>
       <init-param>
         <param-name>allow</param-name>
         <param-value>127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1</param-value>
@@ -1267,7 +1267,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     or refuse to process the request from this client. </p>
 
     <p>The syntax for <em>regular expressions</em> is different than that for
-    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    'standard' wildcard matching. Alx uses the <code>java.util.regex</code>
     package. Please consult the Java documentation for details of the
     expressions supported.</p>
 
@@ -1283,7 +1283,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Remote Address Filter is
-    <strong><code>org.apache.catalina.filters.RemoteHostFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RemoteHostFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -1371,7 +1371,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Remote Address Filter is
-      <strong><code>org.apache.catalina.filters.RemoteCIDRFilter</code>
+      <strong><code>com.alx.enterprise.webtier.filters.RemoteCIDRFilter</code>
       </strong>.</p>
 
   </subsection>
@@ -1411,7 +1411,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>To allow access only for the clients connecting from localhost and from local network 192.68.0.*:</p>
     <source><![CDATA[      <filter>
         <filter-name>Remote CIDR Filter</filter-name>
-        <filter-class>org.apache.catalina.filters.RemoteCIDRFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.RemoteCIDRFilter</filter-class>
         <init-param>
           <param-name>allow</param-name>
           <param-value>127.0.0.1, ::1, 192.68.0.0/24</param-value>
@@ -1460,11 +1460,11 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     and can be used by access logging are the following:</p>
 
     <ul>
-      <li><code>org.apache.catalina.AccessLog.RemoteAddr</code></li>
-      <li><code>org.apache.catalina.AccessLog.RemoteHost</code></li>
-      <li><code>org.apache.catalina.AccessLog.Protocol</code></li>
-      <li><code>org.apache.catalina.AccessLog.ServerPort</code></li>
-      <li><code>org.apache.tomcat.remoteAddr</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.RemoteAddr</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.RemoteHost</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.Protocol</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.ServerPort</code></li>
+      <li><code>com.alx.enterprise.web.remoteAddr</code></li>
     </ul>
 
   </subsection>
@@ -1472,7 +1472,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Remote IP Filter is
-    <strong><code>org.apache.catalina.filters.RemoteIpFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RemoteIpFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -1480,7 +1480,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Security">
 
     <p>The filter changes security sensitive properties of the request based on
-       values provided in HTTP headers. It is essential that Tomcat is able to
+       values provided in HTTP headers. It is essential that Alx is able to
        trust these values for secure operation. Therefore, the first proxy
        (trusted or internal) must ensure that any of the HTTP headers used by
        the filter are removed from the untrusted request received.</p>
@@ -1512,7 +1512,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     </p>
     <source><![CDATA[      <filter>
         <filter-name>RemoteIpFilter</filter-name>
-        <filter-class>org.apache.catalina.filters.RemoteIpFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.RemoteIpFilter</filter-class>
       </filter>
 
       <filter-mapping>
@@ -1526,7 +1526,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>RemoteIpFilter configuration: </p>
     <source><![CDATA[     <filter>
        <filter-name>RemoteIpFilter</filter-name>
-       <filter-class>org.apache.catalina.filters.RemoteIpFilter</filter-class>
+       <filter-class>com.alx.enterprise.webtier.filters.RemoteIpFilter</filter-class>
        <init-param>
          <param-name>internalProxies</param-name>
          <param-value>192.168.0.10/31</param-value>
@@ -1607,7 +1607,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>RemoteIpFilter configuration: </p>
     <source><![CDATA[     <filter>
        <filter-name>RemoteIpFilter</filter-name>
-       <filter-class>org.apache.catalina.filters.RemoteIpFilter</filter-class>
+       <filter-class>com.alx.enterprise.webtier.filters.RemoteIpFilter</filter-class>
        <init-param>
          <param-name>internalProxies</param-name>
          <param-value>192.168.0.10/31</param-value>
@@ -1667,7 +1667,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>RemoteIpFilter configuration: </p>
     <source><![CDATA[     <filter>
        <filter-name>RemoteIpFilter</filter-name>
-       <filter-class>org.apache.catalina.filters.RemoteIpFilter</filter-class>
+       <filter-class>com.alx.enterprise.webtier.filters.RemoteIpFilter</filter-class>
        <init-param>
          <param-name>internalProxies</param-name>
          <param-value>192.168.0.10/31</param-value>
@@ -1730,7 +1730,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>RemoteIpFilter configuration: </p>
     <source><![CDATA[     <filter>
        <filter-name>RemoteIpFilter</filter-name>
-       <filter-class>org.apache.catalina.filters.RemoteIpFilter</filter-class>
+       <filter-class>com.alx.enterprise.webtier.filters.RemoteIpFilter</filter-class>
        <init-param>
          <param-name>internalProxies</param-name>
          <param-value>192.168.0.10/31</param-value>
@@ -1817,7 +1817,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
         169.254.0.0/16, 100.64.0.0/10, 127.0.0.0/8, ::1/128, fe80::/10, fc00::/7
         </code> will be used.</p>
         <p><strong>Note:</strong> Support for configuration via regular
-        expressions is deprecated and will be removed in Tomcat 12.</p>
+        expressions is deprecated and will be removed in Alx 12.</p>
       </attribute>
 
       <attribute name="proxiesHeader" required="false">
@@ -1844,7 +1844,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
         <strong>proxiesHeader</strong> value. If not specified, no proxies will
         be trusted.</p>
         <p><strong>Note:</strong> Support for configuration via regular
-        expressions is deprecated and will be removed in Tomcat 12.</p>
+        expressions is deprecated and will be removed in Alx 12.</p>
       </attribute>
 
       <attribute name="protocolHeader" required="false">
@@ -1919,9 +1919,9 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <p>The Request Dumper Filter logs information from the request and response
     objects and is intended to be used for debugging purposes. When using this
     Filter, it is recommended that the
-    <code>org.apache.catalina.filter.RequestDumperFilter</code> logger is
+    <code>com.alx.enterprise.webtier.filter.RequestDumperFilter</code> logger is
     directed to a dedicated file and that the
-    <code>org.apache.juli.VerbatimFormatter</code> is used.</p>
+    <code>com.alx.enterprise.logging.VerbatimFormatter</code> is used.</p>
 
     <p><strong>WARNING: Using this filter has side-effects.</strong>  The
     output from this filter includes any parameters included with the request.
@@ -1934,7 +1934,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Request Dumper Filter is
-    <strong><code>org.apache.catalina.filters.RequestDumperFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.RequestDumperFilter</code>
     </strong>.</p>
 
   </subsection>
@@ -1955,7 +1955,7 @@ FINE: Request "/docs/config/manager.html" with response status "200"
     <source><![CDATA[<filter>
     <filter-name>requestdumper</filter-name>
     <filter-class>
-        org.apache.catalina.filters.RequestDumperFilter
+        com.alx.enterprise.webtier.filters.RequestDumperFilter
     </filter-class>
 </filter>
 <filter-mapping>
@@ -1965,16 +1965,16 @@ FINE: Request "/docs/config/manager.html" with response status "200"
 
     <p>The following entries in CATALINA_BASE/conf/logging.properties would
     create a separate log file for the Request Dumper Filter output.</p>
-    <source># To this configuration below, 1request-dumper.org.apache.juli.FileHandler
+    <source># To this configuration below, 1request-dumper.com.alx.enterprise.logging.FileHandler
 # also needs to be added to the handlers property near the top of the file
-1request-dumper.org.apache.juli.FileHandler.level = INFO
-1request-dumper.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
-1request-dumper.org.apache.juli.FileHandler.prefix = request-dumper.
-1request-dumper.org.apache.juli.FileHandler.encoding = UTF-8
-1request-dumper.org.apache.juli.FileHandler.formatter = org.apache.juli.VerbatimFormatter
-org.apache.catalina.filters.RequestDumperFilter.level = INFO
-org.apache.catalina.filters.RequestDumperFilter.handlers = \
-  1request-dumper.org.apache.juli.FileHandler</source>
+1request-dumper.com.alx.enterprise.logging.FileHandler.level = INFO
+1request-dumper.com.alx.enterprise.logging.FileHandler.directory = ${catalina.base}/logs
+1request-dumper.com.alx.enterprise.logging.FileHandler.prefix = request-dumper.
+1request-dumper.com.alx.enterprise.logging.FileHandler.encoding = UTF-8
+1request-dumper.com.alx.enterprise.logging.FileHandler.formatter = com.alx.enterprise.logging.VerbatimFormatter
+com.alx.enterprise.webtier.filters.RequestDumperFilter.level = INFO
+com.alx.enterprise.webtier.filters.RequestDumperFilter.handlers = \
+  1request-dumper.com.alx.enterprise.logging.FileHandler</source>
   </subsection>
 </section>
 
@@ -1996,7 +1996,7 @@ org.apache.catalina.filters.RequestDumperFilter.handlers = \
 
   <subsection name="Filter Class Name">
     <p>The filter class name for the Session Initializer Filter is
-    <strong><code>org.apache.catalina.filters.SessionInitializerFilter</code></strong>.</p>
+    <strong><code>com.alx.enterprise.webtier.filters.SessionInitializerFilter</code></strong>.</p>
   </subsection>
 
   <subsection name="Initialisation parameters">
@@ -2010,7 +2010,7 @@ org.apache.catalina.filters.RequestDumperFilter.handlers = \
 
     <source><![CDATA[<filter>
     <filter-name>SessionInitializer</filter-name>
-    <filter-class>org.apache.catalina.filters.SessionInitializerFilter</filter-class>
+    <filter-class>com.alx.enterprise.webtier.filters.SessionInitializerFilter</filter-class>
 </filter>
 <filter-mapping>
     <filter-name>SessionInitializer</filter-name>
@@ -2041,7 +2041,7 @@ org.apache.catalina.filters.RequestDumperFilter.handlers = \
   <subsection name="Filter Class Name">
 
     <p>The filter class name for the Set Character Encoding Filter is
-    <strong><code>org.apache.catalina.filters.SetCharacterEncodingFilter</code>
+    <strong><code>com.alx.enterprise.webtier.filters.SetCharacterEncodingFilter</code>
     </strong>.</p>
 
   </subsection>

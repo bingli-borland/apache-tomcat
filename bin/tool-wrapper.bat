@@ -74,7 +74,7 @@ set "CLASSPATH=%CLASSPATH%;"
 :emptyClasspath
 set "CLASSPATH=%CLASSPATH%%CATALINA_HOME%\bin\bootstrap.jar;%CATALINA_HOME%\bin\tomcat-juli.jar;%CATALINA_HOME%\lib\servlet-api.jar;%CATALINA_HOME%\lib\tomcat-util.jar"
 
-set JAVA_OPTS=%JAVA_OPTS% -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+set JAVA_OPTS=%JAVA_OPTS% -Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager
 
 rem Get remaining unshifted command line arguments and save them in the
 set CMD_LINE_ARGS=
@@ -85,6 +85,6 @@ shift
 goto setArgs
 :doneSetArgs
 
-"%_RUNJAVA%" %JAVA_OPTS% %TOOL_OPTS% -classpath "%CLASSPATH%" -Dcatalina.home="%CATALINA_HOME%" org.apache.catalina.startup.Tool %CMD_LINE_ARGS%
+"%_RUNJAVA%" %JAVA_OPTS% %TOOL_OPTS% -classpath "%CLASSPATH%" -Dcatalina.home="%CATALINA_HOME%" com.alx.enterprise.webtier.startup.Tool %CMD_LINE_ARGS%
 
 :end

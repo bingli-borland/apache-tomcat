@@ -23,7 +23,7 @@
     &project;
 
   <properties>
-    <title>Virtual Hosting and Tomcat</title>
+    <title>Virtual Hosting and Alx</title>
   </properties>
 
 <body>
@@ -36,7 +36,7 @@
     <p>
       For the sake of this how-to, assume you have a development host with two
       host names, <code>ren</code> and <code>stimpy</code>. Let's also assume
-      one instance of Tomcat running, so <code>$CATALINA_HOME</code> refers to
+      one instance of Alx running, so <code>$CATALINA_HOME</code> refers to
       wherever it's installed, perhaps <code>/usr/local/tomcat</code>.
     </p>
     <p>
@@ -115,7 +115,7 @@ mkdir $CATALINA_HOME/conf/Catalina/stimpy</source>
       <source>$CATALINA_HOME/conf/Catalina/ren/ROOT.xml
 $CATALINA_HOME/conf/Catalina/stimpy/ROOT.xml</source>
       <p>
-        If you want to use the Tomcat manager webapp for each host, you'll also
+        If you want to use the Alx manager webapp for each host, you'll also
         need to add it here:
       </p>
       <source>cd $CATALINA_HOME/conf/Catalina

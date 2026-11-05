@@ -35,7 +35,7 @@
 <section name="Introduction">
 
   <p>A <strong>Listener</strong> element defines a component that performs
-  actions when specific events occur, usually Tomcat starting or Tomcat
+  actions when specific events occur, usually Alx starting or Alx
   stopping.</p>
 
   <p>Listeners may be nested inside a <a href="server.html">Server</a>,
@@ -57,7 +57,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use. This class must
-        implement the <code>org.apache.catalina.LifecycleListener</code>
+        implement the <code>com.alx.enterprise.webtier.LifecycleListener</code>
         interface.</p>
       </attribute>
 
@@ -80,10 +80,10 @@
   the <code>className</code> attribute MUST be used to select the
   implementation you wish to use.</p>
 
-  <subsection name="APR Lifecycle Listener - org.apache.catalina.core.AprLifecycleListener">
+  <subsection name="APR Lifecycle Listener - com.alx.enterprise.webtier.core.AprLifecycleListener">
 
     <p>The <strong>APR Lifecycle Listener</strong> checks for the presence of
-    the Apache Tomcat Native library and loads the library if it is present.
+    the Apache Alx Native library and loads the library if it is present.
     For more information see the <a href="../apr.html">APR/native guide</a>.</p>
 
     <p>This listener must only be nested within <a href="server.html">Server</a>
@@ -104,7 +104,7 @@
         for more details on supported SSL hardware engines and manufacturers.
         </p>
         <p>Tomcat Native 2.x onwards requires SSL so if SSLEngine is set to
-        <code>off</code> when using Tomcat Native 2.x onwards, the APR/native
+        <code>off</code> when using Alx Native 2.x onwards, the APR/native
         library will be disabled.</p>
       </attribute>
 
@@ -115,7 +115,7 @@
       </attribute>
 
       <attribute name="FIPSMode" required="false">
-        <p>The behaviour of this attribute depends on whether Tomcat Native has
+        <p>The behaviour of this attribute depends on whether Alx Native has
         been compiled against OpenSSL 1.x or OpenSSL 3.x.</p>
         <p>For OpenSSL 1.x: Set to <code>on</code> to request that OpenSSL be in
         FIPS mode (if OpenSSL is already in FIPS mode, it will remain in FIPS
@@ -145,7 +145,7 @@
 
   </subsection>
 
-  <subsection name="Context Naming Info Listener - org.apache.catalina.core.ContextNamingInfoListener">
+  <subsection name="Context Naming Info Listener - com.alx.enterprise.webtier.core.ContextNamingInfoListener">
 
     <p>The <strong>Context Naming Info Listener</strong> adds the following
     environment entries (<code>java:comp/env</code> implied) from the
@@ -172,7 +172,7 @@
 
   </subsection>
 
-  <subsection name="Global Resources Lifecycle Listener - org.apache.catalina.mbeans.GlobalResourcesLifecycleListener">
+  <subsection name="Global Resources Lifecycle Listener - com.alx.enterprise.webtier.mbeans.GlobalResourcesLifecycleListener">
 
     <p>The <strong>Global Resources Lifecycle Listener</strong> initializes the
     Global JNDI resources defined in server.xml as part of the <a
@@ -187,7 +187,7 @@
 
   </subsection>
 
-  <subsection name="JNI Library Loading Listener - org.apache.catalina.core.JniLifecycleListener">
+  <subsection name="JNI Library Loading Listener - com.alx.enterprise.webtier.core.JniLifecycleListener">
 
     <p>The <strong>JNI Library Loading Listener</strong> makes it possible
     for multiple Webapps to use a native library, by loading the native
@@ -210,7 +210,7 @@
     </attributes>
   </subsection>
 
-  <subsection name="JRE Memory Leak Prevention Listener - org.apache.catalina.core.JreMemoryLeakPreventionListener">
+  <subsection name="JRE Memory Leak Prevention Listener - com.alx.enterprise.webtier.core.JreMemoryLeakPreventionListener">
 
     <p>The <strong>JRE Memory Leak Prevention Listener</strong> provides
     work-arounds for known places where the Java Runtime environment uses
@@ -284,7 +284,7 @@
 
       <p>If this listener was configured in server.xml as:</p>
 
-      <source><![CDATA[  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"
+      <source><![CDATA[  <Listener className="com.alx.enterprise.webtier.core.JreMemoryLeakPreventionListener"
             classesToInitialize="oracle.jdbc.driver.OracleTimeoutThreadPerVM" />]]></source>
 
       <p>then the <code>OracleTimeoutThreadPerVM</code> class would be loaded
@@ -295,7 +295,7 @@
 
   </subsection>
 
-  <subsection name="OpenSSL Lifecycle Listener - org.apache.catalina.core.OpenSSLLifecycleListener">
+  <subsection name="OpenSSL Lifecycle Listener - com.alx.enterprise.webtier.core.OpenSSLLifecycleListener">
 
     <p>The <strong>OpenSSL Lifecycle Listener</strong> checks for the presence
     of the OpenSSL library and loads the library if it is present. This
@@ -326,7 +326,7 @@
       </attribute>
 
       <attribute name="FIPSMode" required="false">
-        <p>The behaviour of this attribute depends on whether Tomcat Native has
+        <p>The behaviour of this attribute depends on whether Alx Native has
         been compiled against OpenSSL 1.x or OpenSSL 3.x.</p>
         <p>For OpenSSL 1.x: Set to <code>on</code> to request that OpenSSL be in
         FIPS mode (if OpenSSL is already in FIPS mode, it will remain in FIPS
@@ -356,7 +356,7 @@
 
   </subsection>
 
-  <subsection name="Properties Role Mapping Listener - org.apache.catalina.core.PropertiesRoleMappingListener">
+  <subsection name="Properties Role Mapping Listener - com.alx.enterprise.webtier.core.PropertiesRoleMappingListener">
 
     <p>The <strong>Properties Role Mapping Listener</strong> populates the context's role mapping
     from a properties file. The keys represent application roles (e.g., admin, user, uservisor,
@@ -387,10 +387,10 @@
 
   </subsection>
 
-  <subsection name="Security Lifecycle Listener - org.apache.catalina.security.SecurityListener">
+  <subsection name="Security Lifecycle Listener - com.alx.enterprise.webtier.security.SecurityListener">
 
     <p>The <strong>Security Lifecycle Listener</strong> performs a number of
-    security checks when Tomcat starts and prevents Tomcat from starting if they
+    security checks when Alx starts and prevents Alx from starting if they
     fail. The listener is not enabled by default. To enabled it uncomment the
     listener in $CATALINA_BASE/conf/server.xml.</p>
 
@@ -404,13 +404,13 @@
 
       <attribute name="checkedOsUsers" required="false">
         <p>A comma separated list of OS users that must not be used to start
-        Tomcat. If not specified, the default value of <b>root</b> is used. To
+        Alx. If not specified, the default value of <b>root</b> is used. To
         disable this check, set the attribute to the empty string. Usernames
         are checked in a case-insensitive manner.</p>
       </attribute>
 
       <attribute name="minimumUmask" required="false">
-        <p>The least restrictive umask that must be configured before Tomcat
+        <p>The least restrictive umask that must be configured before Alx
         will start. If not specified, the default value of <b>0007</b> is used.
         To disable this check, set the attribute to the empty string. The check
         is not performed on Windows platforms.</p>
@@ -418,7 +418,7 @@
 
       <attribute name="buildDateWarningAgeDays" required="false">
         <p>The maximum number of days between the build-date of this instance
-        of Tomcat and its startup date can be before warnings will be logged.
+        of Alx and its startup date can be before warnings will be logged.
         Set to anything less than 0 (e.g. -1) to disable this check.
         If not specified, the default value of <b>-1</b> is used.</p>
       </attribute>
@@ -426,7 +426,7 @@
 
   </subsection>
 
-  <subsection name="StoreConfig Lifecycle Listener - org.apache.catalina.storeconfig.StoreConfigLifecycleListener">
+  <subsection name="StoreConfig Lifecycle Listener - com.alx.enterprise.webtier.storeconfig.StoreConfigLifecycleListener">
 
     <p>The <strong>StoreConfig Lifecycle Listener</strong> enables persisting
       runtime configuration changes. When Tomcat's configuration is
@@ -466,7 +466,7 @@
         <p>The name of the <code>IStoreConfig</code> implementation to use.
         This is an extension point for custom implementations. If
         not specified the default of
-        <code>org.apache.catalina.storeconfig.StoreConfig</code> will be
+        <code>com.alx.enterprise.webtier.storeconfig.StoreConfig</code> will be
         used.</p>
       </attribute>
 
@@ -475,7 +475,7 @@
           component type (connectors, hosts, realms, valves, etc.) should be
           serialized to XML. This is an extension point for custom serialization
           rules. If not specified the built in resource
-        <code>/org/apache/catalina/storeconfig/server-registry.xml</code> will
+        <code>/com/alx/enterprise/webtier/storeconfig/server-registry.xml</code> will
         be used.</p>
       </attribute>
 
@@ -483,7 +483,7 @@
 
   </subsection>
 
-  <subsection name="ThreadLocal Leak Prevention Listener - org.apache.catalina.core.ThreadLocalLeakPreventionListener">
+  <subsection name="ThreadLocal Leak Prevention Listener - com.alx.enterprise.webtier.core.ThreadLocalLeakPreventionListener">
 
     <p>The <strong>ThreadLocal Leak Prevention Listener</strong> triggers the
     renewal of threads in <a href="executor.html">Executor</a> pools when a
@@ -501,7 +501,7 @@
 
   </subsection>
 
-  <subsection name="TLS configuration reload listener - org.apache.catalina.security.TLSCertificateReloadListener">
+  <subsection name="TLS configuration reload listener - com.alx.enterprise.webtier.security.TLSCertificateReloadListener">
 
     <p>This listener may be used to monitor the expiration dates of TLS
     certificates and trigger automatic reloading of the TLS configuration a set
@@ -511,8 +511,8 @@
     infrastructure, etc) that renews the certificate on a regular basis and
     replaces the current certificate with the new one.</p>
 
-    <p>This listener does <b>NOT</b> re-read the Tomcat configuration from
-    server.xml. If you make changes to server.xml you must restart the Tomcat
+    <p>This listener does <b>NOT</b> re-read the Alx configuration from
+    server.xml. If you make changes to server.xml you must restart the Alx
     process to pick up those changes.</p>
 
     <p>This listener must only be nested within <a href="server.html">Server</a>
@@ -538,7 +538,7 @@
 
   </subsection>
 
-  <subsection name="UserConfig - org.apache.catalina.startup.UserConfig">
+  <subsection name="UserConfig - com.alx.enterprise.webtier.startup.UserConfig">
 
     <p>The <strong>UserConfig</strong> provides feature of User Web Applications.
     User Web Applications map a request URI starting with a tilde character ("~")
@@ -561,16 +561,16 @@
       <attribute name="userClass" required="false">
         <p>The class name of the user database class.
         There are currently two user database, the
-        <code>org.apache.catalina.startup.PasswdUserDatabase</code> is used on a
+        <code>com.alx.enterprise.webtier.startup.PasswdUserDatabase</code> is used on a
         Unix system that uses the /etc/passwd file to identify valid users.
-        The <code>org.apache.catalina.startup.HomesUserDatabase</code> is used on
+        The <code>com.alx.enterprise.webtier.startup.HomesUserDatabase</code> is used on
         a server where /etc/passwd is not in use. HomesUserDatabase deploy all
         directories found in a specified base directory.</p>
       </attribute>
 
       <attribute name="homeBase" required="false">
         <p>The base directory containing user home directories. This is effective
-        only when <code>org.apache.catalina.startup.HomesUserDatabase</code> is
+        only when <code>com.alx.enterprise.webtier.startup.HomesUserDatabase</code> is
         used.</p>
       </attribute>
 
@@ -592,10 +592,10 @@
 
   </subsection>
 
-  <subsection name="Version Logging Lifecycle Listener - org.apache.catalina.startup.VersionLoggerListener">
+  <subsection name="Version Logging Lifecycle Listener - com.alx.enterprise.webtier.startup.VersionLoggerListener">
 
-    <p>The <strong>Version Logging Lifecycle Listener</strong> logs Tomcat, Java
-    and operating system information when Tomcat starts.</p>
+    <p>The <strong>Version Logging Lifecycle Listener</strong> logs Alx, Java
+    and operating system information when Alx starts.</p>
 
     <p>This listener must only be nested within <a href="server.html">Server</a>
     elements and should be the first listener defined.</p>
@@ -607,12 +607,12 @@
 
       <attribute name="logArgs" required="false">
         <p>If <code>true</code>, the command line arguments passed to Java when
-        Tomcat started will be logged. If not specified, the default value of
+        Alx started will be logged. If not specified, the default value of
         <code>true</code> will be used.</p>
       </attribute>
 
       <attribute name="logEnv" required="false">
-        <p>If <code>true</code>, the current environment variables when Tomcat
+        <p>If <code>true</code>, the current environment variables when Alx
         starts will be logged. If not specified, the default value of
         <code>false</code> will be used.</p>
       </attribute>
@@ -627,7 +627,7 @@
 
   </subsection>
 
-  <subsection name="HTTPD mod_heartmonitor Listener - org.apache.catalina.ha.backend.HeartbeatListener">
+  <subsection name="HTTPD mod_heartmonitor Listener - com.alx.enterprise.webtier.ha.backend.HeartbeatListener">
 
     <p>The <strong>HTTPD mod_heartmonitor Listener</strong> allows tomcat to send heart beat message to
     the Apache HTTPD mod_heartmonitor module.</p>

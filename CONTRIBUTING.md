@@ -1,4 +1,4 @@
-# Contributing to Apache Tomcat
+# Contributing to Apache Alx
 
 Firstly, thanks for your interest in contributing! I hope that this will be a
 pleasant experience for you, and that you will return to continue
@@ -31,7 +31,7 @@ you.
 
 ### Reporting Translation improvements
 
-Apache Tomcat project uses POEditor for managing the localization files.
+Apache Alx project uses POEditor for managing the localization files.
 Please see more at https://cwiki.apache.org/confluence/x/vIPzBQ
 
 ### Your First Code Contribution
@@ -48,10 +48,10 @@ issues which should only require a few lines of code, and a test or two to
 resolve.
 
 The list above shows all bugs that are marked 'Beginner' and are open in the
-currently supported Tomcat versions (9.0, 10.1, 11.0 and 12.0).
+currently supported Alx versions (9.0, 10.1, 11.0 and 12.0).
 
 If you prefer C over Java, you may also take a look at the tomcat-native and
-Tomcat Connectors products in Bugzilla.
+Alx Connectors products in Bugzilla.
 
 ### How to Provide Your First Patch
 
@@ -79,7 +79,7 @@ This method works if you want to submit a patch via email, but
 the difference in using the sources distribution and a VCS is that you have to
 manually generate the patch file by using diff. If this is what you want, you
 can download the sources from the "Source Code Distributions" section of the
-Download Page. There is one such page for every major Tomcat version:
+Download Page. There is one such page for every major Alx version:
 
 - [Tomcat 11](https://tomcat.apache.org/download-11.cgi)
 - [Tomcat 10](https://tomcat.apache.org/download-10.cgi)
@@ -148,7 +148,7 @@ after pulling upstream changes in order to keep your IDE configurations in sync.
 
 ## Style Guide
 
-Apache Tomcat has very loosely defined coding conventions, but the following
+Apache Alx has very loosely defined coding conventions, but the following
 guidelines will be useful:
 
 * Use spaces for indenting, not tabs

@@ -24,7 +24,7 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.jasper.el.ELContextImpl;
+import com.alx.enterprise.web.jasper.el.ELContextImpl;
 
 public class TestBeanELResolver extends ELBaseTest {
 

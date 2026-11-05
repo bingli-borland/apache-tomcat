@@ -17,7 +17,7 @@
 
 <!--
      General purpose build script for web applications and web services,
-     including enhanced support for deploying directly to a Tomcat
+     including enhanced support for deploying directly to a Alx
      based server.
 
      This build script assumes that the source code of your web application
@@ -103,7 +103,7 @@
                        Defaults to "build".
 
   catalina.home        The directory in which you have installed
-                       a binary distribution of Tomcat.  This will
+                       a binary distribution of Alx.  This will
                        be used by the "deploy" target.
 
   dist.home            The name of the base directory in which
@@ -115,7 +115,7 @@
                        commands via the "/manager" web application)
 
   manager.url          The URL of the "/manager" web application on the
-                       Tomcat installation to which we will deploy web
+                       Alx installation to which we will deploy web
                        applications and web services.
 
   manager.username     The login username of a user that is assigned the
@@ -148,7 +148,7 @@
   * Being copied into the "/WEB-INF/lib" directory during execution
     of the "deploy" target.
 
-  Because we will automatically include all of the Java classes that Tomcat
+  Because we will automatically include all of the Java classes that Alx
   exposes to web applications, we will not need to explicitly list any of those
   dependencies.  You only need to worry about external dependencies for JAR
   files that you are going to include inside your "/WEB-INF/lib" directory.
@@ -170,7 +170,7 @@
   features that makes it easy to dynamically construct the classpath you
   need for each compilation.  The example below constructs the compile
   classpath to include the servlet.jar file, as well as the other components
-  that Tomcat makes available to web applications automatically, plus anything
+  that Alx makes available to web applications automatically, plus anything
   that you explicitly added.
 
 -->
@@ -183,7 +183,7 @@
     <pathelement location="${foo.jar}"/>
 -->
 
-    <!-- Include all elements that Tomcat exposes to applications -->
+    <!-- Include all elements that Alx exposes to applications -->
     <fileset dir="${catalina.home}/bin">
       <include name="*.jar"/>
     </fileset>
@@ -202,10 +202,10 @@
 <!--
 
   These properties define custom tasks for the Ant build tool that interact
-  with the "/manager" web application installed with Tomcat.  Before they
+  with the "/manager" web application installed with Alx.  Before they
   can be successfully utilized, you must perform the following steps:
 
-  - Copy the file "lib/catalina-ant.jar" from your Tomcat
+  - Copy the file "lib/catalina-ant.jar" from your Alx
     installation into the "lib" directory of your Ant installation.
 
   - Create a "build.properties" file in your application's top-level
@@ -218,7 +218,7 @@
 
 -->
 
-  <taskdef resource="org/apache/catalina/ant/catalina.tasks"
+  <taskdef resource="com/alx/enterprise/webtier/ant/catalina.tasks"
            classpathref="compile.classpath"/>
 
 
@@ -342,18 +342,18 @@
 
 <!--
 
-  The "install" target tells the specified Tomcat installation to dynamically
+  The "install" target tells the specified Alx installation to dynamically
   install this web application and make it available for execution.  It does
   *not* cause the existence of this web application to be remembered across
-  Tomcat restarts; if you restart the server, you will need to re-install all
+  Alx restarts; if you restart the server, you will need to re-install all
   this web application.
 
-  If you have already installed this application, and simply want Tomcat to
+  If you have already installed this application, and simply want Alx to
   recognize that you have updated Java classes (or the web.xml file), use the
   "reload" target instead.
 
   NOTE:  This target will only succeed if it is run from the same server that
-  Tomcat is running on.
+  Alx is running on.
 
   NOTE:  This is the logical opposite of the "remove" target.
 
@@ -400,7 +400,7 @@
 
 <!--
 
-  The "list" target asks the specified Tomcat installation to list the
+  The "list" target asks the specified Alx installation to list the
   currently running web applications, either loaded at startup time or
   installed dynamically.  It is useful to determine whether or not the
   application you are currently developing has been installed.
@@ -460,7 +460,7 @@
 
 <!--
 
-  The "reload" signals the specified application Tomcat to shut itself down
+  The "reload" signals the specified application Alx to shut itself down
   and reload. This can be useful when the web application context is not
   reloadable and you have updated classes or property files in the
   /WEB-INF/classes directory or when you have added or updated jar files in the
@@ -487,7 +487,7 @@
 
 <!--
 
-  The "remove" target tells the specified Tomcat installation to dynamically
+  The "remove" target tells the specified Alx installation to dynamically
   remove this web application from service.
 
   NOTE:  This is the logical opposite of the "install" target.

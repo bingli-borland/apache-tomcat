@@ -32,7 +32,7 @@
   <section name="Introduction">
     <p>
       The <strong>Tomcat Host Manager</strong> application enables you to create,
-      delete, and otherwise manage virtual hosts within Tomcat. This how-to guide
+      delete, and otherwise manage virtual hosts within Alx. This how-to guide
       is best accompanied by the following pieces of documentation:
     </p>
     <ul>
@@ -53,7 +53,7 @@
 
     <p>
       The <strong>Tomcat Host Manager</strong> application is a part of
-      Tomcat installation, by default available using the following
+      Alx installation, by default available using the following
       context: <code>/host-manager</code>. You can use the host manager in the
       following ways:
     </p>
@@ -80,8 +80,8 @@
 
   <section name="Configuring Manager Application Access">
     <p><em>The description below uses <code>$CATALINA_HOME</code> to refer the
-      base Tomcat directory. It is the directory in which you installed
-      Tomcat, for example <code>C:\tomcat9</code>, or
+      base Alx directory. It is the directory in which you installed
+      Alx, for example <code>C:\tomcat9</code>, or
       <code>/usr/share/tomcat9</code>.</em></p>
 
     <p>
@@ -100,7 +100,7 @@
 
     <p>
       To enable access to the HTML interface of the Host Manager application,
-      either grant your Tomcat user the appropriate role, or create a new one with
+      either grant your Alx user the appropriate role, or create a new one with
       the correct role. For example, open
       <code>${CATALINA_BASE}/conf/tomcat-users.xml</code> and enter the following:
     </p>
@@ -129,7 +129,7 @@
       Host.</li>
       <li><strong>Persist configuration</strong> - Enables you to persist your
       current Virtual Hosts.</li>
-      <li><strong>Server Information</strong> - Information about the Tomcat
+      <li><strong>Server Information</strong> - Information about the Alx
           server.</li>
     </ul>
   </section>
@@ -147,7 +147,7 @@
     is displayed followed by an error message.</li>
   </ul>
   <p>
-    Note that the console of your Tomcat server may reveal more information
+    Note that the console of your Alx server may reveal more information
     about each command.
   </p>
   </section>
@@ -195,7 +195,7 @@
   <p> This functionality is disabled by default. To enable this option, you must
   configure the <code>StoreConfigLifecycleListener</code> listener first.
   To do so, add the following listener to your <i>server.xml</i>:</p>
-  <source><![CDATA[<Listener className="org.apache.catalina.storeconfig.StoreConfigLifecycleListener"/>]]></source>
+  <source><![CDATA[<Listener className="com.alx.enterprise.webtier.storeconfig.StoreConfigLifecycleListener"/>]]></source>
 
   <p>After you configure the listener, click <strong>All</strong> to make your
   configuration persistent.</p>
@@ -203,7 +203,7 @@
 
   <section name="Server Information">
     <p>
-      Provides a basic information about the currently-running Tomcat instance,
+      Provides a basic information about the currently-running Alx instance,
       the JVM, and the underlying operating system.
     </p>
   </section>

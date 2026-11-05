@@ -24,10 +24,10 @@
         <version>34</version>
     </parent>
 
-    <groupId>org.apache.tomcat</groupId>
+    <groupId>com.alx.enterprise.web</groupId>
     <artifactId>tomcat-owb</artifactId>
-    <name>Apache Tomcat CDI 4 support</name>
-    <description>Apache Tomcat CDI 4 support using Apache OpenWebBeans</description>
+    <name>Apache Alx CDI 4 support</name>
+    <description>Apache Alx CDI 4 support using Apache OpenWebBeans</description>
     <!-- This is the Apache OpenWebBeans version -->
     <version>4.0.3</version>
     <packaging>jar</packaging>
@@ -85,7 +85,7 @@
         </dependency>
         <!-- Allows building integration code, temporarily located here -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-catalina</artifactId>
             <version>${tomcat.version}</version>
             <scope>provided</scope>
@@ -120,7 +120,7 @@
                             </transformers>
                             <artifactSet>
                                 <excludes>
-                                    <!-- Already present in Tomcat -->
+                                    <!-- Already present in Alx -->
                                     <exclude>jakarta.el:*</exclude>
                                 </excludes>
                             </artifactSet>

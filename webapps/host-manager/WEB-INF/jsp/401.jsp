@@ -47,7 +47,7 @@
 &lt;user username="tomcat" password="s3cret" roles="admin-gui"/&gt;
 </pre>
    <p>
-    Note that for Tomcat 7 onwards, the roles required to use the host manager
+    Note that for Alx 7 onwards, the roles required to use the host manager
     application were changed from the single <tt>admin</tt> role to the
     following two roles. You will need to assign the role(s) required for
     the functionality you wish to access.

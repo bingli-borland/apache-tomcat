@@ -39,7 +39,7 @@ ant clean && ant && ant embed && ant test-compile
 
 mkdir -p output/graal
 cd output/testclasses
-jar cvfM ../graal/tomcat-embedded-sample.jar org/apache/catalina/startup/EmbeddedTomcat*class
+jar cvfM ../graal/tomcat-embedded-sample.jar com/alx/enterprise/webtier/startup/EmbeddedTomcat*class
 
 cd ../graal
 
@@ -57,6 +57,6 @@ native-image \
 --allow-incomplete-classpath \
 --no-fallback \
 -cp ../embed/tomcat-embed-programmatic.jar:tomcat-embedded-sample.jar \
-org.apache.catalina.startup.EmbeddedTomcat
+com.alx.enterprise.webtier.startup.EmbeddedAlx
 
 cd $CURDIR

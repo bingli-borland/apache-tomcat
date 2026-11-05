@@ -29,9 +29,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 
-import static org.apache.catalina.startup.SimpleHttpClient.CRLF;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.Tomcat;
+import static com.alx.enterprise.webtier.startup.SimpleHttpClient.CRLF;
+import com.alx.enterprise.webtier.core.StandardContext;
+import com.alx.enterprise.webtier.startup.Alx;
 
 @RunWith(Parameterized.class)
 public class TestServletRequestParametersMultipartEncoded extends ServletRequestParametersBaseTest {
@@ -54,7 +54,7 @@ public class TestServletRequestParametersMultipartEncoded extends ServletRequest
     @Test
     public void testBodyTooLarge() throws Exception {
 
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         tomcat.getConnector().setMaxPostSize(50);
 
@@ -64,7 +64,7 @@ public class TestServletRequestParametersMultipartEncoded extends ServletRequest
 
         // Map the test Servlet
         ParameterParsingServlet parameterParsingServlet = new ParameterParsingServlet();
-        Tomcat.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
+        Alx.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
         ctx.addServletMapping("/", "parameterParsingServlet");
 
         tomcat.start();

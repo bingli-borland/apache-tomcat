@@ -24,6 +24,6 @@
   <uri>http://tomcat.apache.org/listener</uri>
 
   <listener>
-    <listener-class>org.apache.catalina.core.TesterTldListener</listener-class>
+    <listener-class>com.alx.enterprise.webtier.core.TesterTldListener</listener-class>
   </listener>
 </taglib>

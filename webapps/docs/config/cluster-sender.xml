@@ -35,7 +35,7 @@
 <section name="Introduction">
   <p>
   The channel sender component is responsible for delivering outgoing cluster messages over the network.
-  In the default implementation, <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>,
+  In the default implementation, <code>com.alx.enterprise.webtier.tribes.transport.ReplicationTransmitter</code>,
   the sender is a fairly empty shell with not much logic around a fairly complex <code>&lt;Transport&gt;</code>
   component the implements the actual delivery mechanism.
   </p>
@@ -43,7 +43,7 @@
 
 <section name="Concurrent Parallel Delivery">
   <p>
-  In the default <code>transport</code> implementation, <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>,
+  In the default <code>transport</code> implementation, <code>com.alx.enterprise.webtier.tribes.transport.nio.PooledParallelSender</code>,
   Apache Tribes implements what we like to call &quot;Concurrent Parallel Delivery&quot;.
   This means that we can send a message to more than one destination at the same time(parallel), and
   deliver two messages to the same destination at the same time(concurrent). Combine these two and we have
@@ -68,7 +68,7 @@
   <subsection name="Common Sender Attributes">
     <attributes>
       <attribute name="className" required="true">
-        Required, only available implementation is <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>
+        Required, only available implementation is <code>com.alx.enterprise.webtier.tribes.transport.ReplicationTransmitter</code>
       </attribute>
     </attributes>
   </subsection>
@@ -76,8 +76,8 @@
     <attributes>
       <attribute name="className" required="true">
         The implementation of the sender component.
-        <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>
-        is provided by Tomcat.
+        <code>com.alx.enterprise.webtier.tribes.transport.nio.PooledParallelSender</code>
+        is provided by Alx.
       </attribute>
       <attribute name="rxBufSize" required="false">
         The receive buffer size on the socket.
@@ -150,7 +150,7 @@
       </attribute>
       <attribute name="throwOnFailedAck" required="false">
        Boolean value, default value is <code>true</code>.
-       If set to true, the sender will throw a <code>org.apache.catalina.tribes.RemoteProcessException</code>
+       If set to true, the sender will throw a <code>com.alx.enterprise.webtier.tribes.RemoteProcessException</code>
        when we receive a negative ack from the remote member.
        Set to false, and Tribes will treat a positive ack the same way as a negative ack, that the message was received.
       </attribute>

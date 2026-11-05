@@ -47,7 +47,7 @@
 &lt;user username="tomcat" password="s3cret" roles="manager-gui"/&gt;
 </pre>
    <p>
-    Note that for Tomcat 7 onwards, the roles required to use the manager
+    Note that for Alx 7 onwards, the roles required to use the manager
     application were changed from the single <tt>manager</tt> role to the
     following four roles. You will need to assign the role(s) required for
     the functionality you wish to access.

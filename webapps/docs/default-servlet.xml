@@ -47,7 +47,7 @@ By default here is it's declaration:
 <source><![CDATA[    <servlet>
         <servlet-name>default</servlet-name>
         <servlet-class>
-          org.apache.catalina.servlets.DefaultServlet
+          com.alx.enterprise.webtier.servlets.DefaultServlet
         </servlet-class>
         <init-param>
             <param-name>debug</param-name>
@@ -74,12 +74,12 @@ listings are disabled and debugging is turned off.</p>
 override the default configuration by re-defining the DefaultServlet in
 <code>/WEB-INF/web.xml</code>. However, this will cause problems if you attempt
 to deploy the application on another container as the DefaultServlet class will
-not be recognised. You can work-around this problem by using the Tomcat specific
+not be recognised. You can work-around this problem by using the Alx specific
 <code>/WEB-INF/tomcat-web.xml</code> deployment descriptor. The format is
 identical to <code>/WEB-INF/web.xml</code>. It will override any default
-settings but not those in <code>/WEB-INF/web.xml</code>. Since it is Tomcat
+settings but not those in <code>/WEB-INF/web.xml</code>. Since it is Alx
 specific, it will only be processed when the application is deployed on
-Tomcat.</p>
+Alx.</p>
 </section>
 
 <section anchor="change" name="What can I change?">
@@ -107,7 +107,7 @@ Tomcat.</p>
   <property name="precompressed">
         If a precompressed version of a file exists (a file with <code>.br</code>
         or <code>.gz</code> appended to the file name located alongside the
-        original file), Tomcat will serve the precompressed file if the user
+        original file), Alx will serve the precompressed file if the user
         agent supports the matching content encoding (br or gzip) and this
         option is enabled. [false]
         <br />
@@ -158,10 +158,10 @@ Tomcat.</p>
     <code>contextXsltFile</code> does not exist, then
     <code>globalXsltFile</code> will be used. If <code>globalXsltFile</code>
     does not exist, then the default directory listing will be shown.</p>
-    <p>Any <code>localXsltFile</code> is both a Tomcat configuration file and
-    part of the web application. As per the Tomcat security model, such files
+    <p>Any <code>localXsltFile</code> is both a Alx configuration file and
+    part of the web application. As per the Alx security model, such files
     are assumed to be trusted. Write access to this file should, like write
-    access to any Tomcat configuration file, be limited to trusted users. This
+    access to any Alx configuration file, be limited to trusted users. This
     incudes users with remote access via WebDAV, PUT or similar.</p>
   </property>
   <property name="input">
@@ -197,7 +197,7 @@ Tomcat.</p>
         If true, the Accept-Ranges header will be set when appropriate for the
         response. [true]
         <br/>
-        Deprecated. This option will be removed without replacement in Tomcat
+        Deprecated. This option will be removed without replacement in Alx
         12 onwards where it will effectively be hard coded to <code>true</code>.
   </property>
   <property name="showServerInfo">

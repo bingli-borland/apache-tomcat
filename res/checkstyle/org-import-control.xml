@@ -46,34 +46,34 @@
     <allow pkg="jakarta.xml.ws"/>
     <disallow pkg="org\.apache\.catalina\.ha.*" regex="true"/>
     <disallow pkg="org\.apache\.catalina\.tribes.*" regex="true"/>
-    <allow pkg="org.apache.catalina"/>
-    <allow pkg="org.apache.coyote"/>
-    <allow pkg="org.apache.juli"/>
-    <allow pkg="org.apache.naming"/>
-    <allow pkg="org.apache.tomcat"/>
+    <allow pkg="com.alx.enterprise.webtier"/>
+    <allow pkg="com.alx.enterprise.web.crane"/>
+    <allow pkg="com.alx.enterprise.logging"/>
+    <allow pkg="com.alx.enterprise.naming"/>
+    <allow pkg="com.alx.enterprise.web"/>
     <subpackage name="ant">
       <allow pkg="org.apache.tools.ant"/>
-      <allow class="org.apache.tomcat.util.Base64"/>
+      <allow class="com.alx.enterprise.web.util.Base64"/>
       <disallow pkg="jakarta.annotation"/>
       <disallow pkg="jakarta.ejb"/>
       <disallow pkg="jakarta.persistence"/>
       <disallow pkg="jakarta.servlet"/>
-      <disallow pkg="org.apache.coyote"/>
-      <disallow pkg="org.apache.juli"/>
-      <disallow pkg="org.apache.naming"/>
+      <disallow pkg="com.alx.enterprise.web.crane"/>
+      <disallow pkg="com.alx.enterprise.logging"/>
+      <disallow pkg="com.alx.enterprise.naming"/>
     </subpackage>
     <subpackage name="ha">
       <disallow pkg="jakarta.annotation"/>
       <disallow pkg="jakarta.ejb"/>
       <disallow pkg="jakarta.persistence"/>
-      <disallow pkg="org.apache.coyote"/>
-      <disallow pkg="org.apache.naming"/>
-      <allow pkg="org.apache.catalina.ha"/>
-      <allow pkg="org.apache.catalina.tribes"/>
+      <disallow pkg="com.alx.enterprise.web.crane"/>
+      <disallow pkg="com.alx.enterprise.naming"/>
+      <allow pkg="com.alx.enterprise.webtier.ha"/>
+      <allow pkg="com.alx.enterprise.webtier.tribes"/>
     </subpackage>
     <subpackage name="storeconfig">
-      <allow pkg="org.apache.catalina.ha"/>
-      <allow pkg="org.apache.catalina.tribes"/>
+      <allow pkg="com.alx.enterprise.webtier.ha"/>
+      <allow pkg="com.alx.enterprise.webtier.tribes"/>
     </subpackage>
     <subpackage name="tribes">
       <disallow pkg="jakarta.annotation"/>
@@ -81,58 +81,58 @@
       <disallow pkg="jakarta.persistence"/>
       <disallow pkg="jakarta.servlet"/>
       <disallow pkg="org\.apache\.catalina(?!\.tribes).*" regex="true"/>
-      <disallow pkg="org.apache.coyote"/>
-      <disallow pkg="org.apache.naming"/>
+      <disallow pkg="com.alx.enterprise.web.crane"/>
+      <disallow pkg="com.alx.enterprise.naming"/>
       <disallow pkg="org\.apache\.tomcat(?!\.util\.json).*" regex="true"/>
-      <allow pkg="org.apache.catalina.tribes"/>
+      <allow pkg="com.alx.enterprise.webtier.tribes"/>
       <subpackage name="membership">
         <subpackage name="cloud">
-          <allow class="org.apache.tomcat.util.net.jsse.PEMFile"/>
-          <allow class="org.apache.tomcat.util.json.JSONParser"/>
+          <allow class="com.alx.enterprise.web.util.net.jsse.PEMFile"/>
+          <allow class="com.alx.enterprise.web.util.json.JSONParser"/>
         </subpackage>
       </subpackage>
     </subpackage>
   </subpackage>
   <subpackage name="coyote">
     <allow pkg="jakarta.servlet"/>
-    <allow pkg="org.apache.coyote"/>
-    <allow pkg="org.apache.juli"/>
-    <allow pkg="org.apache.tomcat"/>
-    <allow pkg="org.apache.tomcat.jni"/>
-    <allow pkg="org.apache.tomcat.util"/>
+    <allow pkg="com.alx.enterprise.web.crane"/>
+    <allow pkg="com.alx.enterprise.logging"/>
+    <allow pkg="com.alx.enterprise.web"/>
+    <allow pkg="com.alx.enterprise.web.jni"/>
+    <allow pkg="com.alx.enterprise.web.util"/>
   </subpackage>
   <subpackage name="el">
     <allow pkg="jakarta.el"/>
-    <allow pkg="org.apache.el"/>
+    <allow pkg="com.alx.enterprise.el"/>
   </subpackage>
   <subpackage name="jasper">
     <allow pkg="javax.tools"/>
     <allow pkg="jakarta.el"/>
     <allow pkg="jakarta.servlet"/>
-    <allow pkg="org.apache.el"/>
-    <allow pkg="org.apache.jasper"/>
-    <allow pkg="org.apache.juli"/>
-    <allow pkg="org.apache.tomcat" exact-match="true"/>
-    <allow pkg="org.apache.tomcat.util.buf"/>
-    <allow pkg="org.apache.tomcat.util.descriptor"/>
-    <allow pkg="org.apache.tomcat.util.scan"/>
-    <allow pkg="org.apache.tomcat.util.security"/>
+    <allow pkg="com.alx.enterprise.el"/>
+    <allow pkg="com.alx.enterprise.web.jasper"/>
+    <allow pkg="com.alx.enterprise.logging"/>
+    <allow pkg="com.alx.enterprise.web" exact-match="true"/>
+    <allow pkg="com.alx.enterprise.web.util.buf"/>
+    <allow pkg="com.alx.enterprise.web.util.descriptor"/>
+    <allow pkg="com.alx.enterprise.web.util.scan"/>
+    <allow pkg="com.alx.enterprise.web.util.security"/>
     <allow pkg="org.apache.tools.ant"/>
     <allow pkg="org.eclipse.jdt"/>
   </subpackage>
   <subpackage name="juli">
-    <allow pkg="org.apache.juli"/>
+    <allow pkg="com.alx.enterprise.logging"/>
   </subpackage>
   <subpackage name="naming">
     <allow pkg="jakarta.mail"/>
     <allow pkg="javax.wsdl"/>
-    <allow pkg="org.apache.juli"/>
-    <allow pkg="org.apache.naming"/>
-    <allow class="org.apache.tomcat.util.ExceptionUtils"/>
-    <allow class="org.apache.tomcat.util.buf.UDecoder"/>
-    <allow class="org.apache.tomcat.util.buf.UEncoder"/>
-    <allow class="org.apache.tomcat.util.http.FastHttpDateFormat"/>
-    <allow class="org.apache.tomcat.util.http.RequestUtil"/>
+    <allow pkg="com.alx.enterprise.logging"/>
+    <allow pkg="com.alx.enterprise.naming"/>
+    <allow class="com.alx.enterprise.web.util.ExceptionUtils"/>
+    <allow class="com.alx.enterprise.web.util.buf.UDecoder"/>
+    <allow class="com.alx.enterprise.web.util.buf.UEncoder"/>
+    <allow class="com.alx.enterprise.web.util.http.FastHttpDateFormat"/>
+    <allow class="com.alx.enterprise.web.util.http.RequestUtil"/>
     <subpackage name="factory.webservices">
     </subpackage>
   </subpackage>
@@ -140,13 +140,13 @@
     <allow pkg="jakarta.servlet"/>
     <subpackage name="buildutil">
       <allow pkg="org.apache.tools.ant"/>
-      <allow pkg="org.apache.tomcat.util"/>
+      <allow pkg="com.alx.enterprise.web.util"/>
     </subpackage>
     <subpackage name="dbcp">
-      <allow pkg="org.apache.juli"/>
+      <allow pkg="com.alx.enterprise.logging"/>
       <subpackage name="dbcp2">
-        <allow pkg="org.apache.tomcat.dbcp.dbcp2"/>
-        <allow pkg="org.apache.tomcat.dbcp.pool2"/>
+        <allow pkg="com.alx.enterprise.web.dbcp.dbcp2"/>
+        <allow pkg="com.alx.enterprise.web.dbcp.pool2"/>
         <subpackage name="managed">
           <allow pkg="jakarta.transaction"/>
           <allow pkg="javax.transaction.xa"/>
@@ -154,43 +154,43 @@
       </subpackage>
       <subpackage name="pool2">
         <subpackage name="impl">
-          <allow pkg="org.apache.tomcat.dbcp.pool2"/>
+          <allow pkg="com.alx.enterprise.web.dbcp.pool2"/>
         </subpackage>
       </subpackage>
     </subpackage>
     <subpackage name="jni">
       <subpackage name="socket">
-        <allow pkg="org.apache.tomcat.jni"/>
+        <allow pkg="com.alx.enterprise.web.jni"/>
       </subpackage>
     </subpackage>
     <subpackage name="util">
-      <allow pkg="org.apache.juli"/>
-      <allow pkg="org.apache.tomcat.jni"/>
-      <allow pkg="org.apache.tomcat.util"/>
-      <disallow pkg="org.apache.tomcat.util.scan"/>
+      <allow pkg="com.alx.enterprise.logging"/>
+      <allow pkg="com.alx.enterprise.web.jni"/>
+      <allow pkg="com.alx.enterprise.web.util"/>
+      <disallow pkg="com.alx.enterprise.web.util.scan"/>
       <subpackage name="descriptor">
-        <allow pkg="org.apache.tomcat.util.scan"/>
-        <allow pkg="org.apache.tomcat" exact-match="true"/>
+        <allow pkg="com.alx.enterprise.web.util.scan"/>
+        <allow pkg="com.alx.enterprise.web" exact-match="true"/>
       </subpackage>
       <subpackage name="scan">
-        <allow pkg="org.apache.tomcat" exact-match="true"/>
+        <allow pkg="com.alx.enterprise.web" exact-match="true"/>
       </subpackage>
     </subpackage>
     <subpackage name="websocket">
       <allow pkg="jakarta.websocket"/>
-      <allow pkg="org.apache.juli"/>
-      <allow pkg="org.apache.tomcat"/>
-      <allow pkg="org.apache.tomcat.util"/>
+      <allow pkg="com.alx.enterprise.logging"/>
+      <allow pkg="com.alx.enterprise.web"/>
+      <allow pkg="com.alx.enterprise.web.util"/>
       <!-- Ideally want to remove this -->
-      <allow pkg="org.apache.tomcat.websocket.pojo"/>
+      <allow pkg="com.alx.enterprise.web.websocket.pojo"/>
       <disallow pkg="jakarta.servlet"/>
       <subpackage name="pojo">
-        <allow pkg="org.apache.tomcat.websocket"/>
+        <allow pkg="com.alx.enterprise.web.websocket"/>
       </subpackage>
       <subpackage name="server">
         <allow pkg="jakarta.servlet"/>
-        <allow pkg="org.apache.coyote.http11.upgrade"/>
-        <allow pkg="org.apache.tomcat.websocket"/>
+        <allow pkg="com.alx.enterprise.web.crane.http11.upgrade"/>
+        <allow pkg="com.alx.enterprise.web.websocket"/>
       </subpackage>
     </subpackage>
   </subpackage>

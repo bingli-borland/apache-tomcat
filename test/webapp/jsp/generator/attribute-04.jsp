@@ -27,7 +27,7 @@
   <jsp:body>
     <jsp:useBean
         id="bean1"
-        type="org.apache.jasper.runtime.TesterBean.Inner"
+        type="com.alx.enterprise.web.jasper.runtime.TesterBean.Inner"
         beanName="bean1"
         />
   </jsp:body>
@@ -39,7 +39,7 @@
     <jsp:include page="/index.html"/>
   </jsp:body>
 </bugs:TesterDynamicTag>
-<jsp:useBean id="bean2" class="org.apache.jasper.runtime.TesterBean" />
+<jsp:useBean id="bean2" class="com.alx.enterprise.web.jasper.runtime.TesterBean" />
 <bugs:TesterDynamicTag bugs:x="foo">
   <jsp:attribute name="attribute04">
   </jsp:attribute>

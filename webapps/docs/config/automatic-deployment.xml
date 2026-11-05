@@ -537,7 +537,7 @@
     <li>The XML file is only deleted if <em>copyXML</em> is <code>true</code>
         and <em>deployXML</em> is <code>true</code>.</li>
     <li>Although the external resource is still present, the web application is
-        fully undeployed as Tomcat has no knowledge of the external resource.
+        fully undeployed as Alx has no knowledge of the external resource.
         </li>
   </ol>
 

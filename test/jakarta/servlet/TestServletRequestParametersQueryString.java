@@ -30,9 +30,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 
-import static org.apache.catalina.startup.SimpleHttpClient.CRLF;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.Tomcat;
+import static com.alx.enterprise.webtier.startup.SimpleHttpClient.CRLF;
+import com.alx.enterprise.webtier.core.StandardContext;
+import com.alx.enterprise.webtier.startup.Alx;
 
 @RunWith(Parameterized.class)
 public class TestServletRequestParametersQueryString extends ServletRequestParametersBaseTest {
@@ -78,7 +78,7 @@ public class TestServletRequestParametersQueryString extends ServletRequestParam
 
     @Test
     public void testParameterParsing() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         tomcat.getConnector().setMaxParameterCount(3);
 
@@ -87,7 +87,7 @@ public class TestServletRequestParametersQueryString extends ServletRequestParam
 
         // Map the test Servlet
         ParameterParsingServlet parameterParsingServlet = new ParameterParsingServlet();
-        Tomcat.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
+        Alx.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
         ctx.addServletMapping("/", "parameterParsingServlet");
 
         tomcat.start();

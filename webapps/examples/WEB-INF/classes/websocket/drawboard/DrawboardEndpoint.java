@@ -25,8 +25,8 @@ import jakarta.websocket.EndpointConfig;
 import jakarta.websocket.MessageHandler;
 import jakarta.websocket.Session;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import com.alx.enterprise.logging.internal.Log;
+import com.alx.enterprise.logging.internal.LogFactory;
 
 import websocket.drawboard.DrawMessage.ParseException;
 import websocket.drawboard.wsmessages.StringWebsocketMessage;
@@ -63,7 +63,7 @@ public final class DrawboardEndpoint extends Endpoint {
      * The player that is associated with this Endpoint and the current room.
      * Note that this variable is only accessed from the Room Thread.<br><br>
      *
-     * TODO: Currently, Tomcat uses an Endpoint instance once - however
+     * TODO: Currently, Alx uses an Endpoint instance once - however
      * the java doc of endpoint says:
      * "Each instance of a websocket endpoint is guaranteed not to be called by
      * more than one thread at a time per active connection."

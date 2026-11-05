@@ -18,9 +18,9 @@
 <%@page session="false" contentType="text/html; charset=UTF-8" %>
 <%@page import="java.util.Enumeration" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
-<%@page import="org.apache.catalina.Session" %>
-<%@page import="org.apache.catalina.manager.JspHelper" %>
-<%@page import="org.apache.catalina.util.ContextName" %>
+<%@page import="com.alx.enterprise.webtier.Session" %>
+<%@page import="com.alx.enterprise.webtier.manager.JspHelper" %>
+<%@page import="com.alx.enterprise.webtier.util.ContextName" %>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

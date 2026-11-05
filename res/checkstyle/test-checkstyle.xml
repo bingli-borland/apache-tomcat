@@ -61,7 +61,7 @@
     <!-- Imports -->
     <module name="AvoidStarImport"/>
     <module name="AvoidStaticImport">
-        <property name="excludes" value="org.apache.catalina.startup.SimpleHttpClient.CRLF"/>
+        <property name="excludes" value="com.alx.enterprise.webtier.startup.SimpleHttpClient.CRLF"/>
         <property name="excludes" value="org.hamcrest.MatcherAssert.*"/>
         <property name="excludes" value="org.hamcrest.core.IsInstanceOf.*"/>
     </module>

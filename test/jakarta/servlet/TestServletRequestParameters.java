@@ -22,17 +22,17 @@ import java.nio.charset.StandardCharsets;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.apache.catalina.startup.SimpleHttpClient.CRLF;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.SimpleHttpClient;
-import org.apache.catalina.startup.Tomcat;
+import static com.alx.enterprise.webtier.startup.SimpleHttpClient.CRLF;
+import com.alx.enterprise.webtier.core.StandardContext;
+import com.alx.enterprise.webtier.startup.SimpleHttpClient;
+import com.alx.enterprise.webtier.startup.Alx;
 
 public class TestServletRequestParameters extends ServletRequestParametersBaseTest {
 
     @Test
     public void testClientDisconnect() throws Exception {
 
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         tomcat.getConnector().setMaxPostSize(20);
         Assert.assertTrue(tomcat.getConnector().setProperty("connectionTimeout", "1000"));
@@ -42,7 +42,7 @@ public class TestServletRequestParameters extends ServletRequestParametersBaseTe
 
         // Map the test Servlet
         ParameterParsingServlet parameterParsingServlet = new ParameterParsingServlet();
-        Tomcat.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
+        Alx.addServlet(ctx, "parameterParsingServlet", parameterParsingServlet);
         ctx.addServletMapping("/", "parameterParsingServlet");
 
         tomcat.start();

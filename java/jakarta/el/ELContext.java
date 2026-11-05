@@ -378,7 +378,7 @@ public abstract class ELContext {
 
 
     /*
-     * Copied from org.apache.el.lang.ELSupport - keep in sync
+     * Copied from com.alx.enterprise.el.lang.ELSupport - keep in sync
      */
     static boolean isFunctionalInterface(Class<?> type) {
 
@@ -408,7 +408,7 @@ public abstract class ELContext {
 
 
     /*
-     * Copied from org.apache.el.lang.ELSupport - keep in sync
+     * Copied from com.alx.enterprise.el.lang.ELSupport - keep in sync
      */
     private static boolean overridesObjectMethod(Method method) {
         // There are three methods that can be overridden

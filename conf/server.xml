@@ -20,18 +20,18 @@
      Documentation at /docs/config/server.html
  -->
 <Server port="8005" shutdown="SHUTDOWN">
-  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="com.alx.enterprise.webtier.startup.VersionLoggerListener" />
   <!-- Security listener. Documentation at /docs/config/listeners.html
-  <Listener className="org.apache.catalina.security.SecurityListener" />
+  <Listener className="com.alx.enterprise.webtier.security.SecurityListener" />
   -->
-  <!-- OpenSSL support using Tomcat Native -->
-  <Listener className="org.apache.catalina.core.AprLifecycleListener" />
+  <!-- OpenSSL support using Alx Native -->
+  <Listener className="com.alx.enterprise.webtier.core.AprLifecycleListener" />
   <!-- OpenSSL support using FFM API from Java 22 -->
-  <!-- <Listener className="org.apache.catalina.core.OpenSSLLifecycleListener" /> -->
+  <!-- <Listener className="com.alx.enterprise.webtier.core.OpenSSLLifecycleListener" /> -->
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
-  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
-  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
-  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+  <Listener className="com.alx.enterprise.webtier.core.JreMemoryLeakPreventionListener" />
+  <Listener className="com.alx.enterprise.webtier.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="com.alx.enterprise.webtier.core.ThreadLocalLeakPreventionListener" />
 
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html
@@ -41,9 +41,9 @@
          UserDatabaseRealm to authenticate users
     -->
     <Resource name="UserDatabase" auth="Container"
-              type="org.apache.catalina.UserDatabase"
+              type="com.alx.enterprise.webtier.UserDatabase"
               description="User database that can be updated and saved"
-              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              factory="com.alx.enterprise.webtier.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
   </GlobalNamingResources>
 
@@ -85,9 +85,9 @@
          the SSLImplementation selected. JSSE style configuration is used below.
     -->
     <!--
-    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+    <Connector port="8443" protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
                maxThreads="150" SSLEnabled="true">
-        <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+        <UpgradeProtocol className="com.alx.enterprise.web.crane.http2.Http2Protocol" />
         <SSLHostConfig>
             <Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
                          certificateKeystorePassword="changeit" type="RSA" />
@@ -104,7 +104,7 @@
     -->
 
     <!-- An Engine represents the entry point (within Catalina) that processes
-         every request.  The Engine implementation for Tomcat stand alone
+         every request.  The Engine implementation for Alx stand alone
          analyzes the HTTP headers included with the request, and passes them
          on to the appropriate Host (virtual host).
          Documentation at /docs/config/engine.html -->
@@ -118,17 +118,17 @@
           /docs/cluster-howto.html  (simple how to)
           /docs/config/cluster.html (reference documentation) -->
       <!--
-      <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>
+      <Cluster className="com.alx.enterprise.webtier.ha.tcp.SimpleTcpCluster"/>
       -->
 
       <!-- Use the LockOutRealm to prevent attempts to guess user passwords
            via a brute-force attack -->
-      <Realm className="org.apache.catalina.realm.LockOutRealm">
+      <Realm className="com.alx.enterprise.webtier.realm.LockOutRealm">
         <!-- This Realm uses the UserDatabase configured in the global JNDI
              resources under the key "UserDatabase".  Any edits
              that are performed against this UserDatabase are immediately
              available for use by the Realm.  -->
-        <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+        <Realm className="com.alx.enterprise.webtier.realm.UserDatabaseRealm"
                resourceName="UserDatabase"/>
       </Realm>
 
@@ -138,13 +138,13 @@
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
         <!--
-        <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
+        <Valve className="com.alx.enterprise.webtier.authenticator.SingleSignOn" />
         -->
 
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
-        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+        <Valve className="com.alx.enterprise.webtier.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 

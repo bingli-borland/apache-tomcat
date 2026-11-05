@@ -22,8 +22,8 @@ import jakarta.servlet.ServletException;
 
 import org.junit.Test;
 
-import org.apache.catalina.connector.RequestFacade;
-import org.apache.catalina.filters.TesterHttpServletResponse;
+import com.alx.enterprise.webtier.connector.RequestFacade;
+import com.alx.enterprise.webtier.filters.TesterHttpServletResponse;
 
 
 /*

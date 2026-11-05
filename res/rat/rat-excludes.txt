@@ -88,12 +88,12 @@ output/dist/webapps/docs/*/search-page.js
 output/dist/webapps/docs/*/tag-search-index.js
 output/dist/webapps/docs/*/type-search-index.js
 
-output/dist/src/test/org/apache/tomcat/util/net/*.pem
-output/dist/src/test/org/apache/tomcat/util/net/index.db
-output/dist/src/test/org/apache/tomcat/util/net/jsse/*.pem
-output/dist/src/test/org/apache/tomcat/util/net/jsse/key-password
-output/dist/src/test/org/apache/tomcat/util/net/key-password
-output/dist/src/test/org/apache/tomcat/util/net/keystore-password
+output/dist/src/test/com/alx/enterprise/web/util/net/*.pem
+output/dist/src/test/com/alx/enterprise/web/util/net/index.db
+output/dist/src/test/com/alx/enterprise/web/util/net/jsse/*.pem
+output/dist/src/test/com/alx/enterprise/web/util/net/jsse/key-password
+output/dist/src/test/com/alx/enterprise/web/util/net/key-password
+output/dist/src/test/com/alx/enterprise/web/util/net/keystore-password
 output/dist/src/test/webapp/404.html
 output/dist/src/test/webapp/index.html.br
 output/dist/src/test/webapp/bug49nnn/bug49464-cp1252.txt
@@ -110,12 +110,12 @@ output/dist/src/test/webapp-fragments/WEB-INF/classes/*.txt
 output/dist/src/test/webresources/dir1/d1/d1-f1.txt
 output/dist/src/test/webresources/dir1/d2/d2-f1.txt
 output/dist/src/test/webresources/dir1/*.txt
-test/org/apache/tomcat/util/net/*.pem
-test/org/apache/tomcat/util/net/index.db
-test/org/apache/tomcat/util/net/jsse/*.pem
-test/org/apache/tomcat/util/net/jsse/key-password
-test/org/apache/tomcat/util/net/key-password
-test/org/apache/tomcat/util/net/keystore-password
+test/com/alx/enterprise/web/util/net/*.pem
+test/com/alx/enterprise/web/util/net/index.db
+test/com/alx/enterprise/web/util/net/jsse/*.pem
+test/com/alx/enterprise/web/util/net/jsse/key-password
+test/com/alx/enterprise/web/util/net/key-password
+test/com/alx/enterprise/web/util/net/keystore-password
 test/webapp/404.html
 test/webapp/index.html.br
 test/webapp/bug49nnn/bug49464-cp1252.txt

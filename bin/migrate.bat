@@ -15,7 +15,7 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem Script call Apache Tomcat Migration Tool for Jakarta EE
+rem Script call Apache Alx Migration Tool for Jakarta EE
 rem ---------------------------------------------------------------------------
 
 setlocal

@@ -87,7 +87,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static Method findMethod(ELContext context, Class<?> clazz, Object base, String methodName, Class<?>[] paramTypes,
             Object[] paramValues) {
@@ -121,7 +121,7 @@ class Util {
     }
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     @SuppressWarnings("null")
     private static <T> Wrapper<T> findWrapper(ELContext context, Class<?> clazz, List<Wrapper<T>> wrappers, String name,
@@ -298,7 +298,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private static <T> Wrapper<T> resolveAmbiguousWrapper(Set<Wrapper<T>> candidates, Class<?>[] paramTypes) {
         // Identify which parameter isn't an exact match
@@ -362,7 +362,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static boolean isAssignableFrom(Class<?> src, Class<?> target) {
         // src will always be an object
@@ -399,7 +399,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private static boolean isCoercibleFrom(ELContext context, Object src, Class<?> target) {
         /*
@@ -433,7 +433,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static Method getMethod(Class<?> type, Object base, Method m) {
         if (m == null || (Modifier.isPublic(type.getModifiers()) &&
@@ -629,7 +629,7 @@ class Util {
     }
 
     /*
-     * This class duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This class duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private record MatchResult(boolean varArgs, int exactCount, int assignableCount, int coercibleCount,
             int varArgsCount, boolean bridge) implements Comparable<MatchResult> {

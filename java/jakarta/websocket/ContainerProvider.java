@@ -30,7 +30,7 @@ public abstract class ContainerProvider {
     protected ContainerProvider() {
     }
 
-    private static final String DEFAULT_PROVIDER_CLASS_NAME = "org.apache.tomcat.websocket.WsWebSocketContainer";
+    private static final String DEFAULT_PROVIDER_CLASS_NAME = "com.alx.enterprise.web.websocket.WsWebSocketContainer";
 
     /**
      * Create a new container used to create outgoing WebSocket connections.

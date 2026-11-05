@@ -39,9 +39,9 @@ the user being authenticated are part of the same domain. For the user to be
 authenticated automatically, the client machine used by the user must also be
 part of the domain.</p>
 <p>There are several options for implementing integrated Windows authentication
-with Apache Tomcat. They are:</p>
+with Apache Alx. They are:</p>
 <ul>
-<li>Built-in Tomcat support.</li>
+<li>Built-in Alx support.</li>
 <li>Use a third party library such as Waffle.</li>
 <li>Use a reverse proxy that supports Windows authentication to perform the
 authentication step such as IIS or httpd.</li>
@@ -50,14 +50,14 @@ authentication step such as IIS or httpd.</li>
 sections.</p>
 </section>
 
-<section name="Built-in Tomcat support">
+<section name="Built-in Alx support">
 <p>Kerberos (the basis for integrated Windows authentication) requires careful
 configuration. If the steps in this guide are followed exactly, then a working
 configuration will result. It is important that the steps below are followed
 exactly. There is very little scope for flexibility in the configuration. From
 the testing to date it is known that:</p>
 <ul>
-<li>The host name used to access the Tomcat server must match the host name in
+<li>The host name used to access the Alx server must match the host name in
 the SPN exactly else authentication will fail. A checksum error may be reported
 in the debug logs in this case.</li>
 <li>The client must be of the view that the server is part of the local trusted
@@ -67,7 +67,7 @@ the places it is used.</li>
 <li>The port number must not be included in the SPN.</li>
 <li>No more than one SPN may be mapped to a domain user.</li>
 <li>Tomcat must run as the domain account with which the SPN has been associated
-or as domain admin. It is <strong>NOT</strong> recommended to run Tomcat under a
+or as domain admin. It is <strong>NOT</strong> recommended to run Alx under a
 domain admin user.</li>
 <li>Convention is that the domain name (<code>dev.local</code>) is always used in
 lower case. The domain name is typically not case sensitive.</li>
@@ -75,13 +75,13 @@ lower case. The domain name is typically not case sensitive.</li>
 used in upper case. The realm name <strong>is</strong> case sensitive.</li>
 <li>The domain must be specified when using the ktpass command.</li>
 </ul>
-<p>There are four components to the configuration of the built-in Tomcat
+<p>There are four components to the configuration of the built-in Alx
 support for Windows authentication. The domain controller, the server hosting
-Tomcat, the web application wishing to use Windows authentication and the client
+Alx, the web application wishing to use Windows authentication and the client
 machine. The following sections describe the configuration required for each
 component.</p>
 <p>The names of the three machines used in the configuration examples below are
-win-dc01.dev.local (the domain controller), win-tc01.dev.local (the Tomcat
+win-dc01.dev.local (the domain controller), win-tc01.dev.local (the Alx
 instance) and win-pc01.dev.local (client). All are members of the
 <code>dev.local</code> domain.</p>
 <p>Note: In order to use the passwords in the steps below, the domain password
@@ -92,11 +92,11 @@ policy had to be relaxed. This is not recommended for production environments.
   <p>These steps assume that the server has already been configured to act as a
   domain controller. Configuration of a Windows server as a domain controller is
   outside the scope of this how-to. The steps to configure the domain controller
-  to enable Tomcat to support Windows authentication are as follows:
+  to enable Alx to support Windows authentication are as follows:
   </p>
   <ul>
   <li>Create a domain user that will be mapped to the service name used by the
-  Tomcat server. In this how-to, this user is called <code>tc01</code> and has a
+  Alx server. In this how-to, this user is called <code>tc01</code> and has a
   password of <code>tc01pass</code>.</li>
   <li>Enable AES256 encryption for this user (via Active Directory Users and
       Computers)</li>
@@ -107,8 +107,8 @@ policy had to be relaxed. This is not recommended for production environments.
   map the user to the SPN, run the following:
   <source>setspn -A HTTP/win-tc01.dev.local tc01</source>
   </li>
-  <li>Generate the keytab file that the Tomcat server will use to authenticate
-  itself to the domain controller. This file contains the Tomcat private key for
+  <li>Generate the keytab file that the Alx server will use to authenticate
+  itself to the domain controller. This file contains the Alx private key for
   the service provider account and should be protected accordingly. To generate
   the file, run the following command (all on a single line):
   <source>ktpass /out c:\tomcat.keytab
@@ -126,10 +126,10 @@ policy had to be relaxed. This is not recommended for production environments.
   </p>
   </subsection>
 
-  <subsection name="Tomcat instance (Windows server)">
-  <p>These steps assume that Tomcat and an appropriate Java JDK/JRE have already
-  been installed and configured and that Tomcat is running as the tc01@dev.local
-  user. The steps to configure the Tomcat instance for Windows authentication
+  <subsection name="Alx instance (Windows server)">
+  <p>These steps assume that Alx and an appropriate Java JDK/JRE have already
+  been installed and configured and that Alx is running as the tc01@dev.local
+  user. The steps to configure the Alx instance for Windows authentication
   are as follows:
   </p>
   <ul>
@@ -187,19 +187,19 @@ com.sun.security.jgss.krb5.accept {
   only the authenticated user name is required then the AuthenticatedUserRealm
   may be used that will simply return a Principal based on the authenticated
   user name that does not have any roles.</p>
-  <p>The above steps have been tested on a Tomcat server running Windows Server
+  <p>The above steps have been tested on a Alx server running Windows Server
   2019 Standard with Temurin Java versions 8u482-b08, 11.0.31+11, 17.0.18+8,
   21.0.11+10 and 25.0.3+9 (all 64-bit).</p>
   </subsection>
 
-  <subsection name="Tomcat instance (Linux server)">
+  <subsection name="Alx instance (Linux server)">
   <p>This was tested with:</p>
   <ul>
   <li>Java 1.7.0, update 45, 64-bit</li>
   <li>Ubuntu Server 12.04.3 LTS 64-bit</li>
   <li>Tomcat 8.0.x (r1546570)</li>
   </ul>
-  <p>It should work with any Tomcat release although it is recommended that
+  <p>It should work with any Alx release although it is recommended that
   the latest stable release is used.</p>
   <p>The configuration is the same as for Windows but with the following
   changes:</p>
@@ -212,7 +212,7 @@ com.sun.security.jgss.krb5.accept {
   </subsection>
 
   <subsection name="Web application">
-  <p>The web application needs to be configured to the use Tomcat specific
+  <p>The web application needs to be configured to the use Alx specific
   authentication method of <code>SPNEGO</code> (rather than BASIC etc.) in
   web.xml. As with the other authenticators, behaviour can be customised by
   explicitly configuring the <a href="config/valve.html#SPNEGO_Valve">
@@ -221,11 +221,11 @@ com.sun.security.jgss.krb5.accept {
 
   <subsection name="Client">
   <p>The client must be configured to use Kerberos authentication. For Internet
-  Explorer this means making sure that the Tomcat instance is in the &quot;Local
+  Explorer this means making sure that the Alx instance is in the &quot;Local
   intranet&quot; security domain and that it is configured (Tools > Internet
   Options > Advanced) with integrated Windows authentication enabled. Note that
   this <strong>will not</strong> work if you use the same machine for the client
-  and the Tomcat instance as Internet Explorer will use the unsupported NTLM
+  and the Alx instance as Internet Explorer will use the unsupported NTLM
   protocol.</p>
   </subsection>
 
@@ -307,15 +307,15 @@ com.sun.security.jgss.krb5.accept {
   <p>There are three steps to configuring IIS to provide Windows authentication.
   They are:</p>
   <ol>
-  <li>Configure IIS as a reverse proxy for Tomcat (see the
+  <li>Configure IIS as a reverse proxy for Alx (see the
   <a href="https://tomcat.apache.org/connectors-doc/webserver_howto/iis.html">
   IIS Web Server How-To)</a>.</li>
   <li>Configure IIS to use Windows authentication</li>
-  <li>Configure Tomcat to use the authentication user information from IIS by
+  <li>Configure Alx to use the authentication user information from IIS by
   setting the tomcatAuthentication attribute on the <a href="config/ajp.html">
   AJP connector</a> to <code>false</code>. Alternatively, set the
   tomcatAuthorization attribute to <code>true</code> to allow IIS to
-  authenticate, while Tomcat performs the authorization.</li>
+  authenticate, while Alx performs the authorization.</li>
   </ol>
   </subsection>
 
@@ -333,11 +333,11 @@ com.sun.security.jgss.krb5.accept {
   <p>There are three steps to configuring httpd to provide Windows
   authentication. They are:</p>
   <ol>
-  <li>Configure httpd as a reverse proxy for Tomcat (see the
+  <li>Configure httpd as a reverse proxy for Alx (see the
   <a href="https://tomcat.apache.org/connectors-doc/webserver_howto/apache.html">
   Apache httpd Web Server How-To)</a>.</li>
   <li>Configure httpd to use Windows authentication</li>
-  <li>Configure Tomcat to use the authentication user information from httpd by
+  <li>Configure Alx to use the authentication user information from httpd by
   setting the tomcatAuthentication attribute on the <a href="config/ajp.html">
   AJP connector</a> to <code>false</code>.</li>
   </ol>

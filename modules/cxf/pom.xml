@@ -24,10 +24,10 @@
         <version>34</version>
     </parent>
 
-    <groupId>org.apache.tomcat</groupId>
+    <groupId>com.alx.enterprise.web</groupId>
     <artifactId>tomcat-cxf</artifactId>
-    <name>Apache CXF for Apache Tomcat CDI</name>
-    <description>Apache CXF packaged for Apache Tomcat CDI</description>
+    <name>Apache CXF for Apache Alx CDI</name>
+    <description>Apache CXF packaged for Apache Alx CDI</description>
     <!-- This is the Apache CXF version -->
     <version>4.1.7</version>
     <packaging>jar</packaging>
@@ -92,7 +92,7 @@
 
     <build>
         <plugins>
-            <!-- Build any extra classes for your custom Tomcat components if needed -->
+            <!-- Build any extra classes for your custom Alx components if needed -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -121,7 +121,7 @@
                             </transformers>
 				            <artifactSet>
                                 <excludes>
-                                    <!-- Already present in Tomcat or in the CDI bundle -->
+                                    <!-- Already present in Alx or in the CDI bundle -->
                                     <exclude>jakarta.activation:*</exclude>
                                     <exclude>jakarta.annotation:jakarta.annotation-api</exclude>
 									<exclude>jakarta.el:*</exclude>

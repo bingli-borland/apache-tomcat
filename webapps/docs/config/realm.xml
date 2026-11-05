@@ -49,7 +49,7 @@
   Realm associated with an Engine or a Host is automatically inherited by
   lower-level containers unless the lower level container explicitly defines its
   own Realm. If no Realm is configured for the Engine, an instance of the
-  <a href="#Null_Realm_-_org.apache.catalina.realm.NullRealm">Null Realm</a>
+  <a href="#Null_Realm_-_com.alx.enterprise.webtier.realm.NullRealm">Null Realm</a>
   will be configured for the Engine automatically.</p>
 
   <p>For more in-depth information about container managed security in web
@@ -60,9 +60,9 @@
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 </section>
 
@@ -78,7 +78,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.Realm</code> interface.</p>
+        implement the <code>com.alx.enterprise.webtier.Realm</code> interface.</p>
       </attribute>
 
     </attributes>
@@ -91,9 +91,9 @@
   </subsection>
 
 
-  <subsection name="DataSource Database Realm - org.apache.catalina.realm.DataSourceRealm">
+  <subsection name="DataSource Database Realm - com.alx.enterprise.webtier.realm.DataSourceRealm">
 
-    <p>The <strong>DataSource Database Realm</strong> connects Tomcat to
+    <p>The <strong>DataSource Database Realm</strong> connects Alx to
     a relational database, accessed through a JNDI named JDBC DataSource
     to perform lookups of usernames, passwords, and their associated
     roles.  Because the lookup is done each time that it is required,
@@ -198,7 +198,7 @@
         <p>When using X509 client certificates, this specifies the class name
         that will be used to retrieve the user name from the certificate.
         The class must implement the
-        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        <code>com.alx.enterprise.webtier.realm.X509UsernameRetriever</code>
         interface. The default is to use the certificate's SubjectDN
         as the username.</p>
       </attribute>
@@ -211,9 +211,9 @@
   </subsection>
 
 
-  <subsection name="JNDI Directory Realm - org.apache.catalina.realm.JNDIRealm">
+  <subsection name="JNDI Directory Realm - com.alx.enterprise.webtier.realm.JNDIRealm">
 
-    <p>The <strong>JNDI Directory Realm</strong> connects Tomcat to
+    <p>The <strong>JNDI Directory Realm</strong> connects Alx to
     an LDAP Directory, accessed through an appropriate JNDI driver,
     that stores usernames, passwords, and their associated
     roles. Changes to the directory are immediately reflected in the
@@ -625,7 +625,7 @@
         <p>When using X509 client certificates, this specifies the class name
         that will be used to retrieve the user name from the certificate.
         The class must implement the
-        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        <code>com.alx.enterprise.webtier.realm.X509UsernameRetriever</code>
         interface. The default is to use the certificate's SubjectDN
         as the username.</p>
       </attribute>
@@ -638,11 +638,11 @@
   </subsection>
 
 
-  <subsection name="UserDatabase Realm - org.apache.catalina.realm.UserDatabaseRealm">
+  <subsection name="UserDatabase Realm - com.alx.enterprise.webtier.realm.UserDatabaseRealm">
 
     <p>The <strong>UserDatabase Realm</strong> is a Realm implementation
     that is based on a UserDatabase resource made available through the global
-    JNDI resources configured for this Tomcat instance.</p>
+    JNDI resources configured for this Alx instance.</p>
 
     <p>The UserDatabase Realm implementation supports the following
     additional attributes:</p>
@@ -696,7 +696,7 @@
         <p>When using X509 client certificates, this specifies the class name
         that will be used to retrieve the user name from the certificate.
         The class must implement the
-        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        <code>com.alx.enterprise.webtier.realm.X509UsernameRetriever</code>
         interface. The default is to use the certificate's SubjectDN
         as the username.</p>
       </attribute>
@@ -712,7 +712,7 @@
   </subsection>
 
 
-  <subsection name="Memory Based Realm - org.apache.catalina.realm.MemoryRealm">
+  <subsection name="Memory Based Realm - com.alx.enterprise.webtier.realm.MemoryRealm">
 
     <p>The <strong>Memory Based Realm</strong> is a simple Realm implementation
     that reads user information from an XML format, and represents it as a
@@ -764,7 +764,7 @@
         <p>When using X509 client certificates, this specifies the class name
         that will be used to retrieve the user name from the certificate.
         The class must implement the
-        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        <code>com.alx.enterprise.webtier.realm.X509UsernameRetriever</code>
         interface. The default is to use the certificate's SubjectDN
         as the username.</p>
       </attribute>
@@ -798,9 +798,9 @@
   </subsection>
 
 
-  <subsection name="JAAS Realm - org.apache.catalina.realm.JAASRealm">
+  <subsection name="JAAS Realm - com.alx.enterprise.webtier.realm.JAASRealm">
 
-    <p><strong>JAASRealm</strong> is an implementation of the Tomcat
+    <p><strong>JAASRealm</strong> is an implementation of the Alx
     <code>Realm</code> interface that authenticates users through the Java
     Authentication &amp; Authorization Service (JAAS) framework which is now
     provided as part of the standard J2SE API.</p>
@@ -808,7 +808,7 @@
     <p>Using JAASRealm gives the developer the ability to combine practically
     any conceivable security realm with Tomcat's CMA.</p>
 
-    <p>JAASRealm is prototype for Tomcat of the JAAS-based J2EE authentication
+    <p>JAASRealm is prototype for Alx of the JAAS-based J2EE authentication
     framework for J2EE v1.4, based on the <a
     href="https://www.jcp.org/en/jsr/detail?id=196">JCP Specification Request
     196</a> to enhance container-managed security and promote 'pluggable'
@@ -819,7 +819,7 @@
     (see <code>javax.security.auth.spi.LoginModule</code> and
     <code>javax.security.Principal</code>), you can develop your own security
     mechanism or wrap another third-party mechanism for integration with the CMA
-    as implemented by Tomcat.</p>
+    as implemented by Alx.</p>
 
     <p>The JAAS Realm implementation supports the following additional
     attributes:</p>
@@ -884,7 +884,7 @@
         <p>Instructs JAASRealm to use the context class loader for loading the
         user-specified <code>LoginModule</code> class and associated
         <code>Principal</code> classes. The default value is <code>true</code>,
-        which is backwards-compatible with the way Tomcat 5 works. To load
+        which is backwards-compatible with the way Alx 5 works. To load
         classes using the container's classloader, specify
         <code>false</code>.</p>
       </attribute>
@@ -893,7 +893,7 @@
         <p>When using X509 client certificates, this specifies the class name
         that will be used to retrieve the user name from the certificate.
         The class must implement the
-        <code>org.apache.catalina.realm.X509UsernameRetriever</code>
+        <code>com.alx.enterprise.webtier.realm.X509UsernameRetriever</code>
         interface. The default is to use the certificate's SubjectDN
         as the username.</p>
       </attribute>
@@ -906,9 +906,9 @@
   </subsection>
 
 
-  <subsection name="Combined Realm - org.apache.catalina.realm.CombinedRealm">
+  <subsection name="Combined Realm - com.alx.enterprise.webtier.realm.CombinedRealm">
 
-    <p><strong>CombinedRealm</strong> is an implementation of the Tomcat
+    <p><strong>CombinedRealm</strong> is an implementation of the Alx
     <code>Realm</code> interface that authenticates users through one or more
     sub-Realms.</p>
 
@@ -957,9 +957,9 @@
   </subsection>
 
 
-  <subsection name="LockOut Realm - org.apache.catalina.realm.LockOutRealm">
+  <subsection name="LockOut Realm - com.alx.enterprise.webtier.realm.LockOutRealm">
 
-    <p><strong>LockOutRealm</strong> is an implementation of the Tomcat
+    <p><strong>LockOutRealm</strong> is an implementation of the Alx
     <code>Realm</code> interface that extends the CombinedRealm to provide lock
     out functionality to provide a user lock out mechanism if there are too many
     failed authentication attempts in a given period of time.</p>
@@ -1044,9 +1044,9 @@
 
   </subsection>
 
-  <subsection name="Null Realm - org.apache.catalina.realm.NullRealm">
+  <subsection name="Null Realm - com.alx.enterprise.webtier.realm.NullRealm">
 
-    <p><strong>NullRealm</strong> is a minimal implementation of the Tomcat
+    <p><strong>NullRealm</strong> is a minimal implementation of the Alx
     <code>Realm</code> interface that always returns null when an attempt is
     made to validate a user name and associated credentials. It is intended to
     be used as a default Realm implementation when no other Realm is
@@ -1068,7 +1068,7 @@
 
   </subsection>
 
-  <subsection name="Authenticated User Realm - org.apache.catalina.realm.AuthenticatedUserRealm">
+  <subsection name="Authenticated User Realm - com.alx.enterprise.webtier.realm.AuthenticatedUserRealm">
 
     <p><strong>AuthenticatedUserRealm</strong> is intended for use with
     Authenticator implementations (SSLAuthenticator, SpnegoAuthenticator) that

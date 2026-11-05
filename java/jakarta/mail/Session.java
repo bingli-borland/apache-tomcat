@@ -20,7 +20,7 @@ import java.util.Properties;
 
 /**
  * Represents a mail session configuration.
- * NOTE: This is a stub API, Apache Tomcat does not provide any implementation for this API.
+ * NOTE: This is a stub API, Apache Alx does not provide any implementation for this API.
  */
 public class Session {
     /**

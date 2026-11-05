@@ -16,16 +16,16 @@
 -include: build-defaults.bnd
 
 Bundle-Name: tomcat-embed-websocket
-Bundle-SymbolicName: org.apache.tomcat-embed-websocket
+Bundle-SymbolicName: com.alx.enterprise.web-embed-websocket
 Export-Package: \
     jakarta.websocket.*;version=${websocket.spec.version},\
-    org.apache.tomcat.websocket,\
-    org.apache.tomcat.websocket.server
+    com.alx.enterprise.web.websocket,\
+    com.alx.enterprise.web.websocket.server
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}
 
 -includepackage: \
-    org.apache.tomcat.websocket.pojo
+    com.alx.enterprise.web.websocket.pojo
 
 -includeresource.meta-inf: /META-INF/=${tomcat.output}/manifests/tomcat-websocket.jar/
 

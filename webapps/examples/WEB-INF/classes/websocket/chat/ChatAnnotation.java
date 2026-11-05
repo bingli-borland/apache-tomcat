@@ -30,8 +30,8 @@ import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
 import jakarta.websocket.server.ServerEndpoint;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import com.alx.enterprise.logging.internal.Log;
+import com.alx.enterprise.logging.internal.LogFactory;
 
 import util.HTMLFilter;
 

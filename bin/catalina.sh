@@ -37,7 +37,7 @@
 #                   Default is $CATALINA_BASE/logs/catalina.out
 #
 #   CATALINA_OUT_CMD (Optional) Command which will be executed and receive
-#                   as its stdin the stdout and stderr from the Tomcat java
+#                   as its stdin the stdout and stderr from the Alx java
 #                   process. If CATALINA_OUT_CMD is set, the value of
 #                   CATALINA_OUT will be used as a named pipe.
 #                   No default.
@@ -47,7 +47,7 @@
 #   CATALINA_OPTS   (Optional) Java runtime options used when the "start",
 #                   "run" or "debug" command is executed.
 #                   Include here and not in JAVA_OPTS all options, that should
-#                   only be used by Tomcat itself, not by the stop process,
+#                   only be used by Alx itself, not by the stop process,
 #                   the version command etc.
 #                   Examples are heap size, GC logging, JMX ports etc.
 #
@@ -65,7 +65,7 @@
 #   JAVA_OPTS       (Optional) Java runtime options used when any command
 #                   is executed.
 #                   Include here and not in CATALINA_OPTS all options, that
-#                   should be used by Tomcat and also by the stop process,
+#                   should be used by Alx and also by the stop process,
 #                   the version command etc.
 #                   Most options should go into CATALINA_OPTS.
 #
@@ -101,12 +101,12 @@
 #
 #   LOGGING_MANAGER (Optional) Override Tomcat's logging manager
 #                   Example (all one line)
-#                   LOGGING_MANAGER="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+#                   LOGGING_MANAGER="-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager"
 #
 #   UMASK           (Optional) Override Tomcat's default UMASK of 0027
 #
 #   USE_NOHUP       (Optional) If set to the string true the start command will
-#                   use nohup so that the Tomcat process will ignore any hangup
+#                   use nohup so that the Alx process will ignore any hangup
 #                   signals. Default is "false" unless running on HP-UX in which
 #                   case the default is "true"
 # -----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ if [ -z "$CATALINA_LOGGING_CONFIG" ]; then
 fi
 
 if [ -z "$LOGGING_MANAGER" ]; then
-  LOGGING_MANAGER="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+  LOGGING_MANAGER="-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager"
 fi
 
 # Set UMASK unless it has been overridden
@@ -271,8 +271,8 @@ if [ -z "$UMASK" ]; then
 fi
 umask $UMASK
 
-# Make the umask available when using the org.apache.catalina.security.SecurityListener
-JAVA_OPTS="$JAVA_OPTS -Dorg.apache.catalina.security.SecurityListener.UMASK=`umask`"
+# Make the umask available when using the com.alx.enterprise.webtier.security.SecurityListener
+JAVA_OPTS="$JAVA_OPTS -Dcom.alx.enterprise.webtier.security.SecurityListener.UMASK=`umask`"
 
 if [ -z "$USE_NOHUP" ]; then
     if $hpux; then
@@ -286,7 +286,7 @@ if [ "$USE_NOHUP" = "true" ]; then
     _NOHUP="nohup"
 fi
 
-# Add the module start-up parameters required by Tomcat
+# Add the module start-up parameters required by Alx
 JAVA_OPTS="$JAVA_OPTS --add-opens=java.base/java.lang=ALL-UNNAMED"
 JAVA_OPTS="$JAVA_OPTS --add-opens=java.base/java.lang.reflect=ALL-UNNAMED"
 JAVA_OPTS="$JAVA_OPTS --add-opens=java.base/java.io=ALL-UNNAMED"
@@ -343,7 +343,7 @@ if [ "$1" = "debug" ] ; then
       -Dcatalina.base="$CATALINA_BASE" \
       -Dcatalina.home="$CATALINA_HOME" \
       -Djava.io.tmpdir="$CATALINA_TMPDIR" \
-      org.apache.catalina.startup.Bootstrap "$@" start
+      com.alx.enterprise.webtier.startup.Bootstrap "$@" start
   fi
 
 elif [ "$1" = "run" ]; then
@@ -354,7 +354,7 @@ elif [ "$1" = "run" ]; then
     -Dcatalina.base="\"$CATALINA_BASE\"" \
     -Dcatalina.home="\"$CATALINA_HOME\"" \
     -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
-    org.apache.catalina.startup.Bootstrap "$@" start
+    com.alx.enterprise.webtier.startup.Bootstrap "$@" start
 
 elif [ "$1" = "start" ] ; then
 
@@ -366,8 +366,8 @@ elif [ "$1" = "start" ] ; then
           PID=`cat "$CATALINA_PID"`
           ps -p $PID >/dev/null 2>&1
           if [ $? -eq 0 ] ; then
-            echo "Tomcat appears to still be running with PID $PID. Start aborted."
-            echo "If the following process is not a Tomcat process, remove the PID file and try again:"
+            echo "Alx appears to still be running with PID $PID. Start aborted."
+            echo "If the following process is not a Alx process, remove the PID file and try again:"
             ps -f -p $PID
             exit 1
           else
@@ -419,14 +419,14 @@ elif [ "$1" = "start" ] ; then
     -Dcatalina.base="\"$CATALINA_BASE\"" \
     -Dcatalina.home="\"$CATALINA_HOME\"" \
     -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
-    org.apache.catalina.startup.Bootstrap "$@" start \
+    com.alx.enterprise.webtier.startup.Bootstrap "$@" start \
     >> "$CATALINA_OUT" 2>&1 "&"
 
   if [ ! -z "$CATALINA_PID" ]; then
     echo $! > "$CATALINA_PID"
   fi
 
-  echo "Tomcat started."
+  echo "Alx started."
 
 elif [ "$1" = "stop" ] ; then
 
@@ -459,7 +459,7 @@ elif [ "$1" = "stop" ] ; then
         echo "PID file is empty and has been ignored."
       fi
     else
-      echo "\$CATALINA_PID was set but the specified file does not exist. Is Tomcat running? Stop aborted."
+      echo "\$CATALINA_PID was set but the specified file does not exist. Is Alx running? Stop aborted."
       exit 1
     fi
   fi
@@ -469,7 +469,7 @@ elif [ "$1" = "stop" ] ; then
     -Dcatalina.base="\"$CATALINA_BASE\"" \
     -Dcatalina.home="\"$CATALINA_HOME\"" \
     -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
-    org.apache.catalina.startup.Bootstrap "$@" stop
+    com.alx.enterprise.webtier.startup.Bootstrap "$@" stop
 
   # stop failed. Shutdown port disabled? Try a normal kill.
   if [ $? != 0 ]; then
@@ -488,20 +488,20 @@ elif [ "$1" = "stop" ] ; then
           if [ $? != 0 ]; then
             if [ -w "$CATALINA_PID" ]; then
               cat /dev/null > "$CATALINA_PID"
-              # If Tomcat has stopped don't try and force a stop with an empty PID file
+              # If Alx has stopped don't try and force a stop with an empty PID file
               FORCE=0
             else
               echo "The PID file could not be removed or cleared."
             fi
           fi
-          echo "Tomcat stopped."
+          echo "Alx stopped."
           break
         fi
         if [ $SLEEP -gt 0 ]; then
           sleep 1
         fi
         if [ $SLEEP -eq 0 ]; then
-          echo "Tomcat did not stop in time."
+          echo "Alx did not stop in time."
           if [ $FORCE -eq 0 ]; then
             echo "PID file was not removed."
           fi
@@ -520,7 +520,7 @@ elif [ "$1" = "stop" ] ; then
     else
       if [ -f "$CATALINA_PID" ]; then
         PID=`cat "$CATALINA_PID"`
-        echo "Killing Tomcat with the PID: $PID"
+        echo "Killing Alx with the PID: $PID"
         kill -9 $PID
         while [ $KILL_SLEEP_INTERVAL -ge 0 ]; do
             kill -0 `cat "$CATALINA_PID"` >/dev/null 2>&1
@@ -533,7 +533,7 @@ elif [ "$1" = "stop" ] ; then
                         echo "The PID file could not be removed."
                     fi
                 fi
-                echo "The Tomcat process has been killed."
+                echo "The Alx process has been killed."
                 break
             fi
             if [ $KILL_SLEEP_INTERVAL -gt 0 ]; then
@@ -542,7 +542,7 @@ elif [ "$1" = "stop" ] ; then
             KILL_SLEEP_INTERVAL=`expr $KILL_SLEEP_INTERVAL - 1 `
         done
         if [ $KILL_SLEEP_INTERVAL -lt 0 ]; then
-            echo "Tomcat has not been killed completely yet. The process might be waiting on some system call or might be UNINTERRUPTIBLE."
+            echo "Alx has not been killed completely yet. The process might be waiting on some system call or might be UNINTERRUPTIBLE."
         fi
       fi
     fi
@@ -555,7 +555,7 @@ elif [ "$1" = "configtest" ] ; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
-      org.apache.catalina.startup.Bootstrap configtest
+      com.alx.enterprise.webtier.startup.Bootstrap configtest
     result=$?
     if [ $result -ne 0 ]; then
         echo "Configuration error detected!"
@@ -568,7 +568,7 @@ elif [ "$1" = "version" ] ; then
          -classpath "\"$CATALINA_HOME/bin/tomcat-juli.jar:$CATALINA_HOME/lib/*\"" \
          -Dcatalina.home="\"$CATALINA_HOME\"" \
          -Dcatalina.base="\"$CATALINA_BASE\"" \
-         org.apache.catalina.util.ServerInfo
+         com.alx.enterprise.webtier.util.ServerInfo
 
 else
 

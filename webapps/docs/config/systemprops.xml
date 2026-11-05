@@ -34,35 +34,35 @@
 
 <section name="Introduction">
   <p>The following sections list the system properties that may be set to modify
-  the default Tomcat behaviour.</p>
+  the default Alx behaviour.</p>
 </section>
 
 <section name="Property replacements">
   <properties>
-    <property name="org.apache.tomcat.util.digester. PROPERTY_SOURCE">
+    <property name="com.alx.enterprise.web.util.digester. PROPERTY_SOURCE">
       <p>Set this to a comma separated list of fully qualified name of classes
          that implement
-         <code>org.apache.tomcat.util.IntrospectionUtils.PropertySource</code>.
+         <code>com.alx.enterprise.web.util.IntrospectionUtils.PropertySource</code>.
          Required to have a public constructor with no arguments.</p>
       <p>Use this to add a property source, that will be invoked when
          <code>${parameter:-default-value}</code> denoted parameters (with
-         optional default values) are found in the XML files that Tomcat
+         optional default values) are found in the XML files that Alx
          parses.</p>
       <p>Property replacement from the specified property source on the JVM
          system properties can also be done using the
          <code>REPLACE_SYSTEM_PROPERTIES</code> system property.</p>
-      <p><code>org.apache.tomcat.util.digester.ServiceBindingPropertySource</code>
+      <p><code>com.alx.enterprise.web.util.digester.ServiceBindingPropertySource</code>
         can be used to replace parameters from any Kubernetes service bindings
         that follows the <a href="https://servicebinding.io/">servicebinding.io</a> spec</p>
-      <p><code>org.apache.tomcat.util.digester.EnvironmentPropertySource</code>
+      <p><code>com.alx.enterprise.web.util.digester.EnvironmentPropertySource</code>
          can be used to replace parameters from the process' environment
          variables, e.g. injected ConfigMaps or Secret objects in container
          based systems like OpenShift or Kubernetes.</p>
-      <p><code>org.apache.tomcat.util.digester.SystemPropertySource</code>
+      <p><code>com.alx.enterprise.web.util.digester.SystemPropertySource</code>
          does replacement with system properties. It is always enabled,
          but can also be specified as part of the property value.</p>
     </property>
-    <property name="org.apache.tomcat.util.digester. REPLACE_SYSTEM_PROPERTIES">
+    <property name="com.alx.enterprise.web.util.digester. REPLACE_SYSTEM_PROPERTIES">
       <p>Set this boolean system property to <code>true</code> to cause
          property replacement from the digester property source on the JVM
          system properties.</p>
@@ -74,19 +74,19 @@
 <section name="Expression Language">
   <properties>
 
-    <property name="org.apache.el.BeanELResolver. CACHE_SIZE">
+    <property name="com.alx.enterprise.el.BeanELResolver. CACHE_SIZE">
       <p>The number of jakarta.el.BeanELResolver.BeanProperties objects that will
       be cached by the EL Parser.</p>
       <p>If not specified, the default of <code>1000</code> will be used.</p>
     </property>
 
-    <property name="org.apache.el.ExpressionBuilder. CACHE_SIZE">
+    <property name="com.alx.enterprise.el.ExpressionBuilder. CACHE_SIZE">
       <p>The number of parsed EL expressions that will be cached by the EL
       Parser.</p>
       <p>If not specified, the default of <code>5000</code> will be used.</p>
     </property>
 
-    <property name="org.apache.el.parser. COERCE_TO_ZERO">
+    <property name="com.alx.enterprise.el.parser. COERCE_TO_ZERO">
       <p>If <code>true</code>, when coercing <code>null</code>s to objects of
       type Number, Character or Boolean the result will be <code>0</code> for
       Number and Character types and <code>false</code> for Boolean as required
@@ -97,7 +97,7 @@
       used.</p>
     </property>
 
-    <property name="org.apache.el.parser. SKIP_IDENTIFIER_CHECK">
+    <property name="com.alx.enterprise.el.parser. SKIP_IDENTIFIER_CHECK">
       <p>If <code>true</code>, when parsing expressions, identifiers will not be
       checked to ensure that they conform to the Java Language Specification for
       Java identifiers.</p>
@@ -112,7 +112,7 @@
 
   <properties>
 
-    <property name="org.apache.catalina. STRICT_SERVLET_COMPLIANCE">
+    <property name="com.alx.enterprise.webtier. STRICT_SERVLET_COMPLIANCE">
       <p>The default value of this system property is <code>false</code>.</p>
       <p>If this is <code>true</code> the default values will be changed
       to <code>true</code> instead of <code>false</code> for:</p>
@@ -149,27 +149,27 @@
 
   <properties>
 
-    <property name="org.apache.juli.formatter">
+    <property name="com.alx.enterprise.logging.formatter">
       <p>If no logging configuration file is specified and no logging configuration class is specified
          using the <code>java.util.logging.config.class</code> and <code>java.util.logging.config.file</code>
-         properties the default logging framework <code>org.apache.juli</code> will use the default
+         properties the default logging framework <code>com.alx.enterprise.logging</code> will use the default
          <code>java.util.logging.SimpleFormatter</code> for all console output.
          To simply override the console output formatter, one can use the described property. Example:
-         <code>-Dorg.apache.juli.formatter=org.apache.juli.OneLineFormatter</code></p>
+         <code>-Dcom.alx.enterprise.logging.formatter=com.alx.enterprise.logging.OneLineFormatter</code></p>
     </property>
 
-    <property name="org.apache.juli. AsyncMaxRecordCount">
+    <property name="com.alx.enterprise.logging. AsyncMaxRecordCount">
       <p>The maximum number of log records that the JULI AsyncFileHandler will queue in memory.
          New records are added to the queue and get asynchronously removed from the queue
          and written to the files by a single writer thread.
          When the queue is full and a new record is being logged
-         the log record will be handled based on the <code>org.apache.juli.AsyncOverflowDropType</code> setting.</p>
+         the log record will be handled based on the <code>com.alx.enterprise.logging.AsyncOverflowDropType</code> setting.</p>
       <p>The default value is <code>10000</code> records.
          This number represents the global number of records, not on a per handler basis.
       </p>
     </property>
 
-    <property name="org.apache.juli. AsyncOverflowDropType">
+    <property name="com.alx.enterprise.logging. AsyncOverflowDropType">
       <p>When the queue of log records of the JULI AsyncFileHandler is full,
          new log records are handled according to the following setting:
       </p>
@@ -183,13 +183,13 @@
       <p>The default value is <code>1</code> (drop the newest record in the queue).</p>
     </property>
 
-    <property name="org.apache.juli.logging. UserDataHelper.CONFIG">
+    <property name="com.alx.enterprise.logging.internal. UserDataHelper.CONFIG">
       <p>The type of logging to use for errors generated by invalid input data.
          The options are: <code>DEBUG_ALL</code>, <code>INFO_THEN_DEBUG</code>,
          <code>INFO_ALL</code> and <code>NONE</code>. When
          <code>INFO_THEN_DEBUG</code> is used, the period for which errors are
          logged at DEBUG rather than INFO is controlled by the system property
-         <code>org.apache.juli.logging.UserDataHelper.SUPPRESSION_TIME</code>.
+         <code>com.alx.enterprise.logging.internal.UserDataHelper.SUPPRESSION_TIME</code>.
          </p>
       <p>The default value is <code>INFO_THEN_DEBUG</code>.</p>
       <p>The errors currently logged using this system are:</p>
@@ -206,16 +206,16 @@
          system in later versions.</p>
     </property>
 
-    <property name="org.apache.juli.logging. UserDataHelper.SUPPRESSION_TIME">
+    <property name="com.alx.enterprise.logging.internal. UserDataHelper.SUPPRESSION_TIME">
       <p>When using <code>INFO_THEN_DEBUG</code> for
-         <code>org.apache.juli.logging.UserDataHelper.CONFIG</code> this system
+         <code>com.alx.enterprise.logging.internal.UserDataHelper.CONFIG</code> this system
          property controls how long messages are logged at DEBUG after a message
          has been logged at INFO. Once this period has elapsed, the next message
          will be logged at INFO followed by a new suppression period where
          messages are logged at DEBUG and so on. The value is measured
          in seconds.</p>
       <p>A value of <code>0</code> is equivalent to using <code>INFO_ALL</code>
-         for <code>org.apache.juli.logging.UserDataHelper.CONFIG</code>.</p>
+         for <code>com.alx.enterprise.logging.internal.UserDataHelper.CONFIG</code>.</p>
       <p>A negative value means an infinite suppression period.</p>
       <p>The default value is <code>86400</code> (24 hours).</p>
     </property>
@@ -232,7 +232,7 @@
          attributes of the standard
          <a href="jar-scan-filter.html">JarScanFilter</a> implementation.</p>
       <p>The coded default is empty, however the system property is set in
-         a default Tomcat installation via the
+         a default Alx installation via the
          <code>$CATALINA_BASE/conf/catalina.properties</code> file.</p>
     </property>
 
@@ -242,7 +242,7 @@
          attributes of the standard
          <a href="jar-scan-filter.html">JarScanFilter</a> implementation.</p>
       <p>The coded default is empty, however the system property is set in
-         a default Tomcat installation via the
+         a default Alx installation via the
          <code>$CATALINA_BASE/conf/catalina.properties</code> file.</p>
     </property>
 
@@ -254,18 +254,18 @@
 
   <properties>
 
-    <property name="org.apache.tomcat. websocket.DEFAULT_BUFFER_SIZE">
+    <property name="com.alx.enterprise.web. websocket.DEFAULT_BUFFER_SIZE">
       <p>The default size for buffers used in the Websockets container.</p>
       <p>The default value is <code>8192</code> which corresponds to 8 KiB.</p>
     </property>
 
-    <property name="org.apache.tomcat. websocket.DEFAULT_ORIGIN_HEADER_VALUE">
+    <property name="com.alx.enterprise.web. websocket.DEFAULT_ORIGIN_HEADER_VALUE">
       <p>Default value of the origin header that will be sent by the client
          during the upgrade handshake.</p>
       <p>The default is null so that no origin header is sent.</p>
     </property>
 
-    <property name="org.apache.tomcat. websocket.DEFAULT_PROCESS_PERIOD">
+    <property name="com.alx.enterprise.web. websocket.DEFAULT_PROCESS_PERIOD">
       <p>The number of periodic ticks between periodic processing which
          involves in particular session expiration checks.</p>
       <p>The default value is <code>10</code> which corresponds to 10
@@ -289,7 +289,7 @@
     <property name="javax.sql.DataSource.Factory">
       <p>The class name of the factory to use to create resources of type
       <code>javax.sql.DataSource</code>. If not specified the default of
-      <code>org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory</code> is used
+      <code>com.alx.enterprise.web.dbcp.dbcp2.BasicDataSourceFactory</code> is used
       which is a package renamed (to avoid conflicts) copy of
       <a href="https://commons.apache.org/dbcp">Apache Commons DBCP 2</a>.</p>
     </property>
@@ -297,13 +297,13 @@
     <property name="jakarta.mail.Session.Factory">
       <p>The class name of the factory to use to create resources of type
       <code>jakarta.mail.Session</code>. If not specified the default of
-      <code>org.apache.naming.factory.MailSessionFactory</code> is used.</p>
+      <code>com.alx.enterprise.naming.factory.MailSessionFactory</code> is used.</p>
     </property>
 
     <property name="catalina.config">
       <p>The location from which to load the catalina.properties configuration
       file. This may be an absolute URL, a relative (to the current working
-      directory) URL or an alternative file name in which case Tomcat will
+      directory) URL or an alternative file name in which case Alx will
       attempt to load the file from the default location of
       <code>$CATALINA_BASE/conf/</code>.</p>
     </property>
@@ -331,9 +331,9 @@
       <p>If not specified, the default value of <code>200</code> will be used.</p>
     </property>
 
-    <property name="org.apache.tomcat.util.buf.UriUtil. WAR_SEPARATOR">
+    <property name="com.alx.enterprise.web.util.buf.UriUtil. WAR_SEPARATOR">
       <p>The character to use to separate the WAR file and WAR content parts of
-      a WAR URL using the custom WAR scheme provided by Tomcat. This is
+      a WAR URL using the custom WAR scheme provided by Alx. This is
       equivalent to how <code>!</code> is used in JAR URLs.</p>
       <p>If not specified, the default value of <code>*</code> will be used.</p>
     </property>
@@ -343,25 +343,25 @@
       <p>If not specified, the default value of <code>128</code> will be used.</p>
     </property>
 
-    <property name="org.apache.tomcat.util. http.FastHttpDateFormat.CACHE_SIZE">
+    <property name="com.alx.enterprise.web.util. http.FastHttpDateFormat.CACHE_SIZE">
       <p>The size of the cache to use parsed and formatted date value.</p>
       <p>If not specified, the default value of <code>1000</code> will be used.</p>
     </property>
 
-    <property name="org.apache.tomcat.util.openssl.LIBRARY_NAME">
+    <property name="com.alx.enterprise.web.util.openssl.LIBRARY_NAME">
       <p>Specify the library name of OpenSSL.</p>
       <p>If not specified, the default value of <code>ssl</code> will be used,
       except on MacOS where a dylib versioned name will be used, in the form of
       <code>ssl.v</code> where v is a version number.</p>
     </property>
 
-    <property name="org.apache.tomcat.util.openssl.USE_SYSTEM_LOAD_LIBRARY">
+    <property name="com.alx.enterprise.web.util.openssl.USE_SYSTEM_LOAD_LIBRARY">
       <p>Use <code>System.loadLibrary</code> to load OpenSSL rather than
       the FFM library loading code.</p>
       <p>If not specified, the default value of <code>false</code> will be used.</p>
     </property>
 
-    <property name="org.apache.catalina.startup. EXIT_ON_INIT_FAILURE">
+    <property name="com.alx.enterprise.webtier.startup. EXIT_ON_INIT_FAILURE">
       <p>If <code>true</code>, the server will exit if an exception happens
       during the server initialization phase. To support this feature, this
       system property is used as the default for the
@@ -370,19 +370,19 @@
       used.</p>
     </property>
 
-    <property name="org.apache.catalina.startup. RealmRuleSet.MAX_NESTED_REALM_LEVELS">
+    <property name="com.alx.enterprise.webtier.startup. RealmRuleSet.MAX_NESTED_REALM_LEVELS">
       <p>The CombinedRealm allows nested Realms. This property controls the
       maximum permitted number of levels of nesting.</p>
       <p>If not specified, the default value of <code>3</code> will be used.</p>
     </property>
 
-    <property name="org.apache.catalina.startup. CredentialHandlerRuleSet.MAX_NESTED_LEVELS">
+    <property name="com.alx.enterprise.webtier.startup. CredentialHandlerRuleSet.MAX_NESTED_LEVELS">
       <p>The NestedCredentialHandler allows nested CredentialHandlers. This
       property controls the maximum permitted number of levels of nesting.</p>
       <p>If not specified, the default value of <code>3</code> will be used.</p>
     </property>
 
-    <property name="org.apache.catalina.tribes.io. BufferPool.DEFAULT_POOL_SIZE">
+    <property name="com.alx.enterprise.webtier.tribes.io. BufferPool.DEFAULT_POOL_SIZE">
       <p>The size of the buffer pool which is used by Tribes in bytes.</p>
       <p>If not specified, the default value of <code>100*1024*1024</code>
       (100 MiB) will be used.</p>

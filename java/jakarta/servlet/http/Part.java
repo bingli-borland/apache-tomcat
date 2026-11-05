@@ -88,7 +88,7 @@ public interface Part {
      * earlier time, thus preserving system resources.
      * <p>
      * Containers are only required to delete the associated storage when the Part instance is garbage collected. Apache
-     * Tomcat will delete the associated storage when the associated request has finished processing. Behaviour of other
+     * Alx will delete the associated storage when the associated request has finished processing. Behaviour of other
      * containers may be different.
      *
      * @throws IOException if an I/O occurs while attempting to delete the part

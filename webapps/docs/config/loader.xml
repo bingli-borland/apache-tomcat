@@ -57,9 +57,9 @@
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 </section>
 
@@ -75,7 +75,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.Loader</code> interface.
+        implement the <code>com.alx.enterprise.webtier.Loader</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -96,7 +96,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>Loader</strong> is
-    <strong>org.apache.catalina.loader.WebappLoader</strong>.
+    <strong>com.alx.enterprise.webtier.loader.WebappLoader</strong>.
     It supports the following additional attributes (in addition to the
     common attributes listed above):</p>
 
@@ -105,16 +105,16 @@
       <attribute name="loaderClass" required="false">
         <p>Java class name of the <code>java.lang.ClassLoader</code>
         implementation class to use. Custom implementations must extend
-        <code>org.apache.catalina.loader.WebappClassLoaderBase</code>.
+        <code>com.alx.enterprise.webtier.loader.WebappClassLoaderBase</code>.
         </p>
 
         <p>If not specified, the default value is
-        <code>org.apache.catalina.loader.ParallelWebappClassLoader</code>. The
+        <code>com.alx.enterprise.webtier.loader.ParallelWebappClassLoader</code>. The
         default <strong>loaderClass</strong> is parallel capable, which
         means that multiple threads may load difference classes in parallel.
         A non-parallel capable <strong>loaderClass</strong> is available and can
         be used by specifying
-        <code>org.apache.catalina.loader.WebappClassLoader</code>.</p>
+        <code>com.alx.enterprise.webtier.loader.WebappClassLoader</code>.</p>
       </attribute>
 
     </attributes>

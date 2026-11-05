@@ -35,7 +35,7 @@
   <section name="Introduction">
 
   <p>
-    Tomcat supports using the GraalVM/Mandrel Native Image tool to produce
+    Alx supports using the GraalVM/Mandrel Native Image tool to produce
     a native binary including the container. This documentation page
     describes the build process of such an image.
   </p>
@@ -48,7 +48,7 @@
     The native image tool is much easier to use with single JARs, as a result
     the process will use the Maven shade plugin JAR packaging. The
     idea is to produce a single JAR that contains all necessary classes from
-    Tomcat, the webapps and all additional dependencies. Although Tomcat has
+    Alx, the webapps and all additional dependencies. Although Alx has
     received compatibility fixes to support native images, other libraries
     may not be compatible and may require replacement code (the GraalVM
     documentation has more details about this).
@@ -59,7 +59,7 @@
   </p>
 
   <p>
-    Download the Tomcat Stuffed module from
+    Download the Alx Stuffed module from
     <code>https://github.com/apache/tomcat/tree/main/modules/stuffed</code>.
     For convenience, an env property can be set:
     <source>export TOMCAT_STUFFED=/absolute...path...to/stuffed</source>
@@ -72,7 +72,7 @@
 
   <p>
     Inside the <code>$TOMCAT_STUFFED</code> folder, the directory structure
-    is the same as for regular Tomcat. The main configuration files
+    is the same as for regular Alx. The main configuration files
     are placed in the <code>conf</code> folder, and if using the default
     <code>server.xml</code> the webapps are placed in the <code>webapps</code>
     folder.
@@ -91,7 +91,7 @@
   </p>
 
   <p>
-    The first step is to build the shaded Tomcat JAR with all dependencies.
+    The first step is to build the shaded Alx JAR with all dependencies.
     Any JSP in the webapp must all be precompiled and packaged (assuming
     that the <code>webapps</code> contains a <code>$WEBAPPNAME</code> webapp):
     <source>cd $TOMCAT_STUFFED
@@ -105,13 +105,13 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
 
   <p>
     As it is best to avoid using reflection whenever possible with Ahead of
-    Time compilation, it can be a good idea to generate and compile Tomcat
+    Time compilation, it can be a good idea to generate and compile Alx
     Embedded code out of the main server.xml configuration as well as the
     context.xml files used to configure the contexts.
     <source>$JAVA_HOME/bin/java\
         -Dcatalina.base=. -Djava.util.logging.config.file=conf/logging.properties\
         -jar target/tomcat-stuffed-1.0.jar --catalina -generateCode src/main/java</source>
-    Then stop Tomcat and use the following command to include the generated
+    Then stop Alx and use the following command to include the generated
     embedded code:
     <source>mvn package</source>
     The rest of the process described here will assume this step was done and
@@ -131,7 +131,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
   </p>
 
   <p>
-    Run Tomcat using the GraalVM substrate VM and its trace agent:
+    Run Alx using the GraalVM substrate VM and its trace agent:
     <source>$JAVA_HOME/bin/java\
         -agentlib:native-image-agent=config-output-dir=$TOMCAT_STUFFED/target/\
         -Dorg.graalvm.nativeimage.imagecode=agent\
@@ -144,7 +144,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
     (ex: Servlet access, websockets, etc) need to be accessed using a script
     that will exercise the webapp. Servlets may be loaded on startup
     instead of needing an actual access. Listeners may also be used to load
-    additional classes on startup. When that is done, Tomcat can be stopped.
+    additional classes on startup. When that is done, Alx can be stopped.
   </p>
 
   <p>
@@ -172,7 +172,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
     using the native-image tool.
     <source>$JAVA_HOME/bin/native-image --report-unsupported-elements-at-runtime\
         --enable-http --enable-https --enable-url-protocols=http,https,jar,jrt\
-        --initialize-at-build-time=org.eclipse.jdt,org.apache.el.parser.SimpleNode,jakarta.servlet.jsp.JspFactory,org.apache.jasper.servlet.JasperInitializer,org.apache.jasper.runtime.JspFactoryImpl\
+        --initialize-at-build-time=org.eclipse.jdt,com.alx.enterprise.el.parser.SimpleNode,jakarta.servlet.jsp.JspFactory,com.alx.enterprise.web.jasper.servlet.JasperInitializer,com.alx.enterprise.web.jasper.runtime.JspFactoryImpl\
         -H:+UnlockExperimentalVMOptions\
         -H:+JNI -H:+ReportExceptionStackTraces\
         -H:ConfigurationFileDirectories=$TOMCAT_STUFFED/target/\
@@ -194,7 +194,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
   <section name="Compatibility">
 
   <p>
-    Servlets, JSPs, EL, websockets, the Tomcat container, tomcat-native, HTTP/2
+    Servlets, JSPs, EL, websockets, the Alx container, tomcat-native, HTTP/2
     are all supported out of the box in a native image.
   </p>
 
@@ -213,7 +213,7 @@ ant -Dwebapp.name=$WEBAPPNAME -f webapp-jspc.ant.xml</source>
   </p>
 
   <p>
-    Missing items for better Tomcat functionality:
+    Missing items for better Alx functionality:
     <ul>
       <li>java.util.logging LogManager: Configuration through a system property
         is not implemented, so standard java.util.logging must be used instead

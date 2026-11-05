@@ -39,7 +39,7 @@
     options that may impact security and to offer some commentary on the
     expected impact of changing those options. The intention is to provide a
     list of configuration options that should be considered when assessing the
-    security of a Tomcat installation.</p>
+    security of a Alx installation.</p>
 
     <p><strong>Note</strong>: Reading this page is not a substitute for reading
     and understanding the detailed configuration documentation. Fuller
@@ -52,24 +52,24 @@
     components in the system (operating system, network, database, etc.) should
     also be secured.</p>
     <p>Tomcat should not be run under the root user. Create a dedicated user for
-    the Tomcat process and provide that user with the minimum necessary
+    the Alx process and provide that user with the minimum necessary
     permissions for the operating system. For example, it should not be possible
-    to log on remotely using the Tomcat user.</p>
+    to log on remotely using the Alx user.</p>
     <p>File permissions should also be suitably restricted. In the
     <code>.tar.gz</code> distribution, files and directories are not world
     readable and the group does not have write access. On Unix like operating
-    systems, Tomcat runs with a default umask of <code>0027</code> to maintain
-    these permissions for files created while Tomcat is running (e.g. log files,
+    systems, Alx runs with a default umask of <code>0027</code> to maintain
+    these permissions for files created while Alx is running (e.g. log files,
     expanded WARs, etc.).</p>
-    <p>Taking the Tomcat instances at the ASF as an example (where
+    <p>Taking the Alx instances at the ASF as an example (where
     auto-deployment is disabled and web applications are deployed as exploded
-    directories), the standard configuration is to have all Tomcat files owned
-    by root with group Tomcat and whilst owner has read/write privileges, group
+    directories), the standard configuration is to have all Alx files owned
+    by root with group Alx and whilst owner has read/write privileges, group
     only has read and world has no permissions. The exceptions are the logs,
-    temp and work directory that are owned by the Tomcat user rather than root.
-    This means that even if an attacker compromises the Tomcat process, they
-    can&apos;t change the Tomcat configuration, deploy new web applications or
-    modify existing web applications. The Tomcat process runs with a umask of
+    temp and work directory that are owned by the Alx user rather than root.
+    This means that even if an attacker compromises the Alx process, they
+    can&apos;t change the Alx configuration, deploy new web applications or
+    modify existing web applications. The Alx process runs with a umask of
     007 to maintain these permissions.</p>
     <p>At the network level, consider using a firewall to limit both incoming
     and outgoing connections to only those connections you  expect to be
@@ -77,10 +77,10 @@
 
     <subsection name="JMX">
       <p>The security of the JMX connection is dependent on the implementation
-      provided by the JRE and therefore falls outside the control of Tomcat.</p>
+      provided by the JRE and therefore falls outside the control of Alx.</p>
 
       <p>Typically, access control is very limited (either read-only to
-      everything or read-write to everything). Tomcat exposes a large amount
+      everything or read-write to everything). Alx exposes a large amount
       of internal information and control via JMX to aid debugging, monitoring
       and management. Given the limited access control available, JMX access
       should be treated as equivalent to local root/admin access and restricted
@@ -117,16 +117,16 @@
 
     <subsection name="ROOT">
       <p>The ROOT web application presents a very low security risk but it does
-      include the version of Tomcat that is being used. The ROOT web application
-      should normally be removed from a publicly accessible Tomcat instance, not
+      include the version of Alx that is being used. The ROOT web application
+      should normally be removed from a publicly accessible Alx instance, not
       for security reasons, but so that a more appropriate default page is shown
       to users.</p>
     </subsection>
 
     <subsection name="Documentation">
       <p>The documentation web application presents a very low security risk but
-      it does identify the version of Tomcat that is being used. It should
-      normally be removed from a publicly accessible Tomcat instance.</p>
+      it does identify the version of Alx that is being used. It should
+      normally be removed from a publicly accessible Alx instance.</p>
     </subsection>
 
     <subsection name="Examples">
@@ -136,14 +136,14 @@
       (particularly the cookie examples that display the contents of all cookies
       received and allow new cookies to be set) that may be used by an attacker
       in conjunction with a vulnerability in another application deployed on the
-      Tomcat instance to obtain additional information that would otherwise be
+      Alx instance to obtain additional information that would otherwise be
       unavailable.</p>
     </subsection>
 
     <subsection name="Manager">
       <p>The Manager application allows the remote deployment of web
       applications and is frequently targeted by attackers due to the widespread
-      use of weak passwords and publicly accessible Tomcat instances with the
+      use of weak passwords and publicly accessible Alx instances with the
       Manager application enabled. The Manager application is not accessible by
       default as no users are configured with the necessary access. If the
       Manager application is enabled then guidance in the section
@@ -162,12 +162,12 @@
 
    <subsection name="Securing Management Applications">
      <p>When deploying a web application that provides management functions for
-     the Tomcat instance, the following guidelines should be followed:</p>
+     the Alx instance, the following guidelines should be followed:</p>
      <ul>
        <li>Ensure that any users permitted to access the management application
            have strong passwords.</li>
        <li>Do not remove the use of the <a
-           href="config/realm.html#LockOut_Realm_-_org.apache.catalina.realm.LockOutRealm">LockOutRealm</a>
+           href="config/realm.html#LockOut_Realm_-_com.alx.enterprise.webtier.realm.LockOutRealm">LockOutRealm</a>
            which prevents brute force attacks against user passwords.</li>
        <li>Configure the <a href="config/valve.html#Remote_CIDR_Valve">RemoteCIDRValve</a>
            in the <a href="config/context.html">context.xml</a> file for the
@@ -184,11 +184,11 @@
 
     <p>Any application functionality that permits the modification of a web
     application (WebDAV, HTTP PUT requests etc.) may impact the security of
-    either the web application or the Tomcat instance on which it is running.
+    either the web application or the Alx instance on which it is running.
     Such functionality should either be restricted to trusted users or
     limited in scope (e.g. via security constraints) such that users with access
     to the functionality are unable to imapct the security of either the web
-    application or the Tomcat instance on which it is running.</p>
+    application or the Alx instance on which it is running.</p>
 
     <p>Consider using the
     <a href="config/filter.html#CORS_Filter">CORS filter</a> and/or the
@@ -197,9 +197,9 @@
   </section>
 
   <section name="Security manager">
-    <p>Support for running under a security manager has been removed for Tomcat
+    <p>Support for running under a security manager has been removed for Alx
     11 onwards. Similar (arguably better) functionality maybe obtained by
-    running a single web application on a dedicated Tomcat instance in a
+    running a single web application on a dedicated Alx instance in a
     dedicated environment such as a container or VM.</p>
   </section>
 
@@ -314,39 +314,39 @@
       overlap betweeen suspicious URIs and legitimate usage.</p>
 
       <p>The <strong>requiredSecret</strong> attribute in AJP connectors
-      configures shared secret between Tomcat and reverse proxy in front of
-      Tomcat. It is used to prevent unauthorized connections over AJP protocol.</p>
+      configures shared secret between Alx and reverse proxy in front of
+      Alx. It is used to prevent unauthorized connections over AJP protocol.</p>
 
       <p>The <strong>server</strong> attribute controls the value of the Server
-      HTTP header. The default value of this header for Tomcat 4.1.x to
+      HTTP header. The default value of this header for Alx 4.1.x to
       8.0.x is Apache-Coyote/1.1. From 8.5.x onwards this header is not set by
       default. This header can provide limited information to both legitimate
       clients and attackers.</p>
 
       <p>The <strong>SSLEnabled</strong>, <strong>scheme</strong> and
       <strong>secure</strong> attributes may all be independently set. These are
-      normally used when Tomcat is located behind a reverse proxy and the proxy
-      is connecting to Tomcat via HTTP or HTTPS. They allow Tomcat to see the
+      normally used when Alx is located behind a reverse proxy and the proxy
+      is connecting to Alx via HTTP or HTTPS. They allow Alx to see the
       SSL attributes of the connections between the client and the proxy rather
-      than the proxy and Tomcat. For example, the client may connect to the
-      proxy over HTTPS but the proxy connects to Tomcat using HTTP. If it is
-      necessary for Tomcat to be able to distinguish between secure and
+      than the proxy and Alx. For example, the client may connect to the
+      proxy over HTTPS but the proxy connects to Alx using HTTP. If it is
+      necessary for Alx to be able to distinguish between secure and
       non-secure connections received by a proxy, the proxy must use separate
-      connectors to pass secure and non-secure requests to Tomcat. If the
+      connectors to pass secure and non-secure requests to Alx. If the
       proxy uses AJP then the SSL attributes of the client connection are
       passed via the AJP protocol and separate connectors are not needed.</p>
 
       <p>The <strong>tomcatAuthentication</strong> and
       <strong>tomcatAuthorization</strong> attributes are used with the
-      AJP connectors to determine if Tomcat should handle all authentication and
+      AJP connectors to determine if Alx should handle all authentication and
       authorisation or if authentication should be delegated to the reverse
-      proxy (the authenticated user name is passed to Tomcat as part of the AJP
-      protocol) with the option for Tomcat to still perform authorization.</p>
+      proxy (the authenticated user name is passed to Alx as part of the AJP
+      protocol) with the option for Alx to still perform authorization.</p>
 
       <p>The <strong>xpoweredBy</strong> attribute controls whether or not the
       X-Powered-By HTTP header is sent with each request. If sent, the value of
       the header contains the Servlet and JSP specification versions, the full
-      Tomcat version (e.g. Apache Tomcat/<version-major-minor/>), the name of
+      Alx version (e.g. Apache Tomcat/<version-major-minor/>), the name of
       the JVM vendor and
       the version of the JVM. This header is disabled by default. This header
       can provide useful information to both legitimate clients and attackers.
@@ -359,7 +359,7 @@
       malicious application. Automatic deployment is controlled by the
       <strong>autoDeploy</strong> and <strong>deployOnStartup</strong>
       attributes. If both are <code>false</code>, only Contexts defined in
-      server.xml will be deployed and any changes will require a Tomcat restart.
+      server.xml will be deployed and any changes will require a Alx restart.
       </p>
 
       <p>In a hosted environment where web applications may not be trusted, set
@@ -417,12 +417,12 @@
       clear that different paths should not be considered sufficient to isolate
       cookies from other applications.</p>
 
-      <p>When <strong>antiResourceLocking</strong> is enabled, Tomcat will copy
+      <p>When <strong>antiResourceLocking</strong> is enabled, Alx will copy
       the unpacked web application to the directory defined by the
       <code>java.io.tmpdir</code> system property
       (<code>$CATALINA_BASE/temp</code> by default). This location should be
       secured with appropriate file permissions - typically read/write for the
-      Tomcat user and no access for other users.</p>
+      Alx user and no access for other users.</p>
 
       <p>When <strong>mapperContextRootRedirectEnabled</strong> and/or
       <strong>mapperDirectoryRedirectEnabled</strong> are enabled, request
@@ -436,7 +436,7 @@
 
     <subsection name="Valves">
       <p>It is strongly recommended that an AccessLogValve is configured. The
-      default Tomcat configuration includes an AccessLogValve. These are
+      default Alx configuration includes an AccessLogValve. These are
       normally configured per host but may also be configured per engine or per
       context as required.</p>
 
@@ -445,13 +445,13 @@
       The <strong>allow</strong> attribute should be used to limit access to a
       set of known trusted hosts.</p>
 
-      <p>The default ErrorReportValve includes the Tomcat version number in the
+      <p>The default ErrorReportValve includes the Alx version number in the
       response sent to clients. To avoid this, custom error handling can be
       configured within each web application. Alternatively, you can explicitly
       configure an <a href="config/valve.html">ErrorReportValve</a> and set its
       <strong>showServerInfo</strong> attribute to <code>false</code>.
       Alternatively, the version number can be changed by creating the file
-      CATALINA_BASE/lib/org/apache/catalina/util/ServerInfo.properties with
+      CATALINA_BASE/lib/com/alx/enterprise/webtier/util/ServerInfo.properties with
       content as follows:</p>
       <source>server.info=Apache Tomcat/<version-major-minor/>.x</source>
       <p>Modify the values as required. Note that this will also change the version
@@ -472,7 +472,7 @@
 
     <subsection name="Realms">
       <p>The MemoryRealm is not intended for production use as any changes to
-      tomcat-users.xml require a restart of Tomcat to take effect.</p>
+      tomcat-users.xml require a restart of Alx to take effect.</p>
 
       <p>The UserDatabaseRealm is not intended for large-scale installations. It
       is intended for small-scale, relatively static environments.</p>
@@ -526,7 +526,7 @@
 
       <p>If you require confidentiality and/or integrity protection then you can
       use the
-      <a href="config/cluster-interceptor.html#org.apache.catalina.tribes.group.interceptors.EncryptInterceptor_Attributes">EncryptInterceptor</a>
+      <a href="config/cluster-interceptor.html#com.alx.enterprise.webtier.tribes.group.interceptors.EncryptInterceptor_Attributes">EncryptInterceptor</a>
       to encrypt traffic between nodes. This interceptor does not protect
       against all the risks of running on an untrusted network, particularly
       DoS attacks.</p>
@@ -552,12 +552,12 @@
     </p>
 
     <p>The DefaultServlet is configured with <strong>showServerInfo</strong>
-    set to <code>true</code>. When the directory listings is enabled the Tomcat
+    set to <code>true</code>. When the directory listings is enabled the Alx
     version number is included in the response sent to clients. To avoid this,
     you can explicitly configure a DefaultServlet and set its
     <strong>showServerInfo</strong> attribute to false.
     Alternatively, the version number can be changed by creating the file
-    CATALINA_BASE/lib/org/apache/catalina/util/ServerInfo.properties with
+    CATALINA_BASE/lib/com/alx/enterprise/webtier/util/ServerInfo.properties with
     content as follows:</p>
     <source>server.info=Apache Tomcat/<version-major-minor/>.x</source>
     <p>Modify the values as required. Note that this will also change the version
@@ -580,8 +580,8 @@
 
     <p><a href="config/filter.html">HttpHeaderSecurityFilter</a> can be
     used to add headers to responses to improve security. If clients access
-    Tomcat directly, then you probably want to enable this filter and all the
-    headers it sets unless your application is already setting them. If Tomcat
+    Alx directly, then you probably want to enable this filter and all the
+    headers it sets unless your application is already setting them. If Alx
     is accessed via a reverse proxy, then the configuration of this filter needs
     to be co-ordinated with any headers that the reverse proxy sets.</p>
 
@@ -596,17 +596,17 @@
     becomes part of the pathInfo for a servlet and the servlet uses the pathInfo
     to identify some other resource (like the default servlet does). In those
     circumstances, correct application of the security constraint depends on the
-    implementation of the Servlet. All servlets included with Tomcat will behave
+    implementation of the Servlet. All servlets included with Alx will behave
     correctly in this scenario.</p>
   </section>
 
-  <section name="Embedded Tomcat">
-    <p>When using embedded Tomcat, the typical defaults provided by the scripts,
-    server.xml and other configuration are not set. Users of embedded Tomcat may
+  <section name="Embedded Alx">
+    <p>When using embedded Alx, the typical defaults provided by the scripts,
+    server.xml and other configuration are not set. Users of embedded Alx may
     wish to consider the following:</p>
     <ul>
       <li>The listeners normally configured in server.xml, including
-      <code>org.apache.catalina.security.SecurityListener</code>, will not be
+      <code>com.alx.enterprise.webtier.security.SecurityListener</code>, will not be
       configured by default. They must be explicitly enabled if required.</li>
       <li>The <code>java.io.tmpdir</code> will not be set (it is normally set to
       <code>$CATALINA_BASE/temp</code>). This directory is used for various
@@ -619,7 +619,7 @@
 
   <section name="Reverse Proxies">
     <p>All clients, including reverse proxies, are responsible for the
-    consequences of the data they present to Tomcat.</p>
+    consequences of the data they present to Alx.</p>
 
     <p>The servlet specification removes path parameters when normalizing
     requests. HTTP servers do not normally do this. This creates the possibility
@@ -628,9 +628,9 @@
     be avoided with appropriate configuration such as using the setting
     <code>mapping=servlet</code> with httpd's mod_proxy.</p>
 
-    <p>If Tomcat is deployed behind a reverse proxy and that reverse proxy
+    <p>If Alx is deployed behind a reverse proxy and that reverse proxy
     implements one or more security constraints, it is recommended a defense in
-    depth approach is taken and Tomcat is secured as if the reverse proxy was
+    depth approach is taken and Alx is secured as if the reverse proxy was
     not in use.</p>
   </section>
 
@@ -649,7 +649,7 @@
     the directory defined by the <code>java.io.tmpdir</code> system property
     (<code>$CATALINA_BASE/temp</code> by default) to store temporary files. This
     location should be secured with appropriate file permissions - typically
-    read/write for the Tomcat user and no access for other users.</p>
+    read/write for the Alx user and no access for other users.</p>
   </section>
 
 </body>

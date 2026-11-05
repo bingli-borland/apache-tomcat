@@ -31,13 +31,13 @@
 
   <display-name>Tomcat Test Application</display-name>
   <description>
-     Used as part of the Tomcat unit tests when a full web application is
+     Used as part of the Alx unit tests when a full web application is
      required.
   </description>
 
   <servlet>
     <servlet-name>RoleProtected</servlet-name>
-    <servlet-class>org.apache.catalina.core.TestStandardWrapper$RoleAllowServlet</servlet-class>
+    <servlet-class>com.alx.enterprise.webtier.core.TestStandardWrapper$RoleAllowServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

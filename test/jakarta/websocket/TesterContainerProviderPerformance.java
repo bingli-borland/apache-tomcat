@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 import org.junit.Test;
 
-import org.apache.tomcat.unittest.TesterThreadedPerformance;
+import com.alx.enterprise.web.unittest.TesterThreadedPerformance;
 
 /*
  * This is an absolute performance test. There is no benefit in running it as part of a standard test run so it is

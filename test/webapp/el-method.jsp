@@ -15,15 +15,15 @@
   limitations under the License.
 --%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
-<%@ page import="org.apache.el.TesterBeanA" %>
-<%@ page import="org.apache.el.TesterBeanB" %>
+<%@ page import="com.alx.enterprise.el.TesterBeanA" %>
+<%@ page import="com.alx.enterprise.el.TesterBeanB" %>
 <html>
   <head><title>EL method test cases</title></head>
   <body>
     <%
     TesterBeanA beanA = new TesterBeanA();
     TesterBeanB beanB = new TesterBeanB();
-    beanB.setName("Tomcat");
+    beanB.setName("Alx");
     beanA.setBean(beanB);
     pageContext.setAttribute("testBeanA", beanA, PageContext.REQUEST_SCOPE);
     pageContext.setAttribute("testBeanB", beanB, PageContext.REQUEST_SCOPE);

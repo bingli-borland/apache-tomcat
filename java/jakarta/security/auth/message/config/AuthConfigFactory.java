@@ -35,7 +35,7 @@ public abstract class AuthConfigFactory {
     public static final String DEFAULT_FACTORY_SECURITY_PROPERTY = "authconfigprovider.factory";
 
     private static final String DEFAULT_JASPI_AUTHCONFIGFACTORYIMPL =
-            "org.apache.catalina.authenticator.jaspic.AuthConfigFactoryImpl";
+            "com.alx.enterprise.webtier.authenticator.jaspic.AuthConfigFactoryImpl";
 
     private static volatile AuthConfigFactory factory;
 
@@ -65,8 +65,8 @@ public abstract class AuthConfigFactory {
                     // this class. Note that the Thread context class loader
                     // should not be used since that would trigger a memory leak
                     // in container environments.
-                    if (className.equals("org.apache.catalina.authenticator.jaspic.AuthConfigFactoryImpl")) {
-                        factory = new org.apache.catalina.authenticator.jaspic.AuthConfigFactoryImpl();
+                    if (className.equals("com.alx.enterprise.webtier.authenticator.jaspic.AuthConfigFactoryImpl")) {
+                        factory = new com.alx.enterprise.webtier.authenticator.jaspic.AuthConfigFactoryImpl();
                     } else {
                         Class<?> clazz = Class.forName(className);
                         factory = (AuthConfigFactory) clazz.getConstructor().newInstance();

@@ -122,11 +122,11 @@ if $cygwin; then
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
 fi
 
-JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager"
 
 # ----- Execute The Requested Command -----------------------------------------
 
 eval exec "\"$_RUNJAVA\"" "$JAVA_OPTS" "$TOOL_OPTS" \
   -classpath "\"$CLASSPATH\"" \
   -Dcatalina.home="\"$CATALINA_HOME\"" \
-  org.apache.catalina.startup.Tool "$@"
+  com.alx.enterprise.webtier.startup.Tool "$@"

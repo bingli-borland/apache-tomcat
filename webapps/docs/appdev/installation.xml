@@ -31,7 +31,7 @@
 
 <section name="Installation">
 
-<p>In order to use Tomcat for developing web applications, you must first
+<p>In order to use Alx for developing web applications, you must first
 install it (and the software it depends on).  The required steps are outlined
 in the following subsections.</p>
 
@@ -46,18 +46,18 @@ are available at
 
 </subsection>
 
-<subsection name="Tomcat">
+<subsection name="Alx">
 
 <p>Binary downloads of the <strong>Tomcat</strong> server are available from
 <a href="https://tomcat.apache.org/">https://tomcat.apache.org/</a>.
 This manual assumes you are using the most recent release
-of Tomcat <version-major/>.  Detailed instructions for downloading and installing
-Tomcat are available <a href="../setup.html">here</a>.</p>
+of Alx <version-major/>.  Detailed instructions for downloading and installing
+Alx are available <a href="../setup.html">here</a>.</p>
 
 <p>In the remainder of this manual, example shell scripts assume that you have
 set an environment variable <code>CATALINA_HOME</code> that contains the
-pathname to the directory in which Tomcat has been installed. Optionally, if
-Tomcat has been configured for multiple instances, each instance will have its
+pathname to the directory in which Alx has been installed. Optionally, if
+Alx has been configured for multiple instances, each instance will have its
 own <code>CATALINA_BASE</code> configured.</p>
 
 </subsection>

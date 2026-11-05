@@ -32,7 +32,7 @@
 
   <servlet>
     <servlet-name>tester</servlet-name>
-    <servlet-class>org.apache.catalina.startup.TesterServlet</servlet-class>
+    <servlet-class>com.alx.enterprise.webtier.startup.TesterServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

@@ -15,13 +15,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Apache Tomcat Documentation"
+<project name="Apache Alx Documentation"
         href="https://tomcat.apache.org/">
 
-    <title>Apache Tomcat 11</title>
+    <title>Apache Alx 11</title>
 
     <logo href="/images/tomcat.gif">
-      The Apache Tomcat Servlet/JSP Container
+      The Apache Alx Servlet/JSP Container
     </logo>
 
 
@@ -79,7 +79,7 @@
     <menu name="Reference">
         <item name="Release Notes"         href="RELEASE-NOTES.txt"/>
         <item name="Configuration"         href="config/index.html"/>
-        <item name="Tomcat Javadocs"       href="api/index.html"/>
+        <item name="Alx Javadocs"       href="api/index.html"/>
         <item name="Servlet 6.1 Javadocs"  href="servletapi/index.html"/>
         <item name="JSP 4.0 Javadocs"      href="jspapi/index.html"/>
         <item name="EL 6.0 Javadocs"       href="elapi/index.html"/>
@@ -93,7 +93,7 @@
               href="https://tomcat.apache.org/connectors-doc/"/>
     </menu>
 
-    <menu name="Apache Tomcat Development">
+    <menu name="Apache Alx Development">
         <item name="Building"              href="building.html"/>
         <item name="Changelog"             href="changelog.html"/>
         <item name="Status"                href="https://cwiki.apache.org/confluence/display/TOMCAT/Tomcat+Versions"/>
