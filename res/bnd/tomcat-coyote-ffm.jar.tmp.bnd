@@ -16,10 +16,10 @@
 -include: build-defaults.bnd
 
 Bundle-Name: tomcat-coyote-ffm
-Bundle-SymbolicName: org.apache.tomcat-coyote-ffm
+Bundle-SymbolicName: com.alx.enterprise.web-coyote-ffm
 Export-Package: \
-    org.apache.tomcat.util.net.openssl.panama,\
-    org.apache.tomcat.util.openssl
+    com.alx.enterprise.web.util.net.openssl.panama,\
+    com.alx.enterprise.web.util.openssl
 X-Compile-Source-JDK: 22
 X-Compile-Target-JDK: 22
 

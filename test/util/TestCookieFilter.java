@@ -19,7 +19,7 @@ package util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.authenticator.Constants;
+import com.alx.enterprise.webtier.authenticator.Constants;
 
 public class TestCookieFilter {
 

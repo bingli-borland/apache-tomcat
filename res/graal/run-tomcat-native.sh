@@ -49,7 +49,7 @@ if [ "$1" == "jvm" ]; then
   cd $PRGDIR/../../output/graal
   java -Dorg.graalvm.nativeimage.imagecode=true \
     -cp ../embed/tomcat-embed-programmatic.jar:tomcat-embedded-sample.jar \
-    org.apache.catalina.startup.EmbeddedTomcat
+    com.alx.enterprise.webtier.startup.EmbeddedAlx
 elif [ "$1" == "native" ]; then
   if [ ! -f $PRGDIR/../../output/graal/tc-graal-image ]; then
     $PRGDIR/build-tomcat-native-image.sh

@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
-public class TestCompositeELResolver extends TomcatBaseTest {
+public class TestCompositeELResolver extends AlxBaseTest {
 
     @Test
     public void testBug50408() throws Exception {

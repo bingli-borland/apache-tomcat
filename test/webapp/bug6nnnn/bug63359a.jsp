@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<jsp:useBean id="bean" class="org.apache.jasper.runtime.TesterBean" />
+<jsp:useBean id="bean" class="com.alx.enterprise.web.jasper.runtime.TesterBean" />
 <html>
   <head><title>Bug 63359 test cases</title></head>
   <body>

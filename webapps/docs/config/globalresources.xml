@@ -137,7 +137,7 @@
 
     You <strong>MUST</strong> also define any other needed parameters using
     attributes on the Resource element, to configure
-    the object factory to be used (if not known to Tomcat already), and
+    the object factory to be used (if not known to Alx already), and
     the properties used to configure that object factory.</p>
 
     <p>For example, you can create a resource definition like this:</p>
@@ -185,10 +185,10 @@
         This attribute is ignored if the <code>singleton</code> attribute is
         false. If not specified, no default is defined and no close method will
         be called.</p>
-        <p>For Apache Commons DBCP 2 and Apache Tomcat JDBC connection pools
+        <p>For Apache Commons DBCP 2 and Apache Alx JDBC connection pools
         you can use <code>closeMethod="close"</code>. Note that Apache Commons
         DBCP 2 requires this to be set for a clean shutdown. When using the
-        default Tomcat connection pool (based on DBCP 2) Tomcat will set this
+        default Alx connection pool (based on DBCP 2) Alx will set this
         attribute automatically unless it is explicitly set to the empty
         string.</p>
       </attribute>

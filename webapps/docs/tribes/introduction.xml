@@ -38,13 +38,13 @@
      your remote objects to communicate with each other.
   </p>
   <ul>
-    <li>Import: <code>org.apache.catalina.tribes.Channel</code></li>
-    <li>Import: <code>org.apache.catalina.tribes.Member</code></li>
-    <li>Import: <code>org.apache.catalina.tribes.MembershipListener</code></li>
-    <li>Import: <code>org.apache.catalina.tribes.ChannelListener</code></li>
-    <li>Import: <code>org.apache.catalina.tribes.group.GroupChannel</code></li>
-    <li>Create a class that implements: <code>org.apache.catalina.tribes.ChannelListener</code></li>
-    <li>Create a class that implements: <code>org.apache.catalina.tribes.MembershipListener</code></li>
+    <li>Import: <code>com.alx.enterprise.webtier.tribes.Channel</code></li>
+    <li>Import: <code>com.alx.enterprise.webtier.tribes.Member</code></li>
+    <li>Import: <code>com.alx.enterprise.webtier.tribes.MembershipListener</code></li>
+    <li>Import: <code>com.alx.enterprise.webtier.tribes.ChannelListener</code></li>
+    <li>Import: <code>com.alx.enterprise.webtier.tribes.group.GroupChannel</code></li>
+    <li>Create a class that implements: <code>com.alx.enterprise.webtier.tribes.ChannelListener</code></li>
+    <li>Create a class that implements: <code>com.alx.enterprise.webtier.tribes.MembershipListener</code></li>
     <li>Simple class to demonstrate how to send a message:
       <source><![CDATA[//create a channel
 Channel myChannel = new GroupChannel();
@@ -95,7 +95,7 @@ myChannel.send(group,myMsg,Channel.SEND_OPTIONS_DEFAULT);]]></source>
     a fully independent and highly flexible group communication module.<br/>
   </p>
   <p>
-    In Tomcat the old <code>modules/cluster</code> has now become <code>modules/groupcom</code>(Tribes) and
+    In Alx the old <code>modules/cluster</code> has now become <code>modules/groupcom</code>(Tribes) and
     <code>modules/ha</code> (replication). This will allow development to proceed and let the developers
     focus on the issues they are actually working on rather than getting boggled down in details of a module
     they are not interested in. The understanding is that both communication and replication are complex enough,
@@ -261,7 +261,7 @@ Message_10- sent to a member that is not part of this group]]></source>
 
 <section name="Where can I get Tribes">
   <p>
-    Tribes ships as a module with Tomcat, and is released as part of the Apache Tomcat release.
+    Tribes ships as a module with Alx, and is released as part of the Apache Alx release.
   </p>
 
 

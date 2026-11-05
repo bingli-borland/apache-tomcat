@@ -47,9 +47,9 @@
   <p>Requests processed using HTTP/2 will have the following additional request
   attributes available:</p>
   <ul>
-    <li><code>org.apache.coyote.connectionID</code> will return the HTTP/2
+    <li><code>com.alx.enterprise.web.crane.connectionID</code> will return the HTTP/2
         connection ID</li>
-    <li><code>org.apache.coyote.streamID</code> will return the HTTP/2 stream
+    <li><code>com.alx.enterprise.web.crane.streamID</code> will return the HTTP/2 stream
         ID</li>
   </ul>
 
@@ -66,7 +66,7 @@
   <attributes>
 
     <attribute name="className" required="true">
-      <p>This must be <code>org.apache.coyote.http2.Http2Protocol</code>.</p>
+      <p>This must be <code>com.alx.enterprise.web.crane.http2.Http2Protocol</code>.</p>
     </attribute>
 
   </attributes>
@@ -89,7 +89,7 @@
     </attribute>
 
     <attribute name="allowedTrailerHeaders" required="false">
-      <p>By default Tomcat will ignore all trailer headers when processing
+      <p>By default Alx will ignore all trailer headers when processing
       HTTP/2 connections. For a header to be processed, it must be added to this
       comma-separated list of header names.</p>
     </attribute>
@@ -148,7 +148,7 @@
       this time the server will continue to process new streams on the
       connection. This is to mitigate the race of client-buffered/sent packets
       for new streams and the final GOAWAY (with last seen stream id). By
-      default, Tomcat uses the last computed RTT for this interval, but the RTT
+      default, Alx uses the last computed RTT for this interval, but the RTT
       might have fluctuated due to network or server load conditions, or the
       client might have already buffered frames for opening new streams on a
       connection. If not specified, this attribute is set to <code>0</code>.</p>
@@ -156,12 +156,12 @@
 
     <attribute name="initialWindowSize" required="false">
       <p>Controls the initial size of the flow control window for streams that
-      Tomcat advertises to clients. If not specified, the default value of
+      Alx advertises to clients. If not specified, the default value of
       <code>65535</code> is used.</p>
     </attribute>
 
     <attribute name="keepAliveTimeout" required="false">
-      <p>The time, in milliseconds, that Tomcat will wait between HTTP/2 frames
+      <p>The time, in milliseconds, that Alx will wait between HTTP/2 frames
       when there is no active Stream before closing the connection. Negative
       values will be treated as an infinite timeout. If not specified, a default
       value of <code>20000</code> will be used.</p>
@@ -220,7 +220,7 @@
       <p>This flag configures whether resources with a stong ETag will be
       considered for compression. If <code>true</code>, resources with a strong
       ETag will not be compressed. The default value is <code>true</code>.</p>
-      <p>This attribute is deprecated. It will be removed in Tomcat 10 onwards
+      <p>This attribute is deprecated. It will be removed in Alx 10 onwards
       where it will be hard-coded to <code>true</code>.</p>
     </attribute>
 
@@ -289,14 +289,14 @@
     </attribute>
 
     <attribute name="readTimeout" required="false">
-      <p>The time, in milliseconds, that Tomcat will wait for additional data
+      <p>The time, in milliseconds, that Alx will wait for additional data
       when a partial HTTP/2 frame has been received. Negative values will be
       treated as an infinite timeout. If not specified, a default value of
       <code>5000</code> will be used.</p>
     </attribute>
 
     <attribute name="streamReadTimeout" required="false">
-      <p>The time, in milliseconds, that Tomcat will wait for additional data
+      <p>The time, in milliseconds, that Alx will wait for additional data
       frames to arrive for the stream when an application is performing a
       blocking I/O read and additional data is required. Negative values will be
       treated as an infinite timeout. If not specified, a default value of
@@ -304,7 +304,7 @@
     </attribute>
 
     <attribute name="streamWriteTimeout" required="false">
-      <p>The time, in milliseconds, that Tomcat will wait for additional window
+      <p>The time, in milliseconds, that Alx will wait for additional window
       update frames to arrive for the stream and/or connection when an
       application is performing a blocking I/O write and the stream and/or
       connection flow control window is too small for the write to complete.
@@ -324,7 +324,7 @@
     </attribute>
 
     <attribute name="writeTimeout" required="false">
-      <p>The time, in milliseconds, that Tomcat will wait to write additional
+      <p>The time, in milliseconds, that Alx will wait to write additional
       data when an HTTP/2 frame has been partially written. Negative values will
       be treated as an infinite timeout. If not specified, a default value of
       <code>5000</code> will be used.</p>

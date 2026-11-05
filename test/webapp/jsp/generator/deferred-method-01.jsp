@@ -15,10 +15,10 @@
   limitations under the License.
 --%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
-<%@ page import="org.apache.el.TesterBeanB" %>
+<%@ page import="com.alx.enterprise.el.TesterBeanB" %>
 <%
 TesterBeanB beanB = new TesterBeanB();
-beanB.setName("Tomcat");
+beanB.setName("Alx");
 pageContext.setAttribute("testBeanB", beanB, PageContext.REQUEST_SCOPE);
 %>
 <tags:echo-deferred-method echo="#{testBeanB.sayHello('aaa')}" echo2="#{testBeanB.sayHello('bbb')}"/>

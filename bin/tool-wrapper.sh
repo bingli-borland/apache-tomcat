@@ -142,7 +142,7 @@ if [ -d "$CATALINA_HOME/endorsed" ]; then
     ENDORSED_PROP=java.endorsed.dirs
 fi
 
-JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager"
 
 # ----- Execute The Requested Command -----------------------------------------
 
@@ -150,4 +150,4 @@ eval exec "\"$_RUNJAVA\"" "$JAVA_OPTS" "$TOOL_OPTS" \
   -D$ENDORSED_PROP="\"$JAVA_ENDORSED_DIRS\"" \
   -classpath "\"$CLASSPATH\"" \
   -Dcatalina.home="\"$CATALINA_HOME\"" \
-  org.apache.catalina.startup.Tool "$@"
+  com.alx.enterprise.webtier.startup.Tool "$@"

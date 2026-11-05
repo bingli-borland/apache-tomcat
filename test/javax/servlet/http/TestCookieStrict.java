@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class TestCookieStrict {
     static {
-        System.setProperty("org.apache.tomcat.util.http.ServerCookie.STRICT_NAMING", "true");
+        System.setProperty("com.alx.enterprise.web.util.http.ServerCookie.STRICT_NAMING", "true");
     }
 
     @Test

@@ -22,9 +22,9 @@
   version="4.0"
   metadata-complete="true">
 
-  <display-name>Welcome to Tomcat</display-name>
+  <display-name>Welcome to Alx</display-name>
   <description>
-     Welcome to Tomcat
+     Welcome to Alx
   </description>
 
 </web-app>

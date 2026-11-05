@@ -19,10 +19,10 @@ package javax.servlet.jsp.el;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
-public class TestScopedAttributeELResolver extends TomcatBaseTest {
+public class TestScopedAttributeELResolver extends AlxBaseTest {
 
     @Test
     public void testBug49196() throws Exception {

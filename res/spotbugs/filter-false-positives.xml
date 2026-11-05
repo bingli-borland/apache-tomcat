@@ -87,47 +87,47 @@
   </Match>
   <Match>
     <!-- Yes the simple name is the same as the super class. Accept it. -->
-    <Class name="org.apache.catalina.Executor" />
+    <Class name="com.alx.enterprise.webtier.Executor" />
     <Bug code="Nm" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.ant.AbstractCatalinaTask"/>
+    <Class name="com.alx.enterprise.webtier.ant.AbstractCatalinaTask"/>
     <Method name="execute"/>
     <Bug code="REC"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.ant.jmx.JMXAccessorConditionBase"/>
+    <Class name="com.alx.enterprise.webtier.ant.jmx.JMXAccessorConditionBase"/>
     <Method name="accessJMXValue"/>
     <Bug code="REC"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.authenticator.AuthenticatorBase"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.AuthenticatorBase"/>
     <Field name="sessionIdGenerator"/>
     <Bug code="IS"/>
   </Match>
   <Match>
     <!-- request.getCoyoteRequest().getRemoteUser() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.authenticator.AuthenticatorBase"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.AuthenticatorBase"/>
     <Method name="checkForCachedAuthentication"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- request.getQueryString() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.authenticator.DigestAuthenticator$DigestInfo"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.DigestAuthenticator$DigestInfo"/>
     <Method name="validate"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- Method is synchronized therefore not an issue -->
-    <Class name="org.apache.catalina.authenticator.DigestAuthenticator$NonceInfo"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.DigestAuthenticator$NonceInfo"/>
     <Bug code="VO"/>
   </Match>
   <Match>
     <!-- request.getPathInfo(), request.getDecodedRequestURI() can return null
     because o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.authenticator.FormAuthenticator"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.FormAuthenticator"/>
     <Or>
       <Method name="doAuthenticate"/>
       <Method name="matchRequest"/>
@@ -136,21 +136,21 @@
   </Match>
   <Match>
     <!-- False positive. It is lifecycle state that is being protected -->
-    <Class name="org.apache.catalina.authenticator.SingleSignOn" />
+    <Class name="com.alx.enterprise.webtier.authenticator.SingleSignOn" />
     <Field name="engine" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
   </Match>
     <!-- NPE is expected if Connector definition is invalid -->
-    <Class name="org.apache.catalina.connector.Connector"/>
+    <Class name="com.alx.enterprise.webtier.connector.Connector"/>
     <Method name="startInternal"/>
     <Bug pattern="NP_NULL_ON_SOME_PATH"/>
   <Match>
     <!-- req.getRemoteUser(), req.getAuthType(), request.getQueryString() can
     return null because o.a.t.util.buf.MessageBytes.toString() can return NULL
     -->
-    <Class name="org.apache.catalina.connector.CoyoteAdapter"/>
+    <Class name="com.alx.enterprise.webtier.connector.CoyoteAdapter"/>
     <Or>
       <Method name="doConnectorAuthenticationAuthorization"/>
       <Method name="postParseRequest"/>
@@ -158,14 +158,14 @@
     <Bug code="RCN"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.connector.CoyoteReader"/>
+    <Class name="com.alx.enterprise.webtier.connector.CoyoteReader"/>
     <Method name="readLine"/>
     <Bug code="RR"/>
   </Match>
   <Match>
     <!-- request.getPathInfo(), scookie.getDomain() can return null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.connector.Request"/>
+    <Class name="com.alx.enterprise.webtier.connector.Request"/>
     <Or>
       <Method name="getRequestDispatcher"/>
       <Method name="getPathTranslated"/>
@@ -176,80 +176,80 @@
   <Match>
     <!-- the platform default encoding is a fallback when calculating the
     length of the string -->
-    <Class name="org.apache.catalina.connector.Request"/>
+    <Class name="com.alx.enterprise.webtier.connector.Request"/>
     <Method name="parseParts"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- JNI library can only be loaded once so statics are appropriate -->
-    <Class name="org.apache.catalina.core.AprLifecycleListener" />
+    <Class name="com.alx.enterprise.webtier.core.AprLifecycleListener" />
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- request.getQueryString() can return null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.core.AsyncContextImpl"/>
+    <Class name="com.alx.enterprise.webtier.core.AsyncContextImpl"/>
     <Method name="logDebug"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- Sync isn't guarding this object -->
-    <Class name="org.apache.catalina.core.ContainerBase"/>
+    <Class name="com.alx.enterprise.webtier.core.ContainerBase"/>
     <Method name="setStartStopThreads"/>
     <Bug pattern="IS2_INCONSISTENT_SYNC"/>
   </Match>
   <Match>
     <!-- Exception caught deliberately -->
-    <Class name="org.apache.catalina.core.NamingContextListener" />
+    <Class name="com.alx.enterprise.webtier.core.NamingContextListener" />
     <Method name="constructEnvEntry" />
     <Bug pattern="REC_CATCH_EXCEPTION" />
   </Match>
   <Match>
     <!-- Code uses same approach as CopyOnWriteArrayList -->
-    <Class name="org.apache.catalina.core.StandardContext" />
+    <Class name="com.alx.enterprise.webtier.core.StandardContext" />
     <Field name="constraints" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
   <Match>
     <!-- Sync is for lifecycle state, not CookieProcessor -->
-    <Class name="org.apache.catalina.core.StandardContext" />
+    <Class name="com.alx.enterprise.webtier.core.StandardContext" />
     <Field name="cookieProcessor" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- Use of new String() is deliberate -->
-    <Class name="org.apache.catalina.core.StandardContext" />
+    <Class name="com.alx.enterprise.webtier.core.StandardContext" />
     <Method name="setResponseCharacterEncoding" />
     <Bug pattern="DM_STRING_CTOR" />
   </Match>
   <Match>
     <!-- Calling sleep while holding a lock is deliberate -->
-    <Class name="org.apache.catalina.core.StandardContext" />
+    <Class name="com.alx.enterprise.webtier.core.StandardContext" />
     <Method name="stopInternal" />
     <Bug pattern="SWL_SLEEP_WITH_LOCK_HELD" />
   </Match>
   <Match>
     <!-- Have to trigger GC for leak detection to work. Clearly documented -->
-    <Class name="org.apache.catalina.core.StandardHost" />
+    <Class name="com.alx.enterprise.webtier.core.StandardHost" />
     <Method name="findReloadedContextMemoryLeaks" />
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Random will be used multiple times if required. -->
-    <Class name="org.apache.catalina.core.StandardServer"/>
+    <Class name="com.alx.enterprise.webtier.core.StandardServer"/>
     <Method name="await"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- This could be optimised but a) the code would be less clear and -->
     <!-- b) SpotBugs still reports an error with the optimised code.     -->
-    <Class name="org.apache.catalina.core.StandardServer"/>
+    <Class name="com.alx.enterprise.webtier.core.StandardServer"/>
     <Method name="startPeriodicLifecycleEvent"/>
     <Bug pattern="RpC_REPEATED_CONDITIONAL_TEST "/>
   </Match>
   <Match>
     <!-- Sync not targeting these fields -->
-    <Class name="org.apache.catalina.core.StandardWrapper" />
+    <Class name="com.alx.enterprise.webtier.core.StandardWrapper" />
     <Or>
       <Field name="multipartConfigElement" />
       <Field name="servletClass" />
@@ -260,63 +260,63 @@
   </Match>
   <Match>
     <!-- There is only a single wait condition -->
-    <Class name="org.apache.catalina.core.StandardWrapper" />
+    <Class name="com.alx.enterprise.webtier.core.StandardWrapper" />
     <Method name="deallocate" />
     <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
   </Match>
   <Match>
     <!-- Sleep is of short duration and lock is required -->
-    <Class name="org.apache.catalina.core.StandardWrapper" />
+    <Class name="com.alx.enterprise.webtier.core.StandardWrapper" />
     <Method name="unload" />
     <Bug code="SWL" />
   </Match>
   <Match>
     <!-- null return value is documented -->
-    <Class name="org.apache.catalina.core.StandardWrapper" />
+    <Class name="com.alx.enterprise.webtier.core.StandardWrapper" />
     <Method name="isSingleThreadModel" />
     <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
   </Match>
   <Match>
     <!-- The code is adding HTTP request headers, not parameters and the
          header parsing on input will have removed any CR or LF characters. -->
-    <Class name="org.apache.catalina.filters.CorsFilter" />
+    <Class name="com.alx.enterprise.webtier.filters.CorsFilter" />
     <Method name="addStandardHeaders" />
     <Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER" />
   </Match>
   <Match>
     <!-- Random will be SecureRandom by default and will be used multiple
          times. -->
-    <Class name="org.apache.catalina.filters.CsrfPreventionFilterBase"/>
+    <Class name="com.alx.enterprise.webtier.filters.CsrfPreventionFilterBase"/>
     <Method name="generateNonce"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- ParseException is ignored in loop but handled afterwards if all formats failed -->
-    <Class name="org.apache.catalina.filters.RemoteIpFilter$XForwardedRequest" />
+    <Class name="com.alx.enterprise.webtier.filters.RemoteIpFilter$XForwardedRequest" />
     <Method name="getDateHeader" />
     <Bug code="DE" />
   </Match>
   <Match>
     <!-- False positive. It is lifecycle state that is being protected -->
-    <Class name="org.apache.catalina.ha.authenticator.ClusterSingleSignOn" />
+    <Class name="com.alx.enterprise.webtier.ha.authenticator.ClusterSingleSignOn" />
     <Field name="cluster" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- shost will not be null in normal usage -->
-    <Class name="org.apache.catalina.ha.backend.CollectedInfo" />
+    <Class name="com.alx.enterprise.webtier.ha.backend.CollectedInfo" />
     <Method name="init" />
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- Ignore IOException when closing input/output streams in cleanup -->
-    <Class name="org.apache.catalina.ha.deploy.FileMessageFactory" />
+    <Class name="com.alx.enterprise.webtier.ha.deploy.FileMessageFactory" />
     <Method name="cleanup" />
     <Bug code="DE" />
   </Match>
   <Match>
     <!-- Ignore exceptions from Thread.sleep() -->
-    <Class name="org.apache.catalina.ha.session.DeltaManager" />
+    <Class name="com.alx.enterprise.webtier.ha.session.DeltaManager" />
     <Or>
       <Method name="handleGET_ALL_SESSIONS" />
       <Method name="waitForSendAllSessions" />
@@ -325,24 +325,24 @@
   </Match>
   <Match>
     <!-- Unit test confirms public no-arg constructor is not required -->
-    <Class name="org.apache.catalina.ha.session.DeltaRequest$AttributeInfo" />
+    <Class name="com.alx.enterprise.webtier.ha.session.DeltaRequest$AttributeInfo" />
     <Pattern code="SE_NO_SUITABLE_CONSTRUCTOR_FOR_EXTERNALIZATION" />
   </Match>
   <Match>
     <!-- False positive caused by additional method syncs -->
-    <Class name="org.apache.catalina.ha.session.DeltaManager" />
+    <Class name="com.alx.enterprise.webtier.ha.session.DeltaManager" />
     <Field name="receiverQueue" />
     <Pattern code="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- False positive caused by method syncs -->
-    <Class name="org.apache.catalina.ha.session.JvmRouteBinderValve" />
+    <Class name="com.alx.enterprise.webtier.ha.session.JvmRouteBinderValve" />
     <Field name="cluster" />
     <Pattern code="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- Design choice to reduce need for syncs -->
-    <Class name="org.apache.catalina.ha.tcp.ReplicationValve" />
+    <Class name="com.alx.enterprise.webtier.ha.tcp.ReplicationValve" />
     <Or>
       <Field name="nrOfCrossContextSendRequests" />
       <Field name="nrOfFilterRequests" />
@@ -353,13 +353,13 @@
   </Match>
   <Match>
     <!-- Thread never executed so empty run method not an issue -->
-    <Class name="org.apache.catalina.loader.WebappClassLoaderBase" />
+    <Class name="com.alx.enterprise.webtier.loader.WebappClassLoaderBase" />
     <Method name="clearReferences" />
     <Bug pattern="DM_USELESS_THREAD" />
   </Match>
   <Match>
     <!-- Field is only modified during Servlet load -->
-    <Class name="org.apache.catalina.manager.host.HostManagerServlet" />
+    <Class name="com.alx.enterprise.webtier.manager.host.HostManagerServlet" />
     <Or>
       <Field name="context" />
       <Field name="installedHost" />
@@ -370,14 +370,14 @@
   </Match>
   <Match>
     <!-- Catching exception is simpler than handling all the individual ones -->
-    <Class name="org.apache.catalina.manager.util.SessionUtils" />
+    <Class name="com.alx.enterprise.webtier.manager.util.SessionUtils" />
     <Method name="guessLocaleFromSession" />
     <Bug code="REC" />
   </Match>
   <Match>
-    <!-- The fields are only set in setWrapper() which Tomcat calls once during
+    <!-- The fields are only set in setWrapper() which Alx calls once during
          initialisation. All other accesses are reads. -->
-    <Class name="org.apache.catalina.manager.ManagerServlet" />
+    <Class name="com.alx.enterprise.webtier.manager.ManagerServlet" />
     <Or>
       <Field name="context" />
       <Field name="host" />
@@ -389,13 +389,13 @@
   </Match>
   <Match>
     <!-- The array contents is never mutated. -->
-    <Class name="org.apache.catalina.mapper.Mapper" />
+    <Class name="com.alx.enterprise.webtier.mapper.Mapper" />
     <Field name="hosts" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
   <Match>
     <!-- The array contents is never mutated. -->
-    <Class name="org.apache.catalina.mapper.Mapper$MappedContext" />
+    <Class name="com.alx.enterprise.webtier.mapper.Mapper$MappedContext" />
     <Field name="versions" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
@@ -403,15 +403,15 @@
     <!-- Not catching NPE would require generating an NPE and then wrapping
          it because there is no MBeanException(String) constructor. It is
          cleaner to catch the NPE. -->
-    <Class name="org.apache.catalina.mbeans.ContainerMBean" />
+    <Class name="com.alx.enterprise.webtier.mbeans.ContainerMBean" />
     <Method name="removeValve" />
     <Bug pattern="DCN_NULLPOINTER_EXCEPTION" />
   </Match>
   <Match>
     <!-- SQL construction is safe since it is from trusted config -->
     <Or>
-      <Class name="org.apache.catalina.realm.DataSourceRealm" />
-      <Class name="org.apache.catalina.realm.JDBCRealm" />
+      <Class name="com.alx.enterprise.webtier.realm.DataSourceRealm" />
+      <Class name="com.alx.enterprise.webtier.realm.JDBCRealm" />
     </Or>
     <Or>
       <Method name="credentials" />
@@ -423,18 +423,18 @@
   </Match>
   <Match>
     <!-- Use of == rather than equals() is deliberate. -->
-    <Class name="org.apache.catalina.realm.DigestCredentialHandlerBase"/>
+    <Class name="com.alx.enterprise.webtier.realm.DigestCredentialHandlerBase"/>
     <Method name="equals"/>
     <Bug pattern="ES_COMPARING_PARAMETER_STRING_WITH_EQ"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.realm.JDBCRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.JDBCRealm" />
     <Field name="containerLog" />
     <Bug code="IS" />
   </Match>
   <Match>
     <!-- Sync is protecting preparedRoles, not these fields -->
-    <Class name="org.apache.catalina.realm.JDBCRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.JDBCRealm" />
     <Or>
       <Field name="roleNameCol" />
       <Field name="userRoleTable" />
@@ -443,13 +443,13 @@
   </Match>
   <Match>
     <!-- Random will be SecureRandom and will be used multiple times. -->
-    <Class name="org.apache.catalina.realm.DigestCredentialHandlerBase"/>
+    <Class name="com.alx.enterprise.webtier.realm.DigestCredentialHandlerBase"/>
     <Method name="mutate"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Safer to catch NPE as the root cause of NPEs is not clear -->
-    <Class name="org.apache.catalina.realm.JNDIRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.JNDIRealm" />
     <Or>
       <Method name="authenticate" />
       <Method name="getPassword" />
@@ -458,7 +458,7 @@
   </Match>
   <Match>
     <!-- roles will be initialized in addAttributeValues -->
-    <Class name="org.apache.catalina.realm.JNDIRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.JNDIRealm" />
     <Or>
       <Method name="getUserByPattern" />
       <Method name="getUserBySearch" />
@@ -467,20 +467,20 @@
   </Match>
   <Match>
     <!-- Sync is protecting authenticate90, not this field -->
-    <Class name="org.apache.catalina.realm.JNDIRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.JNDIRealm" />
     <Field name="userPatternFormatArray" />
     <Bug pattern="IS2_INCONSISTENT_SYNC " />
   </Match>
   <Match>
     <!-- Class lock is not an instance lock -->
-    <Class name="org.apache.catalina.realm.MemoryRealm" />
+    <Class name="com.alx.enterprise.webtier.realm.MemoryRealm" />
     <Field name="digester"/>
     <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA"/>
   </Match>
   <Match>
     <!-- request.getRequestPathMB(), request.getQueryString() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.realm.RealmBase"/>
+    <Class name="com.alx.enterprise.webtier.realm.RealmBase"/>
     <Or>
       <Method name="findSecurityConstraints"/>
       <Method name="hasUserDataPermission"/>
@@ -490,26 +490,26 @@
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.catalina.realm.RealmBase"/>
+    <Class name="com.alx.enterprise.webtier.realm.RealmBase"/>
     <Method name="Digest"/>
     <Bug code="Dm" />
   </Match>
   <Match>
   <!-- The stream is closed in the thread  -->
-    <Class name="org.apache.catalina.servlets.CGIServlet$CGIRunner" />
+    <Class name="com.alx.enterprise.webtier.servlets.CGIServlet$CGIRunner" />
     <Method name="run" />
     <Bug pattern="OS_OPEN_STREAM" />
   </Match>
   <Match>
   <!-- The header value is safe  -->
-    <Class name="org.apache.catalina.servlets.DefaultServlet" />
+    <Class name="com.alx.enterprise.webtier.servlets.DefaultServlet" />
     <Method name="doDirectoryRedirect" />
     <Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER" />
   </Match>
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.catalina.servlets.DefaultServlet"/>
+    <Class name="com.alx.enterprise.webtier.servlets.DefaultServlet"/>
     <Or>
       <Method name="copy"/>
       <Method name="getReadme"/>
@@ -518,14 +518,14 @@
   </Match>
   <Match>
     <!-- The use of != with a String is a deliberate hack  -->
-    <Class name="org.apache.catalina.servlets.DefaultServlet" />
+    <Class name="com.alx.enterprise.webtier.servlets.DefaultServlet" />
     <Method name="serveResource" />
     <Bug pattern="ES_COMPARING_STRINGS_WITH_EQ" />
   </Match>
   <Match>
     <!-- Non-constant strings are configuration settings rather than client
          supplied -->
-    <Class name="org.apache.catalina.session.DataSourceStore" />
+    <Class name="com.alx.enterprise.webtier.session.DataSourceStore" />
     <Or>
       <Method name="clear" />
       <Method name="getSize" />
@@ -539,7 +539,7 @@
   <Match>
     <!-- Non-constant strings are configuration settings rather than client
          supplied -->
-    <Class name="org.apache.catalina.session.JDBCStore" />
+    <Class name="com.alx.enterprise.webtier.session.JDBCStore" />
     <Or>
       <Method name="clear" />
       <Method name="getSize" />
@@ -552,7 +552,7 @@
   </Match>
   <Match>
     <!-- Syncs aren't intended to protect these fields -->
-    <Class name="org.apache.catalina.session.JDBCStore" />
+    <Class name="com.alx.enterprise.webtier.session.JDBCStore" />
     <Or>
       <Field name="dataSourceName" />
       <Field name="sessionAppCol" />
@@ -562,13 +562,13 @@
   </Match>
   <Match>
     <!-- We can live with the threading issue. See code comment for details. -->
-    <Class name="org.apache.catalina.session.ManagerBase" />
+    <Class name="com.alx.enterprise.webtier.session.ManagerBase" />
     <Method name="generateSessionId" />
     <Bug code="VO" />
   </Match>
   <Match>
     <!-- These fields should not be serialized with the session -->
-    <Class name="org.apache.catalina.session.StandardSession" />
+    <Class name="com.alx.enterprise.webtier.session.StandardSession" />
     <Or>
       <Field name="listeners" />
       <Field name="notes" />
@@ -578,51 +578,51 @@
   </Match>
   <Match>
     <!-- Use of null is deliberate -->
-    <Class name="org.apache.catalina.ssi.ExpressionParseTree" />
+    <Class name="com.alx.enterprise.webtier.ssi.ExpressionParseTree" />
     <Method name="pushOpp" />
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.catalina.ssi.SSIServlet"/>
+    <Class name="com.alx.enterprise.webtier.ssi.SSIServlet"/>
     <Method name="processSSI"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.catalina.ssi.SSIServletExternalResolver"/>
+    <Class name="com.alx.enterprise.webtier.ssi.SSIServletExternalResolver"/>
     <Method name="getFileText"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Dead store is deliberate to test URL validity -->
-    <Class name="org.apache.catalina.startup.Bootstrap" />
+    <Class name="com.alx.enterprise.webtier.startup.Bootstrap" />
     <Method name="createClassLoader" />
     <Bug pattern="DLS_DEAD_LOCAL_STORE" />
   </Match>
   <Match>
     <!-- Failure at this point is fatal -->
-    <Class name="org.apache.catalina.startup.Bootstrap" />
+    <Class name="com.alx.enterprise.webtier.startup.Bootstrap" />
     <Method name="initClassLoaders" />
     <Bug pattern="DM_EXIT" />
   </Match>
   <Match>
     <!-- Genric error handling -->
-    <Class name="org.apache.catalina.startup.Catalina" />
+    <Class name="com.alx.enterprise.webtier.startup.Catalina" />
     <Method name="parseServerXml" />
     <Bug pattern="REC_CATCH_EXCEPTION" />
   </Match>
   <Match>
     <!-- Catalina isn't used when embedding -->
-    <Class name="org.apache.catalina.startup.Catalina" />
+    <Class name="com.alx.enterprise.webtier.startup.Catalina" />
     <Method name="stopServer" />
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- The stream is closed in WebXmlParser.parseWebXml -->
-    <Class name="org.apache.catalina.startup.ContextConfig" />
+    <Class name="com.alx.enterprise.webtier.startup.ContextConfig" />
     <Or>
       <Method name="getContextWebXmlSource" />
       <Method name="getWebXmlSource" />
@@ -631,25 +631,25 @@
   </Match>
   <Match>
     <!-- There is no null check (SpotBugs bug?) -->
-    <Class name="org.apache.catalina.startup.ContextConfig" />
+    <Class name="com.alx.enterprise.webtier.startup.ContextConfig" />
     <Method name="populateJavaClassCache" />
     <Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
   </Match>
   <Match>
     <!-- Method checks result and logs error later -->
-    <Class name="org.apache.catalina.startup.ExpandWar" />
+    <Class name="com.alx.enterprise.webtier.startup.ExpandWar" />
     <Method name="deleteDir" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" />
   </Match>
   <Match>
     <!-- Sleep is short, needs to keep lock -->
-    <Class name="org.apache.catalina.startup.HostConfig" />
+    <Class name="com.alx.enterprise.webtier.startup.HostConfig" />
     <Method name="checkResources" />
     <Bug code="SWL" />
   </Match>
   <Match>
     <!-- context is never null -->
-    <Class name="org.apache.catalina.startup.HostConfig" />
+    <Class name="com.alx.enterprise.webtier.startup.HostConfig" />
     <Or>
       <Method name="deployDescriptor" />
       <Method name="deployDirectory" />
@@ -659,63 +659,63 @@
   </Match>
   <Match>
     <!-- Domain resolution not an issue here -->
-    <Class name="org.apache.catalina.startup.WebappServiceLoader" />
+    <Class name="com.alx.enterprise.webtier.startup.WebappServiceLoader" />
     <Method name="load" />
     <Bug pattern="DMI_COLLECTION_OF_URLS" />
   </Match>
   <Match>
     <!-- If old -> save worked, assume save -> old will to -->
-    <Class name="org.apache.catalina.storeconfig.StoreFileMover" />
+    <Class name="com.alx.enterprise.webtier.storeconfig.StoreFileMover" />
     <Method name="move" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"/>
+    <Class name="com.alx.enterprise.webtier.tribes.group.interceptors.TcpFailureDetector"/>
     <Method name="memberAlive"/>
     <Bug code="DE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.group.ChannelCoordinator"/>
+    <Class name="com.alx.enterprise.webtier.tribes.group.ChannelCoordinator"/>
     <Field name="membershipService"/>
     <Bug pattern="IS2_INCONSISTENT_SYNC"/>
   </Match>
   <Match>
     <!-- This could be optimised but a) the code would be less clear and -->
     <!-- b) SpotBugs still reports an error with the optimised code.     -->
-    <Class name="org.apache.catalina.tribes.group.GroupChannel"/>
+    <Class name="com.alx.enterprise.webtier.tribes.group.GroupChannel"/>
     <Method name="startHeartbeat"/>
     <Bug pattern="RpC_REPEATED_CONDITIONAL_TEST "/>
   </Match>
   <Match>
     <!-- False positive. It is lifecycle state that is being protected -->
-    <Class name="org.apache.catalina.tribes.group.GroupChannel" />
+    <Class name="com.alx.enterprise.webtier.tribes.group.GroupChannel" />
     <Field name="utilityExecutor" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- Class lock is not an instance lock -->
-    <Class name="org.apache.catalina.tribes.io.BufferPool" />
+    <Class name="com.alx.enterprise.webtier.tribes.io.BufferPool" />
     <Field name="instance"/>
     <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.membership.McastServiceImpl"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.McastServiceImpl"/>
     <Method name="stop"/>
     <Bug code="DE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.membership.McastServiceImpl$ReceiverThread"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.McastServiceImpl$ReceiverThread"/>
     <Method name="run"/>
     <Bug code="DE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.membership.McastServiceImpl$RecoveryThread"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.McastServiceImpl$RecoveryThread"/>
     <Method name="run"/>
     <Bug code="NS"/>
   </Match>
   <Match>
     <!-- Sync is to protect construction of data not individual fields -->
-    <Class name="org.apache.catalina.tribes.membership.MemberImpl"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.MemberImpl"/>
     <Or>
       <Method name="getCommand"/>
       <Method name="getDomain"/>
@@ -729,13 +729,13 @@
     <Bug pattern="UG_SYNC_SET_UNSYNC_GET"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.membership.MemberImpl"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.MemberImpl"/>
     <Field name="dataPkg"/>
     <Bug pattern="IS2_INCONSISTENT_SYNC"/>
   </Match>
   <Match>
     <!-- Byte arrays contents are not mutated -->
-    <Class name="org.apache.catalina.tribes.membership.MemberImpl"/>
+    <Class name="com.alx.enterprise.webtier.tribes.membership.MemberImpl"/>
     <Or>
       <Field name="command"/>
       <Field name="domain"/>
@@ -747,19 +747,19 @@
   </Match>
   <Match>
     <!-- lock is in clone so this is safe -->
-    <Class name="org.apache.catalina.tribes.membership.Membership" />
+    <Class name="com.alx.enterprise.webtier.tribes.membership.Membership" />
     <Method name="clone" />
     <Bug pattern="ML_SYNC_ON_FIELD_TO_GUARD_CHANGING_THAT_FIELD" />
   </Match>
   <Match>
     <!-- Byte arrays contents are not mutated -->
-    <Class name="org.apache.catalina.tribes.membership.Membership" />
+    <Class name="com.alx.enterprise.webtier.tribes.membership.Membership" />
     <Field name="members"/>
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY"/>
   </Match>
   <Match>
     <!--  Fields are always recalculated on access -->
-    <Class name="org.apache.catalina.tribes.tipis.AbstractReplicatedMap$MapMessage" />
+    <Class name="com.alx.enterprise.webtier.tribes.tipis.AbstractReplicatedMap$MapMessage" />
     <Or>
       <Field name="key" />
       <Field name="value" />
@@ -768,19 +768,19 @@
   </Match>
   <Match>
     <!-- Sync is not intended to protect access to this field -->
-    <Class name="org.apache.catalina.tribes.transport.ReplicationTransmitter"/>
+    <Class name="com.alx.enterprise.webtier.tribes.transport.ReplicationTransmitter"/>
     <Field name="oname"/>
     <Bug pattern="IS2_INCONSISTENT_SYNC"/>
   </Match>
   <Match>
     <!-- Intentional in case thread is waiting -->
-    <Class name="org.apache.catalina.tribes.transport.RxTaskPool"/>
+    <Class name="com.alx.enterprise.webtier.tribes.transport.RxTaskPool"/>
     <Method name="returnWorker"/>
     <Bug code="NN"/>
   </Match>
   <Match>
     <!-- Sync is to protect multiple against calls to connect() -->
-    <Class name="org.apache.catalina.tribes.transport.nio.NioSender"/>
+    <Class name="com.alx.enterprise.webtier.tribes.transport.nio.NioSender"/>
     <Or>
       <Field name="dataChannel"/>
       <Field name="socketChannel"/>
@@ -790,13 +790,13 @@
   </Match>
   <Match>
     <!-- Byte arrays contents are not mutated -->
-    <Class name="org.apache.catalina.tribes.transport.nio.NioSender"/>
+    <Class name="com.alx.enterprise.webtier.tribes.transport.nio.NioSender"/>
     <Field name="current"/>
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY"/>
   </Match>
   <Match>
     <!-- Random is SecureRandom and will be used multiple times. -->
-    <Class name="org.apache.catalina.tribes.util.UUIDGenerator"/>
+    <Class name="com.alx.enterprise.webtier.tribes.util.UUIDGenerator"/>
     <Or>
       <Method name="&lt;clinit&gt;"/>
       <Method name="nextBytes"/>
@@ -805,7 +805,7 @@
   </Match>
   <Match>
     <!-- Expected. Statement is being generated from configuration. -->
-    <Class name="org.apache.catalina.users.DataSourceUserDatabase"/>
+    <Class name="com.alx.enterprise.webtier.users.DataSourceUserDatabase"/>
     <Or>
       <Method name="findGroupInternal"/>
       <Method name="findRoleInternal"/>
@@ -819,7 +819,7 @@
   </Match>
   <Match>
     <!-- All modifications wrapped with appropriate locks -->
-    <Class name="org.apache.catalina.users.DataSourceUserDatabase"/>
+    <Class name="com.alx.enterprise.webtier.users.DataSourceUserDatabase"/>
     <Or>
       <Method name="modifiedGroup"/>
       <Method name="modifiedRole"/>
@@ -828,52 +828,52 @@
     <Bug pattern="AT_OPERATION_SEQUENCE_ON_CONCURRENT_ABSTRACTION"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.util.LifecycleBase" />
+    <Class name="com.alx.enterprise.webtier.util.LifecycleBase" />
     <Method name="getState"/>
     <Bug code="UG" />
   </Match>
   <Match>
     <!-- Random is SecureRandom and will be used multiple times. -->
-    <Class name="org.apache.catalina.util.SessionIdGeneratorBase"/>
+    <Class name="com.alx.enterprise.webtier.util.SessionIdGeneratorBase"/>
     <Method name="createSecureRandom"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- the platform default encoding is a fallback -->
-    <Class name="org.apache.catalina.util.URLEncoder"/>
+    <Class name="com.alx.enterprise.webtier.util.URLEncoder"/>
     <Method name="encode"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- request.getRemoteHost() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.valves.AbstractAccessLogValve$HostElement"/>
+    <Class name="com.alx.enterprise.webtier.valves.AbstractAccessLogValve$HostElement"/>
     <Method name="addElement"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- request.getMethod() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.valves.AbstractAccessLogValve$RequestElement"/>
+    <Class name="com.alx.enterprise.webtier.valves.AbstractAccessLogValve$RequestElement"/>
     <Method name="addElement"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- Syncs are there to protect state not context -->
-    <Class name="org.apache.catalina.valves.HealthCheckValve" />
+    <Class name="com.alx.enterprise.webtier.valves.HealthCheckValve" />
     <Field name="context" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- Non-constant strings are configuration settings rather than client
          supplied -->
-    <Class name="org.apache.catalina.valves.JDBCAccessLogValve" />
+    <Class name="com.alx.enterprise.webtier.valves.JDBCAccessLogValve" />
     <Method name="open" />
     <Bug code="SQL" />
   </Match>
   <Match>
     <!-- NO-OPs due to remaining FIXMEs -->
-    <Class name="org.apache.catalina.valves.rewrite.ResolverImpl"/>
+    <Class name="com.alx.enterprise.webtier.valves.rewrite.ResolverImpl"/>
     <Method name="resolveSsl"/>
     <Or>
       <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
@@ -883,32 +883,32 @@
   <Match>
     <!-- request.getQueryString() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.valves.rewrite.RewriteValve"/>
+    <Class name="com.alx.enterprise.webtier.valves.rewrite.RewriteValve"/>
     <Method name="invoke"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- Deliberately ignored -->
-    <Class name="org.apache.catalina.valves.rewrite.RewriteValve"/>
+    <Class name="com.alx.enterprise.webtier.valves.rewrite.RewriteValve"/>
     <Method name="parse"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED"/>
   </Match>
   <Match>
     <!-- request.getQueryString() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.catalina.valves.StuckThreadDetectionValve"/>
+    <Class name="com.alx.enterprise.webtier.valves.StuckThreadDetectionValve"/>
     <Method name="invoke"/>
     <Bug code="RCN"/>
   </Match>
   <Match>
     <!-- There is no null check (SpotBugs bug?) -->
-    <Class name="org.apache.catalina.webresources.AbstractArchiveResource" />
+    <Class name="com.alx.enterprise.webtier.webresources.AbstractArchiveResource" />
     <Method name="getContent" />
     <Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
   </Match>
   <Match>
     <!-- Array contents is not mutated -->
-    <Class name="org.apache.catalina.webresources.CachedResource"/>
+    <Class name="com.alx.enterprise.webtier.webresources.CachedResource"/>
     <Or>
       <Field name="webResources"/>
       <Field name="cachedContent"/>
@@ -917,7 +917,7 @@
   </Match>
   <Match>
     <!-- Delegation to URL methods is deliberate -->
-    <Class name="org.apache.catalina.webresources.CachedResource$CachedResourceURLStreamHandler"/>
+    <Class name="com.alx.enterprise.webtier.webresources.CachedResource$CachedResourceURLStreamHandler"/>
     <Or>
       <Method name="equals"/>
       <Method name="hashCode"/>
@@ -926,20 +926,20 @@
   </Match>
   <Match>
     <!-- Class lock is not an instance lock -->
-    <Class name="org.apache.catalina.webresources.TomcatURLStreamHandlerFactory"/>
+    <Class name="com.alx.enterprise.webtier.webresources.AlxURLStreamHandlerFactory"/>
     <Field name="instance"/>
     <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA"/>
   </Match>
   <Match>
     <!-- Switch fall-though is deliberate -->
-    <Class name="org.apache.coyote.AbstractProcessor"/>
+    <Class name="com.alx.enterprise.web.crane.AbstractProcessor"/>
     <Method name="parseHost"/>
     <Bug pattern="SF_SWITCH_FALLTHROUGH" />
   </Match>
   <Match>
     <!-- Use of synchronisation is required to make a sequence of calls in   -->
     <!-- one method appear to be atomic.                                     -->
-    <Class name="org.apache.coyote.AbstractProcessorLight"/>
+    <Class name="com.alx.enterprise.web.crane.AbstractProcessorLight"/>
     <Or>
       <Method name="addDispatch"/>
       <Method name="getIteratorAndClearDispatches"/>
@@ -950,66 +950,66 @@
   <Match>
     <!-- This could be optimised but a) the code would be less clear and -->
     <!-- b) SpotBugs still reports an error with the optimised code.     -->
-    <Class name="org.apache.coyote.AbstractProtocol"/>
+    <Class name="com.alx.enterprise.web.crane.AbstractProtocol"/>
     <Method name="startAsyncTimeout"/>
     <Bug pattern="RpC_REPEATED_CONDITIONAL_TEST "/>
   </Match>
   <Match>
     <!-- Correct behaviour does not assume sequential operations on concurrent
          hash map are atomic. -->
-    <Class name="org.apache.coyote.AbstractProtocol$AbstractConnectionHandler" />
+    <Class name="com.alx.enterprise.web.crane.AbstractProtocol$AbstractConnectionHandler" />
     <Method name="process" />
     <Bug pattern="AT_OPERATION_SEQUENCE_ON_CONCURRENT_ABSTRACTION" />
   </Match>
   <Match>
     <!-- readChunk will not be null due to previous call to readBytes() -->
-    <Class name="org.apache.coyote.http11.filters.ChunkedInputFilter" />
+    <Class name="com.alx.enterprise.web.crane.http11.filters.ChunkedInputFilter" />
     <Method name="parseHeader"/>
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
   </Match>
   <Match>
     <!-- Locks are always released. Non-standard pattern is required because -->
     <!-- of lock upgrade that is used. -->
-    <Class name="org.apache.coyote.http11.upgrade.AprServletInputStream" />
+    <Class name="com.alx.enterprise.web.crane.http11.upgrade.AprServletInputStream" />
     <Method name="doRead"/>
     <Bug code="UL" />
   </Match>
   <Match>
     <!-- Locks are always released. Non-standard pattern is required because -->
     <!-- of lock upgrade that is used. -->
-    <Class name="org.apache.coyote.http11.upgrade.AprServletOutputStream" />
+    <Class name="com.alx.enterprise.web.crane.http11.upgrade.AprServletOutputStream" />
     <Method name="doWrite"/>
     <Bug code="UL"  />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.coyote.http11.Http11Processor" />
+    <Class name="com.alx.enterprise.web.crane.http11.Http11Processor" />
     <Method name="service"/>
     <Bug code="SF" />
   </Match>
   <Match>
     <!-- Locks are always released. Non-standard pattern is required because -->
     <!-- of lock upgrade that is used. -->
-    <Class name="org.apache.coyote.http11.InternalAprInputBuffer" />
+    <Class name="com.alx.enterprise.web.crane.http11.InternalAprInputBuffer" />
     <Method name="doReadSocket"/>
     <Bug code="UL" />
   </Match>
   <Match>
     <!-- Locks are always released. Non-standard pattern is required because -->
     <!-- of lock upgrade that is used. -->
-    <Class name="org.apache.coyote.http11.InternalAprOutputBuffer" />
+    <Class name="com.alx.enterprise.web.crane.http11.InternalAprOutputBuffer" />
     <Method name="writeToSocket"/>
     <Bug code="UL" />
   </Match>
   <Match>
     <!-- HpackDecoder is used by multiple streams but not concurrently. -->
-    <Class name="org.apache.coyote.http2.HpackDecoder" />
+    <Class name="com.alx.enterprise.web.crane.http2.HpackDecoder" />
     <Method name="emitHeader" />
     <Bug pattern="VO_VOLATILE_INCREMENT" />
   </Match>
   <Match>
     <!-- False positive. Affects 4.7.3. May affect other versions. -->
-    <Class name="org.apache.coyote.http2.HpackDecoder" />
+    <Class name="com.alx.enterprise.web.crane.http2.HpackDecoder" />
     <Method name="handleMaxMemorySizeChange" />
     <Or>
       <Field name="currentMemorySize" />
@@ -1019,19 +1019,19 @@
   </Match>
   <Match>
     <!-- Number being tested is unsigned. -->
-    <Class name="org.apache.coyote.http2.Http2UpgradeHandler" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2UpgradeHandler" />
     <Method name="createRemoteStream" />
     <Bug pattern="IM_BAD_CHECK_FOR_ODD" />
   </Match>
   <Match>
     <!-- Loss of the occasional increment is acceptable. -->
-    <Class name="org.apache.coyote.http2.Http2UpgradeHandler" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2UpgradeHandler" />
     <Method name="pruneClosedStreams" />
     <Bug pattern="VO_VOLATILE_INCREMENT" />
   </Match>
   <Match>
     <!-- Notify is correct. Condition changed outside of this method. -->
-    <Class name="org.apache.coyote.http2.Http2UpgradeHandler" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2UpgradeHandler" />
     <Method name="incrementWindowSize" />
     <Or>
       <Bug pattern="NN_NAKED_NOTIFY" />
@@ -1040,19 +1040,19 @@
   </Match>
   <Match>
     <!-- Switch fall-through is intentional. -->
-    <Class name="org.apache.coyote.http2.Http2UpgradeHandler" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2UpgradeHandler" />
     <Method name="upgradeDispatch" />
      <Bug pattern="SF_SWITCH_FALLTHROUGH" />
   </Match>
   <Match>
     <!-- Return value is intentionally ignored. -->
-    <Class name="org.apache.coyote.http2.Http2UpgradeHandler$PingManager" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2UpgradeHandler$PingManager" />
     <Method name="receivePing" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED" />
   </Match>
   <Match>
     <!-- Notify is correct. Condition changed outside of this method. -->
-    <Class name="org.apache.coyote.http2.Stream" />
+    <Class name="com.alx.enterprise.web.crane.http2.Stream" />
     <Or>
       <Method name="cancelAllocationRequests" />
       <Method name="incrementWindowSize" />
@@ -1064,38 +1064,38 @@
   </Match>
   <Match>
     <!-- Monitor is used for a single condition. -->
-    <Class name="org.apache.coyote.http2.WindowAllocationManager" />
+    <Class name="com.alx.enterprise.web.crane.http2.WindowAllocationManager" />
     <Method name="notify" />
     <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
   </Match>
   <Match>
     <!-- Returning null is required by the EL specification -->
-    <Class name="org.apache.el.lang.ELSupport" />
+    <Class name="com.alx.enterprise.el.lang.ELSupport" />
     <Method name="coerceToBoolean"/>
     <Bug pattern="NP_BOOLEAN_RETURN_NULL"/>
   </Match>
   <Match>
     <!-- Result is negated because arguments have to be swapped -->
-    <Class name="org.apache.el.lang.ELSupport" />
+    <Class name="com.alx.enterprise.el.lang.ELSupport" />
     <Method name="compare"/>
     <Bug pattern="RV_NEGATING_RESULT_OF_COMPARETO"/>
   </Match>
   <Match>
     <!-- JspC will not be used under a security manager -->
-    <Class name="org.apache.jasper.JspC"/>
+    <Class name="com.alx.enterprise.web.jasper.JspC"/>
     <Method name="initClassLoader"/>
     <Bug code="DP" />
   </Match>
   <Match>
     <!-- Parser config is static so statics are appropriate -->
-    <Class name="org.apache.jasper.JspC"/>
+    <Class name="com.alx.enterprise.web.jasper.JspC"/>
     <Method name="setValidateXml"/>
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.jasper.JspC"/>
+    <Class name="com.alx.enterprise.web.jasper.JspC"/>
     <Or>
       <Method name="openWebxmlReader"/>
       <Method name="openWebxmlWriter"/>
@@ -1105,19 +1105,19 @@
   <Match>
     <!-- Node constructors add node to parent. Local variable is used to
          silence an Eclipse warning -->
-    <Class name="org.apache.jasper.compiler.ELFunctionMapper"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.ELFunctionMapper"/>
     <Method name="map"/>
     <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
   </Match>
   <Match>
     <!-- There is no null check (SpotBugs bug?) -->
-    <Class name="org.apache.jasper.compiler.JDTCompiler$1" />
+    <Class name="com.alx.enterprise.web.jasper.compiler.JDTCompiler$1" />
     <Method name="findType" />
     <Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
   </Match>
   <Match>
     <!-- Sync is not protecting these fields -->
-    <Class name="org.apache.jasper.compiler.JspConfig"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.JspConfig"/>
     <Or>
       <Field name="defaultDeferedSyntaxAllowedAsLiteral" />
       <Field name="defaultIsELIgnored" />
@@ -1126,14 +1126,14 @@
   </Match>
   <Match>
     <!-- NPE is not possible -->
-    <Class name="org.apache.jasper.compiler.JspConfig"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.JspConfig"/>
     <Method name="selectProperty"/>
     <Bug code="NP"/>
   </Match>
   <Match>
     <!-- Yes this is a dead store. This is so the IDE warning can be suppressed.
          The object creation has side-effects so the code is required. -->
-    <Class name="org.apache.jasper.compiler.JspDocumentParser" />
+    <Class name="com.alx.enterprise.web.jasper.compiler.JspDocumentParser" />
     <Or>
       <Method name="comment"/>
       <Method name="processChars"/>
@@ -1142,25 +1142,25 @@
   </Match>
   <Match>
     <!-- Returning null is intentional -->
-    <Class name="org.apache.jasper.compiler.JspReader"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.JspReader"/>
     <Method name="indexOf"/>
     <Bug code="NP"/>
   </Match>
   <Match>
     <!-- Node constructors add node to parent. Local variable is used to
          silence an Eclipse warning -->
-    <Class name="org.apache.jasper.compiler.Parser"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.Parser"/>
     <Bug code="DLS"/>
   </Match>
   <Match>
     <!-- Use of == is deliberate -->
-    <Class name="org.apache.jasper.compiler.Parser"/>
+    <Class name="com.alx.enterprise.web.jasper.compiler.Parser"/>
     <Method name="parseBody"/>
     <Bug code="ES"/>
   </Match>
   <Match>
     <!-- Only base null is handled by this resolver -->
-    <Class name="org.apache.jasper.el.ELResolverImpl"/>
+    <Class name="com.alx.enterprise.web.jasper.el.ELResolverImpl"/>
     <Or>
       <Method name="getType" />
       <Method name="getValue" />
@@ -1171,76 +1171,76 @@
   </Match>
   <Match>
     <!-- Array contents are not mutated -->
-    <Class name="org.apache.jasper.el.JasperELResolver"/>
+    <Class name="com.alx.enterprise.web.jasper.el.JasperELResolver"/>
     <Field name="resolvers" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
   <Match>
     <!-- base null is handled by this resolver -->
-    <Class name="org.apache.jasper.el.JasperELResolver"/>
+    <Class name="com.alx.enterprise.web.jasper.el.JasperELResolver"/>
     <Method name="getValue" />
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- the platform default encoding is a fallback -->
-    <Class name="org.apache.jasper.runtime.JspRuntimeLibrary"/>
+    <Class name="com.alx.enterprise.web.jasper.runtime.JspRuntimeLibrary"/>
     <Method name="URLEncode"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Use of == is deliberate, String.intern() is used -->
-    <Class name="org.apache.jasper.xmlparser.XMLEncodingDetector"/>
+    <Class name="com.alx.enterprise.web.jasper.xmlparser.XMLEncodingDetector"/>
     <Method name="scanXMLDeclOrTextDecl"/>
     <Bug code="ES"/>
   </Match>
   <Match>
     <!--  Cast is safe -->
-    <Class name="org.apache.juli.AsyncFileHandler$DropLastPolicy"/>
+    <Class name="com.alx.enterprise.logging.AsyncFileHandler$DropLastPolicy"/>
     <Method name="rejectedExecution"/>
     <Bug pattern="BC_UNCONFIRMED_CAST"/>
   </Match>
   <Match>
     <!--  Dummy thread -->
-    <Class name="org.apache.juli.AsyncFileHandler$LoggerExecutorService"/>
+    <Class name="com.alx.enterprise.logging.AsyncFileHandler$LoggerExecutorService"/>
     <Method name="deregisterHandler"/>
     <Bug pattern="DM_USELESS_THREAD"/>
   </Match>
   <Match>
     <!-- Stream is closed in o.a.juli.ClassLoaderLogManager.readConfiguration
          (InputStream, ClassLoader) -->
-    <Class name="org.apache.juli.ClassLoaderLogManager"/>
+    <Class name="com.alx.enterprise.logging.ClassLoaderLogManager"/>
     <Method name="readConfiguration"/>
     <Bug code="OBL"/>
   </Match>
   <Match>
     <!-- There is no null-check -->
-    <Class name="org.apache.juli.FileHandler"/>
+    <Class name="com.alx.enterprise.logging.FileHandler"/>
     <Method name="lambda$clean$0" />
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
   </Match>
   <Match>
     <!-- If encoding is specified it will be used,
     otherwise platform default encoding will be used -->
-    <Class name="org.apache.juli.FileHandler"/>
+    <Class name="com.alx.enterprise.logging.FileHandler"/>
     <Method name="openWriter"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- As per the comment, FileSystems.getDefault() does have a
          side-effect. -->
-    <Class name="org.apache.juli.logging.LogFactory"/>
+    <Class name="com.alx.enterprise.logging.internal.LogFactory"/>
     <Method name="&lt;init&gt;"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
   </Match>
   <Match>
     <!-- Reference.equals() implementation correctly handles sub-classes -->
-    <Class name="org.apache.naming.ServiceRef" />
+    <Class name="com.alx.enterprise.naming.ServiceRef" />
     <Pattern code="EQ_DOESNT_OVERRIDE_EQUALS" />
   </Match>
   <Match>
     <!-- Simpler to catch Exception than to create dummy implementations of the
          necessary exception hierarchy -->
-    <Class name="org.apache.naming.factory.SendMailFactory" />
+    <Class name="com.alx.enterprise.naming.factory.SendMailFactory" />
     <Or>
       <!-- Latest Eclipse plug-in and latest stand-alone JAR report different
            method names. -->
@@ -1252,18 +1252,18 @@
   <Match>
     <!-- Simpler to catch Exception than to create dummy implementations of the
          necessary exception hierarchy -->
-    <Class name="org.apache.naming.factory.webservices.ServiceProxy" />
+    <Class name="com.alx.enterprise.naming.factory.webservices.ServiceProxy" />
     <Method name="&lt;init&gt;"/>
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- Class name needs to start with a lower case letter in this case -->
-    <Class name="org.apache.naming.java.javaURLContextFactory" />
+    <Class name="com.alx.enterprise.naming.java.javaURLContextFactory" />
     <Bug code="Nm" />
   </Match>
   <Match>
     <!-- Class lock is not an instance lock -->
-    <Class name="org.apache.naming.java.javaURLContextFactory" />
+    <Class name="com.alx.enterprise.naming.java.javaURLContextFactory" />
     <Field name="initialContext"/>
     <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA"/>
   </Match>
@@ -1271,37 +1271,37 @@
     <!-- Utility classes used to import/export l10n strings -->
     <!-- This code does not need to be robust -->
     <Or>
-      <Class name="org.apache.tomcat.buildutil.translate.Export"/>
-      <Class name="org.apache.tomcat.buildutil.translate.Import"/>
+      <Class name="com.alx.enterprise.web.buildutil.translate.Export"/>
+      <Class name="com.alx.enterprise.web.buildutil.translate.Import"/>
     </Or>
   </Match>
   <Match>
     <!-- Sync protects writing not reading -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.BasicDataSource" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.BasicDataSource" />
     <Field name="closed" />
     <Bug pattern="IS2_INCONSISTENT_SYNC" />
   </Match>
   <Match>
     <!-- Return value is never used -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.DelegatingConnection" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.DelegatingConnection" />
     <Method name="prepareStatement" />
     <Bug pattern="NP_NONNULL_RETURN_VIOLATION" />
   </Match>
   <Match>
     <!-- SQL is from config so is considered safe -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.PoolableConnectionFactory" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.PoolableConnectionFactory" />
     <Method name="initializeConnection" />
     <Bug pattern="SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" />
   </Match>
   <Match>
     <!-- SQL construction is safe for validation query -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.PoolableConnectionFactory" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.PoolableConnectionFactory" />
     <Method name="validateConnection" />
     <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
   </Match>
   <Match>
     <!-- SQL construction is necessary for pooled statements -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.PStmtKey" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.PStmtKey" />
     <Or>
       <!-- Names reported via IDE -->
       <Method name="lambda$3" />
@@ -1322,22 +1322,22 @@
   </Match>
   <Match>
     <!-- SQL construction is necessary for pooled statements -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.cpdsadapter.PooledConnectionImpl" />
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.cpdsadapter.PooledConnectionImpl" />
     <Method name="makeObject" />
     <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
   </Match>
   <Match>
     <!-- SQL construction is safe for validation query -->
     <Or>
-      <Class name="org.apache.tomcat.dbcp.dbcp2.datasources.CPDSConnectionFactory" />
-      <Class name="org.apache.tomcat.dbcp.dbcp2.datasources.KeyedCPDSConnectionFactory" />
+      <Class name="com.alx.enterprise.web.dbcp.dbcp2.datasources.CPDSConnectionFactory" />
+      <Class name="com.alx.enterprise.web.dbcp.dbcp2.datasources.KeyedCPDSConnectionFactory" />
     </Or>
     <Method name="validateObject" />
     <Bug pattern="SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" />
   </Match>
   <Match>
-    <!-- Commons DBCP 2 code Tomcat does not control -->
-    <Class name="org.apache.tomcat.dbcp.dbcp2.datasources.UserPassKey" />
+    <!-- Commons DBCP 2 code Alx does not control -->
+    <Class name="com.alx.enterprise.web.dbcp.dbcp2.datasources.UserPassKey" />
     <Or>
       <Field name="name" />
       <Field name="password" />
@@ -1346,25 +1346,25 @@
   </Match>
   <Match>
     <!-- Pooled objects can't be null so this is OK -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.BaseGenericObjectPool$IdentityWrapper" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.BaseGenericObjectPool$IdentityWrapper" />
     <Method name="equals" />
     <Bug pattern="NP_EQUALS_SHOULD_HANDLE_NULL_ARGUMENT" />
   </Match>
   <Match>
     <!-- Natural ordering behaviour is documented in Javadoc -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.DefaultPooledObject" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.DefaultPooledObject" />
     <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS" />
   </Match>
   <Match>
     <!-- Increment is in sync block so it is safe. Volatile is used so reading
          thread sees latest value.  -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.DefaultPooledObject" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.DefaultPooledObject" />
     <Method name="allocate" />
     <Bug pattern="VO_VOLATILE_INCREMENT" />
   </Match>
   <Match>
     <!-- Class lock is not an instance lock -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.EvictionTimer$Reaper" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.EvictionTimer$Reaper" />
     <Or>
       <Field name="executor"/>
       <Field name="taskMap"/>
@@ -1373,7 +1373,7 @@
   </Match>
   <Match>
     <!-- Fields do not need to be sync'd for toString() -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.SoftReferenceObjectPool" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.SoftReferenceObjectPool" />
     <Or>
       <Field name="createCount"/>
       <Field name="numActive"/>
@@ -1382,67 +1382,67 @@
   </Match>
   <Match>
     <!-- Public API is a design decision of Commons -->
-    <Class name="org.apache.tomcat.dbcp.pool2.impl.SoftReferenceObjectPool" />
+    <Class name="com.alx.enterprise.web.dbcp.pool2.impl.SoftReferenceObjectPool" />
     <Bug pattern="PS_PUBLIC_SEMAPHORES" />
   </Match>
   <Match>
     <!-- Return value is ignored but a null result will trigger an exception -->
-    <Class name="org.apache.tomcat.jdbc.pool.ConnectionPool$ConnectionFuture" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.ConnectionPool$ConnectionFuture" />
     <Method name="get" />
     <Bug code="RV" />
   </Match>
   <Match>
     <!-- Name shadowing is deliberate -->
     <Or>
-      <Class name="org.apache.tomcat.jdbc.pool.DataSource" />
-      <Class name="org.apache.tomcat.jdbc.pool.XADataSource" />
+      <Class name="com.alx.enterprise.web.jdbc.pool.DataSource" />
+      <Class name="com.alx.enterprise.web.jdbc.pool.XADataSource" />
     </Or>
     <Bug pattern="NM_SAME_SIMPLE_NAME_AS_INTERFACE" />
   </Match>
   <Match>
     <!-- NPE is triggered by concurrent close. Catching NPE is reasonable. -->
-    <Class name="org.apache.tomcat.jdbc.pool.DisposableConnectionFacade" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.DisposableConnectionFacade" />
     <Method name="invoke" />
     <Bug pattern="DCN_NULLPOINTER_EXCEPTION" />
   </Match>
   <Match>
     <!-- Lock is released -->
-    <Class name="org.apache.tomcat.jdbc.pool.FairBlockingQueue" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.FairBlockingQueue" />
     <Method name="poll" />
     <Bug code="UL" />
   </Match>
   <Match>
     <!-- Use of == is deliberate -->
-    <Class name="org.apache.tomcat.jdbc.pool.JdbcInterceptor" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.JdbcInterceptor" />
     <Method name="compare" />
     <Bug code="ES" />
   </Match>
   <Match>
     <!-- Lock is released -->
-    <Class name="org.apache.tomcat.jdbc.pool.MultiLockFairBlockingQueue" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.MultiLockFairBlockingQueue" />
     <Method name="poll" />
     <Bug code="UL" />
   </Match>
   <Match>
     <!-- SQL is from config so is considered safe -->
-    <Class name="org.apache.tomcat.jdbc.pool.PooledConnection" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.PooledConnection" />
     <Method name="validate" />
     <Bug pattern="SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" />
   </Match>
   <Match>
     <!-- Array elements are not mutated -->
-    <Class name="org.apache.tomcat.jdbc.pool.PoolProperties" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.PoolProperties" />
     <Field name="interceptors" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
   <Match>
     <!-- The name isn't great but it is part of the public API now -->
-    <Class name="org.apache.tomcat.jdbc.pool.TrapException" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.TrapException" />
     <Bug pattern="NM_CLASS_NOT_EXCEPTION" />
   </Match>
   <Match>
     <!-- Lack of thread-safety is accepted in return for better performance. -->
-    <Class name="org.apache.tomcat.jdbc.pool.interceptor.SlowQueryReport$QueryStats" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.interceptor.SlowQueryReport$QueryStats" />
     <Or>
       <Method name="add" />
       <Method name="failure" />
@@ -1451,77 +1451,77 @@
     <Bug code="VO" />
   </Match>
   <Match>
-    <!-- Fields are used by native code. Tomcat doesn't use them but they are
+    <!-- Fields are used by native code. Alx doesn't use them but they are
          part of the public API. -->
     <Or>
-      <Class name="org.apache.tomcat.jni.FileInfo" />
-      <Class name="org.apache.tomcat.jni.Sockaddr" />
+      <Class name="com.alx.enterprise.web.jni.FileInfo" />
+      <Class name="com.alx.enterprise.web.jni.Sockaddr" />
     </Or>
     <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" />
   </Match>
   <Match>
     <!-- Field is populated by JNI code -->
-    <Class name="org.apache.tomcat.jni.Sockaddr" />
+    <Class name="com.alx.enterprise.web.jni.Sockaddr" />
     <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.IntrospectionUtils" />
+    <Class name="com.alx.enterprise.web.util.IntrospectionUtils" />
     <Method name="findMethod"/>
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- Class name is appropriate -->
-    <Class name="org.apache.tomcat.util.bcel.classfile.CodeException"/>
+    <Class name="com.alx.enterprise.web.util.bcel.classfile.CodeException"/>
     <Bug code="Nm" />
   </Match>
   <Match>
     <!-- Field by field copy is fine for clone in this case -->
-    <Class name="org.apache.tomcat.util.bcel.classfile.StackMapType"/>
+    <Class name="com.alx.enterprise.web.util.bcel.classfile.StackMapType"/>
     <Bug code="CN" />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.util.bcel.classfile.Utility"/>
+    <Class name="com.alx.enterprise.web.util.bcel.classfile.Utility"/>
     <Bug code="SF" />
   </Match>
   <Match>
     <!-- Handled by abstract base class -->
     <Or>
-      <Class name="org.apache.tomcat.util.buf.ByteChunk"/>
-      <Class name="org.apache.tomcat.util.buf.CharChunk"/>
+      <Class name="com.alx.enterprise.web.util.buf.ByteChunk"/>
+      <Class name="com.alx.enterprise.web.util.buf.CharChunk"/>
     </Or>
     <Bug pattern="HE_EQUALS_NO_HASHCODE" />
   </Match>
   <Match>
     <!-- Returning null here is fine -->
     <Or>
-      <Class name="org.apache.tomcat.util.buf.ByteChunk"/>
-      <Class name="org.apache.tomcat.util.buf.CharChunk"/>
+      <Class name="com.alx.enterprise.web.util.buf.ByteChunk"/>
+      <Class name="com.alx.enterprise.web.util.buf.CharChunk"/>
     </Or>
     <Method name="toString"/>
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- Switch fall-through is intentional. -->
-    <Class name="org.apache.tomcat.util.buf.MessageBytes"/>
+    <Class name="com.alx.enterprise.web.util.buf.MessageBytes"/>
     <Method name="toChars"/>
     <Bug pattern="SF_SWITCH_FALLTHROUGH" />
   </Match>
   <Match>
     <!-- Returning null here is fine -->
-    <Class name="org.apache.tomcat.util.buf.MessageBytes"/>
+    <Class name="com.alx.enterprise.web.util.buf.MessageBytes"/>
     <Method name="toString"/>
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- Whilst cache is global there may be multiple instances (one per     -->
     <!-- server so statics are appropriate -->
-    <Class name="org.apache.tomcat.util.buf.StringCache"/>
+    <Class name="com.alx.enterprise.web.util.buf.StringCache"/>
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- Array is only ever updated as a whole, not element by element -->
-    <Class name="org.apache.tomcat.util.buf.StringCache"/>
+    <Class name="com.alx.enterprise.web.util.buf.StringCache"/>
     <Or>
       <Field name="bcCache"/>
       <Field name="ccCache"/>
@@ -1531,26 +1531,26 @@
   <Match>
     <!-- mb.toString() can be null because
     o.a.t.util.buf.MessageBytes.toString() can return NULL -->
-    <Class name="org.apache.tomcat.util.buf.UDecoder"/>
+    <Class name="com.alx.enterprise.web.util.buf.UDecoder"/>
     <Method name="convert"/>
     <Bug code="RCN" />
   </Match>
   <Match>
     <!-- the platform default encoding is a fallback -->
-    <Class name="org.apache.tomcat.util.buf.UDecoder"/>
+    <Class name="com.alx.enterprise.web.util.buf.UDecoder"/>
     <Method name="URLDecode"/>
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Not an issue. Initialisation is as intended. -->
-    <Class name="org.apache.tomcat.util.compat.JreCompat"/>
+    <Class name="com.alx.enterprise.web.util.compat.JreCompat"/>
     <Method name="&lt;clinit&gt;"/>
     <Bug pattern="IC_SUPERCLASS_USES_SUBCLASS_DURING_INITIALIZATION" />
   </Match>
   <Match>
     <!-- URLs used are always provided by the container so would normally be -->
     <!-- file URLs.                                                          -->
-    <Class name="org.apache.tomcat.util.descriptor.tld.TldResourcePath" />
+    <Class name="com.alx.enterprise.web.util.descriptor.tld.TldResourcePath" />
     <Or>
       <Method name="equals" />
       <Method name="hashCode" />
@@ -1559,13 +1559,13 @@
   </Match>
   <Match>
     <!-- NPE is desired as it indicates an error condition -->
-    <Class name="org.apache.tomcat.util.digester.CallMethodRule"/>
+    <Class name="com.alx.enterprise.web.util.digester.CallMethodRule"/>
     <Method name="end"/>
     <Bug code="NP" />
   </Match>
   <Match>
     <!-- Test really is for the same object rather than equality -->
-    <Class name="org.apache.tomcat.util.digester.Digester"/>
+    <Class name="com.alx.enterprise.web.util.digester.Digester"/>
     <Or>
       <Method name="updateBodyText"/>
       <Method name="updateAttributes"/>
@@ -1574,25 +1574,25 @@
   </Match>
   <Match>
     <!-- Write to static field is intentional -->
-    <Class name="org.apache.tomcat.util.digester.Digester"/>
+    <Class name="com.alx.enterprise.web.util.digester.Digester"/>
     <Method name="&lt;init&gt;"/>
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.util.http.LegacyCookieProcessor" />
+    <Class name="com.alx.enterprise.web.util.http.LegacyCookieProcessor" />
     <Method name="processCookieHeader"/>
     <Bug code="SF" />
   </Match>
   <Match>
     <!-- Deletion failure should never happen -->
-    <Class name="org.apache.tomcat.util.http.fileupload.disk.DiskFileItem"/>
+    <Class name="com.alx.enterprise.web.util.http.fileupload.disk.DiskFileItem"/>
     <Method name="finalize"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.util.http.parser.Cookie" />
+    <Class name="com.alx.enterprise.web.util.http.parser.Cookie" />
     <Or>
       <Method name="logInvalidHeader"/>
       <Method name="logInvalidVersion"/>
@@ -1601,14 +1601,14 @@
   </Match>
   <Match>
     <!-- Returns null by design -->
-    <Class name="org.apache.tomcat.util.http.parser.EntityTag" />
+    <Class name="com.alx.enterprise.web.util.http.parser.EntityTag" />
      <Method name="compareEntityTag"/>
     <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
   </Match>
   <Match>
     <!-- Reader instance always accepts -ve skip values and there is -->
     <!-- always enough space to skip back the requested amount.      -->
-    <Class name="org.apache.tomcat.util.http.parser.HttpParser" />
+    <Class name="com.alx.enterprise.web.util.http.parser.HttpParser" />
     <Or>
       <Method name="skipConstant" />
       <Method name="readToken" />
@@ -1620,27 +1620,27 @@
   <Match>
     <!--  Generated code -->
     <Or>
-      <Class name="org.apache.tomcat.util.json.JSONParser"/>
-      <Class name="org.apache.tomcat.util.json.JSONParserTokenManager"/>
-      <Class name="org.apache.tomcat.util.json.ParseException"/>
-      <Class name="org.apache.tomcat.util.json.TokenMgrError"/>
+      <Class name="com.alx.enterprise.web.util.json.JSONParser"/>
+      <Class name="com.alx.enterprise.web.util.json.JSONParserTokenManager"/>
+      <Class name="com.alx.enterprise.web.util.json.ParseException"/>
+      <Class name="com.alx.enterprise.web.util.json.TokenMgrError"/>
     </Or>
   </Match>
   <Match>
     <!-- Hiding of field in superclass is deliberate -->
-    <Class name="org.apache.tomcat.util.modeler.NotificationInfo"/>
+    <Class name="com.alx.enterprise.web.util.modeler.NotificationInfo"/>
     <Field name="info" />
     <Bug code="MF" />
   </Match>
   <Match>
     <!-- See wait() call in destroy() -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$Poller"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$Poller"/>
     <Method name="run"/>
     <Bug code="NN" />
   </Match>
   <Match>
     <!-- There is only a single wait in run() when the poller is idle -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$Poller"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$Poller"/>
     <Or>
       <Method name="add"/>
       <Method name="close"/>
@@ -1649,7 +1649,7 @@
     <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$Sendfile"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$Sendfile"/>
     <Method name="run"/>
     <Or>
       <!-- see wait() call in destroy() -->
@@ -1660,7 +1660,7 @@
   </Match>
   <Match>
     <!-- There is only a single wait in run() when the poller is idle -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$Sendfile"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$Sendfile"/>
     <Or>
       <Method name="add"/>
       <Method name="stop"/>
@@ -1669,13 +1669,13 @@
   </Match>
   <Match>
     <!-- Sync is there to protect referenced object not field -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$SocketEventProcessor"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$SocketEventProcessor"/>
     <Method name="run"/>
     <Bug code="ML" />
   </Match>
   <Match>
     <!-- Modifications to SocketLists are always protected by syncs -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$SocketList"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$SocketList"/>
     <Or>
       <Method name="add"/>
       <Method name="remove"/>
@@ -1684,48 +1684,48 @@
   </Match>
   <Match>
     <!-- Object is only ever set to null, sync therefore is still valid -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$SocketProcessor"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$SocketProcessor"/>
     <Method name="run"/>
     <Bug code="ML"/>
   </Match>
   <Match>
     <!-- Sync is there to protect referenced object not field -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$SocketWithOptionsProcessor"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$SocketWithOptionsProcessor"/>
     <Method name="run"/>
     <Bug code="ML" />
   </Match>
   <Match>
     <!-- Sync is on closed to ensure that actions taken because the socket  -->
     <!-- open remain valid until the action is completed.                   -->
-    <Class name="org.apache.tomcat.util.net.AprEndpoint$AprSocketWrapper"/>
+    <Class name="com.alx.enterprise.web.util.net.AprEndpoint$AprSocketWrapper"/>
     <Field name="closed"/>
     <Bug pattern="JLM_JSR166_UTILCONCURRENT_MONITORENTER"/>
   </Match>
   <Match>
     <!-- Return value is ignored at this point but logic further up call     -->
     <!-- stack will ensure that a SocketTimeoutException is thrown           -->
-    <Class name="org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper"/>
+    <Class name="com.alx.enterprise.web.util.net.NioEndpoint$NioSocketWrapper"/>
     <Method name="awaitLatch"/>
     <Bug code="RV"/>
   </Match>
   <Match>
     <!-- Object is only ever set to null, sync therefore is still valid -->
     <Or>
-      <Class name="org.apache.tomcat.util.net.NioEndpoint$SocketProcessor"/>
-      <Class name="org.apache.tomcat.util.net.Nio2Endpoint$SocketProcessor"/>
+      <Class name="com.alx.enterprise.web.util.net.NioEndpoint$SocketProcessor"/>
+      <Class name="com.alx.enterprise.web.util.net.Nio2Endpoint$SocketProcessor"/>
     </Or>
     <Method name="run"/>
     <Bug code="ML"/>
   </Match>
   <Match>
     <!-- Single condition so notify() is OK -->
-    <Class name="org.apache.tomcat.util.net.NioEndpoint$Poller"/>
+    <Class name="com.alx.enterprise.web.util.net.NioEndpoint$Poller"/>
     <Method name="processKey"/>
     <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
   </Match>
   <Match>
     <!-- Single wait so no need for notifyAll() -->
-    <Class name="org.apache.tomcat.util.net.Nio2Endpoint$Nio2SocketWrapper$VectoredIOCompletionHandler"/>
+    <Class name="com.alx.enterprise.web.util.net.Nio2Endpoint$Nio2SocketWrapper$VectoredIOCompletionHandler"/>
     <Or>
       <Method name="completed"/>
       <Method name="failed"/>
@@ -1734,30 +1734,30 @@
   </Match>
   <Match>
     <!-- NPE should never happen but it is caught as a precaution -->
-    <Class name="org.apache.tomcat.util.net.Nio2Endpoint$SocketProcessor" />
+    <Class name="com.alx.enterprise.web.util.net.Nio2Endpoint$SocketProcessor" />
     <Method name="doRun" />
     <Bug pattern="DCN_NULLPOINTER_EXCEPTION" />
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.net.SecureNioChannel"/>
+    <Class name="com.alx.enterprise.web.util.net.SecureNioChannel"/>
     <Method name="rehandshake"/>
     <Bug code="DE" />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.util.net.SecureNioChannel" />
+    <Class name="com.alx.enterprise.web.util.net.SecureNioChannel" />
     <Method name="processSNI"/>
     <Bug code="SF" />
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.util.net.SecureNio2Channel" />
+    <Class name="com.alx.enterprise.web.util.net.SecureNio2Channel" />
     <Method name="processSNI"/>
     <Bug code="SF" />
   </Match>
   <Match>
   <!-- Single condition so notify is fine -->
-    <Class name="org.apache.tomcat.util.net.SocketWrapperBase$VectoredIOCompletionHandler" />
+    <Class name="com.alx.enterprise.web.util.net.SocketWrapperBase$VectoredIOCompletionHandler" />
     <Or>
       <Method name="completed"/>
       <Method name="failed"/>
@@ -1766,13 +1766,13 @@
   </Match>
   <Match>
     <!-- Stream will be closed -->
-    <Class name="org.apache.tomcat.util.net.jsse.PEMFile" />
+    <Class name="com.alx.enterprise.web.util.net.jsse.PEMFile" />
     <Method name="&lt;init&gt;" />
     <Pattern name="OS_OPEN_STREAM" />
   </Match>
   <Match>
     <!-- Array elements are not modified after assignment -->
-    <Class name="org.apache.tomcat.util.net.openssl.OpenSSLEngine" />
+    <Class name="com.alx.enterprise.web.util.net.openssl.OpenSSLEngine" />
     <Or>
       <Field name="peerCerts"/>
       <Field name="x509PeerCerts"/>
@@ -1781,30 +1781,30 @@
   </Match>
   <Match>
     <!-- No performance issue as there is no DNS resolution -->
-    <Class name="org.apache.tomcat.util.scan.StandardJarScanner" />
+    <Class name="com.alx.enterprise.web.util.scan.StandardJarScanner" />
     <Bug pattern="DMI_COLLECTION_OF_URLS" />
   </Match>
   <Match>
     <!-- Yes the simple name is the same as the super class. Accept it. -->
-    <Class name="org.apache.tomcat.util.threads.ThreadPoolExecutor" />
+    <Class name="com.alx.enterprise.web.util.threads.ThreadPoolExecutor" />
     <Bug code="Nm" />
   </Match>
   <Match>
     <!-- Field is updated inside a lock. -->
-    <Class name="org.apache.tomcat.util.threads.ThreadPoolExecutor" />
+    <Class name="com.alx.enterprise.web.util.threads.ThreadPoolExecutor" />
     <Method name="runWorker" />
     <Bug pattern="VO_VOLATILE_INCREMENT " />
   </Match>
   <Match>
     <!-- Random will be SecureRandom and will be used multiple times. -->
-    <Class name="org.apache.tomcat.websocket.DigestAuthenticator"/>
+    <Class name="com.alx.enterprise.web.websocket.DigestAuthenticator"/>
     <Method name="getAuthorization"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- A concurrently closed connection can trigger NPEs. It is not possible
          to test for this before use. -->
-    <Class name="org.apache.tomcat.websocket.PerMessageDeflate" />
+    <Class name="com.alx.enterprise.web.websocket.PerMessageDeflate" />
     <Or>
       <Method name="getMoreData" />
       <Method name="sendMessagePart" />
@@ -1814,50 +1814,50 @@
   </Match>
   <Match>
     <!-- Random will be SecureRandom and will be used multiple times. -->
-    <Class name="org.apache.tomcat.websocket.Util"/>
+    <Class name="com.alx.enterprise.web.websocket.Util"/>
     <Method name="generateMask"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Object creation will trigger input processing. -->
-    <Class name="org.apache.tomcat.websocket.WsWebSocketContainer" />
+    <Class name="com.alx.enterprise.web.websocket.WsWebSocketContainer" />
     <Method name="connectToServer" />
     <Bug code="DLS" />
   </Match>
   <Match>
     <!-- Exception is caught so any issue is handled -->
-    <Class name="org.apache.tomcat.websocket.WsRemoteEndpointImplBase" />
+    <Class name="com.alx.enterprise.web.websocket.WsRemoteEndpointImplBase" />
     <Method name="sendObjectByCompletion" />
     <Bug pattern="REC_CATCH_EXCEPTION" />
   </Match>
   <Match>
     <!-- Exception is caught so any issue is handled -->
-    <Class name="org.apache.tomcat.websocket.WsWebSocketContainer" />
+    <Class name="com.alx.enterprise.web.websocket.WsWebSocketContainer" />
     <Method name="createSSLEngine" />
     <Bug pattern="REC_CATCH_EXCEPTION" />
   </Match>
   <Match>
     <!-- Random will be used multiple times. -->
-    <Class name="org.apache.tomcat.websocket.WsWebSocketContainer"/>
+    <Class name="com.alx.enterprise.web.websocket.WsWebSocketContainer"/>
     <Method name="generateWsKeyValue"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Fall-through expected -->
-    <Class name="org.apache.tomcat.websocket.server.WsHttpUpgradeHandler" />
+    <Class name="com.alx.enterprise.web.websocket.server.WsHttpUpgradeHandler" />
     <Method name="upgradeDispatch"/>
     <Bug code="SF" />
   </Match>
   <Match>
     <!-- The array contents is never mutated. -->
-    <Class name="org.apache.tomcat.websocket.server.WsRemoteEndpointImplServer" />
+    <Class name="com.alx.enterprise.web.websocket.server.WsRemoteEndpointImplServer" />
     <Field name="buffers" />
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY" />
   </Match>
 
   <!-- Example code -->
   <Match>
-    <!-- SpotBugs assumes the container uses the values as is. Tomcat validates
+    <!-- SpotBugs assumes the container uses the values as is. Alx validates
          them and escapes them as necessary to ensure they are safe. -->
     <Class name="CookieExample" />
     <Method name="doGet" />
@@ -1907,23 +1907,23 @@
   <!-- Generated code -->
   <Match>
     <Or>
-      <Class name="org.apache.el.parser.AstFloatingPoint" />
-      <Class name="org.apache.el.parser.AstFunction" />
-      <Class name="org.apache.el.parser.AstInteger" />
-      <Class name="org.apache.el.parser.AstNegative" />
-      <Class name="org.apache.el.parser.AstValue" />
-      <Class name="org.apache.el.parser.ELParser" />
-      <Class name="org.apache.el.parser.ELParserConstants" />
-      <Class name="org.apache.el.parser.ELParserTokenManager" />
-      <Class name="org.apache.el.parser.ELParserTreeConstants" />
-      <Class name="org.apache.el.parser.ParseException" />
-      <Class name="org.apache.el.parser.SimpleCharStream" />
-      <Class name="org.apache.el.parser.TokenMgrError" />
+      <Class name="com.alx.enterprise.el.parser.AstFloatingPoint" />
+      <Class name="com.alx.enterprise.el.parser.AstFunction" />
+      <Class name="com.alx.enterprise.el.parser.AstInteger" />
+      <Class name="com.alx.enterprise.el.parser.AstNegative" />
+      <Class name="com.alx.enterprise.el.parser.AstValue" />
+      <Class name="com.alx.enterprise.el.parser.ELParser" />
+      <Class name="com.alx.enterprise.el.parser.ELParserConstants" />
+      <Class name="com.alx.enterprise.el.parser.ELParserTokenManager" />
+      <Class name="com.alx.enterprise.el.parser.ELParserTreeConstants" />
+      <Class name="com.alx.enterprise.el.parser.ParseException" />
+      <Class name="com.alx.enterprise.el.parser.SimpleCharStream" />
+      <Class name="com.alx.enterprise.el.parser.TokenMgrError" />
     </Or>
   </Match>
   <Match>
     <!-- fCurrentEntity may be null after endEntity() call -->
-    <Class name="org.apache.jasper.xmlparser.XMLEncodingDetector" />
+    <Class name="com.alx.enterprise.web.jasper.xmlparser.XMLEncodingDetector" />
     <Method name="load" />
     <Bug code="RCN" />
   </Match>
@@ -1951,7 +1951,7 @@
   </Match>
   <Match>
     <!-- Code is intentionally unused -->
-    <Class name="org.apache.catalina.authenticator.TestBasicAuthParser"/>
+    <Class name="com.alx.enterprise.webtier.authenticator.TestBasicAuthParser"/>
     <Or>
       <Method name="testAuthMethodBadMethod"/>
       <Method name="testBadBase64Char"/>
@@ -1961,132 +1961,132 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.connector.TestCoyoteAdapter$AsyncServlet"/>
+    <Class name="com.alx.enterprise.webtier.connector.TestCoyoteAdapter$AsyncServlet"/>
     <Field name="t"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Container handles close -->
-    <Class name="org.apache.catalina.connector.TestOutputBuffer$WritingServlet"/>
+    <Class name="com.alx.enterprise.webtier.connector.TestOutputBuffer$WritingServlet"/>
     <Method name="doGet"/>
     <Bug pattern="OS_OPEN_STREAM"/>
   </Match>
   <Match>
     <!-- ByteChunk.toString() can return null -->
-    <Class name="org.apache.catalina.connector.TestRequest"/>
+    <Class name="com.alx.enterprise.webtier.connector.TestRequest"/>
     <Method name="doBug56501"/>
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
   </Match>
   <Match>
     <!-- Return value of latch is intentionally ignored -->
-    <Class name="org.apache.catalina.connector.TestSendFile"/>
+    <Class name="com.alx.enterprise.webtier.connector.TestSendFile"/>
     <Method name="testBug60409"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED"/>
   </Match>
   <Match>
     <!-- Single use of Random is deliberate -->
-    <Class name="org.apache.catalina.connector.TestSendFile$Bug60409Servlet"/>
+    <Class name="com.alx.enterprise.webtier.connector.TestSendFile$Bug60409Servlet"/>
     <Method name="doGet"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.core.TestApplicationSessionCookieConfig$CustomContext" />
+    <Class name="com.alx.enterprise.webtier.core.TestApplicationSessionCookieConfig$CustomContext" />
     <Method name="getState"/>
     <Bug code="UG" />
   </Match>
   <Match>
     <!-- Dead store is deliberate -->
     <Or>
-      <Class name="org.apache.catalina.core.TestAsyncContextImpl$AsyncDispatchUrlWithSpacesServlet"/>
-      <Class name="org.apache.catalina.core.TestAsyncContextImpl$ForwardDispatchUrlWithSpacesServlet"/>
+      <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$AsyncDispatchUrlWithSpacesServlet"/>
+      <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$ForwardDispatchUrlWithSpacesServlet"/>
     </Or>
     <Method name="doGet"/>
     <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49528Servlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49528Servlet"/>
     <Method name="doGet"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49528Servlet$1"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49528Servlet$1"/>
     <Method name="run"/>
     <Bug pattern="DCN_NULLPOINTER_EXCEPTION"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
     <Or>
-      <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49528Servlet"/>
-      <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49567Servlet"/>
+      <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49528Servlet"/>
+      <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49567Servlet"/>
     </Or>
     <Field name="result"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49567Servlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49567Servlet"/>
     <Method name="doGet"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug49567Servlet$1$1"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug49567Servlet$1$1"/>
     <Method name="run"/>
     <Bug pattern="DCN_NULLPOINTER_EXCEPTION"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$Bug53843ServletA"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$Bug53843ServletA"/>
     <Field name="isAsyncWhenExpected"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$AsyncIoEndServlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$AsyncIoEndServlet"/>
     <Field name="asyncIoEndWriteListener"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextImpl$AsyncISEServlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextImpl$AsyncISEServlet"/>
     <Field name="asyncContext"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Deliberate use of run() for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestAsyncContextStateChanges$AsyncServlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestAsyncContextStateChanges$AsyncServlet"/>
     <Method name="doGet"/>
     <Bug pattern="RU_INVOKE_RUN"/>
   </Match>
   <Match>
     <!-- Hard-coded absolute path is intentional -->
-    <Class name="org.apache.catalina.core.TestStandardContext"/>
+    <Class name="com.alx.enterprise.webtier.core.TestStandardContext"/>
     <Method name="testBug57556b"/>
     <Bug pattern="DMI_HARDCODED_ABSOLUTE_FILENAME"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.core.TestStandardContext$Bug51376Servlet"/>
+    <Class name="com.alx.enterprise.webtier.core.TestStandardContext$Bug51376Servlet"/>
     <Field name="destroyOk"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- ByteChunk.toString() can return null -->
-    <Class name="org.apache.catalina.core.TestStandardContextAliases"/>
+    <Class name="com.alx.enterprise.webtier.core.TestStandardContextAliases"/>
     <Method name="testDirContextAliases"/>
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.filters.TestRemoteIpFilter$MockHttpServlet"/>
+    <Class name="com.alx.enterprise.webtier.filters.TestRemoteIpFilter$MockHttpServlet"/>
     <Field name="request"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Return value of latch is intentionally ignored -->
-    <Class name="org.apache.catalina.nonblocking.TestNonBlockingAPI"/>
+    <Class name="com.alx.enterprise.webtier.nonblocking.TestNonBlockingAPI"/>
     <Or>
       <Method name="testDelayedNBReadWrite"/>
       <Method name="testDelayedNBWrite"/>
@@ -2095,19 +2095,19 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.nonblocking.TestNonBlockingAPI$NBReadServlet"/>
+    <Class name="com.alx.enterprise.webtier.nonblocking.TestNonBlockingAPI$NBReadServlet"/>
     <Filed name="listener"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Return value of read is intentionally ignored -->
-    <Class name="org.apache.catalina.nonblocking.TestNonBlockingAPI$NBReadWithDispatchServlet$1"/>
+    <Class name="com.alx.enterprise.webtier.nonblocking.TestNonBlockingAPI$NBReadWithDispatchServlet$1"/>
     <Method name="onDataAvailable"/>
     <Bug pattern="RR_NOT_CHECKED"/>
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.startup.FastNonSecureRandom"/>
+    <Class name="com.alx.enterprise.webtier.startup.FastNonSecureRandom"/>
     <Or>
       <Method name="nextBytes"/>
       <Method name="setSeed"/>
@@ -2116,7 +2116,7 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.startup.TesterServletWithAnnotations"/>
+    <Class name="com.alx.enterprise.webtier.startup.TesterServletWithAnnotations"/>
     <Or>
       <Field name="envEntry2"/>
       <Field name="envEntry3"/>
@@ -2127,55 +2127,55 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.startup.TesterServletWithLifeCycleMethods"/>
+    <Class name="com.alx.enterprise.webtier.startup.TesterServletWithLifeCycleMethods"/>
     <Field name="result"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <Or>
-      <Class name="org.apache.catalina.startup.TestListener$SCL" />
-      <Class name="org.apache.catalina.startup.TestListener$SCL3" />
+      <Class name="com.alx.enterprise.webtier.startup.TestListener$SCL" />
+      <Class name="com.alx.enterprise.webtier.startup.TestListener$SCL3" />
     </Or>
     <Method name="contextInitialized" />
     <Bug code="ST" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.startup.TestTomcatClassLoader$ClassLoaderReport"/>
+    <Class name="com.alx.enterprise.webtier.startup.TestAlxClassLoader$ClassLoaderReport"/>
     <Bug code="Se"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.startup.TestTomcat$CustomContextConfig"/>
+    <Class name="com.alx.enterprise.webtier.startup.TestAlx$CustomContextConfig"/>
     <Field name="used"/>
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Test code - array is safe -->
-    <Class name="org.apache.catalina.startup.TomcatBaseTest"/>
+    <Class name="com.alx.enterprise.webtier.startup.AlxBaseTest"/>
     <Field name="booleans"/>
     <Bug pattern="MS_MUTABLE_ARRAY"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.EchoRpcTest" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.EchoRpcTest" />
     <Method name="run"/>
     <Bug code="REC" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.EchoRpcTest$SystemExit" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.EchoRpcTest$SystemExit" />
     <Bug code="Dm" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.IntrospectionUtils" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.IntrospectionUtils" />
     <Method name="findMethod"/>
     <Bug code="NP" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.LoadTest" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.LoadTest" />
     <Method name="memberAdded"/>
     <Bug code="NN" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.LoadTest" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.LoadTest" />
     <Method name="run"/>
     <Or>
       <Bug code="REC" />
@@ -2184,116 +2184,116 @@
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.demos.LoadTest$LoadMessage"/>
+    <Class name="com.alx.enterprise.webtier.tribes.demos.LoadTest$LoadMessage"/>
     <Method name="&lt;clinit&gt;"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.LoadTest$SystemExit" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.LoadTest$SystemExit" />
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.demos.MapDemo$SimpleTableDemo" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.MapDemo$SimpleTableDemo" />
     <Mehtod name="random"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.demos.MapDemo$SystemExit" />
+    <Class name="com.alx.enterprise.webtier.tribes.demos.MapDemo$SystemExit" />
     <Bug code="Dm" />
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.group.TestGroupChannelSenderConnections$TestMsg" />
+    <Class name="com.alx.enterprise.webtier.tribes.group.TestGroupChannelSenderConnections$TestMsg" />
     <Method name="&lt;init&gt;"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.channel.TestChannelOptionFlag" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestChannelOptionFlag" />
     <Method name="tearDown" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.channel.TestChannelStartStop" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestChannelStartStop" />
     <Method name="tearDown" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.channel.TestChannelStartStop" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestChannelStartStop" />
     <Method name="testDoublePartialStart" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.channel.TestChannelStartStop" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestChannelStartStop" />
     <Method name="testFalseOption" />
     <Bug code="DE" />
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.test.channel.TestDataIntegrity$Data" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestDataIntegrity$Data" />
     <Method name="createRandomData"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.test.channel.TestMulticastPackages$Data" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestMulticastPackages$Data" />
     <Method name="createRandomData"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.channel.TestRemoteProcessException" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestRemoteProcessException" />
    <Bug code="Nm" />
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.test.channel.TestRemoteProcessException" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestRemoteProcessException" />
     <Method name="testDataSendSYNCACK"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.test.channel.TestRemoteProcessException$Data" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestRemoteProcessException$Data" />
     <Method name="createRandomData"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.catalina.tribes.test.channel.TestUdpPackages$Data" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.channel.TestUdpPackages$Data" />
     <Method name="createRandomData"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.interceptors.TestNonBlockingCoordinator" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.interceptors.TestNonBlockingCoordinator" />
     <Method name="testCoord1" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.membership.TestTcpFailureDetector" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.membership.TestTcpFailureDetector" />
     <Method name="tearDown" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.transport.SocketReceive$1" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.transport.SocketReceive$1" />
     <Method name="run" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.transport.SocketTribesReceive$1" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.transport.SocketTribesReceive$1" />
     <Method name="run" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.transport.SocketTribesReceive" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.transport.SocketTribesReceive" />
     <Method name="main" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.tribes.test.transport.SocketValidateReceive$1" />
+    <Class name="com.alx.enterprise.webtier.tribes.test.transport.SocketValidateReceive$1" />
     <Method name="run" />
     <Bug code="DE" />
   </Match>
   <Match>
-    <Class name="org.apache.catalina.users.DataSourceUserDatabaseTests"/>
+    <Class name="com.alx.enterprise.webtier.users.DataSourceUserDatabaseTests"/>
     <Or>
       <Method name="testBasicUserRoleDatabase"/>
       <Method name="testUserDatabase"/>
@@ -2307,36 +2307,36 @@
   </Match>
   <Match>
     <!-- Concrete Map type not affected -->
-    <Class name="org.apache.catalina.util.TestParameterMap" />
+    <Class name="com.alx.enterprise.webtier.util.TestParameterMap" />
     <Method name="testEntrySetImmutabilityAfterLocked" />
     <Bug pattern="DMI_ENTRY_SETS_MAY_REUSE_ENTRY_OBJECTS" />
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.catalina.valves.TestStuckThreadDetectionValve$StickingServlet"/>
+    <Class name="com.alx.enterprise.webtier.valves.TestStuckThreadDetectionValve$StickingServlet"/>
     <Field name="wasInterrupted"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Code is deliberately unused -->
     <Or>
-      <Class name="org.apache.catalina.webresources.AbstractTestFileResourceSet" />
-      <Class name="org.apache.catalina.webresources.TestDirResourceSet" />
-      <Class name="org.apache.catalina.webresources.TestJarResourceSet" />
-      <Class name="org.apache.catalina.webresources.TestJarResourceSetInternal" />
+      <Class name="com.alx.enterprise.webtier.webresources.AbstractTestFileResourceSet" />
+      <Class name="com.alx.enterprise.webtier.webresources.TestDirResourceSet" />
+      <Class name="com.alx.enterprise.webtier.webresources.TestJarResourceSet" />
+      <Class name="com.alx.enterprise.webtier.webresources.TestJarResourceSetInternal" />
     </Or>
     <Method name="testNoArgConstructor" />
     <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
   </Match>
   <Match>
     <!-- Return value ignored as this is a performance test -->
-    <Class name="org.apache.catalina.webresources.TestAbstractFileResourceSetPerformance" />
+    <Class name="com.alx.enterprise.webtier.webresources.TestAbstractFileResourceSetPerformance" />
     <Method name="testFileNameFiltering" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT"/>
   </Match>
   <Match>
     <!-- Return values are irrelevant as exceptions should be thrown -->
-    <Class name="org.apache.catalina.webresources.TestJarContents"/>
+    <Class name="com.alx.enterprise.webtier.webresources.TestJarContents"/>
     <Or>
       <Method name="testStringOutOfBoundExceptions"/>
       <Method name="testNullPointerExceptions"/>
@@ -2345,19 +2345,19 @@
   </Match>
   <Match>
     <!-- Use of hard-coded path is deliberate -->
-    <Class name="org.apache.catalina.webresources.TestStandardRoot" />
+    <Class name="com.alx.enterprise.webtier.webresources.TestStandardRoot" />
     <Method name="&lt;clinit&gt;" />
     <Bug pattern="DMI_HARDCODED_ABSOLUTE_FILENAME"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.coyote.TestIoTimeouts$EchoListener"/>
+    <Class name="com.alx.enterprise.web.crane.TestIoTimeouts$EchoListener"/>
     <Field name="t"/>
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.coyote.http11.filters.TestChunkedInputFilter$BodyReadServlet"/>
+    <Class name="com.alx.enterprise.web.crane.http11.filters.TestChunkedInputFilter$BodyReadServlet"/>
     <Or>
       <Field name="countRead"/>
       <Field name="exceptionDuringRead"/>
@@ -2366,55 +2366,55 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.coyote.http11.filters.TestChunkedInputFilter$EchoHeaderServlet"/>
+    <Class name="com.alx.enterprise.web.crane.http11.filters.TestChunkedInputFilter$EchoHeaderServlet"/>
     <Field name="exceptionDuringRead"/>
     <Bug pattern="MSF_MUTABLE_SERVLET_FIELD"/>
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.coyote.http11.TestHttp11Processor"/>
+    <Class name="com.alx.enterprise.web.crane.http11.TestHttp11Processor"/>
     <Field name="bug55772IsSecondRequest"/>
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Test code - and echoing a header should be safe anyway -->
-    <Class name="org.apache.coyote.http11.upgrade.TestUpgrade$UpgradeServlet"/>
+    <Class name="com.alx.enterprise.web.crane.http11.upgrade.TestUpgrade$UpgradeServlet"/>
     <Method name="doGet"/>
     <Bug pattern="HRS_REQUEST_PARAMETER_TO_HTTP_HEADER"/>
   </Match>
   <Match>
     <!-- Single use is OK for this test -->
-    <Class name="org.apache.coyote.http2.Http2TestBase$LargeHeaderServlet" />
+    <Class name="com.alx.enterprise.web.crane.http2.Http2TestBase$LargeHeaderServlet" />
     <Method name="doGet"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Latch isn't essential so no need to check return -->
-    <Class name="org.apache.coyote.http2.TestAsyncTimeout"/>
+    <Class name="com.alx.enterprise.web.crane.http2.TestAsyncTimeout"/>
     <Method name="testTimeout"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED"/>
   </Match>
   <Match>
     <!-- Single use is OK for this test -->
-    <Class name="org.apache.coyote.http2.TestHttp2Limits" />
+    <Class name="com.alx.enterprise.web.crane.http2.TestHttp2Limits" />
     <Method name="doTestHeaderLimits"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Result is negated to compare result when order is reversed -->
-    <Class name="org.apache.el.TestELEvaluation" />
+    <Class name="com.alx.enterprise.el.TestELEvaluation" />
     <Method name="compareBoth" />
     <Bug pattern="RV_NEGATING_RESULT_OF_COMPARETO" />
   </Match>
   <Match>
     <!-- Performance test so results ignored -->
-    <Class name="org.apache.jasper.compiler.TesterValidator" />
+    <Class name="com.alx.enterprise.web.jasper.compiler.TesterValidator" />
     <Method name="doTestBug53867" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
   </Match>
   <Match>
     <!-- Test is single threaded. Syncs not required. -->
-    <Class name="org.apache.jasper.util.FastRemovalDequeue" />
+    <Class name="com.alx.enterprise.web.jasper.util.FastRemovalDequeue" />
     <Or>
       <Field name="first" />
       <Field name="last" />
@@ -2423,13 +2423,13 @@
   </Match>
   <Match>
     <!-- Not single use -->
-    <Class name="org.apache.juli.TestClassLoaderLogManager$LoggerCreateThread" />
+    <Class name="com.alx.enterprise.logging.TestClassLoaderLogManager$LoggerCreateThread" />
     <Method name="run"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE"/>
   </Match>
   <Match>
     <!-- Field set via injection-->
-    <Class name="org.apache.naming.TesterInjectionServlet" />
+    <Class name="com.alx.enterprise.naming.TesterInjectionServlet" />
     <Or>
       <Field name="property1" />
       <Field name="property3" />
@@ -2438,7 +2438,7 @@
   </Match>
   <Match>
     <!-- Deliberate hack for the purposes of the test -->
-    <Class name="org.apache.naming.TesterInjectionServlet" />
+    <Class name="com.alx.enterprise.naming.TesterInjectionServlet" />
     <Or>
       <Field name="property2"/>
       <Field name="property2a"/>
@@ -2448,51 +2448,51 @@
   <Match>
     <!-- Use of statics is unavoidable in all cases -->
     <!-- Better to use it consistently rather than only where necessary -->
-    <Class name="org.apache.tomcat.jdbc.pool.interceptor.TestInterceptor" />
+    <Class name="com.alx.enterprise.web.jdbc.pool.interceptor.TestInterceptor" />
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- The name random is reused -->
-    <Class name="org.apache.tomcat.jdbc.test.CreateTestTable" />
+    <Class name="com.alx.enterprise.web.jdbc.test.CreateTestTable" />
     <Method name="getRandom"/>
     <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE" />
   </Match>
   <Match>
     <!-- The name shadowing is deliberate -->
     <Or>
-      <Class name="org.apache.tomcat.jdbc.test.driver.Connection" />
-      <Class name="org.apache.tomcat.jdbc.test.driver.Driver" />
-      <Class name="org.apache.tomcat.jdbc.test.driver.ResultSet" />
+      <Class name="com.alx.enterprise.web.jdbc.test.driver.Connection" />
+      <Class name="com.alx.enterprise.web.jdbc.test.driver.Driver" />
+      <Class name="com.alx.enterprise.web.jdbc.test.driver.ResultSet" />
     </Or>
     <Bug pattern="NM_SAME_SIMPLE_NAME_AS_INTERFACE" />
   </Match>
   <Match>
     <!-- The call with the ignored return value is used to ensure the pool -->
     <!-- thinks the connection is being used.                              -->
-    <Class name="org.apache.tomcat.jdbc.test.AbandonPercentageTest" />
+    <Class name="com.alx.enterprise.web.jdbc.test.AbandonPercentageTest" />
     <Method name="testResetConnection" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED" />
   </Match>
   <Match>
     <!-- A number of the tests include performance tests -->
-    <Class name="org.apache.tomcat.jdbc.test.DefaultTestCase" />
+    <Class name="com.alx.enterprise.web.jdbc.test.DefaultTestCase" />
     <Method name="tearDown" />
     <Bug pattern="DM_GC" />
   </Match>
   <Match>
     <!-- Test does not explicitly close statement deliberately -->
-    <Class name="org.apache.tomcat.jdbc.test.StatementFinalizerTest" />
+    <Class name="com.alx.enterprise.web.jdbc.test.StatementFinalizerTest" />
     <Method name="testStatementFinalization" />
     <Bug pattern="ODR_OPEN_DATABASE_RESOURCE"/>
   </Match>
   <Match>
     <!-- Choice of name is deliberate -->
-    <Class name="org.apache.tomcat.jdbc.test.TestException" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestException" />
     <Bug pattern="NM_CLASS_NOT_EXCEPTION" />
   </Match>
   <Match>
     <!-- Testing auto-close so connections not explicitly closed -->
-    <Class name="org.apache.tomcat.jdbc.test.TestGCClose" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestGCClose" />
     <Or>
       <Method name="testGCStop" />
       <Method name="testClose" />
@@ -2501,25 +2501,25 @@
    </Match>
   <Match>
     <!-- SQL is from config so is considered safe -->
-    <Class name="org.apache.tomcat.jdbc.test.TestSlowQueryReport" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestSlowQueryReport" />
     <Method name="testFastSql" />
     <Bug pattern="SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" />
   </Match>
   <Match>
     <!-- Use of static is unavoidable -->
-    <Class name="org.apache.tomcat.jdbc.test.TestStatementCache" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestStatementCache" />
     <Method name="tearDown" />
     <Bug code="ST" />
   </Match>
   <Match>
     <!-- SQL is from generated in test code so is considered safe -->
-    <Class name="org.apache.tomcat.jdbc.test.TestStatementCache" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestStatementCache" />
     <Method name="testMaxCacheSize" />
     <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
   </Match>
   <Match>
     <!-- Tests throw exceptions so connections are never created -->
-    <Class name="org.apache.tomcat.jdbc.test.TestValidationQueryTimeout" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestValidationQueryTimeout" />
     <Or>
       <Method name="testValidationQueryTimeoutOnConnection" />
       <Method name="testValidationInvalidOnConnection" />
@@ -2529,12 +2529,12 @@
   </Match>
   <Match>
     <!-- Statics used to work around API limitations -->
-    <Class name="org.apache.tomcat.jdbc.test.TestValidationQueryTimeout" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TestValidationQueryTimeout" />
     <Field name="isTimeoutSet" />
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.jdbc.test.TwoDataSources" />
+    <Class name="com.alx.enterprise.web.jdbc.test.TwoDataSources" />
     <Method name="testTwoDataSources" />
     <Or>
       <!-- The object creation should fail -->
@@ -2544,18 +2544,18 @@
     </Or>
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.http.TestCookieParsing$EchoCookieHeader"/>
+    <Class name="com.alx.enterprise.web.util.http.TestCookieParsing$EchoCookieHeader"/>
     <Method name="service"/>
     <Bug pattern="XSS_REQUEST_PARAMETER_TO_SERVLET_WRITER"/>
   </Match>
   <Match>
     <!-- No performance issue as there is no DNS resolution -->
-    <Class name="org.apache.tomcat.util.bcel.TesterPerformance" />
+    <Class name="com.alx.enterprise.web.util.bcel.TesterPerformance" />
     <Method name="testClassParserPerformance" />
     <Bug pattern="DMI_COLLECTION_OF_URLS" />
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.net.TestSsl" />
+    <Class name="com.alx.enterprise.web.util.net.TestSsl" />
     <Or>
       <Method name="testRenegotiateFail" />
       <Method name="testRenegotiateWorks" />
@@ -2564,7 +2564,7 @@
   </Match>
   <Match>
     <!-- Path is designed to test edge cases and does not have to exist-->
-    <Class name="org.apache.tomcat.util.buf.TesterUriUtilBase" />
+    <Class name="com.alx.enterprise.web.util.buf.TesterUriUtilBase" />
     <Or>
       <Method name="testBuildJarUrl01"/>
       <Method name="testBuildJarUrl02"/>
@@ -2575,7 +2575,7 @@
   </Match>
   <Match>
     <!-- Return value ignored as this is a performance test -->
-    <Class name="org.apache.tomcat.util.http.parser.TesterParserPerformance" />
+    <Class name="com.alx.enterprise.web.util.http.parser.TesterParserPerformance" />
     <Or>
       <Method name="doLookupTest" />
       <Method name="doLookupTestCheck" />
@@ -2584,25 +2584,25 @@
   </Match>
   <Match>
     <!-- Object not used as this is a performance test -->
-    <Class name="org.apache.tomcat.util.http.TesterParametersPerformance" />
+    <Class name="com.alx.enterprise.web.util.http.TesterParametersPerformance" />
     <Method name="doCreateString" />
     <Bug pattern="UC_USELESS_OBJECT" />
   </Match>
   <Match>
     <!-- Return value ignored because an exception is expected -->
-    <Class name="org.apache.tomcat.util.net.TestTLSClientHelloExtractor" />
+    <Class name="com.alx.enterprise.web.util.net.TestTLSClientHelloExtractor" />
     <Method name="doTestInputMalformed" />
     <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
   </Match>
   <Match>
     <!-- Have to do this to get the set of scanned classes as we only
          provide the SCI class name not an SCI instance. -->
-    <Class name="org.apache.tomcat.util.scan.FooSCI"/>
+    <Class name="com.alx.enterprise.web.util.scan.FooSCI"/>
     <Mehtod name="onStartup"/>
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.threads.TestLimitLatch" />
+    <Class name="com.alx.enterprise.web.util.threads.TestLimitLatch" />
     <Or>
       <Method name="waitForThreadToStop" />
       <Method name="testTenWait" />
@@ -2610,7 +2610,7 @@
     <Bug pattern="NN_NAKED_NOTIFY " />
   </Match>
   <Match>
-    <Class name="org.apache.tomcat.util.threads.TestLimitLatch$TestThread" />
+    <Class name="com.alx.enterprise.web.util.threads.TestLimitLatch$TestThread" />
      <Method name="run" />
      <Or>
       <Bug pattern="WA_NOT_IN_LOOP" />
@@ -2619,46 +2619,46 @@
   </Match>
   <Match>
     <!-- Array contents is not mutated -->
-    <Class name="org.apache.tomcat.websocket.pojo.TestEncodingDecoding$MsgByte"/>
+    <Class name="com.alx.enterprise.web.websocket.pojo.TestEncodingDecoding$MsgByte"/>
     <Field name="data"/>
     <Bug pattern="VO_VOLATILE_REFERENCE_TO_ARRAY"/>
   </Match>
   <Match>
     <!-- Statics are used deliberately as they are simpler -->
-    <Class name="org.apache.tomcat.websocket.server.TestClose" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestClose" />
     <Method name="setUp" />
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Statics are used deliberately as they are simpler -->
-    <Class name="org.apache.tomcat.websocket.server.TestWsRemoteEndpointImplServerDeadlock" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestWsRemoteEndpointImplServerDeadlock" />
     <Method name="testTemporaryDeadlockOnClientClose" />
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Statics are used deliberately as they are simpler -->
-    <Class name="org.apache.tomcat.websocket.server.TestWsRemoteEndpointImplServerDeadlock$Bug66508Endpoint" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestWsRemoteEndpointImplServerDeadlock$Bug66508Endpoint" />
     <Method name="onOpen" />
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Return value of latch is intentionally ignored -->
     <Or>
-      <Class name="org.apache.tomcat.websocket.TestWebSocketFrameClient"/>
-      <Class name="org.apache.tomcat.websocket.TestWebSocketFrameClientSSL"/>
+      <Class name="com.alx.enterprise.web.websocket.TestWebSocketFrameClient"/>
+      <Class name="com.alx.enterprise.web.websocket.TestWebSocketFrameClientSSL"/>
     </Or>
     <Method name="testConnectToServerEndpoint"/>
     <Bug pattern="RV_RETURN_VALUE_IGNORED"/>
   </Match>
   <Match>
     <!-- Statics are used deliberately as they are simpler -->
-    <Class name="org.apache.tomcat.websocket.TestWsSubprotocols$SubProtocolsEndpoint" />
+    <Class name="com.alx.enterprise.web.websocket.TestWsSubprotocols$SubProtocolsEndpoint" />
     <Field name="subprotocols" />
     <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
   </Match>
   <Match>
     <!-- Statics are used deliberately as they are simpler -->
-    <Class name="org.apache.tomcat.websocket.TestWsWebSocketContainerTimeoutServer$ConstantTxEndpoint" />
+    <Class name="com.alx.enterprise.web.websocket.TestWsWebSocketContainerTimeoutServer$ConstantTxEndpoint" />
     <Or>
       <Field name="exception" />
       <Field name="running" />
@@ -2668,7 +2668,7 @@
   </Match>
   <Match>
     <!-- Code is deliberately unused -->
-    <Class name="org.apache.tomcat.websocket.server.TestUriTemplate" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestUriTemplate" />
     <Or>
       <Method name="testBasicPrefix" />
       <Method name="testDuplicate01" />
@@ -2683,7 +2683,7 @@
   </Match>
   <Match>
     <!-- Exception thrown so return value ignored -->
-    <Class name="org.apache.tomcat.websocket.server.TestUriTemplate" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestUriTemplate" />
     <Or>
       <Method name="testPrefixOneOfTwo" />
       <Method name="testPrefixTwoOfTwo" />
@@ -2693,7 +2693,7 @@
   </Match>
   <Match>
       <!-- There is no null check - SpotBugs bug? -->
-    <Class name="org.apache.tomcat.websocket.server.TestWsServerContainer" />
+    <Class name="com.alx.enterprise.web.websocket.server.TestWsServerContainer" />
     <Method name="testBug58232" />
     <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
   </Match>

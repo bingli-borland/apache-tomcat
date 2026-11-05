@@ -41,7 +41,7 @@
 
     <filter>
         <filter-name>Request Dumper Filter</filter-name>
-        <filter-class>org.apache.catalina.filters.RequestDumperFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.RequestDumperFilter</filter-class>
     </filter>
 
     <filter>
@@ -70,7 +70,7 @@
     <!-- and X-XSS-Protection as they are page specific.                     -->
     <filter>
         <filter-name>HTTP header security filter</filter-name>
-        <filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
+        <filter-class>com.alx.enterprise.webtier.filters.HttpHeaderSecurityFilter</filter-class>
         <async-supported>true</async-supported>
         <init-param>
             <param-name>hstsEnabled</param-name>

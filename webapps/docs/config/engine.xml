@@ -72,7 +72,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.Engine</code> interface.
+        implement the <code>com.alx.enterprise.webtier.Engine</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -88,9 +88,9 @@
       <attribute name="jvmRoute" required="false">
         <p>Identifier which must be used in load balancing scenarios to enable
         session affinity. The identifier, which must be unique across all
-        Tomcat servers which participate in the cluster, will be appended to
+        Alx servers which participate in the cluster, will be appended to
         the generated session identifier, therefore allowing the front end
-        proxy to always forward a particular session to the same Tomcat
+        proxy to always forward a particular session to the same Alx
         instance.</p>
         <p>
             Note that the <code>jvmRoute</code> can also be set using the
@@ -128,7 +128,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>Engine</strong> is
-    <strong>org.apache.catalina.core.StandardEngine</strong>.
+    <strong>com.alx.enterprise.webtier.core.StandardEngine</strong>.
     It supports the following additional attributes (in addition to the
     common attributes listed above):</p>
 
@@ -172,7 +172,7 @@
   <subsection name="Logging">
 
     <p>An engine is associated with the
-       <code>org.apache.catalina.core.ContainerBase.[enginename]</code>
+       <code>com.alx.enterprise.webtier.core.ContainerBase.[enginename]</code>
        log category.  Note that the brackets are actually part of the name,
        don't omit them.</p>
 
@@ -195,7 +195,7 @@
 
 <source><![CDATA[<Engine name="Standalone" ...>
   ...
-  <Valve className="org.apache.catalina.valves.AccessLogValve"
+  <Valve className="com.alx.enterprise.webtier.valves.AccessLogValve"
          prefix="catalina_access_log" suffix=".txt"
          pattern="common"/>
   ...
@@ -214,7 +214,7 @@
     <strong>Engine</strong> is started or stopped, you can declare it by
     nesting a <strong>Listener</strong> element inside this element.  The
     class name you specify must implement the
-    <code>org.apache.catalina.LifecycleListener</code> interface, and
+    <code>com.alx.enterprise.webtier.LifecycleListener</code> interface, and
     it will be notified about the occurrence of the corresponding
     lifecycle events.  Configuration of such a listener looks like this:</p>
 
@@ -246,9 +246,9 @@
 
 <source><![CDATA[<Engine name="Standalone" ...>
   ...
-  <Valve className="org.apache.catalina.valves.RemoteHostValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteHostValve"
          allow=".*\.mycompany\.com|www\.yourcompany\.com"/>
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          deny="192.168.1.0/24"/>
   ...
 </Engine>]]></source>

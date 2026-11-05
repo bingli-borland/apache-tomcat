@@ -24,13 +24,13 @@
 
   <display-name>Tomcat Test Application</display-name>
   <description>
-     Used as part of the Tomcat unit tests when a full web application is
+     Used as part of the Alx unit tests when a full web application is
      required.
   </description>
 
   <servlet>
     <servlet-name>AllowByAnnotation</servlet-name>
-    <servlet-class>org.apache.catalina.core.TestStandardWrapper$SubclassAllowAllServlet</servlet-class>
+    <servlet-class>com.alx.enterprise.webtier.core.TestStandardWrapper$SubclassAllowAllServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AllowByAnnotation</servlet-name>
@@ -50,11 +50,11 @@
   </servlet>
 
   <post-construct>
-    <lifecycle-callback-class>org.apache.catalina.startup.TesterServletWithLifeCycleMethods</lifecycle-callback-class>
+    <lifecycle-callback-class>com.alx.enterprise.webtier.startup.TesterServletWithLifeCycleMethods</lifecycle-callback-class>
     <lifecycle-callback-method>postConstruct1</lifecycle-callback-method>
   </post-construct>
   <pre-destroy>
-    <lifecycle-callback-class>org.apache.catalina.startup.TesterServletWithLifeCycleMethods</lifecycle-callback-class>
+    <lifecycle-callback-class>com.alx.enterprise.webtier.startup.TesterServletWithLifeCycleMethods</lifecycle-callback-class>
     <lifecycle-callback-method>preDestroy1</lifecycle-callback-method>
   </pre-destroy>
 
@@ -63,7 +63,7 @@
     <env-entry-type>java.lang.Integer</env-entry-type>
     <env-entry-value>2</env-entry-value>
     <injection-target>
-      <injection-target-class>org.apache.catalina.startup.TesterServletWithAnnotations</injection-target-class>
+      <injection-target-class>com.alx.enterprise.webtier.startup.TesterServletWithAnnotations</injection-target-class>
       <injection-target-name>envEntry2</injection-target-name>
     </injection-target>
   </env-entry>
@@ -72,7 +72,7 @@
     <env-entry-type>java.lang.Integer</env-entry-type>
     <env-entry-value>33</env-entry-value>
     <injection-target>
-      <injection-target-class>org.apache.catalina.startup.TesterServletWithAnnotations</injection-target-class>
+      <injection-target-class>com.alx.enterprise.webtier.startup.TesterServletWithAnnotations</injection-target-class>
       <injection-target-name>envEntry3</injection-target-name>
     </injection-target>
   </env-entry>
@@ -89,7 +89,7 @@
 
   <servlet>
     <servlet-name>injection</servlet-name>
-    <servlet-class>org.apache.naming.TesterInjectionServlet</servlet-class>
+    <servlet-class>com.alx.enterprise.naming.TesterInjectionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>injection</servlet-name>
@@ -104,13 +104,13 @@
 
   <env-entry>
     <env-entry-name>env-entry/valid</env-entry-name>
-    <env-entry-type>org.apache.naming.TesterEnvEntry</env-entry-type>
+    <env-entry-type>com.alx.enterprise.naming.TesterEnvEntry</env-entry-type>
     <env-entry-value>valid</env-entry-value>
   </env-entry>
 
   <env-entry>
     <env-entry-name>env-entry/invalid</env-entry-name>
-    <env-entry-type>org.apache.naming.TesterEnvEntry</env-entry-type>
+    <env-entry-type>com.alx.enterprise.naming.TesterEnvEntry</env-entry-type>
     <env-entry-value>invalid</env-entry-value>
   </env-entry>
 
@@ -119,7 +119,7 @@
     <env-entry-type>java.lang.String</env-entry-type>
     <env-entry-value>inject-value-1</env-entry-value>
     <injection-target>
-      <injection-target-class>org.apache.naming.TesterInjectionServlet</injection-target-class>
+      <injection-target-class>com.alx.enterprise.naming.TesterInjectionServlet</injection-target-class>
       <injection-target-name>property1</injection-target-name>
     </injection-target>
   </env-entry>
@@ -129,7 +129,7 @@
     <env-entry-type>java.lang.String</env-entry-type>
     <env-entry-value>inject-value-2</env-entry-value>
     <injection-target>
-      <injection-target-class>org.apache.naming.TesterInjectionServlet</injection-target-class>
+      <injection-target-class>com.alx.enterprise.naming.TesterInjectionServlet</injection-target-class>
       <injection-target-name>property2</injection-target-name>
     </injection-target>
   </env-entry>
@@ -138,7 +138,7 @@
     <env-entry-name>env-entry/injectFieldNoType</env-entry-name>
     <env-entry-value>inject-value-3</env-entry-value>
     <injection-target>
-      <injection-target-class>org.apache.naming.TesterInjectionServlet</injection-target-class>
+      <injection-target-class>com.alx.enterprise.naming.TesterInjectionServlet</injection-target-class>
       <injection-target-name>property3</injection-target-name>
     </injection-target>
   </env-entry>
@@ -147,7 +147,7 @@
     <env-entry-name>env-entry/injectNoValue</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
     <injection-target>
-      <injection-target-class>org.apache.naming.TesterInjectionServlet</injection-target-class>
+      <injection-target-class>com.alx.enterprise.naming.TesterInjectionServlet</injection-target-class>
       <injection-target-name>property4</injection-target-name>
     </injection-target>
   </env-entry>

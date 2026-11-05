@@ -101,7 +101,7 @@
               <xsl:value-of select="$relative-path"/><xsl:value-of select="$home-logo"/>
             </xsl:variable>
             <div class="logo noPrint">
-              <a href="{$project/@href}"><img alt="Tomcat Home" src="{$src}"/></a>
+              <a href="{$project/@href}"><img alt="Alx Home" src="{$src}"/></a>
             </div>
           </xsl:if>
 
@@ -149,7 +149,7 @@
     <div id="footer">
     Copyright © 1999-<xsl:value-of select="$year"/>, The Apache Software Foundation
     <br/>
-    Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo
+    Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo
     are either registered trademarks or trademarks of the Apache Software
     Foundation.
     </div>

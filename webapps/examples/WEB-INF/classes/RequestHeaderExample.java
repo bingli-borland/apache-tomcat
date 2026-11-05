@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONFilter;
+import com.alx.enterprise.web.util.json.JSONFilter;
 
 import util.CookieFilter;
 import util.HTMLFilter;

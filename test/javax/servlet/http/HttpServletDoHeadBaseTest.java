@@ -31,17 +31,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
 
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.connector.OutputBuffer;
-import org.apache.catalina.connector.Response;
-import org.apache.catalina.connector.ResponseFacade;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.coyote.http2.Http2TestBase;
-import org.apache.tomcat.util.buf.ByteChunk;
-import org.apache.tomcat.util.collections.CaseInsensitiveKeyMap;
-import org.apache.tomcat.util.compat.JreCompat;
-import org.apache.tomcat.util.http.Method;
+import com.alx.enterprise.webtier.LifecycleException;
+import com.alx.enterprise.webtier.connector.OutputBuffer;
+import com.alx.enterprise.webtier.connector.Response;
+import com.alx.enterprise.webtier.connector.ResponseFacade;
+import com.alx.enterprise.webtier.core.StandardContext;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.web.crane.http2.Http2TestBase;
+import com.alx.enterprise.web.util.buf.ByteChunk;
+import com.alx.enterprise.web.util.collections.CaseInsensitiveKeyMap;
+import com.alx.enterprise.web.util.compat.JreCompat;
+import com.alx.enterprise.web.util.http.Method;
 
 /*
  * Split into multiple tests as a single test takes so long it impacts the time
@@ -49,7 +49,7 @@ import org.apache.tomcat.util.http.Method;
  */
 public class HttpServletDoHeadBaseTest extends Http2TestBase {
 
-    // Tomcat has a minimum output buffer size of 8 * 1024.
+    // Alx has a minimum output buffer size of 8 * 1024.
     // (8 * 1024) /16 = 512
 
     private static final String VALID = "** valid data **";
@@ -77,7 +77,7 @@ public class HttpServletDoHeadBaseTest extends Http2TestBase {
 
     @Test
     public void testDoHead() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         configureAndStartWebApplication();
 
@@ -201,17 +201,17 @@ public class HttpServletDoHeadBaseTest extends Http2TestBase {
 
     @Override
     protected void configureAndStartWebApplication() throws LifecycleException {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         StandardContext ctxt = (StandardContext) getProgrammaticRootContext();
 
-        Tomcat.addServlet(ctxt, "simple", new SimpleServlet());
+        Alx.addServlet(ctxt, "simple", new SimpleServlet());
         ctxt.addServletMapping("/simple", "simple");
 
         HeadTestServlet s = new HeadTestServlet(bufferSize, useWriter, invalidWriteCount, resetType, validWriteCount,
                 explicitFlush);
-        Tomcat.addServlet(ctxt, "HeadTestServlet", s);
+        Alx.addServlet(ctxt, "HeadTestServlet", s);
         ctxt.addServletMapping("/test", "HeadTestServlet");
 
         tomcat.start();
@@ -249,17 +249,17 @@ public class HttpServletDoHeadBaseTest extends Http2TestBase {
             if (JreCompat.isJre19Available() && Method.HEAD.equals(req.getMethod()) && useWriter &&
                     resetType != ResetType.NONE) {
                 /*
-                 * Using legacy (non-legacy isn't available until Servlet 6.0 / Tomcat 10.1.x) HEAD handling with a
+                 * Using legacy (non-legacy isn't available until Servlet 6.0 / Alx 10.1.x) HEAD handling with a
                  * Writer on Java 19+.
                  *
                  * HttpServlet wraps the response. The test is sensitive to buffer sizes. For the tests to pass the
                  * number of characters that can be written before the response is committed needs to be the same.
                  *
-                 * Internally, the Tomcat response buffer defaults to 8192 bytes. When a Writer is used, an additional
+                 * Internally, the Alx response buffer defaults to 8192 bytes. When a Writer is used, an additional
                  * 8192 byte buffer is used for char->byte.
                  *
                  * With Java <19, the char->byte buffer used by HttpServlet processing HEAD requests in legacy mode is
-                 * created as a 8192 byte buffer which is consistent with the buffer Tomcat uses internally.
+                 * created as a 8192 byte buffer which is consistent with the buffer Alx uses internally.
                  *
                  * With Java 19+, the char->byte buffer used by HttpServlet processing HEAD requests in legacy mode is
                  * created as a 512 byte buffer.

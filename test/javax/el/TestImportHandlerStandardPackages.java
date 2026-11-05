@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.tomcat.util.compat.JreCompat;
+import com.alx.enterprise.web.util.compat.JreCompat;
 
 public class TestImportHandlerStandardPackages {
 

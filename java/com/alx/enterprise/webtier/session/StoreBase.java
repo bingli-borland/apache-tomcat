@@ -1,0 +1,278 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.alx.enterprise.webtier.session;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.concurrent.locks.ReadWriteLock;
+
+import com.alx.enterprise.webtier.LifecycleException;
+import com.alx.enterprise.webtier.LifecycleState;
+import com.alx.enterprise.webtier.Manager;
+import com.alx.enterprise.webtier.Session;
+import com.alx.enterprise.webtier.Store;
+import com.alx.enterprise.webtier.util.CustomObjectInputStream;
+import com.alx.enterprise.webtier.util.LifecycleBase;
+import com.alx.enterprise.webtier.util.ToStringUtil;
+import com.alx.enterprise.web.util.concurrent.KeyedReentrantReadWriteLock;
+import com.alx.enterprise.web.util.res.StringManager;
+
+/**
+ * Abstract implementation of the {@link Store} interface to support most of the functionality required by a
+ * {@link Store}.
+ */
+public abstract class StoreBase extends LifecycleBase implements Store {
+
+    /**
+     * Default constructor.
+     */
+    public StoreBase() {
+    }
+
+    // ----------------------------------------------------- Instance Variables
+
+    /**
+     * The default store name, used for logging by the default {@link #getStoreName()} implementation. Concrete store
+     * implementations typically shadow this with their own name and override {@link #getStoreName()}.
+     */
+    protected static final String storeName = "StoreBase";
+
+    /**
+     * The property change support for this component.
+     */
+    protected final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    /**
+     * The string manager for this package.
+     */
+    protected static final StringManager sm = StringManager.getManager(StoreBase.class);
+
+    /**
+     * The Manager with which this Store is associated.
+     */
+    protected Manager manager;
+
+    /*
+     * Locks used to control concurrent access to session for persistence
+     */
+    private KeyedReentrantReadWriteLock sessionLocksById = new KeyedReentrantReadWriteLock();
+
+
+    // ------------------------------------------------------------- Properties
+
+    /**
+     * Return the name for this Store, used for logging.
+     *
+     * @return the store name
+     */
+    public String getStoreName() {
+        return storeName;
+    }
+
+
+    @Override
+    public void setManager(Manager manager) {
+        Manager oldManager = this.manager;
+        this.manager = manager;
+        support.firePropertyChange("manager", oldManager, this.manager);
+    }
+
+    @Override
+    public Manager getManager() {
+        return this.manager;
+    }
+
+
+    // --------------------------------------------------------- Public Methods
+
+    @Override
+    public ReadWriteLock getSessionStoreLock(String sessionId) {
+        return sessionLocksById.getLock(sessionId);
+    }
+
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
+    }
+
+    /**
+     * Get the keys of sessions that are to be expired. The default implementation returns all keys that are saved in
+     * the Store. Subclasses may override this to return only the keys of sessions that are actually to be expired.
+     *
+     * @return array of session keys
+     *
+     * @throws IOException if an input-/output error occurred
+     */
+    public String[] expiredKeys() throws IOException {
+        return keys();
+    }
+
+    /**
+     * Called by our background reaper thread to check if Sessions saved in our store are subject of being expired. If
+     * so expire the Session and remove it from the Store.
+     */
+    public void processExpires() {
+        String[] keys;
+
+        if (!getState().isAvailable()) {
+            return;
+        }
+
+        try {
+            keys = expiredKeys();
+        } catch (IOException ioe) {
+            manager.getContext().getLogger().error(sm.getString("store.keysFail"), ioe);
+            return;
+        }
+        if (manager.getContext().getLogger().isTraceEnabled()) {
+            manager.getContext().getLogger()
+                    .trace(getStoreName() + ": processExpires check number of " + keys.length + " sessions");
+        }
+
+        long timeNow = System.currentTimeMillis();
+
+        for (String key : keys) {
+            try {
+                Session session = load(key);
+                if (session == null) {
+                    continue;
+                }
+                int timeIdle = (int) ((timeNow - session.getThisAccessedTime()) / 1000L);
+                int maxInactive = session.getMaxInactiveInterval();
+                if (maxInactive <= 0 || timeIdle < maxInactive) {
+                    continue;
+                }
+                if (manager.getContext().getLogger().isTraceEnabled()) {
+                    manager.getContext().getLogger()
+                            .trace(getStoreName() + ": processExpires expire store session " + key);
+                }
+                boolean isLoaded = false;
+                if (manager instanceof PersistentManagerBase) {
+                    isLoaded = ((PersistentManagerBase) manager).isLoaded(key);
+                } else {
+                    try {
+                        if (manager.findSession(key) != null) {
+                            isLoaded = true;
+                        }
+                    } catch (IOException ioe) {
+                        // Ignore - session will be expired
+                    }
+                }
+                if (isLoaded) {
+                    // recycle old backup session
+                    session.recycle();
+                } else {
+                    // expire swapped out session
+                    session.expire();
+                }
+                remove(key);
+            } catch (Exception e) {
+                manager.getContext().getLogger().error(sm.getString("store.expireFail", key), e);
+                try {
+                    remove(key);
+                } catch (IOException ioe) {
+                    manager.getContext().getLogger().error(sm.getString("store.removeFail", key), ioe);
+                }
+            }
+        }
+    }
+
+
+    // --------------------------------------------------------- Protected Methods
+
+    /**
+     * Create the object input stream to use to read a session from the store. Subclasses <b>must</b> have set the
+     * thread context class loader before calling this method.
+     *
+     * @param is The input stream provided by the subclass that will provide the data for a session
+     *
+     * @return An appropriately configured ObjectInputStream from which the session can be read.
+     *
+     * @throws IOException if a problem occurs creating the ObjectInputStream
+     */
+    protected ObjectInputStream getObjectInputStream(InputStream is) throws IOException {
+        BufferedInputStream bis = new BufferedInputStream(is);
+
+        CustomObjectInputStream ois;
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+        if (manager instanceof ManagerBase) {
+            ManagerBase managerBase = (ManagerBase) manager;
+            ois = new CustomObjectInputStream(bis, classLoader, manager.getContext().getLogger(),
+                    managerBase.getSessionAttributeValueClassNamePattern(),
+                    managerBase.getWarnOnSessionAttributeFilterFailure());
+        } else {
+            ois = new CustomObjectInputStream(bis, classLoader);
+        }
+
+        return ois;
+    }
+
+
+    @Override
+    protected void initInternal() {
+        // NOOP
+    }
+
+
+    /**
+     * Start this component and implement the requirements of {@link LifecycleBase#startInternal()}.
+     *
+     * @exception LifecycleException if this component detects a fatal error that prevents this component from being
+     *                                   used
+     */
+    @Override
+    protected void startInternal() throws LifecycleException {
+
+        setState(LifecycleState.STARTING);
+    }
+
+
+    /**
+     * Stop this component and implement the requirements of {@link LifecycleBase#stopInternal()}.
+     *
+     * @exception LifecycleException if this component detects a fatal error that prevents this component from being
+     *                                   used
+     */
+    @Override
+    protected void stopInternal() throws LifecycleException {
+
+        setState(LifecycleState.STOPPING);
+    }
+
+
+    @Override
+    protected void destroyInternal() {
+        // NOOP
+    }
+
+
+    @Override
+    public String toString() {
+        return ToStringUtil.toString(this, manager);
+    }
+}

@@ -26,7 +26,7 @@
 
   <function>
     <name>trim</name>
-    <function-class>org.apache.el.TesterFunctions</function-class>
+    <function-class>com.alx.enterprise.el.TesterFunctions</function-class>
     <function-signature>
       java.lang.String trim(java.lang.String)
     </function-signature>
@@ -34,7 +34,7 @@
 
   <function>
     <name>concat</name>
-    <function-class>org.apache.el.TesterFunctions</function-class>
+    <function-class>com.alx.enterprise.el.TesterFunctions</function-class>
     <function-signature>
       java.lang.String concat(java.lang.String[])
     </function-signature>
@@ -42,7 +42,7 @@
 
   <function>
     <name>toArray</name>
-    <function-class>org.apache.el.TesterFunctions</function-class>
+    <function-class>com.alx.enterprise.el.TesterFunctions</function-class>
     <!-- Do not change whitespace in signature below. It is used to test for
          correctness in o.a.jasper.compiler.Validator. -->
     <function-signature>
@@ -53,7 +53,7 @@
 
   <function>
     <name>toArrayB</name>
-    <function-class>org.apache.el.TesterFunctions</function-class>
+    <function-class>com.alx.enterprise.el.TesterFunctions</function-class>
     <!-- Do not change whitespace in signature below. It is used to test for
          correctness in o.a.jasper.compiler.Validator. -->
     <function-signature>

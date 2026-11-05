@@ -14,5 +14,5 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@page import="org.apache.catalina.authenticator.DigestAuthenticator.AuthDigest"%>
+<%@page import="com.alx.enterprise.webtier.authenticator.DigestAuthenticator.AuthDigest"%>
 <p>01-${ AuthDigest.values().stream().count() }</p>

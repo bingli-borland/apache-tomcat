@@ -35,7 +35,7 @@
 <section name="Introduction">
   <p>
   The channel sender component is responsible for delivering outgoing cluster messages over the network.
-  In the default implementation, <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>,
+  In the default implementation, <code>com.alx.enterprise.webtier.tribes.transport.ReplicationTransmitter</code>,
   the sender is a fairly empty shell with not much logic around a fairly complex <code>&lt;Transport&gt;</code>
   component the implements the actual delivery mechanism.
   </p>
@@ -43,7 +43,7 @@
 
 <section name="Concurrent Parallel Delivery">
   <p>
-  In the default <code>transport</code> implementation, <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>,
+  In the default <code>transport</code> implementation, <code>com.alx.enterprise.webtier.tribes.transport.nio.PooledParallelSender</code>,
   Apache Tribes implements what we like to call &quot;Concurrent Parallel Delivery&quot;.
   This means that we can send a message to more than one destination at the same time(parallel), and
   deliver two messages to the same destination at the same time(concurrent). Combine these two and we have
@@ -63,8 +63,8 @@
    you would set all the socket options for the outgoing messages. Please see its attributes below.
    There are two implementations, in a similar manner to the <a href="cluster-receiver.html">receiver</a>, one is non-blocking
    based and the other is built using blocking IO. <br/>
-   <code>org.apache.catalina.tribes.transport.bio.PooledMultiSender</code> is the blocking implementation and
-   <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code>.
+   <code>com.alx.enterprise.webtier.tribes.transport.bio.PooledMultiSender</code> is the blocking implementation and
+   <code>com.alx.enterprise.webtier.tribes.transport.nio.PooledParallelSender</code>.
    Parallel delivery is not available for the blocking implementation due to the fact that it is blocking a thread on sending data.
  </p>
 </section>
@@ -73,16 +73,16 @@
   <subsection name="Common Sender Attributes">
     <attributes>
       <attribute name="className" required="true">
-        Required, only available implementation is <code>org.apache.catalina.tribes.transport.ReplicationTransmitter</code>
+        Required, only available implementation is <code>com.alx.enterprise.webtier.tribes.transport.ReplicationTransmitter</code>
       </attribute>
     </attributes>
   </subsection>
   <subsection name="Common Transport Attributes">
     <attributes>
       <attribute name="className" required="true">
-        Required, an implementation of the <code>org.apache.catalina.tribes.transport.MultiPointSender</code>.<br/>
-        Non-blocking implementation is <code>org.apache.catalina.tribes.transport.nio.PooledParallelSender</code><br/>
-        Blocking implementation is <code>org.apache.catalina.tribes.transport.bio.PooledMultiSender</code>
+        Required, an implementation of the <code>com.alx.enterprise.webtier.tribes.transport.MultiPointSender</code>.<br/>
+        Non-blocking implementation is <code>com.alx.enterprise.webtier.tribes.transport.nio.PooledParallelSender</code><br/>
+        Blocking implementation is <code>com.alx.enterprise.webtier.tribes.transport.bio.PooledMultiSender</code>
       </attribute>
       <attribute name="rxBufSize" required="false">
         The receive buffer size on the socket.
@@ -155,7 +155,7 @@
       </attribute>
       <attribute name="throwOnFailedAck" required="false">
        Boolean value, default value is <code>true</code>.
-       If set to true, the sender will throw a <code>org.apache.catalina.tribes.RemoteProcessException</code>
+       If set to true, the sender will throw a <code>com.alx.enterprise.webtier.tribes.RemoteProcessException</code>
        when we receive a negative ack from the remote member.
        Set to false, and Tribes will treat a positive ack the same way as a negative ack, that the message was received.
       </attribute>

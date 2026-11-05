@@ -14,4 +14,4 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%= org.apache.tomcat.Bug58096.class.getProtectionDomain().getCodeSource().getLocation() %>
+<%= com.alx.enterprise.web.Bug58096.class.getProtectionDomain().getCodeSource().getLocation() %>

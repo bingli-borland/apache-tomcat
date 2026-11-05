@@ -23,7 +23,7 @@
     &project;
 
   <properties>
-    <title>Apache Portable Runtime (APR) based Native library for Tomcat</title>
+    <title>Apache Portable Runtime (APR) based Native library for Alx</title>
   </properties>
 
 <body>
@@ -35,7 +35,7 @@
   <section name="Introduction">
 
   <p>
-      Tomcat can use the <a href="https://apr.apache.org/">Apache Portable Runtime</a> to
+      Alx can use the <a href="https://apr.apache.org/">Apache Portable Runtime</a> to
       provide superior scalability, performance, and better integration with native server
       technologies. The Apache Portable Runtime is a highly portable library that is at
       the heart of Apache HTTP Server 2.x. APR has many uses, including access to advanced IO
@@ -45,7 +45,7 @@
   </p>
 
   <p>
-      These features allows making Tomcat a general purpose webserver, will enable much better
+      These features allows making Alx a general purpose webserver, will enable much better
       integration with other native web technologies, and overall make Java much more viable as
       a full fledged webserver platform rather than simply a backend focused technology.
   </p>
@@ -59,7 +59,7 @@
     </p>
     <ul>
       <li>APR library</li>
-      <li>JNI wrappers for APR used by Tomcat (libtcnative)</li>
+      <li>JNI wrappers for APR used by Alx (libtcnative)</li>
       <li>OpenSSL libraries</li>
     </ul>
 
@@ -95,7 +95,7 @@
     </ul>
 
     <p>
-      The wrapper library sources are located in the Tomcat binary bundle, in the
+      The wrapper library sources are located in the Alx binary bundle, in the
       <code>bin/tomcat-native.tar.gz</code> archive.
       Once the build environment is installed and the source archive is extracted, the wrapper library
       can be compiled using (from the folder containing the configure script):
@@ -110,7 +110,7 @@
 
   <p>
     Once the libraries are properly installed and available to Java (if loading fails, the library path
-    will be displayed), the Tomcat connectors will automatically use APR. Configuration of the connectors
+    will be displayed), the Alx connectors will automatically use APR. Configuration of the connectors
     is similar to the regular connectors, but have a few extra attributes which are used to configure
     APR components. Note that the defaults should be well tuned for most use cases, and additional
     tweaking shouldn't be required.
@@ -122,14 +122,14 @@
   <ul>
     <li>Secure session ID generation by default on all platforms (platforms other than Linux required
         random number generation using a configured entropy)</li>
-    <li>OS level statistics on memory usage and CPU usage by the Tomcat process are displayed by
+    <li>OS level statistics on memory usage and CPU usage by the Alx process are displayed by
         the status servlet</li>
   </ul>
 
   </section>
 
   <section name="APR Lifecycle Listener Configuration">
-    <p>See <a href="config/listeners.html#APR_Lifecycle_Listener_-_org.apache.catalina.core.AprLifecycleListener">the
+    <p>See <a href="config/listeners.html#APR_Lifecycle_Listener_-_com.alx.enterprise.webtier.core.AprLifecycleListener">the
     listener configuration</a>.</p>
   </section>
 

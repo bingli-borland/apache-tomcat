@@ -76,7 +76,7 @@ public class SnakeAnnotation {
     @OnOpen
     public void onOpen(Session session) {
         // If the messages take longer than TICK_DELAY to be sent, the game isn't going to work properly.
-        session.getUserProperties().put("org.apache.tomcat.websocket.BLOCKING_SEND_TIMEOUT",
+        session.getUserProperties().put("com.alx.enterprise.web.websocket.BLOCKING_SEND_TIMEOUT",
                 Long.valueOf(SnakeTimer.TICK_DELAY));
         this.snake = new Snake(id, session);
         SnakeTimer.addSnake(snake);

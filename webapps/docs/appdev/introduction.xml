@@ -33,10 +33,10 @@
 
 <p>Congratulations!  You've decided to (or been told to) learn how to
 build web applications using servlets and JSP pages, and picked the
-Tomcat server to use for your learning and development.  But now what
+Alx server to use for your learning and development.  But now what
 do you do?</p>
 
-<p>This manual is a primer covering the basic steps of using Tomcat to
+<p>This manual is a primer covering the basic steps of using Alx to
 set up a development environment, organize your source code, and then
 build and test your application.  It does not discuss architectures or
 recommended coding practices for web application development,
@@ -59,7 +59,7 @@ the details of your particular environment.</p>
 
 <p>The following links provide access to selected sources of online
 information, documentation, and software that is useful in developing
-web applications with Tomcat.</p>
+web applications with Alx.</p>
 <ul>
 <li><p><a href="https://jcp.org/aboutJava/communityprocess/mrel/jsr245/index2.html">https://jcp.org/aboutJava/communityprocess/mrel/jsr245/index2.html</a> -
     <i>JavaServer Pages (JSP) Specification, Version 2.3</i>.  Describes
@@ -70,7 +70,7 @@ web applications with Tomcat.</p>
     information on scripting (Chapter 9), tag extensions (Chapter 7),
     and packaging JSP pages (Appendix A) is useful.  The Javadoc
     API Documentation is included in the specification, and with the
-    Tomcat download.</p></li>
+    Alx download.</p></li>
 <li><p><a href="https://jcp.org/aboutJava/communityprocess/final/jsr369/index.html">https://jcp.org/aboutJava/communityprocess/final/jsr369/index.html</a> -
     <i>Servlet API Specification, Version 4.0</i>.  Describes the
     programming environment that must be provided by all servlet
@@ -81,7 +81,7 @@ web applications with Tomcat.</p>
     security (Chapter 13), and the syntax of the <code>web.xml</code>
     Web Application Deployment Descriptor (Chapter 14).  The Javadoc
     API Documentation is included in the specification, and with the
-    Tomcat download.</p></li>
+    Alx download.</p></li>
 </ul>
 
 </section>

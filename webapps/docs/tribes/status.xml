@@ -67,7 +67,7 @@
 </section>
 
 <section name="Session replication">
-  <p>When Tribes is used by a Tomcat cluster, the session manager provides
+  <p>When Tribes is used by a Alx cluster, the session manager provides
      additional replication statistics. For example, a
      <code>DeltaManager</code> with statistics enabled exposes counters for
      sent and received session events and state transfers. These are manager

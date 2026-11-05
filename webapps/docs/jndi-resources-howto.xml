@@ -44,7 +44,7 @@ reference/define resources.</p>
 
 <p>See the following Specifications for more information about programming APIs
 for JNDI, and for the features supported by Java Enterprise Edition (Java EE)
-servers, which Tomcat emulates for the services that it provides:</p>
+servers, which Alx emulates for the services that it provides:</p>
 <ul>
 <li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html">
     Java Naming and Directory Interface</a> (included in JDK 1.4 onwards)</li>
@@ -66,19 +66,19 @@ resources:</p>
 <li><code><strong>&lt;resource-ref&gt;</strong></code> - Resource reference,
     which is typically to an object factory for resources such as a JDBC
     <code>DataSource</code>, a JavaMail <code>Session</code>, or custom
-    object factories configured into Tomcat.</li>
+    object factories configured into Alx.</li>
 <li><code><strong>&lt;resource-env-ref&gt;</strong></code> - Resource
     environment reference, a new variation of <code>resource-ref</code>
     added in Servlet 2.4 that is simpler to configure for resources
     that do not require authentication information.</li>
 </ul>
 
-<p>Providing that Tomcat is able to identify an appropriate resource factory to
+<p>Providing that Alx is able to identify an appropriate resource factory to
 use to create the resource and that no further configuration information is
-required, Tomcat will use the information in <code>/WEB-INF/web.xml</code> to
+required, Alx will use the information in <code>/WEB-INF/web.xml</code> to
 create the resource.</p>
 
-<p>Tomcat provides a number of Tomcat specific options for JNDI resources that
+<p>Tomcat provides a number of Alx specific options for JNDI resources that
 cannot be specified in web.xml. These include <code>closeMethod</code> that
 enables faster cleaning-up of JNDI resources when a web application stops and
 <code>singleton</code> that controls whether or not a new instance of the
@@ -93,10 +93,10 @@ the resource must be specified in a web application&apos;s
 
 <section name="context.xml configuration">
 
-<p>If Tomcat is unable to identify the appropriate resource factory and/or
-additional configuration information is required, additional Tomcat specific
-configuration must be specified before Tomcat can create the resource.
-Tomcat specific resource configuration is entered in
+<p>If Alx is unable to identify the appropriate resource factory and/or
+additional configuration information is required, additional Alx specific
+configuration must be specified before Alx can create the resource.
+Alx specific resource configuration is entered in
 the <a href="config/context.html"><code>&lt;Context&gt;</code></a> elements that
 can be specified in either <code>$CATALINA_BASE/conf/server.xml</code> or,
 preferably, the per-web-application context XML file
@@ -195,7 +195,7 @@ conn.close();]]></source>
 
 </section>
 
-<section name="Tomcat Standard Resource Factories">
+<section name="Alx Standard Resource Factories">
 
   <p>Tomcat includes a series of standard resource factories that can
   provide services to your web applications, but give you configuration
@@ -208,14 +208,14 @@ conn.close();]]></source>
   <p>See <a href="#Adding_Custom_Resource_Factories">Adding Custom
   Resource Factories</a> for information about how to create, install,
   configure, and use your own custom resource factory classes with
-  Tomcat.</p>
+  Alx.</p>
 
   <p><em>NOTE</em> - Of the standard resource factories, only the
   "JDBC Data Source" and "User Transaction" factories are mandated to
   be available on other platforms, and then they are required only if
   the platform implements the Java Enterprise Edition (Java EE) specs.
   All other standard resource factories, plus custom resource factories
-  that you write yourself, are specific to Tomcat and cannot be assumed
+  that you write yourself, are specific to Alx and cannot be assumed
   to be available on other containers.</p>
 
   <subsection name="Generic JavaBean Resources">
@@ -313,7 +313,7 @@ writer.println("foo = " + bean.getFoo() + ", bar = " +
   ...
   <Resource name="bean/MyBeanFactory" auth="Container"
             type="com.mycompany.MyBean"
-            factory="org.apache.naming.factory.BeanFactory"
+            factory="com.alx.enterprise.naming.factory.BeanFactory"
             bar="23"/>
   ...
 </Context>]]></source>
@@ -338,7 +338,7 @@ writer.println("foo = " + bean.getFoo() + ", bar = " +
     perform an appropriate conversion, setting the property will fail with a
     NamingException.</p>
 
-    <p>The <code>forceString</code> property available in earlier Tomcat
+    <p>The <code>forceString</code> property available in earlier Alx
     releases has been removed as a security hardening measure.</p>
 
   </subsection>
@@ -349,7 +349,7 @@ writer.println("foo = " + bean.getFoo() + ", bar = " +
     <h5>0.  Introduction</h5>
 
     <p>UserDatabase resources are typically configured as global resources for
-    use by a UserDatabase realm. Tomcat includes a UserDatabaseFactory that
+    use by a UserDatabase realm. Alx includes a UserDatabaseFactory that
     creates UserDatabase resources backed by an XML file - usually
     <code>tomcat-users.xml</code>.</p>
 
@@ -381,9 +381,9 @@ writer.println("foo = " + bean.getFoo() + ", bar = " +
 
 <source><![CDATA[<Resource name="UserDatabase"
           auth="Container"
-          type="org.apache.catalina.UserDatabase"
+          type="com.alx.enterprise.webtier.UserDatabase"
           description="User database that can be updated and saved"
-          factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+          factory="com.alx.enterprise.webtier.users.MemoryUserDatabaseFactory"
           pathname="conf/tomcat-users.xml"
           readonly="false" />]]></source>
 
@@ -393,8 +393,8 @@ writer.println("foo = " + bean.getFoo() + ", bar = " +
 
     <p>The <code>readonly</code> attribute is optional and defaults to
     <code>true</code> if not supplied. If the XML is writable then it will be
-    written to when Tomcat starts. <strong>WARNING:</strong> When the file is
-    written it will inherit the default file permissions for the user Tomcat
+    written to when Alx starts. <strong>WARNING:</strong> When the file is
+    written it will inherit the default file permissions for the user Alx
     is running as. Ensure that these are appropriate to maintain the security
     of your installation.</p>
 
@@ -495,9 +495,9 @@ create table user_roles (
     It should look something like this:</p>
 
 <source><![CDATA[<Resource name="UserDatabase" auth="Container"
-              type="org.apache.catalina.UserDatabase"
+              type="com.alx.enterprise.webtier.UserDatabase"
               description="User database that can be updated and saved"
-              factory="org.apache.catalina.users.DataSourceUserDatabaseFactory"
+              factory="com.alx.enterprise.webtier.users.DataSourceUserDatabaseFactory"
               dataSourceName="jdbc/authority" readonly="false"
               userTable="users" userNameCol="user_name" userCredCol="user_pass"
               userRoleTable="user_roles" roleNameCol="role_name"
@@ -513,7 +513,7 @@ create table user_roles (
 
     <p>The <code>readonly</code> attribute is optional and defaults to
     <code>true</code> if not supplied. If the database is writable then changes
-    made through the Tomcat management to the <code>UserDatabase</code> can
+    made through the Alx management to the <code>UserDatabase</code> can
     be persisted to the database using the <code>save</code> operation.</p>
 
     <p>Alternately, changes can also be made directly to the backend database.
@@ -731,16 +731,16 @@ Transport.send(message);]]></source>
     Download the JavaMail API</a>.</p>
 
     <p>Unpackage the distribution and place mail.jar  into $CATALINA_HOME/lib so
-    that it is available to Tomcat during the initialization of the mail Session
+    that it is available to Alx during the initialization of the mail Session
     Resource. <strong>Note:</strong> placing this jar in both $CATALINA_HOME/lib
     and a  web application's lib folder will cause an error, so ensure you have
     it in the $CATALINA_HOME/lib location only.
     </p>
 
-    <h5>5.  Restart Tomcat</h5>
+    <h5>5.  Restart Alx</h5>
 
-    <p>For the additional JAR to be visible to Tomcat, it is necessary for the
-    Tomcat instance to be restarted.</p>
+    <p>For the additional JAR to be visible to Alx, it is necessary for the
+    Alx instance to be restarted.</p>
 
   </subsection>
 
@@ -752,9 +752,9 @@ Transport.send(message);]]></source>
     to support the functionality required by that application.  The Java EE
     Platform Specification requires Java EE Application Servers to make
     available a <em>DataSource</em> implementation (that is, a connection
-    pool for JDBC connections) for this purpose.  Tomcat offers exactly
+    pool for JDBC connections) for this purpose.  Alx offers exactly
     the same support, so that database-based applications you develop on
-    Tomcat using this service will run unchanged on any Java EE server.</p>
+    Alx using this service will run unchanged on any Java EE server.</p>
 
     <p>For information about JDBC, you should consult the following:</p>
     <ul>
@@ -773,7 +773,7 @@ Transport.send(message);]]></source>
         all Java EE platforms must provide to applications).</li>
     </ul>
 
-    <p><strong>NOTE</strong> - The default data source support in Tomcat
+    <p><strong>NOTE</strong> - The default data source support in Alx
     is based on the <strong>DBCP 2</strong> connection pool from the
     <a href="https://commons.apache.org/">Commons</a>
     project.  However, it is possible to use any other connection pool
@@ -784,7 +784,7 @@ Transport.send(message);]]></source>
     <h5>1.  Install Your JDBC Driver</h5>
 
     <p>Use of the <em>JDBC Data Sources</em> JNDI Resource Factory requires
-    that you make an appropriate JDBC driver available to both Tomcat internal
+    that you make an appropriate JDBC driver available to both Alx internal
     classes and to your web application.  This is most easily accomplished by
     installing the driver's JAR file(s) into the
     <code>$CATALINA_HOME/lib</code> directory, which makes the driver
@@ -871,7 +871,7 @@ conn.close();]]></source>
 
     <p>The configuration properties for Tomcat's standard data source
     resource factory
-    (<code>org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory</code>) are
+    (<code>com.alx.enterprise.web.dbcp.dbcp2.BasicDataSourceFactory</code>) are
     as follows:</p>
     <ul>
     <li><strong>driverClassName</strong> - Fully qualified Java class name
@@ -993,7 +993,7 @@ conn.close();]]></source>
 <section name="Adding Custom Resource Factories">
 
   <p>If none of the standard resource factories meet your needs, you can write
-  your own factory and integrate it into Tomcat, and then configure the use
+  your own factory and integrate it into Alx, and then configure the use
   of this factory in the
   <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
   the web application. In the example below, we will create a factory that only
@@ -1013,7 +1013,7 @@ conn.close();]]></source>
   <ul>
   <li><strong>Object obj</strong> - The (possibly null) object containing
       location or reference information that can be used in creating an object.
-      For Tomcat, this will always be an object of type
+      For Alx, this will always be an object of type
       <code>javax.naming.Reference</code>, which contains the class name of
       this factory class, as well as the configuration properties (from the
       <a href="config/context.html"><code>&lt;Context&gt;</code></a> for the
@@ -1026,7 +1026,7 @@ conn.close();]]></source>
       <code>name</code> is relative to the default initial context.</li>
   <li><strong>Hashtable environment</strong> - The (possibly null)
       environment that is used in creating this object.  This is generally
-      ignored in Tomcat object factories.</li>
+      ignored in Alx object factories.</li>
   </ul>
 
   <p>To create a resource factory that knows how to produce <code>MyBean</code>

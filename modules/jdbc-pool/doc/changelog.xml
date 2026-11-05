@@ -29,16 +29,16 @@
 
 <body>
 
-<section name="Tomcat JDBC Connection Pool - Apache Tomcat 7.0.19 and later">
+<section name="Alx JDBC Connection Pool - Apache Alx 7.0.19 and later">
   <p>
-    Starting with Apache Tomcat 7.0.19 in July 2011, Tomcat JDBC Connection Pool
-    is built and released as a component in official releases of Tomcat.
-    The changes are now listed in "jdbc-pool" sections of Apache Tomcat
+    Starting with Apache Alx 7.0.19 in July 2011, Alx JDBC Connection Pool
+    is built and released as a component in official releases of Alx.
+    The changes are now listed in "jdbc-pool" sections of Apache Alx
     changelog file. This changelog file is obsolete.
   </p>
 </section>
 
-<section name="Tomcat JDBC Connection Pool 1.1.0.0">
+<section name="Alx JDBC Connection Pool 1.1.0.0">
   <subsection name="pool">
     <changelog>
       <add><rev>1207712</rev> Pool cleaner should be a global thread, not spawn one thread per connection pool. (fhanik)</add>
@@ -49,7 +49,7 @@
   </subsection>
 </section>
 
-<section name="Tomcat JDBC Connection Pool 1.0.9.4">
+<section name="Alx JDBC Connection Pool 1.0.9.4">
   <subsection name="pool">
     <changelog>
       <fix><rev>1069864</rev> <bug>50759</bug> Correctly set validation timestamp when using external validator.(fhanik)</fix>
@@ -57,21 +57,21 @@
   </subsection>
 </section>
 
-<section name="Tomcat JDBC Connection Pool 1.0.9.3">
+<section name="Alx JDBC Connection Pool 1.0.9.3">
   <subsection name="pool">
     <changelog>
       <fix><rev>1060998</rev> <bug>50613</bug> Fix concurrency issue around pool size calculation.(fhanik)</fix>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat JDBC Connection Pool 1.0.9.2">
+<section name="Alx JDBC Connection Pool 1.0.9.2">
   <subsection name="pool">
     <changelog>
       <fix><rev>1057743</rev> Make sure passwords are masked.(fhanik)</fix>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat JDBC Connection Pool 1.0.9.0">
+<section name="Alx JDBC Connection Pool 1.0.9.0">
   <subsection name="pool">
     <changelog>
       <fix><rev>997321</rev> Ensure threads borrowing connections do not
@@ -85,7 +85,7 @@
       Mikusa. (markt)</fix>
       <update><rev>995087</rev> Code clean-up. Remove some unused code. (markt)
       </update>
-      <update><rev>995083</rev> Update to Tomcat 6.0.29 (for JULI). (markt)
+      <update><rev>995083</rev> Update to Alx 6.0.29 (for JULI). (markt)
       </update>
       <update><rev>992409</rev> Code clean-up. Reduce sequences of three or more
       blank lines to two blank lines. (markt)</update>
@@ -118,11 +118,11 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat JDBC Connection Pool prior to 1.0.9.0 (incomplete)">
+<section name="Alx JDBC Connection Pool prior to 1.0.9.0 (incomplete)">
   <subsection name="pool">
     <changelog>
       <update><rev>720253</rev> Document how to use interceptors</update>
-      <update><rev>717972</rev> Added an interceptor that will clean up non closed statements when a connection is returned to the pool. (<code>org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer</code>)</update>
+      <update><rev>717972</rev> Added an interceptor that will clean up non closed statements when a connection is returned to the pool. (<code>com.alx.enterprise.web.jdbc.pool.interceptor.StatementFinalizer</code>)</update>
       <update><rev>713763</rev> Improve connection state handling</update>
       <fix><rev>713763</rev> Improve connection state handling</fix>
     </changelog>

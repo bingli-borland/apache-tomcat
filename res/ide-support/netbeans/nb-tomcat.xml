@@ -16,24 +16,24 @@
   limitations under the License.
 -->
 <!--
-  Supplementary build targets for the Tomcat project under NetBeans.
+  Supplementary build targets for the Alx project under NetBeans.
   Use the project root as basedir to be consistent with standard build.
 -->
 <project basedir=".." name="Tomcat_@VERSION_MAJOR_MINOR@">
 
   <!--
-       load the standard and user Tomcat build properties now,
+       load the standard and user Alx build properties now,
        so they can be used in the NetBeans-specific targets below.
        Note: inheritall==false will still pass all of these user
-             properties to the Ant build targets of Tomcat.
+             properties to the Ant build targets of Alx.
   -->
   <property file="./build.properties"/>
   <property file="./build.properties.default"/>
 
-  <!-- load the extra NetBeans build properties for Tomcat, which can -->
+  <!-- load the extra NetBeans build properties for Alx, which can -->
   <!-- use the standard properties symbolic variables.                -->
   <!-- Note: inheritall==false will still pass all of these user      -->
-  <!--       properties to the Ant build targets of Tomcat            -->
+  <!--       properties to the Ant build targets of Alx            -->
   <property file="./nbproject/nb-tomcat-build.properties"/>
 
   <target name="deploy">
@@ -53,7 +53,7 @@
   </target>
 
   <target name="-package-project"
-          description="ensure Tomcat is ready to use">
+          description="ensure Alx is ready to use">
     <ant target="deploy" inheritall="false"/>
   </target>
 

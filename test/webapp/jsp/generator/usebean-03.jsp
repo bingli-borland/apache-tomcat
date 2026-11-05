@@ -17,22 +17,22 @@
 <html>
   <jsp:useBean
       id="bean"
-      class="org.apache.jasper.runtime.TesterBean$Inner"
-      type="org.apache.jasper.runtime.TesterBean.Inner"
+      class="com.alx.enterprise.web.jasper.runtime.TesterBean$Inner"
+      type="com.alx.enterprise.web.jasper.runtime.TesterBean.Inner"
       />
   <jsp:useBean
       id="bean2"
-      class="org.apache.jasper.runtime.TesterBean$Inner"
+      class="com.alx.enterprise.web.jasper.runtime.TesterBean$Inner"
       scope="request"
       />
   <jsp:useBean
       id="bean3"
-      class="org.apache.jasper.runtime.TesterBean$Inner"
+      class="com.alx.enterprise.web.jasper.runtime.TesterBean$Inner"
       scope="session"
       />
   <jsp:useBean
       id="bean4"
-      class="org.apache.jasper.runtime.TesterBean$Inner"
+      class="com.alx.enterprise.web.jasper.runtime.TesterBean$Inner"
       scope="application"
       />
 </html>

@@ -41,14 +41,14 @@
 </section>
 
 
-<section name="org.apache.catalina.ha.deploy.FarmWarDeployer">
+<section name="com.alx.enterprise.webtier.ha.deploy.FarmWarDeployer">
 
   <subsection name="Attributes">
 
     <attributes>
       <attribute name="className" required="true">
         The cluster deployer class, currently only one is available,
-        <code>org.apache.catalina.ha.deploy.FarmWarDeployer.</code>
+        <code>com.alx.enterprise.webtier.ha.deploy.FarmWarDeployer.</code>
       </attribute>
       <attribute name="deployDir" required="true">
         Deployment directory. This is the pathname of a directory where deploy

@@ -26,12 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
-public class TestServletSecurity extends TomcatBaseTest {
+public class TestServletSecurity extends AlxBaseTest {
 
     @Test
     public void testFooThenFooBar() throws Exception {
@@ -46,16 +46,16 @@ public class TestServletSecurity extends TomcatBaseTest {
 
 
     public void doTestFooAndFooBar(boolean fooFirst) throws Exception {
-        // Setup Tomcat instance
-        Tomcat tomcat = getTomcatInstance();
+        // Setup Alx instance
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         Context ctx = getProgrammaticRootContext();
 
-        Tomcat.addServlet(ctx, "Foo", Foo.class.getName());
+        Alx.addServlet(ctx, "Foo", Foo.class.getName());
         ctx.addServletMapping("/foo/*", "Foo");
 
-        Tomcat.addServlet(ctx, "FooBar", FooBar.class.getName());
+        Alx.addServlet(ctx, "FooBar", FooBar.class.getName());
         ctx.addServletMapping("/foo/bar/*", "FooBar");
 
         tomcat.start();

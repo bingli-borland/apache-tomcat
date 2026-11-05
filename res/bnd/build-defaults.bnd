@@ -16,10 +16,10 @@
 Bundle-Version: ${version_cleanup;${version}}
 Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
 
-Specification-Title: Apache Tomcat
+Specification-Title: Apache Alx
 Specification-Version: ${version.major.minor}
 Specification-Vendor: Apache Software Foundation
-Implementation-Title: Apache Tomcat
+Implementation-Title: Apache Alx
 Implementation-Version: ${version}
 Implementation-Vendor: Apache Software Foundation
 

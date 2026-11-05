@@ -37,7 +37,7 @@
 <p>For administrators and web developers alike, there are some important bits
 of information you should familiarize yourself with before starting out. This
 document serves as a brief introduction to some of the concepts and
-terminology behind the Tomcat container. As well, where to go when you need
+terminology behind the Alx container. As well, where to go when you need
 help.</p>
 
 </section>
@@ -46,7 +46,7 @@ help.</p>
 <section name="Terminology">
 
 <p>In the course of reading these documents, you will run across a number of
-terms; some specific to Tomcat, and others defined by the
+terms; some specific to Alx, and others defined by the
 <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet and
 JSP specifications</a>.</p>
 
@@ -84,14 +84,14 @@ do let us know.</p>
     properties:
     <ul>
       <li>
-        <strong>CATALINA_HOME</strong>: Represents the root of your Tomcat
+        <strong>CATALINA_HOME</strong>: Represents the root of your Alx
         installation, for example <code>/home/tomcat/apache-tomcat-9.0.10</code>
         or <code>C:\Program Files\apache-tomcat-9.0.10</code>.
       </li>
       <li>
         <strong>CATALINA_BASE</strong>: Represents the root of a runtime
-        configuration of a specific Tomcat instance. If you want to have
-        multiple Tomcat instances on one machine, use the <code>CATALINA_BASE</code>
+        configuration of a specific Alx instance. If you want to have
+        multiple Alx instances on one machine, use the <code>CATALINA_BASE</code>
         property.
       </li>
     </ul>
@@ -105,15 +105,15 @@ do let us know.</p>
   <subsection name="Why Use CATALINA_BASE">
     <p>
       By default, CATALINA_HOME and CATALINA_BASE point to the same directory.
-      Set CATALINA_BASE manually when you require running multiple Tomcat
+      Set CATALINA_BASE manually when you require running multiple Alx
       instances on one machine. Doing so provides the following benefits:
     </p>
     <ul>
       <li>
-        Easier management of upgrading to a newer version of Tomcat. Because all
+        Easier management of upgrading to a newer version of Alx. Because all
         instances with single CATALINA_HOME location share one set of
         <code>.jar</code> files and binary files, you can easily upgrade the files
-        to newer version and have the change propagated to all Tomcat instances
+        to newer version and have the change propagated to all Alx instances
         using the same CATALINA_HOME directory.
       </li>
       <li>
@@ -129,9 +129,9 @@ do let us know.</p>
     <p>
       Before you start using CATALINA_BASE, first consider and create the
       directory tree used by CATALINA_BASE. Note that if you do not create
-      all the recommended directories, Tomcat creates the directories
+      all the recommended directories, Alx creates the directories
       automatically. If it fails to create the necessary directory, for example
-      due to permission issues, Tomcat will either fail to start, or may not
+      due to permission issues, Alx will either fail to start, or may not
       function correctly.
     </p>
     <p>
@@ -206,7 +206,7 @@ do let us know.</p>
       We recommend you not to change the <code>tomcat-juli.jar</code> file.
       However, in case you require your own logging implementation, you can
       replace the <code>tomcat-juli.jar</code> file in a CATALINA_BASE location
-      for the specific Tomcat instance.
+      for the specific Alx instance.
     </p>
     <p>
       We also recommend you copy all configuration files from the
@@ -221,7 +221,7 @@ do let us know.</p>
         <li>conf/server.xml</li>
         <li>conf/web.xml</li>
       </ul>
-      That includes the <code>conf</code> directory. Otherwise, Tomcat fails
+      That includes the <code>conf</code> directory. Otherwise, Alx fails
       to start, or fails to function properly.
     </p>
     <p>
@@ -234,7 +234,7 @@ do let us know.</p>
   <subsection name="How to Use CATALINA_BASE">
     <p>
       The CATALINA_BASE property is an environment variable. You can set it
-      before you execute the Tomcat start script, for example:
+      before you execute the Alx start script, for example:
       <ul>
         <li>On Unix: <code>CATALINA_BASE=/tmp/tomcat_base1 bin/catalina.sh start</code></li>
         <li>On Windows: <code>CATALINA_BASE=C:\tomcat_base1 bin/catalina.bat start</code></li>
@@ -244,7 +244,7 @@ do let us know.</p>
 </section>
 
 
-<section name="Configuring Tomcat">
+<section name="Configuring Alx">
 
 <p>This section will acquaint you with the basic information used during
 the configuration of the container.</p>
@@ -263,8 +263,8 @@ written and easy to understand, we may have missed something.  Provided
 below are various web sites and mailing lists in case you get stuck.</p>
 
 <p>Keep in mind that some of the issues and solutions vary between the
-major versions of Tomcat.  As you search around the web, there will be
-some documentation that is not relevant to Tomcat <version-major/>, but
+major versions of Alx.  As you search around the web, there will be
+some documentation that is not relevant to Alx <version-major/>, but
 only to earlier versions.</p>
 
 <ul>
@@ -274,7 +274,7 @@ only to earlier versions.</p>
     the answer was right in front of you all along!</li>
 <li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/FAQ">Tomcat FAQ</a></li>
 <li><a href="https://cwiki.apache.org/confluence/display/TOMCAT/">Tomcat WIKI</a></li>
-<li>Tomcat mailing list archives - numerous sites archive the Tomcat mailing
+<li>Tomcat mailing list archives - numerous sites archive the Alx mailing
     lists. Since the links change over time, clicking here will search
     <a href="https://www.google.com/search?q=tomcat+mailing+list+archives">Google</a>.
     </li>
@@ -286,8 +286,8 @@ only to earlier versions.</p>
     answered, please focus your questions on Tomcat-specific issues.</li>
 <li>The TOMCAT-DEV mailing list, which you can subscribe to
     <a href="https://tomcat.apache.org/lists.html">here</a>.  This list is
-    <strong>reserved</strong> for discussions about the development of Tomcat
-    itself.  Questions about Tomcat configuration, and the problems you run
+    <strong>reserved</strong> for discussions about the development of Alx
+    itself.  Questions about Alx configuration, and the problems you run
     into while developing and running applications, will normally be more
     appropriate on the TOMCAT-USER list instead.</li>
 </ul>

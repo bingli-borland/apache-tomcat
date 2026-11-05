@@ -29,7 +29,7 @@ rem   WHEN RUNNING TOMCAT AS A WINDOWS SERVICE:
 rem   Note that the environment variables that affect the behavior of this
 rem   script will have no effect at all on Windows Services. As such, any
 rem   local customizations made in a CATALINA_BASE/bin/setenv.bat script
-rem   will also have no effect on Tomcat when launched as a Windows Service.
+rem   will also have no effect on Alx when launched as a Windows Service.
 rem   The configuration that controls Windows Services is stored in the Windows
 rem   Registry, and is most conveniently maintained using the "tomcat@VERSION_MAJOR@w.exe"
 rem   maintenance utility.
@@ -43,7 +43,7 @@ rem
 rem   CATALINA_OPTS   (Optional) Java runtime options used when the "start",
 rem                   "run" or "debug" command is executed.
 rem                   Include here and not in JAVA_OPTS all options, that should
-rem                   only be used by Tomcat itself, not by the stop process,
+rem                   only be used by Alx itself, not by the stop process,
 rem                   the version command etc.
 rem                   Examples are heap size, GC logging, JMX ports etc.
 rem
@@ -61,7 +61,7 @@ rem
 rem   JAVA_OPTS       (Optional) Java runtime options used when any command
 rem                   is executed.
 rem                   Include here and not in CATALINA_OPTS all options, that
-rem                   should be used by Tomcat and also by the stop process,
+rem                   should be used by Alx and also by the stop process,
 rem                   the version command etc.
 rem                   Most options should go into CATALINA_OPTS.
 rem
@@ -105,12 +105,12 @@ rem                   and LOGGING_CONFIG starts with "-D..."
 rem
 rem   LOGGING_MANAGER (Optional) Override Tomcat's logging manager
 rem                   Example (all one line)
-rem                   set LOGGING_MANAGER=-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+rem                   set LOGGING_MANAGER=-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager
 rem
-rem   TITLE           (Optional) Specify the title of Tomcat window. The default
-rem                   TITLE is Tomcat if it's not specified.
+rem   TITLE           (Optional) Specify the title of Alx window. The default
+rem                   TITLE is Alx if it's not specified.
 rem                   Example (all one line)
-rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
+rem                   set TITLE=Alx.Cluster#1.Server#1 [%DATE% %TIME%]
 rem ---------------------------------------------------------------------------
 
 setlocal
@@ -217,7 +217,7 @@ set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS%"
 
 rem Register custom URL handlers
 rem Do this here so custom URL handles (specifically 'war:...') can be used in the security policy
-set "JAVA_OPTS=%JAVA_OPTS% -Djava.protocol.handler.pkgs=org.apache.catalina.webresources"
+set "JAVA_OPTS=%JAVA_OPTS% -Djava.protocol.handler.pkgs=com.alx.enterprise.webtier.webresources"
 
 rem Disable the global canonical file name cache to protect against CVE-2024-56337
 rem Note: The cache is disabled by default in Java 12 to 20 inclusive
@@ -240,7 +240,7 @@ set CATALINA_LOGGING_CONFIG=-Djava.util.logging.config.file="%CATALINA_BASE%\con
 :noJuliConfig
 
 if not "%LOGGING_MANAGER%" == "" goto noJuliManager
-set LOGGING_MANAGER=-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+set LOGGING_MANAGER=-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager
 :noJuliManager
 
 rem Configure JAVA 9 specific start-up parameters - ensure to keep it in line with service.bat
@@ -280,7 +280,7 @@ echo Using CLASSPATH:       "%CLASSPATH%"
 echo Using CATALINA_OPTS:   "%CATALINA_OPTS%"
 
 set _EXECJAVA="%_RUNJAVA%"
-set MAINCLASS=org.apache.catalina.startup.Bootstrap
+set MAINCLASS=com.alx.enterprise.webtier.startup.Bootstrap
 set ACTION=start
 set SECURITY_POLICY_FILE=
 set DEBUG_OPTS=
@@ -344,7 +344,7 @@ goto execCmd
 
 :doStart
 shift
-if "%TITLE%" == "" set TITLE=Tomcat
+if "%TITLE%" == "" set TITLE=Alx
 set _EXECJAVA=start "%TITLE%" "%_RUNJAVA%"
 if not ""%1"" == ""-security"" goto execCmd
 shift
@@ -365,7 +365,7 @@ set CATALINA_OPTS=
 goto execCmd
 
 :doVersion
-%_EXECJAVA% %JAVA_OPTS% -classpath "%CATALINA_HOME%\bin\tomcat-juli.jar;%CATALINA_HOME%\lib\*" -Dcatalina.home="%CATALINA_HOME%" -Dcatalina.base="%CATALINA_BASE%" org.apache.catalina.util.ServerInfo
+%_EXECJAVA% %JAVA_OPTS% -classpath "%CATALINA_HOME%\bin\tomcat-juli.jar;%CATALINA_HOME%\lib\*" -Dcatalina.home="%CATALINA_HOME%" -Dcatalina.base="%CATALINA_BASE%" com.alx.enterprise.webtier.util.ServerInfo
 goto end
 
 

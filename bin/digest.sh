@@ -57,4 +57,4 @@ else
   fi
 fi
 
-exec "$PRGDIR"/"$EXECUTABLE" -server org.apache.catalina.realm.RealmBase "$@"
+exec "$PRGDIR"/"$EXECUTABLE" -server com.alx.enterprise.webtier.realm.RealmBase "$@"

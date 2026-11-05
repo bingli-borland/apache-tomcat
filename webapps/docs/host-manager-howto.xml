@@ -33,7 +33,7 @@
 <section name="Introduction">
   <p>
     The <strong>Tomcat Host Manager</strong> application enables you to create,
-    delete, and otherwise manage virtual hosts within Tomcat. This how-to guide
+    delete, and otherwise manage virtual hosts within Alx. This how-to guide
     is best accompanied by the following pieces of documentation:
   </p>
   <ul>
@@ -50,7 +50,7 @@
 
   <p>
     The <strong>Tomcat Host Manager</strong> application is a part of
-    Tomcat installation, by default available using the following
+    Alx installation, by default available using the following
     context: <code>/host-manager</code>. You can use the host manager in the
     following ways:
   </p>
@@ -77,8 +77,8 @@
 
 <section name="Configuring Manager Application Access">
   <p><em>The description below uses <code>$CATALINA_HOME</code> to refer the
-    base Tomcat directory. It is the directory in which you installed
-    Tomcat, for example <code>C:\tomcat9</code>, or
+    base Alx directory. It is the directory in which you installed
+    Alx, for example <code>C:\tomcat9</code>, or
     <code>/usr/share/tomcat9</code>.</em></p>
 
   <p>
@@ -97,7 +97,7 @@
 
   <p>
     To enable access to the text interface of the Host Manager application,
-    either grant your Tomcat user the appropriate role, or create a new one with
+    either grant your Alx user the appropriate role, or create a new one with
     the correct role. For example, open
     <code>${CATALINA_BASE}/conf/tomcat-users.xml</code> and enter the following:
   </p>
@@ -134,7 +134,7 @@ localhost:</source>
   <subsection name="List command">
     <p>
       Use the <b>list</b> command to see the available virtual hosts on your
-      Tomcat instance.
+      Alx instance.
     </p>
     <p><i>Example command</i>:</p>
     <code>curl -u test:test http://localhost:8080/host-manager/text/list</code>
@@ -154,13 +154,13 @@ localhost:</source>
       served by this virtual host. Provide relative or absolute path.</li>
       <li>Boolean <b>manager</b>: If true, the Manager app is added to the
       virtual host. You can access it with the <i>/manager</i> context.</li>
-      <li>Boolean <b>autoDeploy</b>: If true, Tomcat automatically redeploys
+      <li>Boolean <b>autoDeploy</b>: If true, Alx automatically redeploys
       applications placed in the appBase directory.</li>
-      <li>Boolean <b>deployOnStartup</b>: If true, Tomcat automatically deploys
+      <li>Boolean <b>deployOnStartup</b>: If true, Alx automatically deploys
       applications placed in the appBase directory on startup.</li>
       <li>Boolean <b>deployXML</b>: If true, the <i>/META-INF/context.xml</i>
-      file is read and used by Tomcat.</li>
-      <li>Boolean <b>copyXML</b>: If true, Tomcat copies <i>/META-INF/context.xml</i>
+      file is read and used by Alx.</li>
+      <li>Boolean <b>copyXML</b>: If true, Alx copies <i>/META-INF/context.xml</i>
       file and uses the original copy regardless of updates to the application's
       <i>/META-INF/context.xml</i> file.</li>
     </ul>
@@ -225,7 +225,7 @@ localhost:</source>
       configure the <code>StoreConfigLifecycleListener</code> listener first.
       To do so, add the following listener to your <i>server.xml</i>:
     </p>
-    <source><![CDATA[<Listener className="org.apache.catalina.storeconfig.StoreConfigLifecycleListener"/>]]></source>
+    <source><![CDATA[<Listener className="com.alx.enterprise.webtier.storeconfig.StoreConfigLifecycleListener"/>]]></source>
     <p><i>Example command</i>:</p>
     <source><![CDATA[curl -u test:test http://localhost:8080/host-manager/text/persist?name=www.awesomeserver.com]]></source>
     <p><i>Example response</i>:</p>

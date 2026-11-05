@@ -24,7 +24,7 @@ static class TestListener implements javax.el.ELContextListener {
     @Override
     public void contextCreated(javax.el.ELContextEvent event) {
         javax.el.ELContext elContext = event.getELContext();
-        if (elContext instanceof org.apache.jasper.el.ELContextImpl) {
+        if (elContext instanceof com.alx.enterprise.web.jasper.el.ELContextImpl) {
             jspCount++;
         } else {
             tagCount++;

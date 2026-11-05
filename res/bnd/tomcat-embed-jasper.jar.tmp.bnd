@@ -16,26 +16,26 @@
 -include: build-defaults.bnd
 
 Bundle-Name: tomcat-embed-jasper
-Bundle-SymbolicName: org.apache.tomcat-embed-jasper
+Bundle-SymbolicName: com.alx.enterprise.web-embed-jasper
 Export-Package: \
     javax.servlet.jsp.*;version=2.3,\
-    org.apache.jasper,\
-    org.apache.jasper.compiler,\
-    org.apache.jasper.compiler.tagplugin,\
-    org.apache.jasper.el,\
-    org.apache.jasper.optimizations,\
-    org.apache.jasper.runtime,\
-    org.apache.jasper.security,\
-    org.apache.jasper.servlet,\
-    org.apache.jasper.tagplugins.jstl,\
-    org.apache.jasper.tagplugins.jstl.core,\
-    org.apache.jasper.util,\
-    org.apache.tomcat.util.descriptor.tld
+    com.alx.enterprise.web.jasper,\
+    com.alx.enterprise.web.jasper.compiler,\
+    com.alx.enterprise.web.jasper.compiler.tagplugin,\
+    com.alx.enterprise.web.jasper.el,\
+    com.alx.enterprise.web.jasper.optimizations,\
+    com.alx.enterprise.web.jasper.runtime,\
+    com.alx.enterprise.web.jasper.security,\
+    com.alx.enterprise.web.jasper.servlet,\
+    com.alx.enterprise.web.jasper.tagplugins.jstl,\
+    com.alx.enterprise.web.jasper.tagplugins.jstl.core,\
+    com.alx.enterprise.web.jasper.util,\
+    com.alx.enterprise.web.util.descriptor.tld
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}
 
 -includepackage: \
-    org.apache.jasper.resources
+    com.alx.enterprise.web.jasper.resources
 
 -includeresource.meta-inf: /META-INF/=${tomcat.output}/manifests/jasper.jar/
 

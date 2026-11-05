@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page import="org.apache.tomcat.util.security.Escape" session="false"
+<%@ page import="com.alx.enterprise.web.util.security.Escape" session="false"
          trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -39,7 +39,7 @@
     does not exist.
    </p>
    <p>
-    The Manager application has been re-structured for Tomcat 7 onwards and some
+    The Manager application has been re-structured for Alx 7 onwards and some
     of URLs have changed. All URLs used to access the Manager application should
     now start with one of the following options:
    </p>
@@ -58,7 +58,7 @@
     You probably need to adjust the URL you are using to access the Manager
     application. However, there is always a chance you have found a bug in the
     Manager application. If you are sure you have found a bug, and that the bug
-    has not already been reported, please report it to the Apache Tomcat team.
+    has not already been reported, please report it to the Apache Alx team.
    </p>
  </body>
 </html>

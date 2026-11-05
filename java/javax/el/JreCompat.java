@@ -19,10 +19,10 @@ package javax.el;
 import java.lang.reflect.AccessibleObject;
 
 /*
- * This is cut down version of org.apache.tomcat.util.JreCompat that provides
+ * This is cut down version of com.alx.enterprise.web.util.JreCompat that provides
  * only the methods required by the EL implementation.
  *
- * This class is duplicated in org.apache.el.util
+ * This class is duplicated in com.alx.enterprise.el.util
  * When making changes keep the two in sync.
  */
 class JreCompat {

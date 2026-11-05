@@ -23,7 +23,7 @@
   &project;
 
   <properties>
-    <title>Monitoring and Managing Tomcat</title>
+    <title>Monitoring and Managing Alx</title>
   </properties>
 
 <body>
@@ -43,8 +43,8 @@
   <section name="Enabling JMX Remote">
 
     <p><strong>Note:</strong> This configuration is needed only if you are
-    going to monitor Tomcat remotely. It is not needed if you are going
-    to monitor it locally, using the same user that Tomcat runs with.</p>
+    going to monitor Alx remotely. It is not needed if you are going
+    to monitor it locally, using the same user that Alx runs with.</p>
 
     <p>The Oracle website includes the list of options and how to configure
     JMX Remote on Java 8:
@@ -53,9 +53,9 @@
     </p>
     <p>The following is a quick configuration guide for Java 8:</p>
     <p>Add the following parameters to <code>setenv.bat</code> script of your
-    Tomcat (see <a href="RUNNING.txt">RUNNING.txt</a> for details).<br/>
+    Alx (see <a href="RUNNING.txt">RUNNING.txt</a> for details).<br/>
     <em>Note:</em> This syntax is for Microsoft Windows. The command has
-    to be on the same line. It is wrapped to be more readable. If Tomcat is
+    to be on the same line. It is wrapped to be more readable. If Alx is
     running as a Windows service, use its configuration dialog to set
     java options for the service.
     For Linux, MacOS, etc, remove <code>"set "</code> from beginning of the
@@ -98,7 +98,7 @@ controlRole readwrite]]></source>
 <source><![CDATA[monitorRole tomcat
 controlRole tomcat]]></source>
     <b>Tip</b>: The password file should be read-only and only accessible by the
-    operating system user Tomcat is running as.
+    operating system user Alx is running as.
     </li>
     <li>Alternatively, you can configure a JAAS login module with:
 <source><![CDATA[  -Dcom.sun.management.jmxremote.login.config=%login.module.name%]]></source></li>
@@ -115,7 +115,7 @@ then you can set:</p>
 
   </section>
 
-  <section name="Manage Tomcat with JMX remote Ant Tasks">
+  <section name="Manage Alx with JMX remote Ant Tasks">
    <p>To simplify JMX usage with Ant, a set of tasks is provided that may
    be used with antlib.</p>
    <p><b>antlib</b>: Copy your catalina-ant.jar from $CATALINA_HOME/lib to $ANT_HOME/lib.</p>
@@ -123,7 +123,7 @@ then you can set:</p>
    <em>Note:</em> The <code>name</code> attribute value was wrapped here to be
    more readable. It has to be all on the same line, without spaces.</p>
    <source><![CDATA[<project name="Catalina Ant JMX"
-      xmlns:jmx="antlib:org.apache.catalina.ant.jmx"
+      xmlns:jmx="antlib:com.alx.enterprise.webtier.ant.jmx"
       default="state"
       basedir=".">
   <property name="jmx.server.name" value="localhost" />
@@ -370,7 +370,7 @@ List of Attributes
 
   <tr>
     <td>attribute</td>
-    <td>Existing MBean attribute (see Tomcat MBean description above)
+    <td>Existing MBean attribute (see Alx MBean description above)
     </td>
     <td></td>
   </tr>
@@ -483,7 +483,7 @@ List of Attributes
 
   <tr>
     <td>attribute</td>
-    <td>Existing MBean attribute (see Tomcat MBean description above)
+    <td>Existing MBean attribute (see Alx MBean description above)
     </td>
     <td></td>
   </tr>
@@ -745,7 +745,7 @@ The result object counter from MBeans is stored ad ${manager.servletExamples.Len
 Example to get all MBeans from a server and store inside an external XML property file
 </p>
 <source><![CDATA[<project name="jmx.query"
-            xmlns:jmx="antlib:org.apache.catalina.ant.jmx"
+            xmlns:jmx="antlib:com.alx.enterprise.webtier.ant.jmx"
             default="query-all" basedir=".">
 <property name="jmx.host" value="localhost"/>
 <property name="jmx.port" value="8050"/>
@@ -807,7 +807,7 @@ List of Attributes
 
   <tr>
     <td>className</td>
-    <td>Existing MBean full qualified class name (see Tomcat MBean description above)
+    <td>Existing MBean full qualified class name (see Alx MBean description above)
     </td>
     <td></td>
   </tr>
@@ -845,11 +845,11 @@ Example to create remote MBean
     name="Catalina:type=MBeanFactory"
     className="org.apache.commons.modeler.BaseModelMBean"
     classLoader="Catalina:type=ServerClassLoader,name=server">
-    <arg value="org.apache.catalina.mbeans.MBeanFactory" />
+    <arg value="com.alx.enterprise.webtier.mbeans.MBeanFactory" />
   </jmx:create>]]></source>
 
 <p>
-    <b>Warning</b>: Many Tomcat MBeans can't be linked to their parent once<br/>
+    <b>Warning</b>: Many Alx MBeans can't be linked to their parent once<br/>
     created. The Valve, Cluster and Realm MBeans are not automatically<br/>
     connected with their parent. Use the <em>MBeanFactory</em> create<br/>
     operation instead.
@@ -903,7 +903,7 @@ Example to unregister remote MBean
   />]]></source>
 
 <p>
-    <b>Warning</b>: A lot of Tomcat MBeans can't be unregister.<br/>
+    <b>Warning</b>: A lot of Alx MBeans can't be unregister.<br/>
     The MBeans are not unlinked from their parent. Use <em>MBeanFactory</em><br/>
     remove operation instead.
 </p>
@@ -1158,10 +1158,10 @@ Wait for server connection and that cluster backup node is accessible
   <section name="Using the JMXProxyServlet">
 
     <p>
-      Tomcat offers an alternative to using remote (or even local) JMX
+      Alx offers an alternative to using remote (or even local) JMX
       connections while still giving you access to everything JMX has to offer:
       Tomcat's
-      <a href="api/org/apache/catalina/manager/JMXProxyServlet.html">JMXProxyServlet</a>.
+      <a href="api/com/alx/enterprise/webtier/manager/JMXProxyServlet.html">JMXProxyServlet</a>.
     </p>
 
     <p>

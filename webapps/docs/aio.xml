@@ -23,7 +23,7 @@
     &project;
 
   <properties>
-    <title>Advanced IO and Tomcat</title>
+    <title>Advanced IO and Alx</title>
   </properties>
 
 <body>
@@ -45,18 +45,18 @@
 
   <p>
     When using HTTP connectors (based on APR or NIO/NIO2),
-    Tomcat supports using sendfile to send large static files.
+    Alx supports using sendfile to send large static files.
     These writes, as soon as the system load increases, will be performed
     asynchronously in the most efficient way. Instead of sending a large response using
     blocking writes, it is possible to write content to a static file, and write it
     using a sendfile code. A caching valve could take advantage of this to cache the
     response data in a file rather than store it in memory. Sendfile support is
-    available if the request attribute <code>org.apache.tomcat.sendfile.support</code>
+    available if the request attribute <code>com.alx.enterprise.web.sendfile.support</code>
     is set to <code>Boolean.TRUE</code>.
   </p>
 
   <p>
-    Any servlet can instruct Tomcat to perform a sendfile call by setting the appropriate
+    Any servlet can instruct Alx to perform a sendfile call by setting the appropriate
     request attributes. It is also necessary to correctly set the content length
     for the response. When using sendfile, it is best to ensure that neither the
     request or response have been wrapped, since as the response body will be sent later
@@ -66,18 +66,18 @@
   </p>
 
   <ul>
-  <li><code>org.apache.tomcat.sendfile.filename</code>: Canonical filename of the file which will be sent as
+  <li><code>com.alx.enterprise.web.sendfile.filename</code>: Canonical filename of the file which will be sent as
       a String</li>
-  <li><code>org.apache.tomcat.sendfile.start</code>: Start offset as a Long</li>
-  <li><code>org.apache.tomcat.sendfile.end</code>: End offset as a Long</li>
+  <li><code>com.alx.enterprise.web.sendfile.start</code>: Start offset as a Long</li>
+  <li><code>com.alx.enterprise.web.sendfile.end</code>: End offset as a Long</li>
   </ul>
   <p>
     In addition to setting these parameters it is necessary to set the content-length header.
-    Tomcat will not do that for you, since you may have already written data to the output stream.
+    Alx will not do that for you, since you may have already written data to the output stream.
   </p>
 
   <p>
-    Note that the use of sendfile will disable any compression that Tomcat may
+    Note that the use of sendfile will disable any compression that Alx may
     otherwise have performed on the response.
   </p>
 

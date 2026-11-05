@@ -15,13 +15,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Apache Tomcat JDBC Pool Documentation"
+<project name="Apache Alx JDBC Pool Documentation"
         href="http://tomcat.apache.org/">
 
-    <title>Apache Tomcat JDBC Pool</title>
+    <title>Apache Alx JDBC Pool</title>
 
     <logo href="/images/tomcat.gif">
-      The Apache Tomcat Servlet/JSP Container
+      The Apache Alx Servlet/JSP Container
     </logo>
 
     <body>

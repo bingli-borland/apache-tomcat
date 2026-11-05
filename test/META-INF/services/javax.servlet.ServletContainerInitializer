@@ -14,4 +14,4 @@
 # limitations under the License.
 
 # SCIs that should be added when running tests
-org.apache.jasper.servlet.JasperInitializer
+com.alx.enterprise.web.jasper.servlet.JasperInitializer

@@ -40,7 +40,7 @@
       <large-icon>large</large-icon>
     </icon>
     <name>Echo</name>
-    <tag-class>org.apache.jasper.compiler.TestValidator$Echo</tag-class>
+    <tag-class>com.alx.enterprise.web.jasper.compiler.TestValidator$Echo</tag-class>
     <body-content>empty</body-content>
     <variable>
       <name-given>var</name-given>
@@ -85,7 +85,7 @@
 
   <function>
     <name>trim</name>
-    <function-class>org.apache.el.TesterFunctions</function-class>
+    <function-class>com.alx.enterprise.el.TesterFunctions</function-class>
     <function-signature>
       java.lang.String trim(java.lang.String)
     </function-signature>

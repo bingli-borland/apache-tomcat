@@ -23,7 +23,7 @@
     <short-name>bug53545</short-name>
     <tag>
       <name>test</name>
-      <tag-class>org.apache.tomcat.unittest.tags.Bug53545</tag-class>
+      <tag-class>com.alx.enterprise.web.unittest.tags.Bug53545</tag-class>
       <body-content>scriptless</body-content>
     </tag>
 </taglib>

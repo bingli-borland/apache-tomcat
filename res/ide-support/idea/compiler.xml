@@ -19,8 +19,8 @@
   <component name="CompilerConfiguration">
     <excludeFromCompile>
       <!--
-      <directory url="file://$PROJECT_DIR$/java/org/apache/tomcat/util/openssl" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/java/org/apache/tomcat/util/net/openssl/panama" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/java/com/alx/enterprise/web/util/openssl" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/java/com/alx/enterprise/web/util/net/openssl/panama" includeSubdirectories="true" />
       -->
     </excludeFromCompile>
     <annotationProcessing>

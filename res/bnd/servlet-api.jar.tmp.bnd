@@ -16,7 +16,7 @@
 -include: build-defaults.bnd, spec-defaults.bnd
 
 Bundle-Name: tomcat-servlet-api
-Bundle-SymbolicName: org.apache.tomcat-servlet-api
+Bundle-SymbolicName: com.alx.enterprise.web-servlet-api
 Export-Package: \
     !javax.servlet.jsp.*,\
     javax.servlet.*;version=4.0

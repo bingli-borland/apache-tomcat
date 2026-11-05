@@ -17,7 +17,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.Principal" %>
 <%@ page import="java.util.Enumeration" %>
-<%@ page import="org.apache.catalina.TomcatPrincipal" %>
+<%@ page import="com.alx.enterprise.webtier.AlxPrincipal" %>
 <%
   if (request.getParameter("logoff") != null) {
     session.invalidate();
@@ -78,12 +78,12 @@ enter it here:
 
 <%
   Principal p = request.getUserPrincipal();
-  if (!(p instanceof TomcatPrincipal)) {
+  if (!(p instanceof AlxPrincipal)) {
 %>
 <p>The principal does not support attributes.</p>
 <%
   } else {
-    TomcatPrincipal principal = (TomcatPrincipal) p;
+    AlxPrincipal principal = (AlxPrincipal) p;
 %>
 <p>The principal contains the following attributes:</p>
 <table>

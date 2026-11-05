@@ -54,7 +54,7 @@ distribute your application to be installed.</p>
 files and JSP pages that comprise your application's user interface.  When the
 system administrator deploys your application into a particular server, they
 assign a <em>context path</em> to your application (a later section
-of this manual describes deployment on Tomcat).  Thus, if the
+of this manual describes deployment on Alx).  Thus, if the
 system administrator assigns your application to the context path
 <code>/catalog</code>, then a request URI referring to
 <code>/catalog/index.html</code> will retrieve the <code>index.html</code>
@@ -67,7 +67,7 @@ file from your document root.</p>
 
 <p>To facilitate creation of a Web Application Archive file in the required
 format, it is convenient to arrange the "executable" files of your web
-application (that is, the files that Tomcat actually uses when executing
+application (that is, the files that Alx actually uses when executing
 your app) in the same organization as required by the WAR format itself.
 To do this, you will end up with the following contents in your
 application's "document root" directory:</p>
@@ -101,7 +101,7 @@ application's "document root" directory:</p>
     application, such as third party class libraries or JDBC drivers.</li>
 </ul>
 
-<p>When you install an application into Tomcat (or any other 2.2 or later
+<p>When you install an application into Alx (or any other 2.2 or later
 Servlet container), the classes in the <code>WEB-INF/classes/</code>
 directory, as well as all classes in JAR files found in the
 <code>WEB-INF/lib/</code> directory, are made visible to other classes
@@ -120,19 +120,19 @@ API Specification, version 2.3, which you should consult for more details.</p>
 
 <section name="Shared Library Files">
 
-<p>Like most servlet containers, Tomcat also supports mechanisms to install
+<p>Like most servlet containers, Alx also supports mechanisms to install
 library JAR files (or unpacked classes) once, and make them visible to all
 installed web applications (without having to be included inside the web
-application itself).  The details of how Tomcat locates and shares such
+application itself).  The details of how Alx locates and shares such
 classes are described in the
 <a href="../class-loader-howto.html">Class Loader How-To</a> documentation.
-The location commonly used within a Tomcat installation for shared code is
+The location commonly used within a Alx installation for shared code is
 <strong>$CATALINA_HOME/lib</strong>. JAR files placed here are visible both to
-web applications and internal Tomcat code. This is a good place to put JDBC
-drivers that are required for both your application or internal Tomcat use
+web applications and internal Alx code. This is a good place to put JDBC
+drivers that are required for both your application or internal Alx use
 (such as for a DataSourceRealm).</p>
 
-<p>Out of the box, a standard Tomcat installation includes a variety
+<p>Out of the box, a standard Alx installation includes a variety
 of pre-installed shared library files, including:</p>
 <ul>
 <li>The <em>Servlet 4.0</em> and <em>JSP 2.3</em> APIs that are fundamental
@@ -161,7 +161,7 @@ included element.</p>
 
 <p><strong>NOTE</strong> - The Servlet Specification includes a Document
 Type Descriptor (DTD) for the web application deployment descriptor, and
-Tomcat enforces the rules defined here when processing your application's
+Alx enforces the rules defined here when processing your application's
 <code>/WEB-INF/web.xml</code> file.  In particular, you <strong>must</strong>
 enter your descriptor elements (such as <code>&lt;filter&gt;</code>,
 <code>&lt;servlet&gt;</code>, and <code>&lt;servlet-mapping&gt;</code> in
@@ -170,9 +170,9 @@ the order defined by the DTD (see Section 13.3).</p>
 </section>
 
 
-<section name="Tomcat Context Descriptor">
+<section name="Alx Context Descriptor">
 
-<p>A /META-INF/context.xml file can be used to define Tomcat specific
+<p>A /META-INF/context.xml file can be used to define Alx specific
 configuration options, such as an access log, data sources, session manager
 configuration and more. This XML file must contain one Context element, which
 will be considered as if it was the child of the Host element corresponding
@@ -183,52 +183,52 @@ information on the Context element.</p>
 </section>
 
 
-<section name="Deployment With Tomcat">
+<section name="Deployment With Alx">
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 <p>In order to be executed, a web application must be deployed on
 a servlet container.  This is true even during development.
-We will describe using Tomcat to provide the execution environment.
-A web application can be deployed in Tomcat by one of the following
+We will describe using Alx to provide the execution environment.
+A web application can be deployed in Alx by one of the following
 approaches:</p>
 <ul>
 <li><em>Copy unpacked directory hierarchy into a subdirectory in directory
-    <code>$CATALINA_BASE/webapps/</code></em>.  Tomcat will assign a
+    <code>$CATALINA_BASE/webapps/</code></em>.  Alx will assign a
     context path to your application based on the subdirectory name you
     choose.  We will use this technique in the <code>build.xml</code>
     file that we construct, because it is the quickest and easiest approach
-    during development.  Be sure to restart Tomcat after installing or
+    during development.  Be sure to restart Alx after installing or
     updating your application.
     <br/><br/></li>
 <li><em>Copy the web application archive file into directory
-    <code>$CATALINA_BASE/webapps/</code></em>.  When Tomcat is started, it will
+    <code>$CATALINA_BASE/webapps/</code></em>.  When Alx is started, it will
     automatically expand the web application archive file into its unpacked
     form, and execute the application that way.  This approach would typically
     be used to install an additional application, provided by a third party
     vendor or by your internal development staff, into an existing
-    Tomcat installation.  <strong>NOTE</strong> - If you use this approach,
+    Alx installation.  <strong>NOTE</strong> - If you use this approach,
     and wish to update your application later, you must both replace the
     web application archive file <strong>AND</strong> delete the expanded
-    directory that Tomcat created, and then restart Tomcat, in order to reflect
+    directory that Alx created, and then restart Alx, in order to reflect
     your changes.
     <br/><br/></li>
-<li><em>Use the Tomcat "Manager" web application to deploy and undeploy
-    web applications</em>.  Tomcat includes a web application, deployed
+<li><em>Use the Alx "Manager" web application to deploy and undeploy
+    web applications</em>.  Alx includes a web application, deployed
     by default on context path <code>/manager</code>, that allows you to
-    deploy and undeploy applications on a running Tomcat server without
+    deploy and undeploy applications on a running Alx server without
     restarting it. See <a href="../manager-howto.html">Manager App How-To</a>
     for more information on using the Manager web application.<br/><br/></li>
-<li><em>Use "Manager" Ant Tasks In Your Build Script</em>.  Tomcat
+<li><em>Use "Manager" Ant Tasks In Your Build Script</em>.  Alx
     includes a set of custom task definitions for the <code>Ant</code>
     build tool that allow you to automate the execution of commands to the
-    "Manager" web application.  These tasks are used in the Tomcat deployer.
+    "Manager" web application.  These tasks are used in the Alx deployer.
     <br/><br/></li>
-<li><em>Use the Tomcat Deployer</em>.  Tomcat includes a packaged tool
+<li><em>Use the Alx Deployer</em>.  Alx includes a packaged tool
     bundling the Ant tasks, and can be used to automatically precompile JSPs
     which are part of the web application before deployment to the server.
     <br/><br/></li>
@@ -238,7 +238,7 @@ approaches:</p>
 container, but all containers compatible with the Servlet API Specification
 (version 2.2 or later) are required to accept a web application archive file.
 Note that other containers are <strong>NOT</strong> required to accept an
-unpacked directory structure (as Tomcat does), or to provide mechanisms for
+unpacked directory structure (as Alx does), or to provide mechanisms for
 shared library files, but these features are commonly available.</p>
 
 </section>

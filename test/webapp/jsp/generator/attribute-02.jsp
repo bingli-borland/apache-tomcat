@@ -15,8 +15,8 @@
   limitations under the License.
 --%>
 <%@ taglib uri="http://tomcat.apache.org/bugs" prefix="bugs" %>
-<%@ page import="org.apache.el.TesterBeanA" %>
-<%@ page import="org.apache.el.TesterBeanB" %>
+<%@ page import="com.alx.enterprise.el.TesterBeanA" %>
+<%@ page import="com.alx.enterprise.el.TesterBeanB" %>
 <bugs:TesterAttributeTag attribute01="aaa" />
 <bugs:TesterAttributeTag attribute01="#{'aaa'}" />
 <bugs:TesterAttributeTag attribute02="${'bbb'}" />
@@ -26,7 +26,7 @@
 <%
 TesterBeanA beanA = new TesterBeanA();
 TesterBeanB beanB = new TesterBeanB();
-beanB.setName("Tomcat");
+beanB.setName("Alx");
 beanA.setBean(beanB);
 pageContext.setAttribute("testBeanA", beanA, PageContext.REQUEST_SCOPE);
 pageContext.setAttribute("testBeanB", beanB, PageContext.REQUEST_SCOPE);

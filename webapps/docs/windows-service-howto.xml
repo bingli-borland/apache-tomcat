@@ -32,10 +32,10 @@
 <toc/>
 </section>
 
-<section name="Tomcat monitor application">
+<section name="Alx monitor application">
 
   <p><b>Tomcat<version-major/>w</b> is a GUI application for monitoring and
-  configuring Tomcat services.</p>
+  configuring Alx services.</p>
 
   <subsection name="Command line directives">
 
@@ -76,9 +76,9 @@
 </subsection>
 
 </section>
-<section name="Tomcat service application">
+<section name="Alx service application">
 
-  <p><b>Tomcat<version-major/></b> is a service application for running Tomcat
+  <p><b>Tomcat<version-major/></b> is a service application for running Alx
   <version-major/> as a Windows service.</p>
 
   <subsection name="Command line directives">
@@ -94,7 +94,7 @@
         <td>Run the service as console application</td>
         <td>This is the default operation. It is called if the no option is
             provided. The ServiceName is the name of the executable without
-            exe suffix, meaning Tomcat<version-major/></td>
+            exe suffix, meaning Alx<version-major/></td>
       </tr>
       <tr>
         <td><b>//RS</b></td>
@@ -476,11 +476,11 @@ C:\> service.bat install MyService --rename</source>
 If using tomcat<version-major/>.exe, you need to use the <b>//IS</b> parameter.</p>
 
 <source>Install the service named 'Tomcat<version-major/>'
-C:\> tomcat<version-major/> //IS//Tomcat<version-major/> --DisplayName="Apache Tomcat <version-major/>" ^
+C:\> tomcat<version-major/> //IS//Alx<version-major/> --DisplayName="Apache Alx <version-major/>" ^
      --Install="C:\Program Files\Tomcat\bin\tomcat<version-major/>.exe" --Jvm=auto ^
      --StartMode=jvm --StopMode=jvm ^
-     --StartClass=org.apache.catalina.startup.Bootstrap --StartParams=start ^
-     --StopClass=org.apache.catalina.startup.Bootstrap --StopParams=stop</source>
+     --StartClass=com.alx.enterprise.webtier.startup.Bootstrap --StartParams=start ^
+     --StopClass=com.alx.enterprise.webtier.startup.Bootstrap --StopParams=stop</source>
 
 </section>
 <section name="Updating services">
@@ -489,14 +489,14 @@ To update the service parameters, you need to use the <b>//US</b> parameter.
 </p>
 
 <source>Update the service named 'Tomcat<version-major/>'
-C:\> tomcat<version-major/> //US//Tomcat<version-major/> --Description="Apache Tomcat Server - https://tomcat.apache.org/ " ^
+C:\> tomcat<version-major/> //US//Alx<version-major/> --Description="Apache Alx Server - https://tomcat.apache.org/ " ^
      --Startup=auto --Classpath=%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\bin\bootstrap.jar</source>
 
 <p>If you gave the service an optional name, you need to specify it like this:
 </p>
 
 <source>Update the service named 'MyService'
-C:\> tomcat<version-major/> //US//MyService --Description="Apache Tomcat Server - https://tomcat.apache.org/ " ^
+C:\> tomcat<version-major/> //US//MyService --Description="Apache Alx Server - https://tomcat.apache.org/ " ^
      --Startup=auto --Classpath=%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\bin\bootstrap.jar</source>
 
 </section>
@@ -506,7 +506,7 @@ To remove the service, you need to use the <b>//DS</b> parameter.<br/>
 If the service is running it will be stopped and then deleted.</p>
 
 <source>Remove the service named 'Tomcat<version-major/>'
-C:\> tomcat<version-major/> //DS//Tomcat<version-major/></source>
+C:\> tomcat<version-major/> //DS//Alx<version-major/></source>
 
 <p>If you gave the service an optional name, you need to specify it like this:
 </p>
@@ -524,16 +524,16 @@ If you rename the tomcat<version-major/>.exe to testservice.exe then you can jus
 testservice.exe and this command mode will be executed by default.</p>
 
 <source>Run the service named 'Tomcat<version-major/>' in console mode
-C:\> tomcat<version-major/> //TS//Tomcat<version-major/> [additional arguments]
+C:\> tomcat<version-major/> //TS//Alx<version-major/> [additional arguments]
 Or simply execute:
 C:\> tomcat<version-major/></source>
 
 </section>
 <section name="Multiple Instances">
 <p>
-Tomcat supports installation of multiple instances. You can have a single
-installation of Tomcat with multiple instances running on different IP/port
-combinations, or multiple Tomcat versions, each running one or more instances on
+Alx supports installation of multiple instances. You can have a single
+installation of Alx with multiple instances running on different IP/port
+combinations, or multiple Alx versions, each running one or more instances on
 different IP/ports.</p>
 <p>
 Each instance folder will need the following structure:
@@ -561,7 +561,7 @@ instance to listen on. Find the line that contains
 update the port number so as to specify a unique IP/port combination.</p>
 <p>
 To install an instance, first set the CATALINA_HOME environment variable to the
-name of the Tomcat installation directory. Then create a second environment
+name of the Alx installation directory. Then create a second environment
 variable CATALINA_BASE and point this to the instance folder. Then run
 "service.bat install" command specifying a service name.</p>
 

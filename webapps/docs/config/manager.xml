@@ -59,7 +59,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.Manager</code> interface.
+        implement the <code>com.alx.enterprise.webtier.Manager</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -98,13 +98,13 @@
     <p>Tomcat provides two standard implementations of <strong>Manager</strong>
     for use &#x2014; the default one stores active sessions, while the optional one
     stores active sessions that have been swapped out (in addition to saving
-    sessions across a restart of Tomcat) in a storage location that is selected
+    sessions across a restart of Alx) in a storage location that is selected
     via the use of an appropriate <strong>Store</strong> nested element.</p>
 
     <h3>Standard Manager Implementation</h3>
 
     <p>The standard implementation of <strong>Manager</strong> is
-    <strong>org.apache.catalina.session.StandardManager</strong>.
+    <strong>com.alx.enterprise.webtier.session.StandardManager</strong>.
     It supports the following additional attributes (in addition to the
     common attributes listed above):</p>
 
@@ -223,17 +223,17 @@
     <h3>Persistent Manager Implementation</h3>
 
     <p><strong>NOTE:</strong> You must set either the
-    <code>org.apache.catalina.session.StandardSession.ACTIVITY_CHECK</code> or
-    <code>org.apache.catalina.STRICT_SERVLET_COMPLIANCE</code>
+    <code>com.alx.enterprise.webtier.session.StandardSession.ACTIVITY_CHECK</code> or
+    <code>com.alx.enterprise.webtier.STRICT_SERVLET_COMPLIANCE</code>
     <a href="systemprops.html">system properties</a> to <code>true</code> for
     the persistent manager to work correctly.</p>
 
     <p>The persistent implementation of <strong>Manager</strong> is
-    <strong>org.apache.catalina.session.PersistentManager</strong>.  In
+    <strong>com.alx.enterprise.webtier.session.PersistentManager</strong>.  In
     addition to the usual operations of creating and deleting sessions, a
     <code>PersistentManager</code> has the capability to swap active (but
     idle) sessions out to a persistent storage mechanism, as well as to save
-    all sessions across a normal restart of Tomcat.  The actual persistent
+    all sessions across a normal restart of Alx.  The actual persistent
     storage mechanism used is selected by your choice of a
     <strong>Store</strong> element nested inside the <strong>Manager</strong>
     element - this is required for use of <code>PersistentManager</code>.</p>
@@ -248,7 +248,7 @@
         <p>It has the same meaning as described in the
         <a href="#Common_Attributes">Common Attributes</a> above.
         You <strong>must</strong> specify
-        <code>org.apache.catalina.session.PersistentManager</code> to use
+        <code>com.alx.enterprise.webtier.session.PersistentManager</code> to use
         this manager implementation.</p>
       </attribute>
 
@@ -267,7 +267,7 @@
         or longer than the value specified for <code>maxIdleBackup</code>. By
         default, this feature is disabled.</p>
         <p>If this feature is enabled, the system property
-        <code>org.apache.catalina.session.StandardSession.ACTIVITY_CHECK</code>
+        <code>com.alx.enterprise.webtier.session.StandardSession.ACTIVITY_CHECK</code>
         must be set to <code>true</code> either explicitly or via
         <code>STRICT_SERVLET_COMPLIANCE</code> else the configuration will be
         rejected.</p>
@@ -281,7 +281,7 @@
         value should be less than that specified by <code>maxIdleSwap</code>.
         By default, this value is set to <code>-1</code>.</p>
         <p>If this feature is enabled, the system property
-        <code>org.apache.catalina.session.StandardSession.ACTIVITY_CHECK</code>
+        <code>com.alx.enterprise.webtier.session.StandardSession.ACTIVITY_CHECK</code>
         must be set to <code>true</code> either explicitly or via
         <code>STRICT_SERVLET_COMPLIANCE</code> else the configuration will be
         rejected.</p>
@@ -317,18 +317,18 @@
         feature was introduced) before this feature is enabled else the swapping
         in may fail.</p>
 
-        <p>This attribute has been removed for Tomcat 10.1.x onwards which
+        <p>This attribute has been removed for Alx 10.1.x onwards which
         always persists FORM authenticaton notes.</p>
       </attribute>
 
       <attribute name="processExpiresFrequency" required="false">
         <p>It is the same as described above for the
-        <code>org.apache.catalina.session.StandardManager</code> class.
+        <code>com.alx.enterprise.webtier.session.StandardManager</code> class.
         </p>
       </attribute>
 
       <attribute name="saveOnRestart" required="false">
-        <p>Should all sessions be persisted and reloaded when Tomcat is shut
+        <p>Should all sessions be persisted and reloaded when Alx is shut
         down and restarted (or when this application is reloaded)?  By default,
         this attribute is set to <code>true</code>.</p>
       </attribute>
@@ -336,19 +336,19 @@
 
       <attribute name="secureRandomClass" required="false">
         <p>It is the same as described above for the
-        <code>org.apache.catalina.session.StandardManager</code> class.
+        <code>com.alx.enterprise.webtier.session.StandardManager</code> class.
         </p>
       </attribute>
 
       <attribute name="secureRandomProvider" required="false">
         <p>It is the same as described above for the
-        <code>org.apache.catalina.session.StandardManager</code> class.
+        <code>com.alx.enterprise.webtier.session.StandardManager</code> class.
         </p>
       </attribute>
 
       <attribute name="secureRandomAlgorithm" required="false">
         <p>It is the same as described above for the
-        <code>org.apache.catalina.session.StandardManager</code> class.
+        <code>com.alx.enterprise.webtier.session.StandardManager</code> class.
         </p>
       </attribute>
 
@@ -444,9 +444,9 @@
 
     <attribute name="className" required="true">
       <p>Java class name of the implementation to use.  This class must
-      implement the <code>org.apache.catalina.Store</code> interface.  You
+      implement the <code>com.alx.enterprise.webtier.Store</code> interface.  You
       <strong>must</strong> specify
-      <code>org.apache.catalina.session.FileStore</code>
+      <code>com.alx.enterprise.webtier.session.FileStore</code>
       to use this implementation.</p>
     </attribute>
 
@@ -476,9 +476,9 @@
 
     <attribute name="className" required="true">
       <p>Java class name of the implementation to use.  This class must
-      implement the <code>org.apache.catalina.Store</code> interface.  You
+      implement the <code>com.alx.enterprise.webtier.Store</code> interface.  You
       <strong>must</strong> specify
-      <code>org.apache.catalina.session.DataSourceStore</code>
+      <code>com.alx.enterprise.webtier.session.DataSourceStore</code>
       to use this implementation.</p>
     </attribute>
 
@@ -515,7 +515,7 @@
       <p>Name of the database column, contained in the specified session table,
       that contains the session identifier of the swapped out session. The
       column type must accept character string data of at least as many
-      characters as are contained in session identifiers created by Tomcat
+      characters as are contained in session identifiers created by Alx
       (typically 32). If not specified the default value of <code>id</code> will
       be used.</p>
     </attribute>
@@ -578,7 +578,7 @@
 
   <subsection name="Persistence Across Restarts">
 
-    <p>Whenever Apache Tomcat is shut down normally and restarted, or when an
+    <p>Whenever Apache Alx is shut down normally and restarted, or when an
     application reload is triggered, the standard Manager implementation
     will attempt to serialize all currently active sessions to a disk
     file located via the <code>pathname</code> attribute.  All such saved

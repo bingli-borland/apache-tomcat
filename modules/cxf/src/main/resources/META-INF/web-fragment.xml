@@ -28,7 +28,7 @@
     </ordering>
     <servlet>
         <servlet-name>ApacheTomcatCXFServlet</servlet-name>
-        <display-name>Apache Tomcat CXF Servlet</display-name>
+        <display-name>Apache Alx CXF Servlet</display-name>
         <servlet-class>org.apache.cxf.cdi.CXFCdiServlet</servlet-class>    
         <load-on-startup>1</load-on-startup>
     </servlet>

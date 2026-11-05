@@ -34,7 +34,7 @@
 
 <section name="Quick Start">
 
-<p>This document describes how to configure Tomcat to support <em>container
+<p>This document describes how to configure Alx to support <em>container
 managed security</em>, by connecting to an existing "database" of usernames,
 passwords, and user roles.  You only need to care about this if you are using
 a web application that includes one or more
@@ -48,7 +48,7 @@ see the <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specificatio
 Specification (Version 2.4)</a>, Section 12.</p>
 
 <p>For information about utilizing the <em>Single Sign On</em> feature of
-Tomcat (allowing a user to authenticate themselves once across the entire
+Alx (allowing a user to authenticate themselves once across the entire
 set of web applications associated with a virtual host), see
 <a href="config/host.html#Single_Sign_On">here</a>.</p>
 
@@ -75,8 +75,8 @@ applications to <em>declare</em> their security requirements (in the
 defining the interface between a servlet container and the associated user
 and role information.  In many cases, however, it is desirable to "connect"
 a servlet container to some existing authentication database or mechanism
-that already exists in the production environment.  Therefore, Tomcat
-defines a Java interface (<code>org.apache.catalina.Realm</code>) that
+that already exists in the production environment.  Therefore, Alx
+defines a Java interface (<code>com.alx.enterprise.webtier.Realm</code>) that
 can be implemented by "plug in" components to establish this connection.
 Six standard plug-ins are provided, supporting connections to various
 sources of authentication information:</p>
@@ -101,9 +101,9 @@ sources of authentication information:</p>
 </ul>
 
 <p>It is also possible to write your own <code>Realm</code> implementation,
-and integrate it with Tomcat.  To do so, you need to:</p>
+and integrate it with Alx.  To do so, you need to:</p>
 <ul>
-  <li>Implement <code>org.apache.catalina.Realm</code>,</li>
+  <li>Implement <code>com.alx.enterprise.webtier.Realm</code>,</li>
   <li>Place your compiled realm in $CATALINA_HOME/lib,</li>
   <li>Declare your realm as described in the "Configuring a Realm" section below,</li>
   <li>Declare your realm to the <a href="mbeans-descriptors-howto.html">MBeans Descriptors</a>.</li>
@@ -187,7 +187,7 @@ techniques are supported:</p>
 <ul>
 <li>If you are writing an application that needs to calculate digested
     passwords dynamically, call the static <code>Digest()</code> method of the
-    <code>org.apache.catalina.realm.RealmBase</code> class, passing the
+    <code>com.alx.enterprise.webtier.realm.RealmBase</code> class, passing the
     cleartext password, the digest algorithm name and the encoding as arguments.
     This method will return the digested password.</li>
 <li>If you want to execute a command line utility to calculate the digested
@@ -258,7 +258,7 @@ simplified to <code>{digest}</code>.</p>
 
 <subsection name="Example Application">
 
-<p>The example application shipped with Tomcat includes an area that is
+<p>The example application shipped with Alx includes an area that is
 protected by a security constraint, utilizing form-based login.  To access it,
 point your browser at
 <a href="http://localhost:8080/examples/jsp/security/protected/">http://localhost:8080/examples/jsp/security/protected/</a>
@@ -271,7 +271,7 @@ and log on with one of the usernames and passwords described for the default
 <subsection name="Manager Application">
 
 <p>If you wish to use the <a href="manager-howto.html">Manager Application</a>
-to deploy and undeploy applications in a running Tomcat installation, you
+to deploy and undeploy applications in a running Alx installation, you
 MUST add the "manager-gui" role to at least one username in your selected
 Realm implementation.  This is because the manager web application itself uses a
 security constraint that requires role "manager-gui" to access ANY request URI
@@ -280,7 +280,7 @@ within the HTML interface of that application.</p>
 <p>For security reasons, no username in the default Realm (i.e. using
 <code>conf/tomcat-users.xml</code> is assigned the "manager-gui" role.
 Therefore, no one will be able to utilize the features of this application
-until the Tomcat administrator specifically assigns this role to one or more
+until the Alx administrator specifically assigns this role to one or more
 users.</p>
 
 </subsection>
@@ -304,7 +304,7 @@ users.</p>
 
 <h5>Introduction</h5>
 
-<p><strong>DataSourceRealm</strong> is an implementation of the Tomcat
+<p><strong>DataSourceRealm</strong> is an implementation of the Alx
 <code>Realm</code> interface that looks up users in a relational database
 accessed via a JNDI named JDBC DataSource.  There is substantial configuration
 flexibility that lets you adapt to existing table and column names, as long
@@ -316,8 +316,8 @@ as your database structure conforms to the following requirements:</p>
 <li>The <em>users</em> table must contain at least two columns (it may
     contain more if your existing applications required it):
     <ul>
-    <li>Username to be recognized by Tomcat when the user logs in.</li>
-    <li>Password to be recognized by Tomcat when the user logs in.
+    <li>Username to be recognized by Alx when the user logs in.</li>
+    <li>Password to be recognized by Alx when the user logs in.
         This value may in cleartext or digested - see below for more
         information.</li>
     </ul></li>
@@ -328,7 +328,7 @@ as your database structure conforms to the following requirements:</p>
 <li>The <em>user roles</em> table must contain at least two columns (it may
     contain more if your existing applications required it):
     <ul>
-    <li>Username to be recognized by Tomcat (same value as is specified
+    <li>Username to be recognized by Alx (same value as is specified
         in the <em>users</em> table).</li>
     <li>Role name of a valid role associated with this user.</li>
     </ul></li>
@@ -336,12 +336,12 @@ as your database structure conforms to the following requirements:</p>
 
 <h5>Quick Start</h5>
 
-<p>To set up Tomcat to use DataSourceRealm, you will need to follow these steps:</p>
+<p>To set up Alx to use DataSourceRealm, you will need to follow these steps:</p>
 <ol>
 <li>If you have not yet done so, create tables and columns in your database
     that conform to the requirements described above.</li>
-<li>Configure a database username and password for use by Tomcat, that has
-    at least read only access to the tables described above.  (Tomcat will
+<li>Configure a database username and password for use by Alx, that has
+    at least read only access to the tables described above.  (Alx will
     never attempt to write to these tables.)</li>
 <li>Configure a JNDI named JDBC DataSource for your database.  Refer to the
     <a href="jndi-datasource-examples-howto.html">JNDI DataSource Example
@@ -351,7 +351,7 @@ as your database structure conforms to the following requirements:</p>
     defined.</li>
 <li>Set up a <code>&lt;Realm&gt;</code> element, as described below, in your
     <code>$CATALINA_BASE/conf/server.xml</code> file.</li>
-<li>Restart Tomcat if it is already running.</li>
+<li>Restart Alx if it is already running.</li>
 </ol>
 
 <h5>Realm Element Attributes</h5>
@@ -380,7 +380,7 @@ create table user_roles (
 <p>Here is an example for using a MySQL database called "authority", configured
 with the tables described above, and accessed with the JNDI JDBC DataSource with
 name "java:/comp/env/jdbc/authority".</p>
-<source><![CDATA[<Realm className="org.apache.catalina.realm.DataSourceRealm"
+<source><![CDATA[<Realm className="com.alx.enterprise.webtier.realm.DataSourceRealm"
    dataSourceName="jdbc/authority"
    userTable="users" userNameCol="user_name" userCredCol="user_pass"
    userRoleTable="user_roles" roleNameCol="role_name"/>]]></source>
@@ -390,12 +390,12 @@ name "java:/comp/env/jdbc/authority".</p>
 <p>DataSourceRealm operates according to the following rules:</p>
 <ul>
 <li>When a user attempts to access a protected resource for the first time,
-    Tomcat will call the <code>authenticate()</code> method of this
+    Alx will call the <code>authenticate()</code> method of this
     <code>Realm</code>.  Thus, any changes you have made to the database
     directly (new users, changed passwords or roles, etc.) will be immediately
     reflected.</li>
 <li>Once a user has been authenticated, the user (and their associated
-    roles) are cached within Tomcat for the duration of the user's login.
+    roles) are cached within Alx for the duration of the user's login.
     (For FORM-based authentication, that means until the session times out or
     is invalidated; for BASIC authentication, that means until the user
     closes their browser).  The cached user is <strong>not</strong> saved and
@@ -403,7 +403,7 @@ name "java:/comp/env/jdbc/authority".</p>
     information for an already authenticated user will <strong>not</strong> be
     reflected until the next time that user logs on again.</li>
 <li>Administering the information in the <em>users</em> and <em>user roles</em>
-    table is the responsibility of your own applications.  Tomcat does not
+    table is the responsibility of your own applications.  Alx does not
     provide any built-in capabilities to maintain users and roles.</li>
 </ul>
 
@@ -414,7 +414,7 @@ name "java:/comp/env/jdbc/authority".</p>
 
 <h5>Introduction</h5>
 
-<p><strong>JNDIRealm</strong> is an implementation of the Tomcat
+<p><strong>JNDIRealm</strong> is an implementation of the Alx
 <code>Realm</code> interface that looks up users in an LDAP directory
 server accessed by a JNDI provider (typically, the standard LDAP
 provider that is available with the JNDI API classes). The realm
@@ -590,16 +590,16 @@ the name of this attribute.</p>
 
 <h5>Quick Start</h5>
 
-<p>To set up Tomcat to use JNDIRealm, you will need to follow these steps:</p>
+<p>To set up Alx to use JNDIRealm, you will need to follow these steps:</p>
 <ol>
 <li>Make sure your directory server is configured with a schema that matches
     the requirements listed above.</li>
-<li>If required, configure a username and password for use by Tomcat, that has
-    read only access to the information described above.  (Tomcat will
+<li>If required, configure a username and password for use by Alx, that has
+    read only access to the information described above.  (Alx will
     never attempt to modify this information.)</li>
 <li>Set up a <code>&lt;Realm&gt;</code> element, as described below, in your
     <code>$CATALINA_BASE/conf/server.xml</code> file.</li>
-<li>Restart Tomcat if it is already running.</li>
+<li>Restart Alx if it is already running.</li>
 </ol>
 
 <h5>Realm Element Attributes</h5>
@@ -626,7 +626,7 @@ rootdn "cn=Manager,dc=mycompany,dc=com"
 rootpw secret</source>
 
 <p>We will assume for <code>connectionURL</code> that the directory
-server runs on the same machine as Tomcat.  See <a
+server runs on the same machine as Alx.  See <a
 href="http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html">
 http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html</a>
 for more information about configuring and using the JNDI LDAP
@@ -689,7 +689,7 @@ that users use their uid (e.g. jjones) to login to the
 application and that an anonymous connection is sufficient to search
 the directory and retrieve role information:</p>
 
-<source><![CDATA[<Realm   className="org.apache.catalina.realm.JNDIRealm"
+<source><![CDATA[<Realm   className="com.alx.enterprise.webtier.realm.JNDIRealm"
      connectionURL="ldap://localhost:389"
        userPattern="uid={0},ou=people,dc=mycompany,dc=com"
           roleBase="ou=groups,dc=mycompany,dc=com"
@@ -725,7 +725,7 @@ userPassword: janet</source>
 
 <p> This realm configuration would satisfy the new requirements:</p>
 
-<source><![CDATA[<Realm   className="org.apache.catalina.realm.JNDIRealm"
+<source><![CDATA[<Realm   className="com.alx.enterprise.webtier.realm.JNDIRealm"
      connectionURL="ldap://localhost:389"
           userBase="ou=people,dc=mycompany,dc=com"
         userSearch="(mail={0})"
@@ -748,7 +748,7 @@ only group entry of which they are a member.</p>
 the password from the directory and making a local comparison in the
 realm, you might use a realm configuration like this:</p>
 
-<source><![CDATA[<Realm   className="org.apache.catalina.realm.JNDIRealm"
+<source><![CDATA[<Realm   className="com.alx.enterprise.webtier.realm.JNDIRealm"
     connectionName="cn=Manager,dc=mycompany,dc=com"
 connectionPassword="secret"
      connectionURL="ldap://localhost:389"
@@ -767,12 +767,12 @@ authentication is usually to be preferred.</p>
 <p>JNDIRealm operates according to the following rules:</p>
 <ul>
 <li>When a user attempts to access a protected resource for the first time,
-    Tomcat will call the <code>authenticate()</code> method of this
+    Alx will call the <code>authenticate()</code> method of this
     <code>Realm</code>.  Thus, any changes you have made to the directory
     (new users, changed passwords or roles, etc.) will be immediately
     reflected.</li>
 <li>Once a user has been authenticated, the user (and their associated
-    roles) are cached within Tomcat for the duration of the user's login.
+    roles) are cached within Alx for the duration of the user's login.
     (For FORM-based authentication, that means until the session times out or
     is invalidated; for BASIC authentication, that means until the user
     closes their browser).  The cached user is <strong>not</strong> saved and
@@ -780,7 +780,7 @@ authentication is usually to be preferred.</p>
     information for an already authenticated user will <strong>not</strong> be
     reflected until the next time that user logs on again.</li>
 <li>Administering the information in the directory server
-    is the responsibility of your own applications.  Tomcat does not
+    is the responsibility of your own applications.  Alx does not
     provide any built-in capabilities to maintain users and roles.</li>
 </ul>
 
@@ -791,7 +791,7 @@ authentication is usually to be preferred.</p>
 
 <h5>Introduction</h5>
 
-<p><strong>UserDatabaseRealm</strong> is an implementation of the Tomcat
+<p><strong>UserDatabaseRealm</strong> is an implementation of the Alx
 <code>Realm</code> interface that uses a JNDI resource to store user
 information. By default, the JNDI resource is backed by an XML file. It is not
 designed for large-scale production use. At startup time, the UserDatabaseRealm
@@ -816,7 +816,7 @@ same format as the <a href="#MemoryRealm">MemoryRealm</a>.</p>
 
 <h5>Example</h5>
 
-<p>The default installation of Tomcat is configured with a UserDatabaseRealm
+<p>The default installation of Alx is configured with a UserDatabaseRealm
 nested inside the <code>&lt;Engine&gt;</code> element, so that it applies
 to all virtual hosts and web applications.  The default contents of the
 <code>conf/tomcat-users.xml</code> file is:</p>
@@ -830,16 +830,16 @@ to all virtual hosts and web applications.  The default contents of the
 
 <p>UserDatabaseRealm operates according to the following rules:</p>
 <ul>
-<li>When Tomcat first starts up, it loads all defined users and their
+<li>When Alx first starts up, it loads all defined users and their
     associated information from the users file. Changes made to the data in
-    this file will <strong>not</strong> be recognized until Tomcat is
-    restarted. Changes may be made via the UserDatabase resource. Tomcat
+    this file will <strong>not</strong> be recognized until Alx is
+    restarted. Changes may be made via the UserDatabase resource. Alx
     provides MBeans that may be accessed via JMX for this purpose.</li>
 <li>When a user attempts to access a protected resource for the first time,
-    Tomcat will call the <code>authenticate()</code> method of this
+    Alx will call the <code>authenticate()</code> method of this
     <code>Realm</code>.</li>
 <li>Once a user has been authenticated, the user becomes associated within
-    Tomcat for the duration of the user's login.
+    Alx for the duration of the user's login.
     (For FORM-based authentication, that means until the session times out or
     is invalidated; for BASIC authentication, that means until the user
     closes their browser). However, the user roles will still reflect the
@@ -863,11 +863,11 @@ to all virtual hosts and web applications.  The default contents of the
 <h5>Introduction</h5>
 
 <p><strong>MemoryRealm</strong> is a simple demonstration implementation of the
-Tomcat <code>Realm</code> interface.  It is not designed for production use.
+Alx <code>Realm</code> interface.  It is not designed for production use.
 At startup time, MemoryRealm loads information about all users, and their
 corresponding roles, from an XML document (by default, this document is loaded
 from <code>$CATALINA_BASE/conf/tomcat-users.xml</code>).  Changes to the data
-in this file are not recognized until Tomcat is restarted.</p>
+in this file are not recognized until Alx is restarted.</p>
 
 <h5>Realm Element Attributes</h5>
 
@@ -897,21 +897,21 @@ valid user, consisting of the following attributes:</p>
 
 <p>MemoryRealm operates according to the following rules:</p>
 <ul>
-<li>When Tomcat first starts up, it loads all defined users and their
+<li>When Alx first starts up, it loads all defined users and their
     associated information from the users file.  Changes to the data in
-    this file will <strong>not</strong> be recognized until Tomcat is
+    this file will <strong>not</strong> be recognized until Alx is
     restarted.</li>
 <li>When a user attempts to access a protected resource for the first time,
-    Tomcat will call the <code>authenticate()</code> method of this
+    Alx will call the <code>authenticate()</code> method of this
     <code>Realm</code>.</li>
 <li>Once a user has been authenticated, the user (and their associated
-    roles) are cached within Tomcat for the duration of the user's login.
+    roles) are cached within Alx for the duration of the user's login.
     (For FORM-based authentication, that means until the session times out or
     is invalidated; for BASIC authentication, that means until the user
     closes their browser).  The cached user is <strong>not</strong> saved and
     restored across sessions serialisations.</li>
 <li>Administering the information in the users file is the responsibility
-    of your application.  Tomcat does not
+    of your application.  Alx does not
     provide any built-in capabilities to maintain users and roles.</li>
 </ul>
 
@@ -923,13 +923,13 @@ valid user, consisting of the following attributes:</p>
 
 <h5>Introduction</h5>
 
-        <p><strong>JAASRealm</strong> is an implementation of the Tomcat
+        <p><strong>JAASRealm</strong> is an implementation of the Alx
 <code>Realm</code> interface that authenticates users through the Java
 Authentication &amp; Authorization Service (JAAS) framework which is now
 provided as part of the standard Java SE API.</p>
         <p>Using JAASRealm gives the developer the ability to combine
 practically any conceivable security realm with Tomcat's CMA. </p>
-        <p>JAASRealm is prototype for Tomcat of the JAAS-based
+        <p>JAASRealm is prototype for Alx of the JAAS-based
 J2EE authentication framework for J2EE v1.4, based on the <a
  href="https://www.jcp.org/en/jsr/detail?id=196">JCP Specification
 Request 196</a> to enhance container-managed security and promote
@@ -939,11 +939,11 @@ container-independent.
         <p>Based on the JAAS login module and principal (see <code>javax.security.auth.spi.LoginModule</code>
 and <code>javax.security.Principal</code>), you can develop your own
 security mechanism or wrap another third-party mechanism for
-integration with the CMA as implemented by Tomcat.
+integration with the CMA as implemented by Alx.
         </p>
 
         <h5>Quick Start</h5>
-        <p>To set up Tomcat to use JAASRealm with your own JAAS login module,
+        <p>To set up Alx to use JAASRealm with your own JAAS login module,
  you will need to follow these steps:</p>
         <ol>
           <li>Write your own LoginModule, User and Role classes based
@@ -958,22 +958,22 @@ only recognizes the <code>NameCallback</code> and <code>PasswordCallback</code> 
           </li>
           <li>Although not specified in JAAS, you should create
 separate classes to distinguish between users and roles, extending <code>javax.security.Principal</code>,
-so that Tomcat can tell which Principals returned from your login
-module are users and which are roles (see <code>org.apache.catalina.realm.JAASRealm</code>).
+so that Alx can tell which Principals returned from your login
+module are users and which are roles (see <code>com.alx.enterprise.webtier.realm.JAASRealm</code>).
 Regardless, the first Principal returned is <em>always</em> treated as the user Principal.
           </li>
           <li>Place the compiled classes on Tomcat's classpath
           </li>
           <li>Set up a login.config file for Java (see <a
  href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/jaas/tutorials/LoginConfigFile.html">
-JAAS LoginConfig file</a>) and tell Tomcat where to find it by specifying
+JAAS LoginConfig file</a>) and tell Alx where to find it by specifying
 its location to the JVM, for instance by setting the environment
 variable: <code>JAVA_OPTS=$JAVA_OPTS -Djava.security.auth.login.config==$CATALINA_BASE/conf/jaas.config</code></li>
 
           <li>Configure your security-constraints in your web.xml for
 the resources you want to protect</li>
           <li>Configure the JAASRealm module in your server.xml </li>
-          <li>Restart Tomcat if it is already running.</li>
+          <li>Restart Alx if it is already running.</li>
         </ol>
         <h5>Realm Element Attributes</h5>
         <p>To configure JAASRealm as for step 6 above, you create
@@ -987,7 +987,7 @@ configuration documentation.</p>
 
 <p>Here is an example of how your server.xml snippet should look.</p>
 
-<source><![CDATA[<Realm className="org.apache.catalina.realm.JAASRealm"
+<source><![CDATA[<Realm className="com.alx.enterprise.webtier.realm.JAASRealm"
                 appName="MyFooRealm"
     userClassNames="org.foobar.realm.FooUser"
      roleClassNames="org.foobar.realm.FooRole"/>]]></source>
@@ -996,7 +996,7 @@ configuration documentation.</p>
 Role objects representing Principals for the user
 (<code>javax.security.auth.Subject</code>). If your login module doesn't
 create a user object but also doesn't throw a login exception, then the
-Tomcat CMA will break and you will be left at the
+Alx CMA will break and you will be left at the
 http://localhost:8080/myapp/j_security_check URI or at some other
 unspecified location.</p>
 
@@ -1011,12 +1011,12 @@ and restarting the server, without any code changes to your application.</li>
         <h5>Additional Notes</h5>
         <ul>
           <li>When a user attempts to access a protected resource for
-              the first time, Tomcat will call the <code>authenticate()</code>
+              the first time, Alx will call the <code>authenticate()</code>
               method of this <code>Realm</code>.  Thus, any changes you have made in
               the security mechanism directly (new users, changed passwords or
               roles, etc.) will be immediately reflected.</li>
           <li>Once a user has been authenticated, the user (and their
-              associated roles) are cached within Tomcat for the duration of
+              associated roles) are cached within Alx for the duration of
               the user's login.  For FORM-based authentication, that means until
               the session times out or is invalidated; for BASIC authentication,
               that means until the user closes their browser.  Any changes to the
@@ -1035,7 +1035,7 @@ and restarting the server, without any code changes to your application.</li>
 
     <h5>Introduction</h5>
 
-    <p><strong>CombinedRealm</strong> is an implementation of the Tomcat
+    <p><strong>CombinedRealm</strong> is an implementation of the Alx
     <code>Realm</code> interface that authenticates users through one or more
     sub-Realms.</p>
 
@@ -1062,10 +1062,10 @@ and restarting the server, without any code changes to your application.</li>
 <p>Here is an example of how your server.xml snippet should look to use a
 UserDatabase Realm and a DataSource Realm.</p>
 
-<source><![CDATA[<Realm className="org.apache.catalina.realm.CombinedRealm" >
-   <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+<source><![CDATA[<Realm className="com.alx.enterprise.webtier.realm.CombinedRealm" >
+   <Realm className="com.alx.enterprise.webtier.realm.UserDatabaseRealm"
              resourceName="UserDatabase"/>
-   <Realm className="org.apache.catalina.realm.DataSourceRealm"
+   <Realm className="com.alx.enterprise.webtier.realm.DataSourceRealm"
              dataSourceName="jdbc/authority"
              userTable="users" userNameCol="user_name" userCredCol="user_pass"
              userRoleTable="user_roles" roleNameCol="role_name"/>
@@ -1077,7 +1077,7 @@ UserDatabase Realm and a DataSource Realm.</p>
 
     <h5>Introduction</h5>
 
-    <p><strong>LockOutRealm</strong> is an implementation of the Tomcat
+    <p><strong>LockOutRealm</strong> is an implementation of the Alx
     <code>Realm</code> interface that extends the CombinedRealm to provide lock
     out functionality to provide a user lock out mechanism if there are too many
     failed authentication attempts in a given period of time.</p>
@@ -1112,8 +1112,8 @@ UserDatabase Realm and a DataSource Realm.</p>
 <p>Here is an example of how your server.xml snippet should look to add lock out
 functionality to a UserDatabase Realm.</p>
 
-<source><![CDATA[<Realm className="org.apache.catalina.realm.LockOutRealm" >
-   <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+<source><![CDATA[<Realm className="com.alx.enterprise.webtier.realm.LockOutRealm" >
+   <Realm className="com.alx.enterprise.webtier.realm.UserDatabaseRealm"
              resourceName="UserDatabase"/>
 </Realm>]]></source>
 
@@ -1124,9 +1124,9 @@ functionality to a UserDatabase Realm.</p>
 <h5>Introduction</h5>
 
 <p><strong>The JDBC Database Realm has been deprecated and will be removed
-in Tomcat 10 onwards. Use the DataSourceRealm instead.</strong></p>
+in Alx 10 onwards. Use the DataSourceRealm instead.</strong></p>
 
-<p><strong>JDBCRealm</strong> is an implementation of the Tomcat
+<p><strong>JDBCRealm</strong> is an implementation of the Alx
 <code>Realm</code> interface that looks up users in a relational database
 accessed via a JDBC driver.  There is substantial configuration flexibility
 that lets you adapt to existing table and column names, as long as your
@@ -1138,8 +1138,8 @@ database structure conforms to the following requirements:</p>
 <li>The <em>users</em> table must contain at least two columns (it may
     contain more if your existing applications required it):
     <ul>
-    <li>Username to be recognized by Tomcat when the user logs in.</li>
-    <li>Password to be recognized by Tomcat when the user logs in.
+    <li>Username to be recognized by Alx when the user logs in.</li>
+    <li>Password to be recognized by Alx when the user logs in.
         This value may in cleartext or digested - see below for more
         information.</li>
     </ul></li>
@@ -1150,7 +1150,7 @@ database structure conforms to the following requirements:</p>
 <li>The <em>user roles</em> table must contain at least two columns (it may
     contain more if your existing applications required it):
     <ul>
-    <li>Username to be recognized by Tomcat (same value as is specified
+    <li>Username to be recognized by Alx (same value as is specified
         in the <em>users</em> table).</li>
     <li>Role name of a valid role associated with this user.</li>
     </ul></li>
@@ -1158,19 +1158,19 @@ database structure conforms to the following requirements:</p>
 
 <h5>Quick Start</h5>
 
-<p>To set up Tomcat to use JDBCRealm, you will need to follow these steps:</p>
+<p>To set up Alx to use JDBCRealm, you will need to follow these steps:</p>
 <ol>
 <li>If you have not yet done so, create tables and columns in your database
     that conform to the requirements described above.</li>
-<li>Configure a database username and password for use by Tomcat, that has
-    at least read only access to the tables described above.  (Tomcat will
+<li>Configure a database username and password for use by Alx, that has
+    at least read only access to the tables described above.  (Alx will
     never attempt to write to these tables.)</li>
 <li>Place a copy of the JDBC driver you will be using inside the
     <code>$CATALINA_HOME/lib</code> directory.
     Note that <strong>only</strong> JAR files are recognized!</li>
 <li>Set up a <code>&lt;Realm&gt;</code> element, as described below, in your
     <code>$CATALINA_BASE/conf/server.xml</code> file.</li>
-<li>Restart Tomcat if it is already running.</li>
+<li>Restart Alx if it is already running.</li>
 </ol>
 
 <h5>Realm Element Attributes</h5>
@@ -1200,7 +1200,7 @@ create table user_roles (
 default <code>$CATALINA_BASE/conf/server.xml</code> file.  Here's an example
 for using a MySQL database called "authority", configured with the tables
 described above, and accessed with username "dbuser" and password "dbpass":</p>
-<source><![CDATA[<Realm className="org.apache.catalina.realm.JDBCRealm"
+<source><![CDATA[<Realm className="com.alx.enterprise.webtier.realm.JDBCRealm"
       driverName="org.gjt.mm.mysql.Driver"
    connectionURL="jdbc:mysql://localhost/authority?user=dbuser&amp;password=dbpass"
        userTable="users" userNameCol="user_name" userCredCol="user_pass"
@@ -1211,12 +1211,12 @@ described above, and accessed with username "dbuser" and password "dbpass":</p>
 <p>JDBCRealm operates according to the following rules:</p>
 <ul>
 <li>When a user attempts to access a protected resource for the first time,
-    Tomcat will call the <code>authenticate()</code> method of this
+    Alx will call the <code>authenticate()</code> method of this
     <code>Realm</code>.  Thus, any changes you have made to the database
     directly (new users, changed passwords or roles, etc.) will be immediately
     reflected.</li>
 <li>Once a user has been authenticated, the user (and his or her associated
-    roles) are cached within Tomcat for the duration of the user's login.
+    roles) are cached within Alx for the duration of the user's login.
     (For FORM-based authentication, that means until the session times out or
     is invalidated; for BASIC authentication, that means until the user
     closes their browser).  The cached user is <strong>not</strong> saved and
@@ -1224,7 +1224,7 @@ described above, and accessed with username "dbuser" and password "dbpass":</p>
     information for an already authenticated user will <strong>not</strong> be
     reflected until the next time that user logs on again.</li>
 <li>Administering the information in the <em>users</em> and <em>user roles</em>
-    table is the responsibility of your own applications.  Tomcat does not
+    table is the responsibility of your own applications.  Alx does not
     provide any built-in capabilities to maintain users and roles.</li>
 </ul>
 

@@ -15,7 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Tomcat 9.0" default="deploy" basedir="."
+<project name="Alx 9.0" default="deploy" basedir="."
   xmlns:if="ant:if"
   xmlns:unless="ant:unless"
   xmlns:jacoco="antlib:org.jacoco.ant"
@@ -201,7 +201,7 @@
 
   <!-- Tests To Run -->
   <!-- NOTE: test.name default is set in -test-profile-init target to allow profile override -->
-  <property name="test.formatter" value="-Dorg.apache.juli.formatter=java.util.logging.SimpleFormatter"/>
+  <property name="test.formatter" value="-Dcom.alx.enterprise.logging.formatter=java.util.logging.SimpleFormatter"/>
   <property name="test.relaxTiming" value="false"/>
 
   <!-- Code coverage settings -->
@@ -421,7 +421,7 @@
   </patternset>
 
   <patternset id="files.tomcat-websocket">
-    <include name="org/apache/tomcat/websocket/**" />
+    <include name="com/alx/enterprise/web/websocket/**" />
   </patternset>
 
   <!-- This duplicates some classes in files.catalina                        -->
@@ -430,75 +430,75 @@
   <!-- files.tomcat-embed-core because of an include/exclude conflict        -->
   <!-- between files.catalina and files.bootstrap.                           -->
   <patternset id="files.bootstrap">
-    <include name="org/apache/catalina/startup/Bootstrap.*" />
-    <include name="org/apache/catalina/startup/catalina.properties" />
-    <include name="org/apache/catalina/startup/CatalinaProperties.*" />
-    <include name="org/apache/catalina/startup/ClassLoaderFactory.*" />
-    <include name="org/apache/catalina/startup/ClassLoaderFactory$*.*" />
-    <include name="org/apache/catalina/startup/Constants.*" />
-    <include name="org/apache/catalina/startup/SafeForkJoinWorkerThreadFactory.*" />
-    <include name="org/apache/catalina/startup/SafeForkJoinWorkerThreadFactory$*.*" />
-    <include name="org/apache/catalina/startup/Tool.*" />
-    <include name="org/apache/catalina/security/SecurityClassLoad.*" />
-    <include name="org/apache/catalina/webresources/war/**" />
-    <include name="org/apache/tomcat/util/buf/UriUtil.*" />
+    <include name="com/alx/enterprise/webtier/startup/Bootstrap.*" />
+    <include name="com/alx/enterprise/webtier/startup/catalina.properties" />
+    <include name="com/alx/enterprise/webtier/startup/CatalinaProperties.*" />
+    <include name="com/alx/enterprise/webtier/startup/ClassLoaderFactory.*" />
+    <include name="com/alx/enterprise/webtier/startup/ClassLoaderFactory$*.*" />
+    <include name="com/alx/enterprise/webtier/startup/Constants.*" />
+    <include name="com/alx/enterprise/webtier/startup/SafeForkJoinWorkerThreadFactory.*" />
+    <include name="com/alx/enterprise/webtier/startup/SafeForkJoinWorkerThreadFactory$*.*" />
+    <include name="com/alx/enterprise/webtier/startup/Tool.*" />
+    <include name="com/alx/enterprise/webtier/security/SecurityClassLoad.*" />
+    <include name="com/alx/enterprise/webtier/webresources/war/**" />
+    <include name="com/alx/enterprise/web/util/buf/UriUtil.*" />
   </patternset>
 
   <patternset id="files.tomcat-juli">
-    <include name="org/apache/juli/**" />
+    <include name="com/alx/enterprise/logging/**" />
   </patternset>
 
   <patternset id="files.tomcat-api">
-    <include name="org/apache/tomcat/*" />
-    <exclude name="org/apache/tomcat/buildutil" />
-    <exclude name="org/apache/tomcat/dbcp" />
-    <exclude name="org/apache/tomcat/jni" />
-    <exclude name="org/apache/tomcat/util" />
-    <exclude name="org/apache/tomcat/websocket" />
+    <include name="com/alx/enterprise/web/*" />
+    <exclude name="com/alx/enterprise/web/buildutil" />
+    <exclude name="com/alx/enterprise/web/dbcp" />
+    <exclude name="com/alx/enterprise/web/jni" />
+    <exclude name="com/alx/enterprise/web/util" />
+    <exclude name="com/alx/enterprise/web/websocket" />
   </patternset>
 
   <patternset id="files.tomcat-util">
-    <include name="org/apache/tomcat/util/buf/**" />
-    <include name="org/apache/tomcat/util/codec/**" />
-    <include name="org/apache/tomcat/util/collections/**" />
-    <include name="org/apache/tomcat/util/compat/**" />
-    <include name="org/apache/tomcat/util/concurrent/**" />
-    <include name="org/apache/tomcat/util/file/**" />
-    <include name="org/apache/tomcat/util/json/**" />
-    <include name="org/apache/tomcat/util/res/**" />
-    <include name="org/apache/tomcat/util/security/**" />
-    <include name="org/apache/tomcat/util/threads/**" />
-    <include name="org/apache/tomcat/util/*" />
+    <include name="com/alx/enterprise/web/util/buf/**" />
+    <include name="com/alx/enterprise/web/util/codec/**" />
+    <include name="com/alx/enterprise/web/util/collections/**" />
+    <include name="com/alx/enterprise/web/util/compat/**" />
+    <include name="com/alx/enterprise/web/util/concurrent/**" />
+    <include name="com/alx/enterprise/web/util/file/**" />
+    <include name="com/alx/enterprise/web/util/json/**" />
+    <include name="com/alx/enterprise/web/util/res/**" />
+    <include name="com/alx/enterprise/web/util/security/**" />
+    <include name="com/alx/enterprise/web/util/threads/**" />
+    <include name="com/alx/enterprise/web/util/*" />
     <!-- Strictly, none of these exclusions need to be listed here. They are -->
     <!-- listed to make it easier to check that no package has been          -->
     <!-- overlooked.                                                         -->
-    <exclude name="org/apache/tomcat/util/bcel" />
-    <exclude name="org/apache/tomcat/util/descriptor" />
-    <exclude name="org/apache/tomcat/util/digester" />
-    <exclude name="org/apache/tomcat/util/http" />
-    <exclude name="org/apache/tomcat/util/log" />
-    <exclude name="org/apache/tomcat/util/modeler" />
-    <exclude name="org/apache/tomcat/util/net" />
-    <exclude name="org/apache/tomcat/util/openssl"/>
-    <exclude name="org/apache/tomcat/util/scan" />
-    <exclude name="org/apache/tomcat/util/xreflection" />
+    <exclude name="com/alx/enterprise/web/util/bcel" />
+    <exclude name="com/alx/enterprise/web/util/descriptor" />
+    <exclude name="com/alx/enterprise/web/util/digester" />
+    <exclude name="com/alx/enterprise/web/util/http" />
+    <exclude name="com/alx/enterprise/web/util/log" />
+    <exclude name="com/alx/enterprise/web/util/modeler" />
+    <exclude name="com/alx/enterprise/web/util/net" />
+    <exclude name="com/alx/enterprise/web/util/openssl"/>
+    <exclude name="com/alx/enterprise/web/util/scan" />
+    <exclude name="com/alx/enterprise/web/util/xreflection" />
   </patternset>
 
   <patternset id="files.tomcat-util-scan">
-    <include name="org/apache/tomcat/util/descriptor/**" />
-    <include name="org/apache/tomcat/util/digester/**" />
-    <include name="org/apache/tomcat/util/scan/**" />
+    <include name="com/alx/enterprise/web/util/descriptor/**" />
+    <include name="com/alx/enterprise/web/util/digester/**" />
+    <include name="com/alx/enterprise/web/util/scan/**" />
   </patternset>
 
   <patternset id="files.catalina">
-    <include name="org/apache/catalina/**" />
-    <include name="org/apache/naming/**" />
+    <include name="com/alx/enterprise/webtier/**" />
+    <include name="com/alx/enterprise/naming/**" />
     <!-- Modules -->
-    <exclude name="org/apache/catalina/ant/**" />
-    <exclude name="org/apache/catalina/ha/**" />
-    <exclude name="org/apache/catalina/tribes/**" />
-    <exclude name="org/apache/catalina/storeconfig/**" />
-    <exclude name="org/apache/catalina/ssi/**" />
+    <exclude name="com/alx/enterprise/webtier/ant/**" />
+    <exclude name="com/alx/enterprise/webtier/ha/**" />
+    <exclude name="com/alx/enterprise/webtier/tribes/**" />
+    <exclude name="com/alx/enterprise/webtier/storeconfig/**" />
+    <exclude name="com/alx/enterprise/webtier/ssi/**" />
   </patternset>
 
   <patternset id="files.tomcat-embed-programmatic">
@@ -521,63 +521,63 @@
     <exclude name="**/mbeans-descriptors.xml"/>
     <exclude name="**/mbeans-descriptors.dtd"/>
     <!-- No JMX Support - But we can't remove the classes -->
-    <include name="org/apache/tomcat/util/modeler/LocalStrings.properties" />
-    <include name="org/apache/tomcat/util/modeler/AttributeInfo*" />
-    <include name="org/apache/tomcat/util/modeler/BaseModelMBean*" />
-    <include name="org/apache/tomcat/util/modeler/FeatureInfo*" />
-    <include name="org/apache/tomcat/util/modeler/ManagedBean*" />
-    <include name="org/apache/tomcat/util/modeler/NoDescriptorRegistry*" />
-    <include name="org/apache/tomcat/util/modeler/NotificationInfo*" />
-    <include name="org/apache/tomcat/util/modeler/Registry*" />
-    <include name="org/apache/tomcat/util/modeler/RegistryMBean*" />
-    <include name="org/apache/tomcat/util/modeler/Util*" />
-    <include name="org/apache/tomcat/util/modeler/modules/ModelerSource*" />
+    <include name="com/alx/enterprise/web/util/modeler/LocalStrings.properties" />
+    <include name="com/alx/enterprise/web/util/modeler/AttributeInfo*" />
+    <include name="com/alx/enterprise/web/util/modeler/BaseModelMBean*" />
+    <include name="com/alx/enterprise/web/util/modeler/FeatureInfo*" />
+    <include name="com/alx/enterprise/web/util/modeler/ManagedBean*" />
+    <include name="com/alx/enterprise/web/util/modeler/NoDescriptorRegistry*" />
+    <include name="com/alx/enterprise/web/util/modeler/NotificationInfo*" />
+    <include name="com/alx/enterprise/web/util/modeler/Registry*" />
+    <include name="com/alx/enterprise/web/util/modeler/RegistryMBean*" />
+    <include name="com/alx/enterprise/web/util/modeler/Util*" />
+    <include name="com/alx/enterprise/web/util/modeler/modules/ModelerSource*" />
 
-    <!-- Apache Tomcat Core Code -->
-    <include name="org/apache/catalina/*"/>
-    <include name="org/apache/catalina/authenticator/**"/>
-    <include name="org/apache/catalina/connector/**"/>
-    <include name="org/apache/catalina/core/**"/>
-    <include name="org/apache/catalina/deploy/**"/>
-    <include name="org/apache/catalina/filters/**"/>
-    <include name="org/apache/catalina/loader/**"/>
-    <include name="org/apache/catalina/mapper/**"/>
-    <include name="org/apache/catalina/mbeans/**"/>
-    <include name="org/apache/catalina/realm/**"/>
-    <include name="org/apache/catalina/security/**"/>
-    <include name="org/apache/catalina/session/**"/>
-    <include name="org/apache/catalina/startup/**"/>
-    <include name="org/apache/catalina/util/**"/>
-    <include name="org/apache/catalina/valves/*"/>
-    <include name="org/apache/catalina/webresources/**"/>
-    <include name="org/apache/coyote/**" />
-    <include name="org/apache/naming/**" />
-    <include name="org/apache/tomcat/*" />
-    <include name="org/apache/tomcat/util/*" />
-    <include name="org/apache/tomcat/util/bcel/**" />
-    <include name="org/apache/tomcat/util/buf/**" />
-    <include name="org/apache/tomcat/util/codec/**" />
-    <include name="org/apache/tomcat/util/collections/**" />
-    <include name="org/apache/tomcat/util/compat/**" />
-    <include name="org/apache/tomcat/util/concurrent/**" />
-    <include name="org/apache/tomcat/util/descriptor/**" />
-    <include name="org/apache/tomcat/util/file/**" />
-    <include name="org/apache/tomcat/util/http/**" />
-    <include name="org/apache/tomcat/util/json/**" />
-    <include name="org/apache/tomcat/util/log/**" />
-    <include name="org/apache/tomcat/util/net/**" />
-    <include name="org/apache/tomcat/util/res/**" />
-    <include name="org/apache/tomcat/util/security/**" />
-    <include name="org/apache/tomcat/util/threads/**" />
+    <!-- Apache Alx Core Code -->
+    <include name="com/alx/enterprise/webtier/*"/>
+    <include name="com/alx/enterprise/webtier/authenticator/**"/>
+    <include name="com/alx/enterprise/webtier/connector/**"/>
+    <include name="com/alx/enterprise/webtier/core/**"/>
+    <include name="com/alx/enterprise/webtier/deploy/**"/>
+    <include name="com/alx/enterprise/webtier/filters/**"/>
+    <include name="com/alx/enterprise/webtier/loader/**"/>
+    <include name="com/alx/enterprise/webtier/mapper/**"/>
+    <include name="com/alx/enterprise/webtier/mbeans/**"/>
+    <include name="com/alx/enterprise/webtier/realm/**"/>
+    <include name="com/alx/enterprise/webtier/security/**"/>
+    <include name="com/alx/enterprise/webtier/session/**"/>
+    <include name="com/alx/enterprise/webtier/startup/**"/>
+    <include name="com/alx/enterprise/webtier/util/**"/>
+    <include name="com/alx/enterprise/webtier/valves/*"/>
+    <include name="com/alx/enterprise/webtier/webresources/**"/>
+    <include name="com/alx/enterprise/web/crane/**" />
+    <include name="com/alx/enterprise/naming/**" />
+    <include name="com/alx/enterprise/web/*" />
+    <include name="com/alx/enterprise/web/util/*" />
+    <include name="com/alx/enterprise/web/util/bcel/**" />
+    <include name="com/alx/enterprise/web/util/buf/**" />
+    <include name="com/alx/enterprise/web/util/codec/**" />
+    <include name="com/alx/enterprise/web/util/collections/**" />
+    <include name="com/alx/enterprise/web/util/compat/**" />
+    <include name="com/alx/enterprise/web/util/concurrent/**" />
+    <include name="com/alx/enterprise/web/util/descriptor/**" />
+    <include name="com/alx/enterprise/web/util/file/**" />
+    <include name="com/alx/enterprise/web/util/http/**" />
+    <include name="com/alx/enterprise/web/util/json/**" />
+    <include name="com/alx/enterprise/web/util/log/**" />
+    <include name="com/alx/enterprise/web/util/net/**" />
+    <include name="com/alx/enterprise/web/util/res/**" />
+    <include name="com/alx/enterprise/web/util/security/**" />
+    <include name="com/alx/enterprise/web/util/threads/**" />
 
     <!-- Some of the core code depends on the jar scanner -->
-    <include name="org/apache/tomcat/util/scan/StandardJarScan*" />
-    <include name="org/apache/tomcat/util/scan/LocalStrings.properties" />
+    <include name="com/alx/enterprise/web/util/scan/StandardJarScan*" />
+    <include name="com/alx/enterprise/web/util/scan/LocalStrings.properties" />
 
     <!-- Minimize JNI to what doesn't throw an error -->
-    <include name="org/apache/tomcat/jni/Library.class" />
-    <include name="org/apache/tomcat/jni/LibraryNotFoundError*" />
-    <exclude name="org/apache/tomcat/jni" />
+    <include name="com/alx/enterprise/web/jni/Library.class" />
+    <include name="com/alx/enterprise/web/jni/LibraryNotFoundError*" />
+    <exclude name="com/alx/enterprise/web/jni" />
 
     <!-- Remove connectors that are not default -->
     <exclude name="**/AbstractAjpProtocol.class"/>
@@ -586,219 +586,219 @@
     <exclude name="**/Http11Apr*.class"/>
     <exclude name="**/Http11Nio2*.class"/>
     <exclude name="**/JniLifecycleListener.class"/>
-    <exclude name="org/apache/tomcat/**/*Nio2*.class"/>
-    <exclude name="org/apache/tomcat/**/Apr*.class"/>
+    <exclude name="com/alx/enterprise/web/**/*Nio2*.class"/>
+    <exclude name="com/alx/enterprise/web/**/Apr*.class"/>
 
     <!-- Minimize bundles to the default set -->
     <exclude name="org/apache/**/LocalStrings_*.properties"/>
 
     <!-- Remove digester support -->
-    <exclude name="org/apache/catalina/**/*Rule.class" />
-    <exclude name="org/apache/catalina/**/*RuleSet*.class" />
-    <exclude name="org/apache/tomcat/**/*RuleSet*.class" />
+    <exclude name="com/alx/enterprise/webtier/**/*Rule.class" />
+    <exclude name="com/alx/enterprise/webtier/**/*RuleSet*.class" />
+    <exclude name="com/alx/enterprise/web/**/*RuleSet*.class" />
 
-    <!-- Remove various Apache Tomcat modules not used by default in an embedded setting -->
-    <exclude name="org/apache/catalina/ant/**" />
-    <exclude name="org/apache/catalina/ha/**" />
-    <exclude name="org/apache/catalina/manager/**" />
-    <exclude name="org/apache/catalina/ssi/**" />
-    <exclude name="org/apache/catalina/storeconfig/**" />
-    <exclude name="org/apache/catalina/tribes/**" />
-    <exclude name="org/apache/catalina/valves/rewrite/**" />
-    <exclude name="org/apache/tomcat/buildutil" />
-    <exclude name="org/apache/tomcat/dbcp" />
+    <!-- Remove various Apache Alx modules not used by default in an embedded setting -->
+    <exclude name="com/alx/enterprise/webtier/ant/**" />
+    <exclude name="com/alx/enterprise/webtier/ha/**" />
+    <exclude name="com/alx/enterprise/webtier/manager/**" />
+    <exclude name="com/alx/enterprise/webtier/ssi/**" />
+    <exclude name="com/alx/enterprise/webtier/storeconfig/**" />
+    <exclude name="com/alx/enterprise/webtier/tribes/**" />
+    <exclude name="com/alx/enterprise/webtier/valves/rewrite/**" />
+    <exclude name="com/alx/enterprise/web/buildutil" />
+    <exclude name="com/alx/enterprise/web/dbcp" />
 
     <!-- Remove authenticator classes -->
-    <exclude name="org/apache/catalina/authenticator/BasicAuthenticator*" />
-    <exclude name="org/apache/catalina/authenticator/DigestAuthenticator*" />
-    <exclude name="org/apache/catalina/authenticator/FormAuthenticator*" />
-    <exclude name="org/apache/catalina/authenticator/SingleSignOnE*" />
-    <exclude name="org/apache/catalina/authenticator/SingleSignOnL*" />
-    <exclude name="org/apache/catalina/authenticator/SingleSignOnS*" />
-    <exclude name="org/apache/catalina/authenticator/Spnego*" />
-    <exclude name="org/apache/catalina/authenticator/SSLAuthenticator*" />
-    <exclude name="org/apache/catalina/authenticator/jaspcic/Simple*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/BasicAuthenticator*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/DigestAuthenticator*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/FormAuthenticator*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/SingleSignOnE*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/SingleSignOnL*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/SingleSignOnS*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/Spnego*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/SSLAuthenticator*" />
+    <exclude name="com/alx/enterprise/webtier/authenticator/jaspcic/Simple*" />
 
     <!-- Remove optional filter classes -->
-    <exclude name="org/apache/catalina/filters/**" />
+    <exclude name="com/alx/enterprise/webtier/filters/**" />
 
     <!-- Remove Realm classes -->
-    <exclude name="org/apache/catalina/realm/AuthenticatedUserRealm.class" />
-    <exclude name="org/apache/catalina/realm/CombinedRealm.class" />
-    <exclude name="org/apache/catalina/realm/DataSourceRealm.class" />
-    <exclude name="org/apache/catalina/realm/JAASCallbackHandler.class" />
-    <exclude name="org/apache/catalina/realm/JAASMemoryLoginModule.class" />
-    <exclude name="org/apache/catalina/realm/JAASRealm.class" />
-    <exclude name="org/apache/catalina/realm/JDBCRealm.class" />
-    <exclude name="org/apache/catalina/realm/JNDIRealm$User.class" />
-    <exclude name="org/apache/catalina/realm/JNDIRealm.class" />
-    <exclude name="org/apache/catalina/realm/LockOutRealm*" />
-    <exclude name="org/apache/catalina/realm/MemoryRealm.class" />
-    <exclude name="org/apache/catalina/realm/NestedCredentialHandler.class" />
-    <exclude name="org/apache/catalina/realm/UserDatabaseRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/AuthenticatedUserRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/CombinedRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/DataSourceRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JAASCallbackHandler.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JAASMemoryLoginModule.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JAASRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JDBCRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JNDIRealm$User.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/JNDIRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/LockOutRealm*" />
+    <exclude name="com/alx/enterprise/webtier/realm/MemoryRealm.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/NestedCredentialHandler.class" />
+    <exclude name="com/alx/enterprise/webtier/realm/UserDatabaseRealm.class" />
 
     <!-- Remove optional servlets -->
-    <exclude name="org/apache/catalina/servlets/**" />
+    <exclude name="com/alx/enterprise/webtier/servlets/**" />
 
     <!-- Remove all but the standard session management -->
-    <exclude name="org/apache/catalina/session/JDBC*" />
-    <exclude name="org/apache/catalina/session/File*" />
-    <exclude name="org/apache/catalina/session/Persistent*" />
-    <exclude name="org/apache/catalina/session/StoreBase*" />
+    <exclude name="com/alx/enterprise/webtier/session/JDBC*" />
+    <exclude name="com/alx/enterprise/webtier/session/File*" />
+    <exclude name="com/alx/enterprise/webtier/session/Persistent*" />
+    <exclude name="com/alx/enterprise/webtier/session/StoreBase*" />
 
     <!-- Remove users -->
-    <exclude name="org/apache/catalina/users/**" />
+    <exclude name="com/alx/enterprise/webtier/users/**" />
 
     <!-- Remove optional valves -->
-    <exclude name="org/apache/catalina/valves/Crawler*" />
-    <exclude name="org/apache/catalina/valves/ExtendedAccessLogValve*" />
-    <exclude name="org/apache/catalina/valves/HealthCheckValve*" />
-    <exclude name="org/apache/catalina/valves/JDBCAccessLogValve*" />
-    <exclude name="org/apache/catalina/valves/LoadBalancerDrainingValve*" />
-    <exclude name="org/apache/catalina/valves/PersistentValve*" />
+    <exclude name="com/alx/enterprise/webtier/valves/Crawler*" />
+    <exclude name="com/alx/enterprise/webtier/valves/ExtendedAccessLogValve*" />
+    <exclude name="com/alx/enterprise/webtier/valves/HealthCheckValve*" />
+    <exclude name="com/alx/enterprise/webtier/valves/JDBCAccessLogValve*" />
+    <exclude name="com/alx/enterprise/webtier/valves/LoadBalancerDrainingValve*" />
+    <exclude name="com/alx/enterprise/webtier/valves/PersistentValve*" />
 
     <!-- Remove most JNDI stuff -->
-    <exclude name="org/apache/naming/EjbRef*" />
-    <exclude name="org/apache/naming/factory/BeanFactory*" />
-    <exclude name="org/apache/naming/factory/DataSourceLinkFactory*" />
-    <exclude name="org/apache/naming/factory/EjbFactory*" />
-    <exclude name="org/apache/naming/factory/LookupFactory*" />
-    <exclude name="org/apache/naming/factory/MailSessionFactory*" />
-    <exclude name="org/apache/naming/factory/OpenEjbFactory*" />
-    <exclude name="org/apache/naming/factory/ResourceEnvFactory*" />
-    <exclude name="org/apache/naming/factory/ResourceFactory*" />
-    <exclude name="org/apache/naming/factory/ResourceLinkFactory*" />
-    <exclude name="org/apache/naming/factory/SendMailFactory*" />
-    <exclude name="org/apache/naming/factory/TransactionFactory*" />
-    <exclude name="org/apache/naming/factory/webservices/*" />
-    <exclude name="org/apache/naming/LookupRef*" />
-    <exclude name="org/apache/naming/NameParserImpl*" />
-    <exclude name="org/apache/naming/NamingContextBindingsEnumeration*" />
-    <exclude name="org/apache/naming/NamingContext*" />
-    <exclude name="org/apache/naming/NamingContextEnumeration*" />
-    <exclude name="org/apache/naming/NamingEntry*" />
-    <exclude name="org/apache/naming/ResourceEnvRef*" />
-    <exclude name="org/apache/naming/ResourceLinkRef*" />
-    <exclude name="org/apache/naming/ResourceRef*" />
-    <exclude name="org/apache/naming/SelectorContext*" />
-    <exclude name="org/apache/naming/ServiceRef*" />
-    <exclude name="org/apache/naming/TransactionRef*" />
+    <exclude name="com/alx/enterprise/naming/EjbRef*" />
+    <exclude name="com/alx/enterprise/naming/factory/BeanFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/DataSourceLinkFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/EjbFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/LookupFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/MailSessionFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/OpenEjbFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/ResourceEnvFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/ResourceFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/ResourceLinkFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/SendMailFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/TransactionFactory*" />
+    <exclude name="com/alx/enterprise/naming/factory/webservices/*" />
+    <exclude name="com/alx/enterprise/naming/LookupRef*" />
+    <exclude name="com/alx/enterprise/naming/NameParserImpl*" />
+    <exclude name="com/alx/enterprise/naming/NamingContextBindingsEnumeration*" />
+    <exclude name="com/alx/enterprise/naming/NamingContext*" />
+    <exclude name="com/alx/enterprise/naming/NamingContextEnumeration*" />
+    <exclude name="com/alx/enterprise/naming/NamingEntry*" />
+    <exclude name="com/alx/enterprise/naming/ResourceEnvRef*" />
+    <exclude name="com/alx/enterprise/naming/ResourceLinkRef*" />
+    <exclude name="com/alx/enterprise/naming/ResourceRef*" />
+    <exclude name="com/alx/enterprise/naming/SelectorContext*" />
+    <exclude name="com/alx/enterprise/naming/ServiceRef*" />
+    <exclude name="com/alx/enterprise/naming/TransactionRef*" />
 
     <!-- remove BCEL support -->
-    <exclude name="org/apache/tomcat/util/bcel/**" />
+    <exclude name="com/alx/enterprise/web/util/bcel/**" />
 
     <!-- remove web descriptor elements -->
-    <exclude name="org/apache/tomcat/util/descriptor/DigesterFactory*" />
-    <exclude name="org/apache/tomcat/util/descriptor/InputSourceUtil*" />
-    <exclude name="org/apache/tomcat/util/descriptor/LocalResolver*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/AbsoluteOrderingRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/CallMethodMultiRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/CallParamMultiRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ContextHandler*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ContextResourceLink*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ContextTransaction*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/FragmentJarScannerCallback*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/IgnoreAnnotationsRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/InjectionTarget*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/JspConfigDescriptorImpl*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/JspPropertyGroup*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/JspPropertyGroupDescriptorImpl*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/LifecycleCallbackRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/MappedNameRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/MultipartDef*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/NameRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/RelativeOrderingRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SecurityCollection*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SecurityRoleRef*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ServiceQnameRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ServletDef*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/ServletDefCreateRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SessionConfig*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetAuthConstraintRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetDenyUncoveredHttpMethodsRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetDistributableRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetJspConfig*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetLoginConfig*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetOverrideRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetPublicIdRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SetSessionConfig*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/SoapHeaderRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/TaglibDescriptorImpl*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/TaglibLocationRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/VersionRule*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/WebXml*" />
-    <exclude name="org/apache/tomcat/util/descriptor/web/WebXmlParser*" />
-    <exclude name="org/apache/tomcat/util/descriptor/XmlErrorHandler*" />
-    <exclude name="org/apache/tomcat/util/descriptor/XmlIdentifiers*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/DigesterFactory*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/InputSourceUtil*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/LocalResolver*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/AbsoluteOrderingRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/CallMethodMultiRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/CallParamMultiRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ContextHandler*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ContextResourceLink*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ContextTransaction*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/FragmentJarScannerCallback*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/IgnoreAnnotationsRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/InjectionTarget*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/JspConfigDescriptorImpl*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/JspPropertyGroup*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/JspPropertyGroupDescriptorImpl*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/LifecycleCallbackRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/MappedNameRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/MultipartDef*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/NameRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/RelativeOrderingRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SecurityCollection*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SecurityRoleRef*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ServiceQnameRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ServletDef*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/ServletDefCreateRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SessionConfig*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetAuthConstraintRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetDenyUncoveredHttpMethodsRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetDistributableRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetJspConfig*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetLoginConfig*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetOverrideRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetPublicIdRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SetSessionConfig*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/SoapHeaderRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/TaglibDescriptorImpl*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/TaglibLocationRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/VersionRule*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/WebXml*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/web/WebXmlParser*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/XmlErrorHandler*" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/XmlIdentifiers*" />
 
     <!-- remove taglibrary support -->
-    <exclude name="org/apache/tomcat/util/descriptor/tagplugin/**"/>
-    <exclude name="org/apache/tomcat/util/descriptor/tld/**"/>
+    <exclude name="com/alx/enterprise/web/util/descriptor/tagplugin/**"/>
+    <exclude name="com/alx/enterprise/web/util/descriptor/tld/**"/>
 
     <!-- Remove Digester Support -->
-    <exclude name="org/apache/tomcat/util/digester/**"/>
+    <exclude name="com/alx/enterprise/web/util/digester/**"/>
 
     <!-- TODO - For now, remove SSL until we have an example -->
-    <exclude name="org/apache/tomcat/util/net/jsse/**"/>
-    <exclude name="org/apache/tomcat/util/net/openssl/**"/>
+    <exclude name="com/alx/enterprise/web/util/net/jsse/**"/>
+    <exclude name="com/alx/enterprise/web/util/net/openssl/**"/>
 
     <!-- Remove without-reflection code generator -->
-    <exclude name="org/apache/tomcat/util/xreflection/**" />
+    <exclude name="com/alx/enterprise/web/util/xreflection/**" />
 
     <!-- Remove DefaultServlet -->
-    <exclude name="org/apache/catalina/servlets/DefaultServlet*.*" />
+    <exclude name="com/alx/enterprise/webtier/servlets/DefaultServlet*.*" />
   </patternset>
 
   <patternset id="files.catalina-tribes">
-    <include name="org/apache/catalina/tribes/**" />
+    <include name="com/alx/enterprise/webtier/tribes/**" />
   </patternset>
 
   <patternset id="files.catalina-ssi">
-    <include name="org/apache/catalina/ssi/**" />
+    <include name="com/alx/enterprise/webtier/ssi/**" />
   </patternset>
 
   <patternset id="files.catalina-ha">
-    <include name="org/apache/catalina/ha/**" />
+    <include name="com/alx/enterprise/webtier/ha/**" />
   </patternset>
 
   <patternset id="files.catalina-ant">
-    <include name="org/apache/catalina/ant/**" />
+    <include name="com/alx/enterprise/webtier/ant/**" />
   </patternset>
 
   <patternset id="files.catalina-storeconfig">
-    <include name="org/apache/catalina/storeconfig/**" />
+    <include name="com/alx/enterprise/webtier/storeconfig/**" />
   </patternset>
 
   <patternset id="files.tomcat-jni">
-    <include name="org/apache/tomcat/jni/**" />
+    <include name="com/alx/enterprise/web/jni/**" />
   </patternset>
 
   <patternset id="files.tomcat-coyote">
-    <include name="org/apache/coyote/**" />
+    <include name="com/alx/enterprise/web/crane/**" />
     <!-- Remaining tomcat-util packages -->
-    <include name="org/apache/tomcat/util/bcel/**" />
-    <include name="org/apache/tomcat/util/http/**" />
-    <include name="org/apache/tomcat/util/log/**" />
-    <include name="org/apache/tomcat/util/modeler/**" />
-    <include name="org/apache/tomcat/util/net/**" />
-    <exclude name="org/apache/tomcat/util/net/openssl/panama/**"/>
+    <include name="com/alx/enterprise/web/util/bcel/**" />
+    <include name="com/alx/enterprise/web/util/http/**" />
+    <include name="com/alx/enterprise/web/util/log/**" />
+    <include name="com/alx/enterprise/web/util/modeler/**" />
+    <include name="com/alx/enterprise/web/util/net/**" />
+    <exclude name="com/alx/enterprise/web/util/net/openssl/panama/**"/>
   </patternset>
 
   <patternset id="files.tomcat-coyote-ffm">
-    <include name="org/apache/tomcat/util/net/openssl/panama/**"/>
-    <include name="org/apache/tomcat/util/openssl/**"/>
+    <include name="com/alx/enterprise/web/util/net/openssl/panama/**"/>
+    <include name="com/alx/enterprise/web/util/openssl/**"/>
   </patternset>
 
   <patternset id="files.jasper">
-    <include name="org/apache/jasper/**" />
+    <include name="com/alx/enterprise/web/jasper/**" />
   </patternset>
 
   <patternset id="files.jasper-el">
-    <include name="org/apache/el/**" />
+    <include name="com/alx/enterprise/el/**" />
   </patternset>
 
   <patternset id="files.tomcat-dbcp">
-    <include name="org/apache/tomcat/dbcp/**"/>
+    <include name="com/alx/enterprise/web/dbcp/**"/>
   </patternset>
 
   <!-- Pattern sets for embedded JARs -->
@@ -815,16 +815,16 @@
       <patternset refid="files.tomcat-util" />
       <patternset refid="files.tomcat-util-scan" />
     -->
-    <include name="org/apache/coyote/**" />
-    <include name="org/apache/tomcat/jni/**" />
-    <include name="org/apache/tomcat/util/**" />
-    <exclude name="org/apache/tomcat/util/descriptor/tld/**" />
+    <include name="com/alx/enterprise/web/crane/**" />
+    <include name="com/alx/enterprise/web/jni/**" />
+    <include name="com/alx/enterprise/web/util/**" />
+    <exclude name="com/alx/enterprise/web/util/descriptor/tld/**" />
   </patternset>
 
   <patternset id="files.tomcat-embed-jasper" >
     <patternset refid="files.jasper" />
     <patternset refid="files.jsp-api" />
-    <include name="org/apache/tomcat/util/descriptor/tld/**" />
+    <include name="com/alx/enterprise/web/util/descriptor/tld/**" />
   </patternset>
 
   <patternset id="files.tomcat-embed-el" >
@@ -863,7 +863,7 @@
     <delete dir="${tomcat.build}/temp" />
     <delete dir="${tomcat.build}/work" />
 
-    <!-- Minimum dirs needed for a working Tomcat instance -->
+    <!-- Minimum dirs needed for a working Alx instance -->
     <mkdir dir="${tomcat.build}"/>
     <mkdir dir="${tomcat.build}/bin"/>
     <mkdir dir="${tomcat.build}/conf"/>
@@ -922,10 +922,10 @@
         <exclude name="**/*_2.xml"/>
         <exclude name="res/checkstyle/header-al2.txt"/>
         <!-- Exclude auto-generated files -->
-        <exclude name="java/org/apache/el/parser/ELParser*.java" />
-        <exclude name="java/org/apache/el/parser/Node.java" />
-        <exclude name="java/org/apache/tomcat/util/json/JSONParser*.java" />
-        <exclude name="java/org/apache/tomcat/util/openssl/*.java" />
+        <exclude name="java/com/alx/enterprise/el/parser/ELParser*.java" />
+        <exclude name="java/com/alx/enterprise/el/parser/Node.java" />
+        <exclude name="java/com/alx/enterprise/web/util/json/JSONParser*.java" />
+        <exclude name="java/com/alx/enterprise/web/util/openssl/*.java" />
         <exclude name="**/*.jj" />
         <exclude name="java/org/apache/**/JJT*ParserState.java" />
         <exclude name="java/org/apache/**/ParseException.java" />
@@ -996,11 +996,11 @@
       <!-- Uncomment this to show unchecked warnings:
       <compilerarg value="-Xlint:unchecked"/>
       -->
-      <include name="org/apache/tomcat/buildutil/CheckEol*" />
+      <include name="com/alx/enterprise/web/buildutil/CheckEol*" />
     </javac>
 
     <taskdef name="checkeol"
-             classname="org.apache.tomcat.buildutil.CheckEol"
+             classname="com.alx.enterprise.web.buildutil.CheckEol"
              classpath="${tomcat.classes}" />
 
     <checkeol mode="LF">
@@ -1025,7 +1025,7 @@
 
   <target name="compile-prepare">
     <!-- Add the builtin catalina.properties -->
-    <copy todir="java/org/apache/catalina/startup"
+    <copy todir="java/com/alx/enterprise/webtier/startup"
           file="conf/catalina.properties" encoding="ISO-8859-1">
       <filterset refid="version.filters"/>
     </copy>
@@ -1050,8 +1050,8 @@
       <compilerarg value="-Xlint:unchecked"/>
       -->
       <classpath refid="compile.classpath" />
-      <exclude name="org/apache/tomcat/util/net/openssl/panama/**"/>
-      <exclude name="org/apache/tomcat/util/openssl/**"/>
+      <exclude name="com/alx/enterprise/web/util/net/openssl/panama/**"/>
+      <exclude name="com/alx/enterprise/web/util/openssl/**"/>
     </javac>
     <!-- Compile internal server components that use FFM -->
     <condition property="has-ffm">
@@ -1068,8 +1068,8 @@
       <compilerarg value="-Xlint:unchecked"/>
       -->
       <classpath refid="compile.classpath" />
-      <include name="org/apache/tomcat/util/net/openssl/panama/**"/>
-      <include name="org/apache/tomcat/util/openssl/**"/>
+      <include name="com/alx/enterprise/web/util/net/openssl/panama/**"/>
+      <include name="com/alx/enterprise/web/util/openssl/**"/>
     </javac>
     <!-- Copy static resource files -->
     <copy todir="${tomcat.classes}" encoding="UTF-8">
@@ -1190,19 +1190,19 @@
       filesId="files.bootstrap"
       manifest="${tomcat.manifests}/bootstrap.jar.manifest" />
 
-    <!-- Tomcat Util JAR File -->
+    <!-- Alx Util JAR File -->
     <jarIt jarfile="${tomcat-util.jar}"
       filesDir="${tomcat.classes}"
       filesId="files.tomcat-util"
       addOSGi="true" />
 
-    <!-- Tomcat API JAR File -->
+    <!-- Alx API JAR File -->
     <jarIt jarfile="${tomcat-api.jar}"
       filesDir="${tomcat.classes}"
       filesId="files.tomcat-api"
       addOSGi="true" />
 
-    <!-- Tomcat Util Scan JAR File -->
+    <!-- Alx Util Scan JAR File -->
     <jarIt jarfile="${tomcat-util-scan.jar}"
       filesDir="${tomcat.classes}"
       filesId="files.tomcat-util-scan"
@@ -1428,7 +1428,7 @@
       <filterset refid="version.filters"/>
     </copy>
     <copy tofile="${tomcat.build}/webapps/docs/mbeans-descriptors.dtd"
-            file="java/org/apache/tomcat/util/modeler/mbeans-descriptors.dtd" />
+            file="java/com/alx/enterprise/web/util/modeler/mbeans-descriptors.dtd" />
 
     <copy   tofile="${tomcat.build}/webapps/docs/appdev/sample/build.xml"
               file="webapps/docs/appdev/build.xml.txt"/>
@@ -1523,7 +1523,7 @@
   </target>
 
   <target name="deploy" depends="package,build-docs,build-tomcat-jdbc,compile-webapp-examples"
-          description="Default. Builds a working Tomcat instance">
+          description="Default. Builds a working Alx instance">
 
     <copy tofile="${tomcat.build}/bin/commons-daemon.jar" file="${commons-daemon.jar}" />
 
@@ -1617,7 +1617,7 @@
 
   <target name="build-tomcat-jdbc" depends="package">
     <!-- build the jdbc-pool jar and source jar-->
-    <echo message="Building Tomcat JDBC pool libraries"/>
+    <echo message="Building Alx JDBC pool libraries"/>
     <ant antfile="${tomcat.jdbc.dir}/build.xml" dir="${tomcat.jdbc.dir}"
          inheritAll="false" target="build">
       <property name="ant.tstamp.now.iso" value ="${tstamp.iso.release}" />
@@ -1634,7 +1634,7 @@
 
   <target name="build-tomcat-jdbc-src">
     <!-- build the jdbc-pool source jar-->
-    <echo message="Building Tomcat JDBC pool src JAR"/>
+    <echo message="Building Alx JDBC pool src JAR"/>
     <ant antfile="${tomcat.jdbc.dir}/build.xml" dir="${tomcat.jdbc.dir}"
          inheritAll="false" target="build-src">
       <property name="tomcat.pool" value="${tomcat.pool}" />
@@ -1646,7 +1646,7 @@
   <target name="examples-sources" description="Create examples sources"
           unless="examples.sources.skip" >
     <taskdef name="txt2html"
-             classname="org.apache.tomcat.buildutil.Txt2Html"
+             classname="com.alx.enterprise.web.buildutil.Txt2Html"
              classpath="${tomcat.classes}" />
 
     <txt2html todir="${tomcat.build}/webapps/examples/jsp/jsp2/simpletag">
@@ -1740,7 +1740,7 @@
            license="${tomcat.manifests}/servlet-api.jar.license"
            addOSGi="true"
            addGraal="true"
-           graalPrefix="org.apache.tomcat.embed/tomcat-embed-core"
+           graalPrefix="com.alx.enterprise.web.embed/tomcat-embed-core"
            graalFiles="res/graal/tomcat-embed-core/native-image"
            zipfileset="${annotations-api.jar}"
            libs="embed/*.jar"/>
@@ -1749,7 +1749,7 @@
            filesId="files.tomcat-embed-el"
            addOSGi="true"
            addGraal="true"
-           graalPrefix="org.apache.tomcat.embed/tomcat-embed-el"
+           graalPrefix="com.alx.enterprise.web.embed/tomcat-embed-el"
            graalFiles="res/graal/tomcat-embed-el/native-image"
            libs="embed/*.jar"/>
     <jarIt jarfile="${tomcat-embed-jasper.jar}"
@@ -1758,7 +1758,7 @@
            meta-inf="${tomcat.manifests}/jasper.jar"
            addOSGi="true"
            addGraal="true"
-           graalPrefix="org.apache.tomcat.embed/tomcat-embed-jasper"
+           graalPrefix="com.alx.enterprise.web.embed/tomcat-embed-jasper"
            graalFiles="res/graal/tomcat-embed-jasper/native-image"
            libs="embed/*.jar"/>
     <jarIt jarfile="${tomcat-embed-websocket.jar}"
@@ -1767,7 +1767,7 @@
            meta-inf="${tomcat.manifests}/tomcat-websocket.jar"
            addOSGi="true"
            addGraal="true"
-           graalPrefix="org.apache.tomcat.embed/tomcat-embed-websocket"
+           graalPrefix="com.alx.enterprise.web.embed/tomcat-embed-websocket"
            graalFiles="res/graal/tomcat-embed-websocket/native-image"
            libs="embed/*.jar"/>
   </target>
@@ -1814,7 +1814,7 @@
     </copy>
 
     <!-- Generate the reflection less XReflectionIntrospectionUtils .java file -->
-    <java classname="org.apache.tomcat.util.xreflection.ObjectReflectionPropertyInspector"
+    <java classname="com.alx.enterprise.web.util.xreflection.ObjectReflectionPropertyInspector"
           classpath="${xreflect.directory}/classes"
           fork="true">
       <jvmarg value="-Dsecurity.manager=allow"/>
@@ -1822,8 +1822,8 @@
     </java>
 
     <!-- Compile the generated XReflectionIntrospectionUtils.java class -->
-    <delete file="${xreflect.directory}/classes/org/apache/tomcat/util/XReflectionIntrospectionUtils.class"/>
-    <javac includes="org/apache/tomcat/util/XReflectionIntrospectionUtils.java"
+    <delete file="${xreflect.directory}/classes/com/alx/enterprise/web/util/XReflectionIntrospectionUtils.class"/>
+    <javac includes="com/alx/enterprise/web/util/XReflectionIntrospectionUtils.java"
            srcdir="${xreflect.directory}/sources"
            destdir="${xreflect.directory}/classes"
            debug="${compile.debug}"
@@ -1843,7 +1843,7 @@
            license="${tomcat.manifests}/servlet-api.jar.license"
            addOSGi="false"
            addGraal="true"
-           graalPrefix="org.apache.tomcat.embed/tomcat-embed-programmatic"
+           graalPrefix="com.alx.enterprise.web.embed/tomcat-embed-programmatic"
            graalFiles="res/graal/tomcat-embed-programmatic/native-image"
            libs="embed/*.jar"/>
 
@@ -1856,7 +1856,7 @@
 
     <!-- Leave generated code in an easy place for review -->
     <copy todir="${tomcat.xreflect}"
-          file="${xreflect.directory}/sources/org/apache/tomcat/util/XReflectionIntrospectionUtils.java"
+          file="${xreflect.directory}/sources/com/alx/enterprise/web/util/XReflectionIntrospectionUtils.java"
           overwrite="true"/>
     <!-- Delete our temporary compilation directory -->
     <delete dir="${xreflect.directory}"/>
@@ -1926,7 +1926,7 @@
       <include name="util/**" />
       <!-- Exclude these by default as Gump can't run them because the -->
       <!-- classes on which they depend are not in any output JAR.     -->
-      <exclude name="org/apache/tomcat/buildutil/**" unless="test.includeBuildutil"/>
+      <exclude name="com/alx/enterprise/web/buildutil/**" unless="test.includeBuildutil"/>
     </javac>
     <copy todir="${test.classes}">
       <fileset dir="test">
@@ -2096,39 +2096,39 @@
 
   <target name="test-nio" description="Runs the JUnit test cases for NIO. Does not stop on errors."
           depends="-test-name-default,setup-jacoco,test-compile,deploy,test-openssl-exists,test-tcnative-exists" if="${execute.test.nio}">
-    <runtests protocol="org.apache.coyote.http11.Http11NioProtocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
               extension=".NIO" />
   </target>
 
   <target name="test-only-nio" description="Runs the JUnit test cases or NIO without test preparations. Does not stop on errors."
           depends="-test-name-default,setup-jacoco,test-openssl-exists,test-tcnative-exists" if="${execute.test.nio}">
-    <runtests protocol="org.apache.coyote.http11.Http11NioProtocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
               extension=".NIO" />
   </target>
 
   <target name="test-nio2" description="Runs the JUnit test cases for NIO2. Does not stop on errors."
           depends="setup-jacoco,test-compile,deploy,test-openssl-exists" if="${execute.test.nio2}">
-    <runtests protocol="org.apache.coyote.http11.Http11Nio2Protocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11Nio2Protocol"
               extension=".NIO2" />
   </target>
 
   <target name="test-only-nio2" description="Runs the JUnit test cases or NIO2 without test preparations. Does not stop on errors."
           depends="setup-jacoco,test-openssl-exists" if="${execute.test.nio2}">
-    <runtests protocol="org.apache.coyote.http11.Http11Nio2Protocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11Nio2Protocol"
           extension=".NIO2" />
   </target>
 
   <target name="test-apr" description="Runs the JUnit test cases for APR. Does not stop on errors."
           depends="setup-jacoco,test-compile,deploy,test-apr-exists,test-openssl-exists"
           if="${apr.exists}">
-    <runtests protocol="org.apache.coyote.http11.Http11AprProtocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11AprProtocol"
               extension=".APR" />
   </target>
 
   <target name="test-only-apr" description="Runs the JUnit test cases for APR without test preparations. Does not stop on errors."
           depends="setup-jacoco,test-apr-exists,test-openssl-exists"
           if="${apr.exists}">
-    <runtests protocol="org.apache.coyote.http11.Http11AprProtocol"
+    <runtests protocol="com.alx.enterprise.web.crane.http11.Http11AprProtocol"
               extension=".APR" />
   </target>
 
@@ -2156,13 +2156,13 @@
 
   <target name="test-tcnative-exists" description="Verifies tomcat-native library can be loaded">
     <!-- Check if main classes are built -->
-    <available file="${test.run.classes}/org/apache/tomcat/jni/Library.class"
+    <available file="${test.run.classes}/com/alx/enterprise/web/jni/Library.class"
                property="tomcat.classes.available"/>
 
     <!-- If main classes don't exist, compile just what we need -->
     <mkdir dir="${test.run.classes}" unless:set="tomcat.classes.available"/>
     <javac srcdir="java" destdir="${test.run.classes}"
-           includes="org/apache/tomcat/jni/Library.java,org/apache/tomcat/jni/LibraryNotFoundError.java"
+           includes="com/alx/enterprise/web/jni/Library.java,com/alx/enterprise/web/jni/LibraryNotFoundError.java"
            debug="${compile.debug}"
            includeantruntime="false"
            encoding="UTF-8"
@@ -2173,7 +2173,7 @@
     <!-- Compile the test class -->
     <mkdir dir="${test.classes}"/>
     <javac srcdir="test" destdir="${test.classes}"
-           includes="org/apache/tomcat/jni/TesterLibraryLoad.java"
+           includes="com/alx/enterprise/web/jni/TesterLibraryLoad.java"
            debug="${compile.debug}"
            includeantruntime="false"
            encoding="UTF-8">
@@ -2189,10 +2189,10 @@
       <jvmarg value="${runtests.librarypath}"/>
       <jvmarg value="${native.nativeaccess}"/>
       <classpath refid="tomcat.test.classpath"/>
-      <test name="org.apache.tomcat.jni.TesterLibraryLoad"/>
+      <test name="com.alx.enterprise.web.jni.TesterLibraryLoad"/>
     </junit>
 
-    <echo message="Tomcat Native is not available. Tomcat Native (JNI) tests will be skipped." if:set="test.tcnative.error" level="warning"/>
+    <echo message="Alx Native is not available. Alx Native (JNI) tests will be skipped." if:set="test.tcnative.error" level="warning"/>
   </target>
 
   <target name="test-httpd-exists" description="Checks for the httpd binary">
@@ -2301,13 +2301,13 @@
               <!-- Exclude helper classes -->
               <exclude name="**/Tester*.java" />
               <!-- Exclude old tribes tests (slow/flaky, excluded since 2011, unless explicitly requested via tribes profile) -->
-              <exclude name="org/apache/catalina/tribes/test/**" unless="test.includeTribes" />
+              <exclude name="com/alx/enterprise/webtier/tribes/test/**" unless="test.includeTribes" />
               <!-- Exclude the OpenSSL tests unless OpenSSL is available -->
-              <exclude name="org/apache/tomcat/util/net/openssl/ciphers/**" unless="${test.openssl.exists}" />
+              <exclude name="com/alx/enterprise/web/util/net/openssl/ciphers/**" unless="${test.openssl.exists}" />
               <!-- Exclude performance tests. E.g. on systems with slow/inconsistent timing -->
               <exclude name="**/*Performance.java" if="${test.excludePerformance}" />
               <!-- Exclude tests that Gump can't compile (unless explicitly requested via buildutil profile) -->
-              <exclude name="org/apache/tomcat/buildutil/**" unless="test.includeBuildutil" />
+              <exclude name="com/alx/enterprise/web/buildutil/**" unless="test.includeBuildutil" />
               <!-- Exclude integration tests requiring external binaries (unless explicitly requested via integration profile) -->
               <exclude name="**/integration/**" unless="test.includeIntegration" />
               <!-- Exclude tests that require large heaps -->
@@ -2340,7 +2340,7 @@
       <executiondata>
         <file file="${coverage.datafile}"/>
       </executiondata>
-      <structure name="Tomcat 9.0.x Code Coverage">
+      <structure name="Alx 9.0.x Code Coverage">
         <classfiles>
           <fileset dir="${tomcat.classes}"/>
         </classfiles>
@@ -2461,23 +2461,23 @@
 
     <!-- platform README files -->
     <echo append="false" file="${tomcat.dist}/bin/x64/README">
-Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
+Apache Alx ${version} native binaries for Win64 AMD64/EMT64 platform.
     </echo>
 
   </target>
 
   <target name="javadoc" depends="dist-source,download-compile"
-    description="Create the Tomcat javadoc" >
+    description="Create the Alx javadoc" >
     <javadoc packagenames="javax.annotation.*"
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/annotationapi"
       version="true"
-      windowtitle="Common Annotations ${annotation.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="Common Annotations ${annotation.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="Common Annotations ${annotation.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;Common Annotations ${annotation.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2498,12 +2498,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/servletapi"
       version="true"
-      windowtitle="Servlet ${servlet.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="Servlet ${servlet.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="Servlet ${servlet.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;Servlet ${servlet.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2523,12 +2523,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/jspapi"
       version="true"
-      windowtitle="JSP ${jsp.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="JSP ${jsp.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="JSP ${jsp.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;JSP ${jsp.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2548,12 +2548,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/elapi"
       version="true"
-      windowtitle="EL ${el.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="EL ${el.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="EL ${el.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;EL ${el.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2573,12 +2573,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/websocketapi"
       version="true"
-      windowtitle="WebSocket ${websocket.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="WebSocket ${websocket.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="WebSocket ${websocket.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;WebSocket ${websocket.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2598,12 +2598,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       sourcepath="${tomcat.dist}/src/java"
       destdir="${tomcat.dist}/webapps/docs/jaspicapi"
       version="true"
-      windowtitle="JASPIC ${jaspic.spec.version} API Documentation - Apache Tomcat ${version}"
+      windowtitle="JASPIC ${jaspic.spec.version} API Documentation - Apache Alx ${version}"
       doctitle="JASPIC ${jaspic.spec.version} API - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}"
       header="&lt;b&gt;JASPIC ${jaspic.spec.version} - Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2621,12 +2621,12 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
     <javadoc packagenames="org.apache.*"
       destdir="${tomcat.dist}/webapps/docs/api"
       version="true"
-      windowtitle="Apache Tomcat ${version} API Documentation"
+      windowtitle="Apache Alx ${version} API Documentation"
       doctitle="Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version} API"
       header="&lt;b&gt;Apache Tomcat&lt;sup&gt;&#174;&lt;/sup&gt; ${version}&lt;/b&gt;"
       bottom="Copyright &amp;#169; 2000-${year} Apache Software Foundation.
               &lt;br/&gt;
-              Apache Tomcat, Tomcat, Apache, the Apache Tomcat logo and the Apache logo are either registered trademarks
+              Apache Alx, Alx, Apache, the Apache Alx logo and the Apache logo are either registered trademarks
               or trademarks of the Apache Software Foundation."
       locale="${javadoc.locale}"
       encoding="UTF-8"
@@ -2651,10 +2651,10 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       <link href="https://javaee.github.io/javaee-spec/javadocs/"/>
       <packageset dir="${tomcat.dist}/src/java/">
         <include name="org/**"/>
-        <exclude name="org/apache/el/parser/**"/>
-        <exclude name="org/apache/tomcat/util/json/**"/>
-        <exclude name="org/apache/tomcat/util/net/openssl/panama/**"/>
-        <exclude name="org/apache/tomcat/util/openssl/**"/>
+        <exclude name="com/alx/enterprise/el/parser/**"/>
+        <exclude name="com/alx/enterprise/web/util/json/**"/>
+        <exclude name="com/alx/enterprise/web/util/net/openssl/panama/**"/>
+        <exclude name="com/alx/enterprise/web/util/openssl/**"/>
       </packageset>
       <!--jdbc-pool src files for javadoc-->
       <packageset dir="${tomcat.dist}/src/modules/jdbc-pool/src/main/java"/>
@@ -2662,7 +2662,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
   </target>
 
   <target name="dist-deployer" depends="dist-prepare,deploy"
-    description="Create the Tomcat deployer binary">
+    description="Create the Alx deployer binary">
 
     <!-- Servlet and JSP -->
     <copy todir="${tomcat.deployer}/lib">
@@ -2690,30 +2690,30 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
          manifest="${tomcat.manifests}/default.manifest"
          modificationtime="${tstamp.iso.release}">
       <fileset dir="${tomcat.classes}">
-        <include name="org/apache/catalina/startup/DigesterFactory.class" />
-        <include name="org/apache/catalina/util/SchemaResolver.class" />
-        <include name="org/apache/catalina/util/StringManager.class" />
-        <include name="org/apache/tomcat/util/*" />
-        <include name="org/apache/tomcat/util/digester/**" />
-        <exclude name="org/apache/tomcat/util/bcel" />
-        <exclude name="org/apache/tomcat/util/buf" />
-        <exclude name="org/apache/tomcat/util/codec" />
-        <exclude name="org/apache/tomcat/util/collections" />
-        <exclude name="org/apache/tomcat/util/compat" />
-        <exclude name="org/apache/tomcat/util/concurrent" />
-        <exclude name="org/apache/tomcat/util/descriptor" />
-        <exclude name="org/apache/tomcat/util/file" />
-        <exclude name="org/apache/tomcat/util/http" />
-        <exclude name="org/apache/tomcat/util/json" />
-        <exclude name="org/apache/tomcat/util/log" />
-        <exclude name="org/apache/tomcat/util/modeler" />
-        <exclude name="org/apache/tomcat/util/net" />
-        <exclude name="org/apache/tomcat/util/openssl" />
-        <exclude name="org/apache/tomcat/util/res" />
-        <exclude name="org/apache/tomcat/util/scan" />
-        <exclude name="org/apache/tomcat/util/security" />
-        <exclude name="org/apache/tomcat/util/threads" />
-        <exclude name="org/apache/tomcat/util/xreflection" />
+        <include name="com/alx/enterprise/webtier/startup/DigesterFactory.class" />
+        <include name="com/alx/enterprise/webtier/util/SchemaResolver.class" />
+        <include name="com/alx/enterprise/webtier/util/StringManager.class" />
+        <include name="com/alx/enterprise/web/util/*" />
+        <include name="com/alx/enterprise/web/util/digester/**" />
+        <exclude name="com/alx/enterprise/web/util/bcel" />
+        <exclude name="com/alx/enterprise/web/util/buf" />
+        <exclude name="com/alx/enterprise/web/util/codec" />
+        <exclude name="com/alx/enterprise/web/util/collections" />
+        <exclude name="com/alx/enterprise/web/util/compat" />
+        <exclude name="com/alx/enterprise/web/util/concurrent" />
+        <exclude name="com/alx/enterprise/web/util/descriptor" />
+        <exclude name="com/alx/enterprise/web/util/file" />
+        <exclude name="com/alx/enterprise/web/util/http" />
+        <exclude name="com/alx/enterprise/web/util/json" />
+        <exclude name="com/alx/enterprise/web/util/log" />
+        <exclude name="com/alx/enterprise/web/util/modeler" />
+        <exclude name="com/alx/enterprise/web/util/net" />
+        <exclude name="com/alx/enterprise/web/util/openssl" />
+        <exclude name="com/alx/enterprise/web/util/res" />
+        <exclude name="com/alx/enterprise/web/util/scan" />
+        <exclude name="com/alx/enterprise/web/util/security" />
+        <exclude name="com/alx/enterprise/web/util/threads" />
+        <exclude name="com/alx/enterprise/web/util/xreflection" />
         <exclude name="**/package.html" />
         <exclude name="**/LocalStrings_*" />
       </fileset>
@@ -2745,7 +2745,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
 
     <mkdir dir="${tomcat.dist}/src"/>
 
-    <!-- Tomcat source -->
+    <!-- Alx source -->
     <copy todir="${tomcat.dist}/src">
       <fileset dir="${basedir}" defaultexcludes="true">
         <not>
@@ -2780,8 +2780,8 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
             <filename name="**/Thumbs.db" />
             <filename name="*.launch"/>
             <filename name="bin/setenv.*" />
-            <filename name="java/org/apache/catalina/startup/catalina.properties" />
-            <filename name="java/org/apache/el/parser/ELParser.jj" />
+            <filename name="java/com/alx/enterprise/webtier/startup/catalina.properties" />
+            <filename name="java/com/alx/enterprise/el/parser/ELParser.jj" />
             <filename name="logs/**" />
             <filename name="webapps/docs/jdbc-pool.xml" />
             <filename name="work/**" />
@@ -3194,7 +3194,7 @@ asf.ldap.username=${release.asfusername}
 
     <echo>=====
 
-Configured for ${release.asfusername} to release Tomcat ${version.major}.${version.minor}.${version.build}${version.suffix} using Java ${java.vm.version} and ant ${antversion}
+Configured for ${release.asfusername} to release Alx ${version.major}.${version.minor}.${version.build}${version.suffix} using Java ${java.vm.version} and ant ${antversion}
 
 =====
 </echo>
@@ -3202,7 +3202,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
 
   <target name="release"
     depends="clean,release-init,dist-deployer,installer,package-zip,package-winzip,package-tgz,package-deployer-zip,package-deployer-tgz,javadoc,package-docs-tgz,package-src-zip,package-src-tgz,package-src-jar"
-    description="Create a Tomcat packaged distribution">
+    description="Create a Alx packaged distribution">
 
     <copy file="KEYS"
          todir="${tomcat.release}/v${version}"/>
@@ -3237,7 +3237,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
   <!-- Sets properties only required for releases -->
   <target name="release-init" depends="release-version-check,gpg-init-test-signing,compile" >
     <taskdef name="forceUtcTimeZone"
-             classname="org.apache.tomcat.buildutil.ForceUtcTimeZone"
+             classname="com.alx.enterprise.web.buildutil.ForceUtcTimeZone"
              classpath="${tomcat.classes}" />
     <forceUtcTimeZone />
   </target>
@@ -3456,7 +3456,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
     <hashAndSign file="${tomcat.release}/v${version}/bin/${final.name}.tar.gz" />
   </target>
 
-  <!-- Packages the deployer Tomcat distro in tar.gz format -->
+  <!-- Packages the deployer Alx distro in tar.gz format -->
   <target name="package-deployer-tgz">
     <fixcrlf srcdir="${tomcat.dist}" eol="lf"
         encoding="ISO-8859-1" fixlast="false" >
@@ -3508,7 +3508,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
       <include name="**/element-list" />
     </fixcrlf>
     <taskdef name="repeatableArchive"
-             classname="org.apache.tomcat.buildutil.RepeatableArchive"
+             classname="com.alx.enterprise.web.buildutil.RepeatableArchive"
              classpath="${tomcat.classes}" />
     <repeatableArchive datetime="${tstamp.file}" pattern="yyyy-MM-dd HH:mm:ss">
       <fileset dir="${tomcat.dist}/webapps/docs">
@@ -3544,7 +3544,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
       <include name=".travis/*.sh" />
       <include name="res/graal/*.sh" />
       <include name="res/openssl/*.sh" />
-      <include name="test/org/apache/tomcat/util/net/ocsp/*.sh" />
+      <include name="test/com/alx/enterprise/web/util/net/ocsp/*.sh" />
     </fixcrlf>
 
     <zip zipfile="${tomcat.release}/v${version}/src/${final-src.name}.zip"
@@ -3567,7 +3567,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
       <include name=".travis/*.sh" />
       <include name="res/graal/*.sh" />
       <include name="res/openssl/*.sh" />
-      <include name="test/org/apache/tomcat/util/net/ocsp/*.sh" />
+      <include name="test/com/alx/enterprise/web/util/net/ocsp/*.sh" />
     </fixcrlf>
 
     <!-- Reproducible builds: consistent timestamps for distributed files -->
@@ -3641,17 +3641,17 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
       filesId="files.bootstrap"
       manifest="${tomcat.manifests}/bootstrap.jar.manifest" />
 
-    <!-- Tomcat Util JAR File -->
+    <!-- Alx Util JAR File -->
     <jarIt jarfile="${tomcat-util-src.jar}"
       filesDir="java"
       filesId="files.tomcat-util" />
 
-    <!-- Tomcat API JAR File -->
+    <!-- Alx API JAR File -->
     <jarIt jarfile="${tomcat-api-src.jar}"
       filesDir="java"
       filesId="files.tomcat-api" />
 
-    <!-- Tomcat Util Scan JAR File -->
+    <!-- Alx Util Scan JAR File -->
     <jarIt jarfile="${tomcat-util-scan-src.jar}"
       filesDir="java"
       filesId="files.tomcat-util-scan" />
@@ -3731,7 +3731,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
           description="Delete the default output folders">
     <delete dir="${tomcat.output}" />
     <!-- Remove the copied catalina.properties -->
-    <delete file="java/org/apache/catalina/startup/catalina.properties" />
+    <delete file="java/com/alx/enterprise/webtier/startup/catalina.properties" />
     <ant antfile="${tomcat.jdbc.dir}/build.xml" dir="${tomcat.jdbc.dir}" inheritAll="false" target="clean">
       <property name="tomcat.pool" value="${tomcat.pool}" />
     </ant>
@@ -4335,7 +4335,7 @@ Configured for ${release.asfusername} to release Tomcat ${version.major}.${versi
     </copy>
 
     <echo>Eclipse project files created.
-Read the Building page on the Apache Tomcat documentation site for details on how to configure your Eclipse workspace.</echo>
+Read the Building page on the Apache Alx documentation site for details on how to configure your Eclipse workspace.</echo>
   </target>
 
   <!-- ============================ IntelliJ IDEA=========================== -->
@@ -4400,7 +4400,7 @@ Use the "ide-netbeans-replace" target if you wish to overwrite them.</echo>
       <filterset refid="classpath.filters"/>
     </copy>
     <echo>NetBeans project files created.
-Read the Building page on the Apache Tomcat documentation site for details on how to customise your NetBeans project.</echo>
+Read the Building page on the Apache Alx documentation site for details on how to customise your NetBeans project.</echo>
   </target>
 
 
@@ -4477,13 +4477,15 @@ Read the Building page on the Apache Tomcat documentation site for details on ho
                default="" />
     <sequential>
       <local name="jar.uptodate"/>
+      <local name="meta-inf.dir.exists"/>
+      <available file="@{meta-inf}" type="dir" property="meta-inf.dir.exists"/>
       <uptodate property="jar.uptodate" targetfile="@{jarfile}" >
         <srcfiles dir="@{filesDir}">
           <patternset refid="@{filesId}"/>
           <!-- Javadoc exclusions -->
           <exclude name="**/package.html" />
         </srcfiles>
-        <srcfiles dir="@{meta-inf}" excludes=".gitignore" />
+        <srcfiles dir="@{meta-inf}" excludes=".gitignore" if:set="meta-inf.dir.exists" />
         <srcfiles file="@{notice}" />
         <srcfiles file="@{license}" />
       </uptodate>
@@ -4501,7 +4503,8 @@ Read the Building page on the Apache Tomcat documentation site for details on ho
             <exclude name="**/package.html" />
           </fileset>
           <zipfileset dir="@{meta-inf}" prefix="META-INF/"
-                      excludes=".gitignore" />
+                      excludes=".gitignore"
+                      if:set="meta-inf.dir.exists" />
           <zipfileset file="@{notice}" fullpath="META-INF/NOTICE" />
           <zipfileset file="@{license}" fullpath="META-INF/LICENSE" />
         </jar>

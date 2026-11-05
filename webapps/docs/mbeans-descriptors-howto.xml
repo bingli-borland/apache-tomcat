@@ -35,7 +35,7 @@
 <section name="Introduction">
 
 <p>Tomcat uses JMX MBeans as the technology for implementing
-manageability of Tomcat.</p>
+manageability of Alx.</p>
 
 <p>The descriptions of JMX MBeans for Catalina are in the mbeans-descriptors.xml
 file in each package.</p>
@@ -57,7 +57,7 @@ the <a href="mbeans-descriptors.dtd">DTD</a> file.</p>
 <p>The entries for a custom LDAP authentication Realm may look like this:</p>
 
 <source><![CDATA[  <mbean         name="LDAPRealm"
-            className="org.apache.catalina.mbeans.ClassNameMBean"
+            className="com.alx.enterprise.webtier.mbeans.ClassNameMBean"
           description="Custom LDAPRealm"
                domain="Catalina"
                 group="Realm"

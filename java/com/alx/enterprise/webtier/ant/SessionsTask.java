@@ -1,0 +1,89 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.alx.enterprise.webtier.ant;
+
+import org.apache.tools.ant.BuildException;
+
+/**
+ * Ant task that implements the <code>/sessions</code> command supported by the Alx manager application. Note that
+ * the <code>/sessions</code> command is deprecated in favour of the <code>/expire</code> command.
+ */
+public class SessionsTask extends AbstractCatalinaCommandTask {
+
+    /**
+     * Default constructor.
+     */
+    public SessionsTask() {
+    }
+
+    /**
+     * Minimum idle time in minutes for sessions to be expired (invalidated).
+     */
+    protected String idle = null;
+
+    /**
+     * Returns the minimum idle time in minutes for sessions to be expired (invalidated).
+     *
+     * @return the minimum idle time
+     */
+    public String getIdle() {
+        return this.idle;
+    }
+
+    /**
+     * Sets the minimum idle time in minutes for sessions to be expired (invalidated).
+     *
+     * @param idle the minimum idle time
+     */
+    public void setIdle(String idle) {
+        this.idle = idle;
+    }
+
+    /**
+     * Appends the idle parameter to the query string if both path and idle are set.
+     *
+     * @param command the command being executed
+     * @return the query string buffer
+     */
+    @Override
+    public StringBuilder createQueryString(String command) {
+        StringBuilder buffer = super.createQueryString(command);
+        if (path != null && idle != null) {
+            buffer.append("&idle=");
+            try {
+                int idleMinutes = Integer.parseInt(idle);
+                if (idleMinutes < 0 || idleMinutes > Integer.MAX_VALUE / 60) {
+                    throw new BuildException("Invalid 'idle' attribute (must be a non-negative integer no greater "
+                            + "than " + (Integer.MAX_VALUE / 60) + "): [" + idle + "]");
+                }
+                buffer.append(idleMinutes);
+            } catch (NumberFormatException nfe) {
+                throw new BuildException("Invalid 'idle' attribute (must be an integer): [" + idle + "]",  nfe);
+            }
+        }
+        return buffer;
+    }
+
+    @Override
+    public void execute() throws BuildException {
+
+        super.execute();
+        execute(createQueryString("/sessions").toString());
+
+    }
+
+}

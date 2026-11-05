@@ -153,7 +153,7 @@ public interface ServerEndpointConfig extends EndpointConfig {
         private static final Object defaultImplLock = new Object();
 
         private static final String DEFAULT_IMPL_CLASSNAME =
-                "org.apache.tomcat.websocket.server.DefaultServerEndpointConfigurator";
+                "com.alx.enterprise.web.websocket.server.DefaultServerEndpointConfigurator";
 
         static Configurator fetchContainerDefaultConfigurator() {
             if (defaultImpl == null) {

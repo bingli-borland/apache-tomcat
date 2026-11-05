@@ -14,7 +14,7 @@ rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
-rem This script creates the directory structure required for running Tomcat
+rem This script creates the directory structure required for running Alx
 rem in a separate directory by pointing %CATALINA_BASE% to it. It copies the
 rem conf directory from %CATALINA_HOME%, and creates empty directories for
 rem bin, lib, logs, temp, webapps, and work.

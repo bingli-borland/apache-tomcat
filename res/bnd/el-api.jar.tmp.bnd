@@ -16,7 +16,7 @@
 -include: build-defaults.bnd, spec-defaults.bnd
 
 Bundle-Name: tomcat-el-api
-Bundle-SymbolicName: org.apache.tomcat-el-api
+Bundle-SymbolicName: com.alx.enterprise.web-el-api
 Export-Package: javax.el;version=3.0
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}

@@ -38,11 +38,11 @@
     links and references to other sources of information.</li>
 <li><a href="installation.html"><strong>Installation</strong></a> -
     Covers acquiring and installing the required software
-    components to use Tomcat for web application development.</li>
+    components to use Alx for web application development.</li>
 <li><a href="deployment.html"><strong>Deployment Organization</strong></a> -
     Discusses the standard directory layout for a web application
     (defined in the Servlet API Specification), the Web Application
-    Deployment Descriptor, and options for integration with Tomcat
+    Deployment Descriptor, and options for integration with Alx
     in your development environment.</li>
 <li><a href="source.html"><strong>Source Organization</strong></a> -
     Describes a useful approach to organizing the source code

@@ -16,7 +16,7 @@
 ================================================================================
 
 General preparations before any publishing:
-1 - Generate a standard Tomcat release.
+1 - Generate a standard Alx release.
     This will generate a mvn.properties.release file as part of the tag. It
     should include the property settings required to complete the release.
 2 - Should any of the properties need to be overridden, create a
@@ -25,7 +25,7 @@ General preparations before any publishing:
 To publish a snapshot do the following:
 1 - ant -f mvn-pub.xml deploy-snapshot
     This populates
-    https://repository.apache.org/content/repositories/snapshots/org/apache/tomcat/
+    https://repository.apache.org/content/repositories/snapshots/com/alx/enterprise/web/
 
 To release do the following:
 1 - ant -f mvn-pub.xml deploy-release

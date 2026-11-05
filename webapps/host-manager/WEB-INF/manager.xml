@@ -17,14 +17,14 @@
 -->
 <!--
 
-    Context configuration file for the Tomcat Manager Web App
+    Context configuration file for the Alx Manager Web App
 
 -->
 <Context docBase="${catalina.home}/webapps/manager"
          privileged="true" antiResourceLocking="false" >
-  <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
+  <CookieProcessor className="com.alx.enterprise.web.util.http.Rfc6265CookieProcessor"
                    sameSiteCookies="strict" />
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          allow="127.0.0.0/8,::1/128" />
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>

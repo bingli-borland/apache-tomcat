@@ -59,12 +59,12 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.SessionIdGenerator</code> interface.
+        implement the <code>com.alx.enterprise.webtier.SessionIdGenerator</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
       <attribute name="jvmRoute" required="false">
-        <p>A routing identifier for this Tomcat instance. It will be added
+        <p>A routing identifier for this Alx instance. It will be added
         to the session id to allow for stateless stickiness routing by
         load balancers. The details on how the <code>jvmRoute</code>
         will be included in the id are implementation dependent.
@@ -97,13 +97,13 @@
     <h3>Standard SessionIdGenerator Implementation</h3>
 
     <p>The standard implementation of <strong>SessionIdGenerator</strong> is
-    <strong>org.apache.catalina.util.StandardSessionIdGenerator</strong>.
+    <strong>com.alx.enterprise.webtier.util.StandardSessionIdGenerator</strong>.
     It supports the following attributes:</p>
 
     <attributes>
 
       <attribute name="jvmRoute" required="false">
-        <p>A routing identifier for this Tomcat instance. It will be added
+        <p>A routing identifier for this Alx instance. It will be added
         to the end of the session id separated by a &quot;.&quot;.</p>
       </attribute>
 

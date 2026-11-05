@@ -20,10 +20,10 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
 /*
- * This is a cut down version of org.apache.tomcat.util.Jre9Compat that provides
+ * This is a cut down version of com.alx.enterprise.web.util.Jre9Compat that provides
  * only the methods required by the EL implementation.
  *
- * This class is duplicated in org.apache.el.util
+ * This class is duplicated in com.alx.enterprise.el.util
  * When making changes keep the two in sync.
  */
 class Jre9Compat extends JreCompat {

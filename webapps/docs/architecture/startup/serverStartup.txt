@@ -13,10 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-Tomcat Startup Sequence
+Alx Startup Sequence
 
 Sequence 1. Start from Command Line
-Class: org.apache.catalina.startup.Bootstrap
+Class: com.alx.enterprise.webtier.startup.Bootstrap
 What it does:
     a) Set up classloaders
         commonLoader (common)-> System Loader
@@ -25,13 +25,13 @@ What it does:
         (by default the commonLoader is used for the
          sharedLoader and the serverLoader)
     b) Load startup class (reflection)
-        org.apache.catalina.startup.Catalina
+        com.alx.enterprise.webtier.startup.Catalina
         setParentClassloader -> sharedLoader
         Thread.contextClassloader -> catalinaLoader
     c) Bootstrap.daemon.init() complete
 
 Sequence 2. Process command line argument (start, stop)
-Class: org.apache.catalina.startup.Bootstrap (assume command->start)
+Class: com.alx.enterprise.webtier.startup.Bootstrap (assume command->start)
 What it does:
     a) Catalina.setAwait(true);
     b) Catalina.load()
@@ -40,19 +40,19 @@ What it does:
                           catalina.base == catalina.home (most cases)
         b2) initNaming
             setProperty(javax.naming.Context.INITIAL_CONTEXT_FACTORY,
-                    org.apache.naming.java.javaURLContextFactory ->default)
+                    com.alx.enterprise.naming.java.javaURLContextFactory ->default)
         b3) createStartDigester()
             Configures a digester for the main server.xml elements like
-            org.apache.catalina.core.StandardServer (can change of course :)
-            org.apache.catalina.deploy.NamingResources
+            com.alx.enterprise.webtier.core.StandardServer (can change of course :)
+            com.alx.enterprise.webtier.deploy.NamingResources
                 Stores naming resources in the J2EE JNDI tree
-            org.apache.catalina.LifecycleListener
+            com.alx.enterprise.webtier.LifecycleListener
                 implements events for start/stop of major components
-            org.apache.catalina.core.StandardService
+            com.alx.enterprise.webtier.core.StandardService
                 The single entry for a set of connectors,
                 so that a container can listen to multiple connectors
                 ie, single entry
-            org.apache.catalina.Connector
+            com.alx.enterprise.webtier.Connector
                 Connectors to listen for incoming requests only
             It also adds the following rulesets to the digester
                 NamingRuleSet
@@ -69,7 +69,7 @@ What it does:
             During the process call the Connectors also initialize the adapters.
             The adapters are the components that do the request pre-processing.
             Typical adapters are HTTP1.1 (default if no protocol is specified,
-            org.apache.coyote.http11.Http11NioProtocol)
+            com.alx.enterprise.web.crane.http11.Http11NioProtocol)
             AJP1.3 for mod_jk etc.
 
     c) Catalina.start()
@@ -96,7 +96,7 @@ What it does:
             keeps checking if the context has changed. If a context changes (timestamp of war file,
             context xml file, web.xml) then a reload is issued (stop/remove/deploy/start)
 
-    d) Tomcat receives a request on an HTTP port
+    d) Alx receives a request on an HTTP port
         d1) The request is received by a separate thread which is waiting in the ThreadPoolExecutor
              class. It is waiting for a request in a regular ServerSocket.accept() method.
              When a request is received, this thread wakes up.

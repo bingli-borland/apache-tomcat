@@ -28,10 +28,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.startup.SimpleHttpClient;
-import org.apache.catalina.startup.TomcatBaseTest;
+import com.alx.enterprise.webtier.startup.SimpleHttpClient;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
 
-public class ServletRequestParametersBaseTest extends TomcatBaseTest {
+public class ServletRequestParametersBaseTest extends AlxBaseTest {
 
     protected Map<String,List<String>> parseReportedParameters(SimpleHttpClient client) {
         Map<String,List<String>> parameters = new LinkedHashMap<>();

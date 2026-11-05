@@ -15,5 +15,5 @@
   limitations under the License.
 --%>
 <%
-application.setAttribute(org.apache.jasper.compiler.ELInterpreter.class.getName(), "does.not.exist");
+application.setAttribute(com.alx.enterprise.web.jasper.compiler.ELInterpreter.class.getName(), "does.not.exist");
 %>

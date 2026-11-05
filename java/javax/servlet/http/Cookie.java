@@ -59,19 +59,19 @@ public class Cookie implements Cloneable, Serializable {
         String propFwdSlashIsSeparator;
 
         if (System.getSecurityManager() == null) {
-            strictServletCompliance = Boolean.getBoolean("org.apache.catalina.STRICT_SERVLET_COMPLIANCE");
-            propStrictNaming = System.getProperty("org.apache.tomcat.util.http.ServerCookie.STRICT_NAMING");
+            strictServletCompliance = Boolean.getBoolean("com.alx.enterprise.webtier.STRICT_SERVLET_COMPLIANCE");
+            propStrictNaming = System.getProperty("com.alx.enterprise.web.util.http.ServerCookie.STRICT_NAMING");
             propFwdSlashIsSeparator =
-                    System.getProperty("org.apache.tomcat.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR");
+                    System.getProperty("com.alx.enterprise.web.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR");
         } else {
             strictServletCompliance = AccessController
                     .doPrivileged((PrivilegedAction<Boolean>) () -> Boolean
-                            .valueOf(System.getProperty("org.apache.catalina.STRICT_SERVLET_COMPLIANCE")))
+                            .valueOf(System.getProperty("com.alx.enterprise.webtier.STRICT_SERVLET_COMPLIANCE")))
                     .booleanValue();
             propStrictNaming = AccessController.doPrivileged((PrivilegedAction<String>) () -> System
-                    .getProperty("org.apache.tomcat.util.http.ServerCookie.STRICT_NAMING"));
+                    .getProperty("com.alx.enterprise.web.util.http.ServerCookie.STRICT_NAMING"));
             propFwdSlashIsSeparator = AccessController.doPrivileged((PrivilegedAction<String>) () -> System
-                    .getProperty("org.apache.tomcat.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR"));
+                    .getProperty("com.alx.enterprise.web.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR"));
         }
 
         if (propStrictNaming == null) {

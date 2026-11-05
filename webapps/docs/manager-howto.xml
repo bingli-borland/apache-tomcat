@@ -38,10 +38,10 @@
 to deploy a new web application, or undeploy an existing one, without having
 to shut down and restart the entire container.  In addition, you can request
 an existing application to reload itself, even if you have not declared it
-to be <code>reloadable</code> in the Tomcat server
+to be <code>reloadable</code> in the Alx server
 configuration file.</p>
 
-<p>To support these capabilities, Tomcat includes a web application
+<p>To support these capabilities, Alx includes a web application
 (installed by default on context path <code>/manager</code>) that supports
 the following functions:</p>
 <ul>
@@ -64,7 +64,7 @@ the following functions:</p>
     directory (unless it was deployed from file system).</li>
 </ul>
 
-<p>A default Tomcat installation includes an instance of the Manager application
+<p>A default Alx installation includes an instance of the Manager application
 configured for the default virtual host. If you create additional virtual hosts,
 you may wish to add an instance of the Manager application to one or more of
 those Hosts. To add an instance of the Manager web application
@@ -74,9 +74,9 @@ configuration file in the
 example:</p>
 <source><![CDATA[<Context privileged="true" antiResourceLocking="false"
          docBase="${catalina.home}/webapps/manager">
-  <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
+  <CookieProcessor className="com.alx.enterprise.web.util.http.Rfc6265CookieProcessor"
                    sameSiteCookies="strict" />
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          allow="127.0.0.0/8,::1/128" />
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>]]></source>
@@ -104,12 +104,12 @@ With Ant</a> for more information.</li>
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 
-<p>It would be quite unsafe to ship Tomcat with default settings that allowed
+<p>It would be quite unsafe to ship Alx with default settings that allowed
 anyone on the Internet to execute the Manager application on your server.
 Therefore, the Manager application is shipped with the requirement that anyone
 who attempts to use it must authenticate themselves, using a username and
@@ -154,7 +154,7 @@ To maintain the CSRF protection:</p>
 </ul>
 
 <p><strong>Note</strong> that JMX proxy interface is effectively low-level root-like
-administrative interface of Tomcat. One can do a lot, if one knows
+administrative interface of Alx. One can do a lot, if one knows
 what commands to call. You should be cautious when enabling the
 <strong>manager-jmx</strong> role.</p>
 
@@ -209,7 +209,7 @@ See <a href="config/valve.html#Remote_Address_Filter">valves documentation</a>
 for details. Here is
 an example of restricting access to the localhost by IP address:</p>
 <source><![CDATA[<Context privileged="true">
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          allow="127.0.0.0/8,::1/128" />
 </Context>]]></source>
 
@@ -243,7 +243,7 @@ initialisation parameter of the <code>HTMLManagerServlet</code>
 
 <source><![CDATA[<servlet>
   <servlet-name>HTMLManager</servlet-name>
-  <servlet-class>org.apache.catalina.manager.HTMLManagerServlet</servlet-class>
+  <servlet-class>com.alx.enterprise.webtier.manager.HTMLManagerServlet</servlet-class>
   <init-param>
     <param-name>htmlSubTitle</param-name>
     <param-value>Company Inc.&lt;br&gt;&lt;i style=&apos;color:red&apos;&gt;Staging&lt;/i&gt;</param-value>
@@ -263,7 +263,7 @@ initialisation parameter of the <code>HTMLManagerServlet</code>
 specified in a single request URI like this:</p>
 <source>http://{host}:{port}/manager/text/{command}?{parameters}</source>
 <p>where <code>{host}</code> and <code>{port}</code> represent the hostname
-and port number on which Tomcat is running, <code>{command}</code>
+and port number on which Alx is running, <code>{command}</code>
 represents the Manager command you wish to execute, and
 <code>{parameters}</code> represents the query parameters
 that are specific to that command.  In the illustrations below, customize
@@ -347,7 +347,7 @@ use of the <code>/undeploy</code> command.</p>
 
 <p>This command is executed by an HTTP PUT request.</p>
 
-<p>The .WAR file may include Tomcat specific deployment configuration, by
+<p>The .WAR file may include Alx specific deployment configuration, by
 including a Context configuration XML file in
 <code>/META-INF/context.xml</code>.</p>
 
@@ -385,7 +385,7 @@ error message.  Possible causes for problems include:</p>
     </li>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to start the new web application.
-    Check the Tomcat logs for the details, but likely explanations include
+    Check the Alx logs for the details, but likely explanations include
     problems parsing your <code>/WEB-INF/web.xml</code> file, or missing
     classes encountered when initializing application event listeners and
     filters.</p>
@@ -416,7 +416,7 @@ removing it would make the deployment fail.</p>
 
 <subsection name="Deploy a Directory or WAR by URL">
 
-<p>Deploy a web application directory or ".war" file located on the Tomcat
+<p>Deploy a web application directory or ".war" file located on the Alx
 server. If no <code>path</code> is specified, the path and version are derived
 from the directory name or the war file name. The <code>war</code> parameter
 specifies a URL (including the <code>file:</code> scheme) for either
@@ -426,13 +426,13 @@ a URL referring to a WAR file is described on the Javadocs page for the
 the entire WAR file.</p>
 
 <p>In this example the web application located in the directory
-<code>/path/to/foo</code> on the Tomcat server is deployed as the
+<code>/path/to/foo</code> on the Alx server is deployed as the
 web application context named <code>/footoo</code>.</p>
 <source>http://localhost:8080/manager/text/deploy?path=/footoo&amp;war=file:/path/to/foo</source>
 
 
 <p>In this example the ".war" file <code>/path/to/bar.war</code> on the
-Tomcat server is deployed as the web application context named
+Alx server is deployed as the web application context named
 <code>/bar</code>. Notice that there is no <code>path</code> parameter
 so the context path defaults to the name of the web application archive
 file without the ".war" extension.</p>
@@ -447,14 +447,14 @@ appBase directory. The path and optional version are derived from the directory
 or war file name.</p>
 
 <p>In this example the web application located in a sub directory named
-<code>foo</code> in the Host appBase directory of the Tomcat server is
+<code>foo</code> in the Host appBase directory of the Alx server is
 deployed as the web application context named <code>/foo</code>. Notice
 that the context path used is the name of the web application directory.</p>
 <source>http://localhost:8080/manager/text/deploy?war=foo</source>
 
 
 <p>In this example the ".war" file <code>bar.war</code> located in your
-Host appBase directory on the Tomcat server is deployed as the web
+Host appBase directory on the Alx server is deployed as the web
 application context named <code>/bar</code>.</p>
 <source>http://localhost:8080/manager/text/deploy?war=bar.war</source>
 
@@ -470,7 +470,7 @@ configuration file.</p>
 
 <p>A Context configuration ".xml" file can contain valid XML for a
 web application Context just as if it were configured in your
-Tomcat <code>server.xml</code> configuration file. Here is an
+Alx <code>server.xml</code> configuration file. Here is an
 example:</p>
 <source><![CDATA[<Context path="/foobar" docBase="/path/to/application/foobar">
 </Context>]]></source>
@@ -539,7 +539,7 @@ error message.  Possible causes for problems include:</p>
     </li>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to start the new web application.
-    Check the Tomcat logs for the details, but likely explanations include
+    Check the Alx logs for the details, but likely explanations include
     problems parsing your <code>/WEB-INF/web.xml</code> file, or missing
     classes encountered when initializing application event listeners and
     filters.</p>
@@ -578,7 +578,7 @@ error message.  Possible causes for problems include:</p>
 <p>List the context paths, current status (<code>running</code> or
 <code>stopped</code>), and number of active sessions for all currently
 deployed web applications.  A typical response immediately
-after starting Tomcat might look like this:</p>
+after starting Alx might look like this:</p>
 <source>OK - Listed applications for virtual host localhost
 /webdav:running:0:webdav
 /examples:running:0:examples
@@ -608,7 +608,7 @@ error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to restart the web application.
-    Check the Tomcat logs for the details.</p>
+    Check the Alx logs for the details.</p>
     </li>
 <li><em>Invalid context path was specified</em>
     <p>The context path must start with a slash character. To reference the
@@ -640,14 +640,14 @@ error message.  Possible causes for problems include:</p>
 
 <source>http://localhost:8080/manager/text/serverinfo</source>
 
-<p>Lists information about the Tomcat version, OS, and JVM properties.</p>
+<p>Lists information about the Alx version, OS, and JVM properties.</p>
 
 <p>If an error occurs, the response will start with <code>FAIL</code> and
 include an error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to enumerate the system properties.
-    Check the Tomcat logs for the details.</p>
+    Check the Alx logs for the details.</p>
     </li>
 </ul>
 
@@ -685,10 +685,10 @@ include an error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to enumerate the global JNDI
-    resources.  Check the Tomcat logs for the details.</p>
+    resources.  Check the Alx logs for the details.</p>
     </li>
 <li><em>No global JNDI resources are available</em>
-    <p>The Tomcat server you are running has been configured without
+    <p>The Alx server you are running has been configured without
     global JNDI resources.</p>
     </li>
 </ul>
@@ -702,7 +702,7 @@ include an error message.  Possible causes for problems include:</p>
 
 <p>Display the default session timeout for a web application, and the
 number of currently active sessions that fall within one-minute ranges of
-their actual timeout times.  For example, after restarting Tomcat and then
+their actual timeout times.  For example, after restarting Alx and then
 executing one of the JSP samples in the <code>/examples</code> web app,
 you might get something like this:</p>
 
@@ -751,7 +751,7 @@ error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to start the web application.
-    Check the Tomcat logs for the details.</p>
+    Check the Alx logs for the details.</p>
     </li>
 <li><em>Invalid context path was specified</em>
     <p>The context path must start with a slash character. To reference the
@@ -786,7 +786,7 @@ error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to stop the web application.
-    Check the Tomcat logs for the details.</p>
+    Check the Alx logs for the details.</p>
     </li>
 <li><em>Invalid context path was specified</em>
     <p>The context path must start with a slash character. To reference the
@@ -819,7 +819,7 @@ If you simply want to take an application
 out of service, you should use the <code>/stop</code> command instead.</p>
 
 <p>Signal an existing application to gracefully shut itself down, and
-remove it from Tomcat (which also makes this context path available for
+remove it from Alx (which also makes this context path available for
 reuse later).  In addition, the document root directory is removed, if it
 exists in the <code>appBase</code> directory (typically "webapps") for
 this virtual host.  This command is the logical opposite of the
@@ -833,7 +833,7 @@ error message.  Possible causes for problems include:</p>
 <ul>
 <li><em>Encountered exception</em>
     <p>An exception was encountered trying to undeploy the web application.
-    Check the Tomcat logs for the details.</p>
+    Check the Alx logs for the details.</p>
     </li>
 <li><em>Invalid context path was specified</em>
     <p>The context path must start with a slash character. To reference the
@@ -922,7 +922,7 @@ Connector[HTTP/1.1-8443]-_default_-RSA
 [
 [
   Version: V3
-  Subject: CN=localhost, OU=Apache Tomcat PMC, O=The Apache Software Foundation, L=Wakefield, ST=MA, C=US
+  Subject: CN=localhost, OU=Apache Alx PMC, O=The Apache Software Foundation, L=Wakefield, ST=MA, C=US
   Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
   ...</source>
 
@@ -943,7 +943,7 @@ Connector[HTTP/1.1-8443]-_default_
 [
 [
   Version: V3
-  Subject: CN=Apache Tomcat Test CA, OU=Apache Tomcat PMC, O=The Apache Software Foundation, L=Wakefield, ST=MA, C=US
+  Subject: CN=Apache Alx Test CA, OU=Apache Alx PMC, O=The Apache Software Foundation, L=Wakefield, ST=MA, C=US
   ...</source>
 
 </subsection>
@@ -976,10 +976,10 @@ Full thread dump Java HotSpot(TM) Client VM (25.25-b02 mixed mode):
         locks java.util.concurrent.ThreadPoolExecutor$Worker@1738ad4
         at sun.management.ThreadImpl.dumpThreads0(Native Method)
         at sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:446)
-        at org.apache.tomcat.util.Diagnostics.getThreadDump(Diagnostics.java:440)
-        at org.apache.tomcat.util.Diagnostics.getThreadDump(Diagnostics.java:409)
-        at org.apache.catalina.manager.ManagerServlet.threadDump(ManagerServlet.java:557)
-        at org.apache.catalina.manager.ManagerServlet.doGet(ManagerServlet.java:371)
+        at com.alx.enterprise.web.util.Diagnostics.getThreadDump(Diagnostics.java:440)
+        at com.alx.enterprise.web.util.Diagnostics.getThreadDump(Diagnostics.java:409)
+        at com.alx.enterprise.webtier.manager.ManagerServlet.threadDump(ManagerServlet.java:557)
+        at com.alx.enterprise.webtier.manager.ManagerServlet.doGet(ManagerServlet.java:371)
         at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
         at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
 ...
@@ -1030,7 +1030,7 @@ for the current Host.</p>
 
 <p>To use the command a StoreConfig MBean must be present. Typically this is
 configured using the <a
-href="config/listeners.html#StoreConfig_Lifecycle_Listener_-_org.apache.catalina.storeconfig.StoreConfigLifecycleListener">StoreConfigLifecycleListener</a>.
+href="config/listeners.html#StoreConfig_Lifecycle_Listener_-_com.alx.enterprise.webtier.storeconfig.StoreConfigLifecycleListener">StoreConfigLifecycleListener</a>.
 </p>
 
 <p>If the command does not succeed, the response will start with
@@ -1070,7 +1070,7 @@ and number followed by the architecture type.</p>
 
 <p>Second, there is information about the memory usage of the JVM.</p>
 
-<p>Then, there is information about the Tomcat AJP and HTTP connectors.
+<p>Then, there is information about the Alx AJP and HTTP connectors.
 The same information is available for both of them :
 </p>
 <ul>
@@ -1232,7 +1232,7 @@ format.</p>
 <section name="Executing Manager Commands With Ant">
 
 <p>In addition to the ability to execute Manager commands via HTTP requests,
-as documented above, Tomcat includes a convenient set of Task definitions
+as documented above, Alx includes a convenient set of Task definitions
 for the <em>Ant</em> (version 1.4 or later) build tool.  In order to use these
 commands, you must perform the following setup operations:</p>
 <ul>
@@ -1243,7 +1243,7 @@ commands, you must perform the following setup operations:</p>
     ANT_HOME in the remainder of these instructions).</li>
 <li>Add the <code>$ANT_HOME/bin</code> directory to your <code>PATH</code>
     environment variable.</li>
-<li>Configure at least one username/password combination in your Tomcat
+<li>Configure at least one username/password combination in your Alx
     user database that includes the <code>manager-script</code> role.</li>
 </ul>
 
@@ -1264,7 +1264,7 @@ file might look something like this:</p>
   <property name="username" value="myusername"/>
   <property name="password" value="mypassword"/>
 
-  <!-- Configure the path to the Tomcat installation -->
+  <!-- Configure the path to the Alx installation -->
   <property name="catalina.home" value="/usr/local/apache-tomcat"/>
 
   <!-- Configure the custom Ant tasks for the Manager application -->
@@ -1298,12 +1298,12 @@ file might look something like this:</p>
 <p>Note: The definition of the resources task via the import above will override
 the resources datatype added in Ant 1.7. If you wish to use the resources
 datatype you will need to use Ant's namespace support to modify
-<code>catalina-tasks.xml</code> to assign the Tomcat tasks to their own
+<code>catalina-tasks.xml</code> to assign the Alx tasks to their own
 namespace.</p>
 
 <p>Now, you can execute commands like <code>ant deploy</code> to deploy the
-application to a running instance of Tomcat, or <code>ant reload</code> to
-tell Tomcat to reload it.  Note also that most of the interesting values in
+application to a running instance of Alx, or <code>ant reload</code> to
+tell Alx to reload it.  Note also that most of the interesting values in
 this <code>build.xml</code> file are defined as replaceable properties, so
 you can override their values from the command line.  For example, you might
 consider it a security risk to include the real manager password in your

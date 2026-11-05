@@ -24,7 +24,7 @@
     <uri>http://tomcat.apache.org/tag-setters</uri>
     <tag>
       <name>tagPrimitiveBoolean</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveBoolean</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveBoolean</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -35,7 +35,7 @@
     </tag>
     <tag>
       <name>tagBoolean</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagBoolean</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagBoolean</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -46,7 +46,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveCharacter</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveCharacter</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveCharacter</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -57,7 +57,7 @@
     </tag>
     <tag>
       <name>tagCharacter</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagCharacter</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagCharacter</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -68,7 +68,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveLong</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveLong</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveLong</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -79,7 +79,7 @@
     </tag>
     <tag>
       <name>tagLong</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagLong</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagLong</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -90,7 +90,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveInteger</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveInteger</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveInteger</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -101,7 +101,7 @@
     </tag>
     <tag>
       <name>tagInteger</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagInteger</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagInteger</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -112,7 +112,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveShort</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveShort</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveShort</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -123,7 +123,7 @@
     </tag>
     <tag>
       <name>tagShort</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagShort</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagShort</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -134,7 +134,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveByte</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveByte</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveByte</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -145,7 +145,7 @@
     </tag>
     <tag>
       <name>tagByte</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagByte</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagByte</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -156,7 +156,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveDouble</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveDouble</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveDouble</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -167,7 +167,7 @@
     </tag>
     <tag>
       <name>tagDouble</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagDouble</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagDouble</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -178,7 +178,7 @@
     </tag>
     <tag>
       <name>tagPrimitiveFloat</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveFloat</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagPrimitiveFloat</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -189,7 +189,7 @@
     </tag>
     <tag>
       <name>tagFloat</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagFloat</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagFloat</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -200,7 +200,7 @@
     </tag>
     <tag>
       <name>tagBigDecimal</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagBigDecimal</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagBigDecimal</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -211,7 +211,7 @@
     </tag>
     <tag>
       <name>tagBigInteger</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagBigInteger</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagBigInteger</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -222,7 +222,7 @@
     </tag>
     <tag>
       <name>tagString</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagString</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagString</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
@@ -233,7 +233,7 @@
     </tag>
     <tag>
       <name>tagTimeUnit</name>
-      <tag-class>org.apache.jasper.optimizations.TestELInterpreterTagSetters$TagTimeUnit</tag-class>
+      <tag-class>com.alx.enterprise.web.jasper.optimizations.TestELInterpreterTagSetters$TagTimeUnit</tag-class>
       <body-content>scriptless</body-content>
       <attribute>
         <name>foo</name>
