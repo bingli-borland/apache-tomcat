@@ -31,6 +31,12 @@ goto end
 call mvn deploy:deploy-file -Dfile="%libDir%/alxas-core-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-core -Dversion=%version% -Dpackaging=jar -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
 call :validateResult %groupId%:alxas-core:%version%
 
+call mvn deploy:deploy-file -Dfile="%libDir%/spring-boot-starter-alx-1.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-1.x-%version%.pom" -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
+call :validateResult %groupId%:spring-boot-starter-alx-1.x:%version%
+
+call mvn deploy:deploy-file -Dfile="%libDir%/spring-boot-starter-alx-2.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-2.x-%version%.pom" -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
+call :validateResult %groupId%:spring-boot-starter-alx-2.x:%version%
+
 call mvn deploy:deploy-file -Dfile="%libDir%/alxas-websocket-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-websocket -Dversion=%version% -Dpackaging=jar  -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
 call :validateResult %groupId%:alxas-websocket:%version%
 

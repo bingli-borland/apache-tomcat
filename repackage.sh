@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -19,27 +20,21 @@
 # 设置版本号
 VERSION="1.0.1"
 TAR_NAME="ALX-APPSERVER-SPRINGBOOT-${VERSION}"
-cd output/embed
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+EMBED_DIR="${SCRIPT_DIR}/output/embed"
+M2_REPO="${M2_REPO:-${HOME}/.m2/repository}"
+STARTER_GROUP_PATH="com/alx/appserver"
+
+cd "${EMBED_DIR}"
 # 创建临时目录结构
 mkdir -p temp_dir
 mkdir -p temp_dir/lib
 
-# 复制所有脚本文件到根目录（.sh和.bat都要保留）
-# 复制shell脚本
-if [ -f "deploylib.sh" ]; then
-    cp deploylib.sh temp_dir/
-fi
-if [ -f "installlib.sh" ]; then
-    cp installlib.sh temp_dir/
-fi
-
-# 复制bat脚本
-if [ -f "deploylib.bat" ]; then
-    cp deploylib.bat temp_dir/
-fi
-if [ -f "installlib.bat" ]; then
-    cp installlib.bat temp_dir/
-fi
+# Copy the current install and deploy scripts from the repository.
+cp "${SCRIPT_DIR}/package/deploylib.sh" temp_dir/
+cp "${SCRIPT_DIR}/package/installlib.sh" temp_dir/
+cp "${SCRIPT_DIR}/package/deploylib.bat" temp_dir/
+cp "${SCRIPT_DIR}/package/installlib.bat" temp_dir/
 
 # 复制README.md到根目录
 if [ -f "README.md" ]; then
@@ -61,11 +56,31 @@ Version: ${VERSION}
 EOF
 fi
 
+cat >> temp_dir/README.md << EOF
+
+## Spring Boot Starters
+- lib/spring-boot-starter-alx-1.x-${VERSION}.jar and its POM - Spring Boot 1.x starter
+- lib/spring-boot-starter-alx-2.x-${VERSION}.jar and its POM - Spring Boot 2.x starter
+Each starter POM depends on com.alx.appserver:alxas-core:${VERSION}.
+EOF
+
 # 复制并重命名jar文件，添加版本号
 cp tomcat-embed-jasper.jar temp_dir/lib/alxas-jasper-${VERSION}.jar
 cp tomcat-embed-core.jar temp_dir/lib/alxas-core-${VERSION}.jar
 cp tomcat-embed-websocket.jar temp_dir/lib/alxas-websocket-${VERSION}.jar
 cp tomcat-embed-el.jar temp_dir/lib/alxas-el-${VERSION}.jar
+
+# Include the Spring Boot starter artifacts from the local Maven repository.
+for starter in spring-boot-starter-alx-1.x spring-boot-starter-alx-2.x; do
+    starter_jar="${M2_REPO}/${STARTER_GROUP_PATH}/${starter}/${VERSION}/${starter}-${VERSION}.jar"
+    if [ ! -f "${starter_jar}" ]; then
+        echo "Starter JAR not found: ${starter_jar}" >&2
+        echo "Set M2_REPO to the Maven repository containing the starter artifacts." >&2
+        exit 1
+    fi
+    cp "${starter_jar}" "temp_dir/lib/${starter}-${VERSION}.jar"
+    cp "${SCRIPT_DIR}/res/maven/${starter}.pom" "temp_dir/lib/${starter}-${VERSION}.pom"
+done
 
 # 进入临时目录打包
 cd temp_dir

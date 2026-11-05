@@ -15,6 +15,12 @@ if not exist "%libDir%" (
 call mvn install:install-file -Dfile="%libDir%/alxas-core-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-core -Dversion=%version% -Dpackaging=jar >> install.log
 call :validateResult %groupId%:alxas-core:%version%
 
+call mvn install:install-file -Dfile="%libDir%/spring-boot-starter-alx-1.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-1.x-%version%.pom" >> install.log
+call :validateResult %groupId%:spring-boot-starter-alx-1.x:%version%
+
+call mvn install:install-file -Dfile="%libDir%/spring-boot-starter-alx-2.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-2.x-%version%.pom" >> install.log
+call :validateResult %groupId%:spring-boot-starter-alx-2.x:%version%
+
 call mvn install:install-file -Dfile="%libDir%/alxas-websocket-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-websocket -Dversion=%version% -Dpackaging=jar  >> install.log
 call :validateResult %groupId%:alxas-websocket:%version%
 

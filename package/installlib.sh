@@ -29,6 +29,12 @@ fi
 mvn install:install-file -Dfile="$libDir/alxas-core-$version.jar" -DgroupId=$groupId -DartifactId=alxas-core -Dversion=$version -Dpackaging=jar >> install.log
 validateResult $groupId:alxas-core:$version
 
+mvn install:install-file -Dfile="$libDir/spring-boot-starter-alx-1.x-$version.jar" -DpomFile="$libDir/spring-boot-starter-alx-1.x-$version.pom" >> install.log
+validateResult $groupId:spring-boot-starter-alx-1.x:$version
+
+mvn install:install-file -Dfile="$libDir/spring-boot-starter-alx-2.x-$version.jar" -DpomFile="$libDir/spring-boot-starter-alx-2.x-$version.pom" >> install.log
+validateResult $groupId:spring-boot-starter-alx-2.x:$version
+
 mvn install:install-file -Dfile="$libDir/alxas-websocket-$version.jar" -DgroupId=$groupId -DartifactId=alxas-websocket -Dversion=$version -Dpackaging=jar  >> install.log
 validateResult $groupId:alxas-websocket:$version
 
