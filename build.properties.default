@@ -47,7 +47,7 @@ compile.debug=true
 compile.deprecation=false
 
 # ----- Documentation properties -----
-git.branch=10.1.x
+git.branch=main
 
 # ----- Code quality tools
 # Note enabling validation uses Checkstyle which is LGPL licensed
@@ -61,7 +61,7 @@ test.coverage=false
 execute.spotbugs=false
 
 # Javadoc - warnings are disabled as they are noisy with Java 18+ and CheckStyle
-# works better for Alx.
+# works better for Tomcat.
 javadoc.failonerror=true
 javadoc.failonwarning=false
 javadoc.locale=en
@@ -141,54 +141,29 @@ base-maven.loc=https://repo.maven.apache.org/maven2
 # Mirror, was used when there were problems with the main SF downloads site
 # base-sf.loc=https://sunet.dl.sourceforge.net
 
-# ----- Webservices - JAX RPC -----
-jaxrpc-lib.version=1.1-rc4
-jaxrpc-lib.checksum.enabled=true
-jaxrpc-lib.checksum.algorithm=MD5|SHA-1
-jaxrpc-lib.checksum.value=4bebba22a4cdb9f68e16c45129770333|fe9371d33dc3e1646d4d13bde19614283eb998b1
-jaxrpc-lib.home=${base.path}/jaxrpc-${jaxrpc-lib.version}
-jaxrpc-lib.jar=${jaxrpc-lib.home}/geronimo-spec-jaxrpc-${jaxrpc-lib.version}.jar
-jaxrpc-lib.loc=${base-maven.loc}/geronimo-spec/geronimo-spec-jaxrpc/${jaxrpc-lib.version}/geronimo-spec-jaxrpc-${jaxrpc-lib.version}.jar
-
-# ----- Webservices - WSDL4J -----
-wsdl4j-lib.version=1.6.3
-wsdl4j-lib.checksum.enabled=true
-wsdl4j-lib.checksum.algorithm=MD5|SHA-1
-wsdl4j-lib.checksum.value=cfc28d89625c5e88589aec7a9aee0208|6d106a6845a3d3477a1560008479312888e94f2f
-wsdl4j-lib.home=${base.path}/wsdl4j-${wsdl4j-lib.version}
-wsdl4j-lib.jar=${wsdl4j-lib.home}/wsdl4j-${wsdl4j-lib.version}.jar
-wsdl4j-lib.loc=${base-maven.loc}/wsdl4j/wsdl4j/${wsdl4j-lib.version}/wsdl4j-${wsdl4j-lib.version}.jar
-
 # ----- Eclipse JDT, version 4.7 or later -----#
 # See https://cwiki.apache.org/confluence/display/TOMCAT/Managing+Tomcat%27s+Dependency+on+the+Eclipse+JDT+Core+Batch+Compiler
 #
-# 4.27 is the latest release that runs on Java 11
-# Later versions can be used but the official builds need to use 4.27
-#
-# Checksum is from "SHA512 Checksums for 4.27" link at
-# https://download.eclipse.org/eclipse/downloads/drops4/R-4.27-202303020300/
-# https://download.eclipse.org/eclipse/downloads/drops4/R-4.27-202303020300/checksum/eclipse-4.27-SUMSSHA512
-#
-jdt.version=4.27
-jdt.release=R-4.27-202303020300
+jdt.version=4.41
+jdt.release=R-4.41-202608281142
 jdt.checksum.enabled=true
 jdt.checksum.algorithm=SHA-512
-jdt.checksum.value=69b57e12aa7f1339fe86fdb82f8fe9a104ff4d5e887448a779059e4f0626c43af0f1539569d9669c3f3add54fce6447e0bdcec93ee52ad25bf9697f7ac59ca7f
+jdt.checksum.value=080bb403adb3b88b5b5f382388922425de5274f7729f0a94702f0e2a516c7d13c6740faab1cb20786b1dda0c5da933aa9b842f7c64867414ff75fa668ea06b09
 jdt.home=${base.path}/ecj-${jdt.version}
 jdt.jar=${jdt.home}/ecj-${jdt.version}.jar
 # The download will be moved to the archive area eventually. We are taking care of that in advance.
 jdt.loc.1=https://archive.eclipse.org/eclipse/downloads/drops4/${jdt.release}/ecj-${jdt.version}.jar
 jdt.loc.2=https://download.eclipse.org/eclipse/downloads/drops4/${jdt.release}/ecj-${jdt.version}.jar
 
-# ----- Alx native library -----
-tomcat-native.version=2.0.16
-tomcat-native-openssl.version=3.5.8
+# ----- Tomcat native library -----
+tomcat-native.version=2.0.17
+tomcat-native-openssl.version=3.5.9
 tomcat-native.src.checksum.enabled=true
 tomcat-native.src.checksum.algorithm=SHA-512
-tomcat-native.src.checksum.value=a38713bfd18a0e6cab9cfb8cacb694fecb6790c13ff495a56ca804f8c9fe2e521356e4eeeef1e2c9967a5f36618779dc321adf65a069676290cf493d6222fbb9
+tomcat-native.src.checksum.value=7a9afa05a0d203d6db0f931666d951b79fc1f1706cec078571ee9c75e30ceb68f595c0db389a19ca8e09cc1318916198834df94792465698b5aa8bef8277dc91
 tomcat-native.win.checksum.enabled=true
 tomcat-native.win.checksum.algorithm=SHA-512
-tomcat-native.win.checksum.value=fb6ab1dc168adf5ec05657c3927498b18e02bbec4f8d3b790525da49f12cda669715abe55c86961214a1441457838ca3f2db70240a09f4d4e374667279f63c36
+tomcat-native.win.checksum.value=c717c80167409a82dc94d4200082af21dffaa499ba90929e5c691a47a3d5ff95201d33af649078a8738ad2f05093be38e6b8f22cac690523a10aff7152846264
 tomcat-native.home=${base.path}/tomcat-native-${tomcat-native.version}
 tomcat-native.tar.gz=${tomcat-native.home}/tomcat-native.tar.gz
 tomcat-native.loc.1=${base-tomcat.loc.1}/tomcat-connectors/native/${tomcat-native.version}/source/tomcat-native-${tomcat-native.version}-src.tar.gz
@@ -311,10 +286,10 @@ jacoco.jar=${jacoco.home}/lib/jacocoant.jar
 jacoco.loc=${base-maven.loc}/org/jacoco/jacoco/${jacoco.version}/jacoco-${jacoco.version}.zip
 
 # ----- SpotBugs (originally FindBugs) -----
-spotbugs.version=4.9.8
+spotbugs.version=4.10.4
 spotbugs.checksum.enabled=true
 spotbugs.checksum.algorithm=SHA-512
-spotbugs.checksum.value=9d0dde900b3e1330ca23b81ad9aaf292d2d9d144ff1db9d397bcbe58c5ebd86dcb36e3d83ba7c3043039d2557a9bd3af35f9dd14297fc5e908745924b9c51678
+spotbugs.checksum.value=e0720c7d51825353f4f6724757f97b5ca1eb169a3579497c2e00002bb36595a7c9f2ab70f53be4f5bba9a44bda2016d1784690cb6e766655be6c43179b42fcb5
 spotbugs.home=${base.path}/spotbugs-${spotbugs.version}
 spotbugs.jar=${spotbugs.home}/lib/spotbugs-ant.jar
 spotbugs.loc=${base-maven.loc}/com/github/spotbugs/spotbugs/${spotbugs.version}/spotbugs-${spotbugs.version}.tgz
@@ -330,7 +305,7 @@ bnd.home=${base.path}/bnd-${bnd.version}
 bnd.jar=${bnd.home}/biz.aQute.bnd-${bnd.version}.jar
 bnd.loc=${base-maven.loc}/biz/aQute/bnd/biz.aQute.bnd/${bnd.version}/biz.aQute.bnd-${bnd.version}.jar
 
-# ----- Alx Migration Tool for Jakarta EE -----
+# ----- Tomcat Migration Tool for Jakarta EE -----
 migration-lib.version=1.0.13
 migration-lib.checksum.enabled=true
 migration-lib.checksum.algorithm=MD5|SHA-1
@@ -341,7 +316,7 @@ migration-lib.jar=${migration-lib.home}/jakartaee-migration-${migration-lib.vers
 migration-lib.loc=${base-maven.loc}/org/apache/tomcat/jakartaee-migration/${migration-lib.version}/jakartaee-migration-${migration-lib.version}-shaded.jar
 
 # ----- JSign, version 4.1 or later -----
-# Note: There are known issues with Alx and Jsign 7.0 and 7.1
+# Note: There are known issues with Tomcat and Jsign 7.0 and 7.1
 jsign.version=7.5
 jsign.checksum.enabled=true
 jsign.checksum.algorithm=MD5|SHA-1

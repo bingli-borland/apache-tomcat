@@ -4405,13 +4405,15 @@ Read the Building page on the Apache Alx documentation site for details on how t
                default="build/lib/*.jar,build/bin/tomcat-juli.jar" />
     <sequential>
       <local name="jar.uptodate"/>
+      <local name="meta-inf.dir.exists"/>
+      <available file="@{meta-inf}" type="dir" property="meta-inf.dir.exists"/>
       <uptodate property="jar.uptodate" targetfile="@{jarfile}" >
         <srcfiles dir="@{filesDir}">
           <patternset refid="@{filesId}"/>
           <!-- Javadoc exclusions -->
           <exclude name="**/package.html" />
         </srcfiles>
-        <srcfiles dir="@{meta-inf}" excludes=".gitignore" />
+        <srcfiles dir="@{meta-inf}" excludes=".gitignore" if:set="meta-inf.dir.exists" />
         <srcfiles file="@{notice}" />
         <srcfiles file="@{license}" />
       </uptodate>
@@ -4425,7 +4427,8 @@ Read the Building page on the Apache Alx documentation site for details on how t
             <exclude name="**/package.html" />
           </fileset>
           <zipfileset dir="@{meta-inf}" prefix="META-INF/"
-                      excludes=".gitignore" />
+                      excludes=".gitignore"
+                      erroronmissingdir="false" />
           <zipfileset file="@{notice}" fullpath="META-INF/NOTICE" />
           <zipfileset file="@{license}" fullpath="META-INF/LICENSE" />
         </jar>
