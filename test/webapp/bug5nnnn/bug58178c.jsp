@@ -23,7 +23,7 @@
     @Override
     public void contextCreated(jakarta.el.ELContextEvent event) {
         jakarta.el.ELContext elContext = event.getELContext();
-        if (elContext instanceof org.apache.jasper.el.ELContextImpl) {
+        if (elContext instanceof com.alx.enterprise.web.jasper.el.ELContextImpl) {
             jspCount++;
         } else {
             tagCount++;

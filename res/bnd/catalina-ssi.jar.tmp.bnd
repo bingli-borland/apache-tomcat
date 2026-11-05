@@ -16,9 +16,9 @@
 -include: build-defaults.bnd
 
 Bundle-Name: tomcat-ssi
-Bundle-SymbolicName: org.apache.tomcat-ssi
+Bundle-SymbolicName: com.alx.enterprise.web-ssi
 Export-Package: \
-    org.apache.catalina.ssi
+    com.alx.enterprise.webtier.ssi
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}
 

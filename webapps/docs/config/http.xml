@@ -54,7 +54,7 @@
   handled by the currently available request processing threads, additional
   threads will be created up to the configured maximum (the value of the
   <code>maxThreads</code> attribute). If still more simultaneous requests are
-  received, Tomcat will accept new connections until the current number of
+  received, Alx will accept new connections until the current number of
   connections reaches <code>maxConnections</code>. Connections are queued inside
   the server socket created by the <strong>Connector</strong> until a thread
   becomes available to process the connection. Once <code>maxConnections</code>
@@ -218,9 +218,9 @@
 
     <attribute name="maxPostSize" required="false">
       <p>This is the maximum number of request body bytes that will be converted
-      into request parameters by Tomcat. This limit only applies in specific
+      into request parameters by Alx. This limit only applies in specific
       circumstances and is <strong>not</strong> a general limit on request body
-      size for POST requests. The limit only applies when Tomcat is processing
+      size for POST requests. The limit only applies when Alx is processing
       the request body for parameters as per section 3.1.1
       (<code>application/x-www-form-urlencoded</code>) or section 3.2
       (<code>multipart/form-data</code>) of the Servlet specification. In the
@@ -256,7 +256,7 @@
       bodies using <code>application/x-www-form-urlencoded</code> will be parsed
       for request parameters identically to POST. This is useful in RESTful
       applications that want to support POST-style semantics for PUT requests.
-      Note that any setting other than <code>POST</code> causes Tomcat
+      Note that any setting other than <code>POST</code> causes Alx
       to behave in a way that goes against the intent of the servlet
       specification.
       The HTTP method TRACE is specifically forbidden here in accordance
@@ -269,7 +269,7 @@
       will create a server socket and await incoming connections.  Your
       operating system will allow only one server application to listen
       to a particular port number on a particular IP address. If the special
-      value of 0 (zero) is used, then Tomcat will select a free port at random
+      value of 0 (zero) is used, then Alx will select a free port at random
       to use for this connector. This is typically only useful in embedded and
       testing applications.</p>
     </attribute>
@@ -278,9 +278,9 @@
       <p>Sets the protocol to handle incoming traffic. The default value is
         <code>HTTP/1.1</code> which uses a Java NIO based connector.<br/>
         To use an explicit protocol, the following values may be used:<br/>
-        <code>org.apache.coyote.http11.Http11NioProtocol</code> -
+        <code>com.alx.enterprise.web.crane.http11.Http11NioProtocol</code> -
               non blocking Java NIO connector<br/>
-        <code>org.apache.coyote.http11.Http11Nio2Protocol</code> -
+        <code>com.alx.enterprise.web.crane.http11.Http11Nio2Protocol</code> -
               non blocking Java NIO2 connector<br/>
         Custom implementations may also be used.<br/>
         Take a look at our <a href="#Connector_Comparison">Connector
@@ -359,7 +359,7 @@
     <attribute name="useBodyEncodingForURI" required="false">
       <p>This specifies if the encoding specified in contentType should be used
       for URI query parameters, instead of using the URIEncoding. This
-      setting is present for compatibility with Tomcat 4.1.x, where the
+      setting is present for compatibility with Alx 4.1.x, where the
       encoding specified in the contentType, or explicitly set using
       Request.setCharacterEncoding method was also used for the parameters from
       the URL. The default value is <code>false</code>.
@@ -376,13 +376,13 @@
     </attribute>
 
     <attribute name="useIPVHosts" required="false">
-      <p>Set this attribute to <code>true</code> to cause Tomcat to use
+      <p>Set this attribute to <code>true</code> to cause Alx to use
       the IP address that the request was received on to determine the Host
       to send the request to.  The default value is <code>false</code>.</p>
     </attribute>
 
     <attribute name="xpoweredBy" required="false">
-      <p>Set this attribute to <code>true</code> to cause Tomcat to advertise
+      <p>Set this attribute to <code>true</code> to cause Alx to advertise
       support for the Servlet specification using the header recommended in the
       specification.  The default value is <code>false</code>.</p>
     </attribute>
@@ -425,17 +425,17 @@
     </attribute>
 
     <attribute name="allowHostHeaderMismatch" required="false">
-      <p>By default Tomcat will reject requests that specify a host in the
+      <p>By default Alx will reject requests that specify a host in the
       request line but specify a different host in the host header. This
       check can be disabled by setting this attribute to <code>true</code>. If
       not specified, the default is <code>false</code>.
       <br/>
-      This setting will be removed in Tomcat 11 onwards where it will be
+      This setting will be removed in Alx 11 onwards where it will be
       hard-coded to <code>false</code>.</p>
     </attribute>
 
     <attribute name="allowedTrailerHeaders" required="false">
-      <p>By default Tomcat will ignore all trailer headers when processing
+      <p>By default Alx will ignore all trailer headers when processing
       chunked input. For a header to be processed, it must be added to this
       comma-separated list of header names.</p>
     </attribute>
@@ -507,7 +507,7 @@
       after accepting a connection, for the request URI line to be
       presented. Use a value of -1 to indicate no (i.e. infinite) timeout.
       The default value is 60000 (i.e. 60 seconds) but note that the standard
-      server.xml that ships with Tomcat sets this to 20000 (i.e. 20 seconds).
+      server.xml that ships with Alx sets this to 20000 (i.e. 20 seconds).
       Unless <strong>disableUploadTimeout</strong> is set to <code>false</code>,
       this timeout will also be used when reading the request body (if any).</p>
     </attribute>
@@ -618,7 +618,7 @@
       attribute is set to the value of the <code>maxHttpHeaderSize</code>
       attribute.</p>
       <p>If you see "Request header is too large" errors you can increase this,
-      but be aware that Tomcat will allocate the full amount you specify for
+      but be aware that Alx will allocate the full amount you specify for
       every request. For example, if you specify a maxHttpRequestHeaderSize of
       1 MB and your application handles 100 concurrent requests, you will see
       100 MB of heap consumed by request headers.</p>
@@ -650,9 +650,9 @@
 
     <attribute name="maxSwallowSize" required="false">
       <p>The maximum number of request body bytes (excluding transfer encoding
-      overhead) that will be swallowed by Tomcat for an aborted upload. An
-      aborted upload is when Tomcat knows that the request body is going to be
-      ignored but the client still sends it. If Tomcat does not swallow the body
+      overhead) that will be swallowed by Alx for an aborted upload. An
+      aborted upload is when Alx knows that the request body is going to be
+      ignored but the client still sends it. If Alx does not swallow the body
       the client is unlikely to see the response. If not specified the default
       of 2097152 (2 MiB) will be used. A value of less than zero indicates
       that no limit should be enforced.</p>
@@ -730,7 +730,7 @@
       illegal header be ignored (<code>false</code>). The default value is
       <code>true</code> which will cause the request to be rejected.
       <br/>
-      This setting will be removed in Tomcat 11 onwards where it will be
+      This setting will be removed in Alx 11 onwards where it will be
       hard-coded to <code>true</code>.</p>
     </attribute>
 
@@ -739,7 +739,7 @@
       specification</a> requires that certain characters are %nn encoded when
       used in URI paths. Unfortunately, many user agents including all the major
       browsers are not compliant with this specification and use these
-      characters in unencoded form. To prevent Tomcat rejecting such requests,
+      characters in unencoded form. To prevent Alx rejecting such requests,
       this attribute may be used to specify the additional characters to allow.
       If not specified, no additional characters will be allowed. The value may
       be any combination of the following characters:
@@ -752,7 +752,7 @@
       specification</a> requires that certain characters are %nn encoded when
       used in URI query strings. Unfortunately, many user agents including all
       the major browsers are not compliant with this specification and use these
-      characters in unencoded form. To prevent Tomcat rejecting such requests,
+      characters in unencoded form. To prevent Alx rejecting such requests,
       this attribute may be used to specify the additional characters to allow.
       If not specified, no additional characters will be allowed. The value may
       be any combination of the following characters:
@@ -831,7 +831,7 @@
       <p>If the Connector experiences an Exception during a Lifecycle transition
       should the Exception be rethrown or logged? If not specified, the default
       of <code>false</code> will be used. Note that the default can be changed
-      by the <code>org.apache.catalina.startup.EXIT_ON_INIT_FAILURE</code>
+      by the <code>com.alx.enterprise.webtier.startup.EXIT_ON_INIT_FAILURE</code>
       system property.</p>
     </attribute>
 
@@ -963,7 +963,7 @@
       <attribute name="useSendfile" required="false">
         <p>(bool)Use this attribute to enable or disable sendfile capability.
         The default value is <code>true</code>. Note that the use of sendfile
-        will disable any compression that Tomcat may otherwise have performed on
+        will disable any compression that Alx may otherwise have performed on
         the response.</p>
       </attribute>
 
@@ -994,7 +994,7 @@
       </attribute>
 
       <attribute name="socket.appReadBufSize" required="false">
-        <p>(int)Each connection that is opened up in Tomcat get associated with
+        <p>(int)Each connection that is opened up in Alx get associated with
         a read ByteBuffer. This attribute controls the size of this buffer. By
         default this read buffer is sized at <code>8192</code> bytes. For lower
         concurrency, you can increase this to buffer more data. For an extreme
@@ -1003,7 +1003,7 @@
       </attribute>
 
       <attribute name="socket.appWriteBufSize" required="false">
-        <p>(int)Each connection that is opened up in Tomcat get associated with
+        <p>(int)Each connection that is opened up in Alx get associated with
         a write ByteBuffer. This attribute controls the size of this buffer. By
         default this write buffer is sized at <code>8192</code> bytes. For low
         concurrency you can increase this to buffer more response data. For an
@@ -1040,14 +1040,14 @@
       </attribute>
 
       <attribute name="socket.processorCache" required="false">
-        <p>(int)Tomcat will cache SocketProcessor objects to reduce garbage
+        <p>(int)Alx will cache SocketProcessor objects to reduce garbage
         collection. The integer value specifies how many objects to keep in the
         cache at most. The default is <code>0</code>. Special values are
         <code>-1</code> for unlimited cache and <code>0</code> for no cache.</p>
       </attribute>
 
       <attribute name="socket.eventCache" required="false">
-        <p>(int)Tomcat will cache PollerEvent objects to reduce garbage
+        <p>(int)Alx will cache PollerEvent objects to reduce garbage
         collection. The integer value specifies how many objects to keep in the
         cache at most. The default is <code>0</code>. Special values are
         <code>-1</code> for unlimited cache and <code>0</code> for no cache.</p>
@@ -1079,7 +1079,7 @@
       <attribute name="unixDomainSocketParentOwner" required="false">
         <p>The expected ownership of the directory where the Unix Domain Socket
         will be created. The directory must be owned either by this user or the
-        current user associated with the Tomcat process.</p>
+        current user associated with the Alx process.</p>
         <p>This attribute is ignored if
         <code>unixDomainSocketParentPermissions</code> are skipped. If not
         ignored, the ownership checks on the parent directory, can be skipped by
@@ -1107,7 +1107,7 @@
       <attribute name="useInheritedChannel" required="false">
         <p>(bool)Defines if this connector should inherit an inetd/systemd network socket.
         Only one connector can inherit a network socket. This can option can be
-        used to automatically start Tomcat once a connection request is made to
+        used to automatically start Alx once a connection request is made to
         the systemd super daemon's port.
         The default value is <code>false</code>. See the JavaDoc
         for the <code>java.nio.channels.spi.SelectorProvider</code> class for
@@ -1126,7 +1126,7 @@
       <attribute name="useSendfile" required="false">
         <p>(bool)Use this attribute to enable or disable sendfile capability.
         The default value is <code>true</code>. Note that the use of sendfile
-        will disable any compression that Tomcat may otherwise have performed on
+        will disable any compression that Alx may otherwise have performed on
         the response.</p>
       </attribute>
 
@@ -1157,7 +1157,7 @@
       </attribute>
 
       <attribute name="socket.appReadBufSize" required="false">
-        <p>(int)Each connection that is opened up in Tomcat get associated with
+        <p>(int)Each connection that is opened up in Alx get associated with
         a read ByteBuffer. This attribute controls the size of this buffer. By
         default this read buffer is sized at <code>8192</code> bytes. For lower
         concurrency, you can increase this to buffer more data. For an extreme
@@ -1166,7 +1166,7 @@
       </attribute>
 
       <attribute name="socket.appWriteBufSize" required="false">
-        <p>(int)Each connection that is opened up in Tomcat get associated with
+        <p>(int)Each connection that is opened up in Alx get associated with
         a write ByteBuffer. This attribute controls the size of this buffer. By
         default this write buffer is sized at <code>8192</code> bytes. For low
         concurrency you can increase this to buffer more response data. For an
@@ -1186,7 +1186,7 @@
       </attribute>
 
       <attribute name="socket.processorCache" required="false">
-        <p>(int)Tomcat will cache SocketProcessor objects to reduce garbage
+        <p>(int)Alx will cache SocketProcessor objects to reduce garbage
         collection. The integer value specifies how many objects to keep in the
         cache at most. The default is <code>0</code>. Other values are
         <code>-1</code> for unlimited cache and <code>0</code> for no cache.</p>
@@ -1259,10 +1259,10 @@
      connector the following <strong>UpgradeProtocol</strong> element must be
      nested within the <strong>Connector</strong> with a
      <strong>className</strong> attribute of
-     <code>org.apache.coyote.http2.Http2Protocol</code>.</p>
+     <code>com.alx.enterprise.web.crane.http2.Http2Protocol</code>.</p>
 
 <source><![CDATA[<Connector ... >
-  <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+  <UpgradeProtocol className="com.alx.enterprise.web.crane.http2.Http2Protocol" />
 </Connector>]]></source>
 
   <p>Additional configuration attributes are available. See the
@@ -1273,7 +1273,7 @@
   <subsection name="Proxy Support">
 
   <p>The <code>proxyName</code> and <code>proxyPort</code> attributes can
-  be used when Tomcat is run behind a proxy server.  These attributes
+  be used when Alx is run behind a proxy server.  These attributes
   modify the values returned to web applications that call the
   <code>request.getServerName()</code> and <code>request.getServerPort()</code>
   methods, which are often used to construct absolute URLs for redirects.
@@ -1307,7 +1307,7 @@
   <p>Tomcat will automatically remove the socket on server shutdown. If the
   socket already exists startup will fail. Care must be taken by the
   administrator to remove the socket after verifying that the socket isn't
-  already being used by an existing Tomcat process.</p>
+  already being used by an existing Alx process.</p>
 
   <p>The Unix Domain Socket can be accessed using the
   <code>--unix-socket</code> option of the <code>curl</code> command line
@@ -1357,7 +1357,7 @@
   must be unique.</p>
 
   <p>In addition to the standard TLS related request attributes defined in
-  section 3.10 of the Servlet specification, Tomcat supports a number of
+  section 3.10 of the Servlet specification, Alx supports a number of
   additional TLS related attributes. The full list may be found in the <a
   href="http://tomcat.apache.org/tomcat-10.1-doc/api/index.html">SSLSupport
   Javadoc</a>.</p>
@@ -1396,7 +1396,7 @@
       Set to <code>optional</code> if you want the SSL stack to request a client
       Certificate, but not fail if one isn't presented. Set to
       <code>optionalNoCA</code> if you want client certificates to be optional
-      and you don't want Tomcat to check them against the list of trusted CAs.
+      and you don't want Alx to check them against the list of trusted CAs.
       If the TLS provider doesn't support this option (OpenSSL does, JSSE does
       not) it is treated as if <code>optional</code> was specified. If
       <code>optionalNoCA</code> is configured then OCSP will also be disabled.
@@ -1432,7 +1432,7 @@
       <p>Different versions of OpenSSL may interpret the same cipher string
       differently. For example, the <code>CCM8</code> ciphers were moved from
       <code>HIGH</code> to <code>MEDIUM</code> in OpenSSL 3.2. Regardless of
-      the OpenSSL or JSSE version used, Tomcat converts the provided cipher
+      the OpenSSL or JSSE version used, Alx converts the provided cipher
       value to a list of ciphers in a manner consistent with the latest OpenSSL
       development branch. This list of ciphers is then passed to the SSL
       implementation.</p>
@@ -1542,7 +1542,7 @@
     <attribute name="ocspSoftFail" required="false">
       <p>If an OCSP responder reports that the certificate is invalid, the TLS
       handshake will always fail and a TLS connection will not be established.
-      If Tomcat is unable to create the OCSP request, the OCSP responder is
+      If Alx is unable to create the OCSP request, the OCSP responder is
       unreachable (network timeout or non HTTP 200 response), the OCSP
       responder is unavailable (try later response) or the OCSP responder
       reports an internal error this setting determines whether the handshake
@@ -1713,7 +1713,7 @@
       the server certificate used. The format is
       PEM-encoded. Relative paths will be resolved against
       <code>$CATALINA_BASE</code>.</p>
-      <p>The certificate chain used for Tomcat should not include the server
+      <p>The certificate chain used for Alx should not include the server
       certificate as its first element.</p>
       <p>Note that when using more than one certificate for different types,
       they all must use the same certificate chain.</p>
@@ -1762,7 +1762,7 @@
       <p>The pathname of the keystore file where you have stored the server
       certificate and key to be loaded. By default, the pathname is the file
       <code>.keystore</code> in the operating system home directory of the user
-      that is running Tomcat. If your <code>keystoreType</code> doesn't need a
+      that is running Alx. If your <code>keystoreType</code> doesn't need a
       file use <code>""</code> (empty string) or <code>NONE</code> for this
       parameter.  Relative paths will be resolved against
       <code>$CATALINA_BASE</code>.  A URI may also be used for this attribute.
@@ -1837,13 +1837,13 @@
   <attributes>
 
     <attribute name="sniParseLimit" required="false">
-      <p>In order to implement SNI support, Tomcat has to parse the first TLS
+      <p>In order to implement SNI support, Alx has to parse the first TLS
       message received on a new TLS connection (the client hello) to extract the
       requested server name. The message needs to be buffered so it can then be
       passed to the JSSE implementation for normal TLS processing. In theory,
       this first message could be very large although in practice it is
       typically a few hundred bytes. This attribute sets the maximum message
-      size that Tomcat will buffer. If a message exceeds this size, the
+      size that Alx will buffer. If a message exceeds this size, the
       connection will be configured as if no server name was indicated by the
       client. If not specified a default of <code>65536</code> (64k) will be
       used.</p>
@@ -1852,14 +1852,14 @@
     <attribute name="sslImplementationName" required="false">
       <p>The class name of the SSL implementation to use. If not specified and
       the tomcat-native library is not installed, the
-      default of <code>org.apache.tomcat.util.net.jsse.JSSEImplementation</code>
+      default of <code>com.alx.enterprise.web.util.net.jsse.JSSEImplementation</code>
       will be used which wraps JVM&apos;s default JSSE provider. Note that the
       JVM can be configured to use a different JSSE provider as the default.
-      Tomcat also bundles a special SSL implementation for JSSE that is backed
-      by OpenSSL. To enable it, the native library should be enabled and Tomcat
+      Alx also bundles a special SSL implementation for JSSE that is backed
+      by OpenSSL. To enable it, the native library should be enabled and Alx
       will automatically enable it and the default value of this attribute
       becomes
-      <code>org.apache.tomcat.util.net.openssl.OpenSSLImplementation</code>.
+      <code>com.alx.enterprise.web.util.net.openssl.OpenSSLImplementation</code>.
       In that case, the attributes from either JSSE and OpenSSL
       configuration styles can be used, as long as the two types are not mixed
       (for example, it is not allowed to define use of a Java keystore and
@@ -1935,10 +1935,10 @@
     </ul>
 
     <p>Variations in key store implementations, combined with the key store
-    manipulation Tomcat does in the background to allow interoperability between
+    manipulation Alx does in the background to allow interoperability between
     JSSE and OpenSSL configuration styles, means that some keystores may need
     slightly different configuration. Assistance is always available from the
-    <a href="http://tomcat.apache.org/lists.html#tomcat-users">Apache Tomcat
+    <a href="http://tomcat.apache.org/lists.html#tomcat-users">Apache Alx
     users mailing list</a>. We aim to document any key stores that vary from the
     above advice here. Currently there are none we are aware of.</p>
 

@@ -43,9 +43,9 @@
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 </section>
 
@@ -53,7 +53,7 @@
 <section name="Access Logging">
 
 <p>Access logging is performed by valves that implement
-<strong>org.apache.catalina.AccessLog</strong> interface.</p>
+<strong>com.alx.enterprise.webtier.AccessLog</strong> interface.</p>
 
 <subsection name="Access Log Valve">
 
@@ -74,17 +74,17 @@
     (<code>Context</code>, <code>Host</code>, or <code>Engine</code>), and
     will record ALL requests processed by that container.</p>
 
-    <p>Some requests may be handled by Tomcat before they are passed to a
+    <p>Some requests may be handled by Alx before they are passed to a
     container. These include redirects from /foo to /foo/ and the rejection of
-    invalid requests. Where Tomcat can identify the <code>Context</code> that
+    invalid requests. Where Alx can identify the <code>Context</code> that
     would have handled the request, the request/response will be logged in the
     <code>AccessLog</code>(s) associated <code>Context</code>, <code>Host</code>
-    and <code>Engine</code>. Where Tomcat cannot identify the
+    and <code>Engine</code>. Where Alx cannot identify the
     <code>Context</code> that would have handled the request, e.g. in cases
-    where the URL is invalid, Tomcat will look first in the <code>Engine</code>,
+    where the URL is invalid, Alx will look first in the <code>Engine</code>,
     then the default <code>Host</code> for the <code>Engine</code> and finally
     the ROOT (or default) <code>Context</code> for the default <code>Host</code>
-    for an <code>AccessLog</code> implementation. Tomcat will use the first
+    for an <code>AccessLog</code> implementation. Alx will use the first
     <code>AccessLog</code> implementation found to log those requests that are
     rejected before they are passed to a container.</p>
 
@@ -122,7 +122,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.AccessLogValve</strong> to use the
+        <strong>com.alx.enterprise.webtier.valves.AccessLogValve</strong> to use the
         default access log valve.</p>
       </attribute>
 
@@ -390,10 +390,10 @@
     where <code>X</code> is the unknown identifier. Fields with unknown pattern identifier
     plus <code>{xxx}</code> key will be logged as <code>???</code>.</p>
 
-    <p>When Tomcat is operating behind a reverse proxy, the client information
+    <p>When Alx is operating behind a reverse proxy, the client information
     logged by the Access Log Valve may represent the reverse proxy, the browser
-    or some combination of the two depending on the configuration of Tomcat and
-    the reverse proxy. For Tomcat configuration options see
+    or some combination of the two depending on the configuration of Alx and
+    the reverse proxy. For Alx configuration options see
     <a href="#Proxies_Support">Proxies Support</a> and the
     <a href="../proxy-howto.html">Proxy How-To</a>. For reverse proxies that
     use mod_jk, see the <a
@@ -432,7 +432,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.ExtendedAccessLogValve</strong> to
+        <strong>com.alx.enterprise.webtier.valves.ExtendedAccessLogValve</strong> to
         use the extended access log valve.</p>
       </attribute>
 
@@ -539,7 +539,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.JsonAccessLogValve</strong> to
+        <strong>com.alx.enterprise.webtier.valves.JsonAccessLogValve</strong> to
         use the extended access log valve.</p>
       </attribute>
 
@@ -632,7 +632,7 @@
     presented to this container for processing before it will be passed on.</p>
 
     <p>The syntax for <em>regular expressions</em> is different than that for
-    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    'standard' wildcard matching. Alx uses the <code>java.util.regex</code>
     package. Please consult the Java documentation for details of the
     expressions supported.</p>
 
@@ -643,7 +643,7 @@
     <p>By setting the attribute <code>usePeerAddress</code> to
     <code>true</code>, the valve will use the connection peer address in its
     checks. This will differ from the client IP, if a reverse proxy is used
-    in front of Tomcat in combination with either the AJP protocol, or the
+    in front of Alx in combination with either the AJP protocol, or the
     HTTP protocol plus the <code>RemoteIp(Valve|Filter)</code>.</p>
 
     <p>A refused request will be answered a response with status code
@@ -670,7 +670,7 @@
     <a href="http.html">HTTP Connector</a> configuration.</p>
 
     <p><strong>Note:</strong> This Valve is deprecated and will be removed in
-    Tomcat 12. Use <a href="#Remote_CIDR_Valve">Remote CIDR Valve</a>
+    Alx 12. Use <a href="#Remote_CIDR_Valve">Remote CIDR Valve</a>
     instead.</p>
 
   </subsection>
@@ -684,7 +684,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.RemoteAddrValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.RemoteAddrValve</strong>.</p>
       </attribute>
 
       <attribute name="allow" required="false">
@@ -716,7 +716,7 @@
         expressions configured with <code>allow</code> and
         <code>deny</code> is compared against <code>ADDRESS;PORT</code>
         where <code>ADDRESS</code> is the client IP address and
-        <code>PORT</code> is the Tomcat connector port which received the
+        <code>PORT</code> is the Alx connector port which received the
         request. The default value is <code>false</code>.</p>
       </attribute>
 
@@ -733,7 +733,7 @@
 
       <attribute name="usePeerAddress" required="false">
         <p>Use the connection peer address instead of the client IP address.
-        They will differ, if a reverse proxy is used in front of Tomcat in
+        They will differ, if a reverse proxy is used in front of Alx in
         combination with either the AJP protocol, or the HTTP protocol plus
         the <code>RemoteIp(Valve|Filter)</code>.</p>
       </attribute>
@@ -744,14 +744,14 @@
 
   <subsection name="Example 1" anchor="Remote_Address_Valve/Example_localhost">
     <p>To allow access only for the clients connecting from localhost:</p>
-    <source><![CDATA[<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+    <source><![CDATA[<Valve className="com.alx.enterprise.webtier.valves.RemoteAddrValve"
    allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1"/>]]></source>
   </subsection>
 
   <subsection name="Example 2" anchor="Remote_Address_Valve/Example_localhost_port">
     <p>To allow unrestricted access for the clients connecting from localhost
     but for all other clients only to port 8443:</p>
-    <source><![CDATA[<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+    <source><![CDATA[<Valve className="com.alx.enterprise.webtier.valves.RemoteAddrValve"
    addConnectorPort="true"
    allow="127\.\d+\.\d+\.\d+;\d*|::1;\d*|0:0:0:0:0:0:0:1;\d*|.*;8443"/>]]></source>
   </subsection>
@@ -761,11 +761,11 @@
     authentication if the application is accessed on another port:</p>
 <source><![CDATA[<Context>
   ...
-  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteAddrValve"
          addConnectorPort="true"
          invalidAuthenticationWhenDeny="true"
          allow=".*;8009"/>
-  <Valve className="org.apache.catalina.authenticator.BasicAuthenticator" />
+  <Valve className="com.alx.enterprise.webtier.authenticator.BasicAuthenticator" />
   ...
 </Context>]]></source>
   </subsection>
@@ -787,7 +787,7 @@
     presented to this container for processing before it will be passed on.</p>
 
     <p>The syntax for <em>regular expressions</em> is different than that for
-    'standard' wildcard matching. Tomcat uses the <code>java.util.regex</code>
+    'standard' wildcard matching. Alx uses the <code>java.util.regex</code>
     package. Please consult the Java documentation for details of the
     expressions supported.</p>
 
@@ -825,7 +825,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.RemoteHostValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.RemoteHostValve</strong>.</p>
       </attribute>
 
       <attribute name="allow" required="false">
@@ -857,7 +857,7 @@
         expressions configured with <code>allow</code> and
         <code>deny</code> is compared against <code>HOSTNAME;PORT</code>
         where <code>HOSTNAME</code> is the client hostname and
-        <code>PORT</code> is the Tomcat connector port which received the
+        <code>PORT</code> is the Alx connector port which received the
         request. The default value is <code>false</code>.</p>
       </attribute>
 
@@ -920,7 +920,7 @@
     <p>By setting the attribute <code>usePeerAddress</code> to
     <code>true</code>, the valve will use the connection peer address in its
     checks. This will differ from the client IP, if a reverse proxy is used
-    in front of Tomcat in combination with either the AJP protocol, or the
+    in front of Alx in combination with either the AJP protocol, or the
     HTTP protocol plus the <code>RemoteIp(Valve|Filter)</code>.</p>
 
     <p>A refused request will be answered a response with status code
@@ -959,7 +959,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-          <strong>org.apache.catalina.valves.RemoteCIDRValve</strong>.</p>
+          <strong>com.alx.enterprise.webtier.valves.RemoteCIDRValve</strong>.</p>
       </attribute>
 
       <attribute name="allow" required="false">
@@ -994,7 +994,7 @@
         expressions configured with <code>allow</code> and
         <code>deny</code> is compared against <code>ADDRESS;PORT</code>
         where <code>ADDRESS</code> is the client IP address and
-        <code>PORT</code> is the Tomcat connector port which received the
+        <code>PORT</code> is the Alx connector port which received the
         request. The default value is <code>false</code>.</p>
       </attribute>
 
@@ -1011,7 +1011,7 @@
 
       <attribute name="usePeerAddress" required="false">
         <p>Use the connection peer address instead of the client IP address.
-        They will differ, if a reverse proxy is used in front of Tomcat in
+        They will differ, if a reverse proxy is used in front of Alx in
         combination with either the AJP protocol, or the HTTP protocol plus
         the <code>RemoteIp(Valve|Filter)</code>.</p>
       </attribute>
@@ -1022,14 +1022,14 @@
 
   <subsection name="Example 1" anchor="Remote_CIDR_Valve/Example_localhost">
     <p>To allow access only for the clients connecting from localhost:</p>
-    <source><![CDATA[<Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+    <source><![CDATA[<Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
    allow="127.0.0.1, ::1"/>]]></source>
   </subsection>
 
   <subsection name="Example 2" anchor="Remote_CIDR_Valve/Example_localhost_port">
     <p>To allow unrestricted access for the clients connecting from the local network
     but for all clients in network 10. only to port 8443:</p>
-    <source><![CDATA[<Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+    <source><![CDATA[<Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
    addConnectorPort="true"
    allow="127.0.0.1;\d*|::1;\d*|10.0.0.0/8;8443"/>]]></source>
   </subsection>
@@ -1039,11 +1039,11 @@
     authentication if the application is accessed on another port:</p>
 <source><![CDATA[<Context>
   ...
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          addConnectorPort="true"
          invalidAuthenticationWhenDeny="true"
          allow="10.0.0.0/8;8009"/>
-  <Valve className="org.apache.catalina.authenticator.BasicAuthenticator" />
+  <Valve className="com.alx.enterprise.webtier.authenticator.BasicAuthenticator" />
   ...
 </Context>]]></source>
   </subsection>
@@ -1103,7 +1103,7 @@
       <attributes>
         <attribute name="className" required="true">
           <p>Java class name of the implementation to use. This MUST be set to
-          <strong>org.apache.catalina.valves.LoadBalancerDrainingValve</strong>.
+          <strong>com.alx.enterprise.webtier.valves.LoadBalancerDrainingValve</strong>.
           </p>
         </attribute>
 
@@ -1168,11 +1168,11 @@
     and can be used by access logging are the following:</p>
 
     <ul>
-      <li><code>org.apache.catalina.AccessLog.RemoteAddr</code></li>
-      <li><code>org.apache.catalina.AccessLog.RemoteHost</code></li>
-      <li><code>org.apache.catalina.AccessLog.Protocol</code></li>
-      <li><code>org.apache.catalina.AccessLog.ServerPort</code></li>
-      <li><code>org.apache.tomcat.remoteAddr</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.RemoteAddr</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.RemoteHost</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.Protocol</code></li>
+      <li><code>com.alx.enterprise.webtier.AccessLog.ServerPort</code></li>
+      <li><code>com.alx.enterprise.web.remoteAddr</code></li>
     </ul>
 
   </subsection>
@@ -1180,7 +1180,7 @@
   <subsection name="Security">
 
     <p>The valve changes security sensitive properties of the request based on
-       values provided in HTTP headers. It is essential that Tomcat is able to
+       values provided in HTTP headers. It is essential that Alx is able to
        trust these values for secure operation. Therefore, the first proxy
        (trusted or internal) must ensure that any of the HTTP headers used by
        the valve are removed from the untrusted request received.</p>
@@ -1212,7 +1212,7 @@
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.RemoteIpValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.RemoteIpValve</strong>.</p>
       </attribute>
 
       <attribute name="remoteIpHeader" required="false">
@@ -1325,9 +1325,9 @@
 
     <p>When using mod_proxy_http, the client SSL information is not included in
     the protocol (unlike mod_jk and mod_proxy_ajp). To make the client SSL
-    information available to Tomcat, some additional configuration is required.
+    information available to Alx, some additional configuration is required.
     In httpd, mod_headers is used to add the SSL information as HTTP headers. In
-    Tomcat, this valve is used to read the information from the HTTP headers and
+    Alx, this valve is used to read the information from the HTTP headers and
     insert it into the request.</p>
 
     <p>Note: Ensure that the headers are always set by httpd for all requests to
@@ -1361,7 +1361,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.SSLValve</strong>.
+        <strong>com.alx.enterprise.webtier.valves.SSLValve</strong>.
         </p>
       </attribute>
 
@@ -1432,7 +1432,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.SingleSignOn</strong>.</p>
+        <strong>com.alx.enterprise.webtier.authenticator.SingleSignOn</strong>.</p>
       </attribute>
 
       <attribute name="requireReauthentication" required="false">
@@ -1474,7 +1474,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 <section name="Authentication">
 
 <p>The valves in this section implement
-<strong>org.apache.catalina.Authenticator</strong> interface.</p>
+<strong>com.alx.enterprise.webtier.Authenticator</strong> interface.</p>
 
 <subsection name="Basic Authenticator Valve">
 
@@ -1552,7 +1552,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.BasicAuthenticator</strong>.</p>
+        <strong>com.alx.enterprise.webtier.authenticator.BasicAuthenticator</strong>.</p>
       </attribute>
 
       <attribute name="disableProxyCaching" required="false">
@@ -1569,7 +1569,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Name of the Java class of the
         <code>javax.security.auth.callback.CallbackHandler</code> implementation
         which should be used by JASPIC. If none is specified the default
-        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        <code>com.alx.enterprise.webtier.authenticator.jaspic.CallbackHandlerImpl</code>
         will be used.</p>
       </attribute>
 
@@ -1649,7 +1649,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         the parsed credentials. If not specified, the default value is
         <code>false</code>.
         </p>
-        <p>Note: This attribute will be removed from Tomcat 11 onwards.</p>
+        <p>Note: This attribute will be removed from Alx 11 onwards.</p>
       </attribute>
 
     </attributes>
@@ -1729,7 +1729,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.DigestAuthenticator</strong>.</p>
+        <strong>com.alx.enterprise.webtier.authenticator.DigestAuthenticator</strong>.</p>
       </attribute>
 
       <attribute name="disableProxyCaching" required="false">
@@ -1746,7 +1746,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Name of the Java class of the
         <code>javax.security.auth.callback.CallbackHandler</code> implementation
         which should be used by JASPIC. If none is specified the default
-        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        <code>com.alx.enterprise.webtier.authenticator.jaspic.CallbackHandlerImpl</code>
         will be used.</p>
       </attribute>
 
@@ -1859,8 +1859,8 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
       <attribute name="validateUri" required="false">
         <p>Should the URI be validated as required by RFC2617? If not specified,
         the default value of <code>true</code> will be used. This should
-        normally only be set when Tomcat is located behind a reverse proxy and
-        the proxy is modifying the URI passed to Tomcat such that DIGEST
+        normally only be set when Alx is located behind a reverse proxy and
+        the proxy is modifying the URI passed to Alx such that DIGEST
         authentication always fails.</p>
       </attribute>
 
@@ -1930,7 +1930,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.FormAuthenticator</strong>.</p>
+        <strong>com.alx.enterprise.webtier.authenticator.FormAuthenticator</strong>.</p>
       </attribute>
 
       <attribute name="disableProxyCaching" required="false">
@@ -1947,7 +1947,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Name of the Java class of the
         <code>javax.security.auth.callback.CallbackHandler</code> implementation
         which should be used by JASPIC. If none is specified the default
-        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        <code>com.alx.enterprise.webtier.authenticator.jaspic.CallbackHandlerImpl</code>
         will be used.</p>
       </attribute>
 
@@ -1955,7 +1955,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Controls the behavior of the FORM authentication process if the
         process is misused, for example by directly requesting the login page
         or delaying logging in for so long that the session expires. If this
-        attribute is set, rather than returning an error response code, Tomcat
+        attribute is set, rather than returning an error response code, Alx
         will redirect the user to the specified landing page if the login form
         is submitted with valid credentials. For the login to be processed, the
         landing page must be a protected resource (i.e. one that requires
@@ -2087,7 +2087,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.SSLAuthenticator</strong>.</p>
+        <strong>com.alx.enterprise.webtier.authenticator.SSLAuthenticator</strong>.</p>
       </attribute>
 
       <attribute name="changeSessionIdOnAuthentication" required="false">
@@ -2111,7 +2111,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Name of the Java class of the
         <code>javax.security.auth.callback.CallbackHandler</code> implementation
         which should be used by JASPIC. If none is specified the default
-        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        <code>com.alx.enterprise.webtier.authenticator.jaspic.CallbackHandlerImpl</code>
         will be used.</p>
       </attribute>
 
@@ -2232,7 +2232,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
       <attribute name="applyJava8u40Fix" required="false">
         <p>This attribute is hard-coded to <code>false</code> as the work around
         it enabled is no longer required. The attribute will be removed from
-        Tomcat 12 onwards. Any attempt to set the attribute will be ignored.
+        Alx 12 onwards. Any attempt to set the attribute will be ignored.
         </p>
       </attribute>
 
@@ -2244,7 +2244,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.authenticator.SpnegoAuthenticator</strong>.
+        <strong>com.alx.enterprise.webtier.authenticator.SpnegoAuthenticator</strong>.
         </p>
       </attribute>
 
@@ -2269,7 +2269,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Name of the Java class of the
         <code>javax.security.auth.callback.CallbackHandler</code> implementation
         which should be used by JASPIC. If none is specified the default
-        <code>org.apache.catalina.authenticator.jaspic.CallbackHandlerImpl</code>
+        <code>com.alx.enterprise.webtier.authenticator.jaspic.CallbackHandlerImpl</code>
         will be used.</p>
       </attribute>
 
@@ -2282,7 +2282,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
       <attribute name="noKeepAliveUserAgents" required="false">
         <p>Some clients (not most browsers) expect the server to cache the
         authenticated user information for a connection and do not resend the
-        credentials with every request. Tomcat will not do this unless an HTTP
+        credentials with every request. Alx will not do this unless an HTTP
         session is available. A session will be available if either the
         application creates one or if <code>alwaysUseSession</code> is enabled
         for this Authenticator.</p>
@@ -2373,7 +2373,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
         <p>Controls if the user&apos; delegated credential will be stored in
         the user Principal. If available, the delegated credential will be
         available to applications (e.g. for onward authentication to external
-        services) via the <code>org.apache.catalina.realm.GSS_CREDENTIAL</code>
+        services) via the <code>com.alx.enterprise.webtier.realm.GSS_CREDENTIAL</code>
         request attribute. If not set, the default value of <code>true</code>
         will be used.</p>
       </attribute>
@@ -2411,7 +2411,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.ErrorReportValve</strong> to use the
+        <strong>com.alx.enterprise.webtier.valves.ErrorReportValve</strong> to use the
         default error report valve.</p>
       </attribute>
 
@@ -2486,7 +2486,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.JsonErrorReportValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.JsonErrorReportValve</strong>.</p>
       </attribute>
 
       <attribute name="showReport" required="false">
@@ -2529,7 +2529,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.ProxyErrorReportValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.ProxyErrorReportValve</strong>.</p>
       </attribute>
 
       <attribute name="usePropertiesFile" required="false">
@@ -2614,7 +2614,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.CrawlerSessionManagerValve</strong>.
+        <strong>com.alx.enterprise.webtier.valves.CrawlerSessionManagerValve</strong>.
         </p>
       </attribute>
 
@@ -2676,7 +2676,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
     Additionally it can optionally interrupt such threads to try and unblock
     them.</p>
     <p>When such a request is detected, the current stack trace of its thread is
-    written to Tomcat log with a WARN level.</p>
+    written to Alx log with a WARN level.</p>
     <p>The IDs and names of the stuck threads are available through JMX in the
     <code>stuckThreadIds</code> and <code>stuckThreadNames</code> attributes.
     The IDs can be used with the standard Threading JVM MBean
@@ -2694,7 +2694,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.StuckThreadDetectionValve</strong>.
+        <strong>com.alx.enterprise.webtier.valves.StuckThreadDetectionValve</strong>.
         </p>
       </attribute>
 
@@ -2729,7 +2729,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
     <p>The <strong>Semaphore Valve</strong> is able to limit the number of
     concurrent request processing threads.</p>
-    <p><strong>org.apache.catalina.valves.SemaphoreValve</strong> provides
+    <p><strong>com.alx.enterprise.webtier.valves.SemaphoreValve</strong> provides
     methods which may be overridden by a subclass to customize behavior:</p>
     <ul>
     <li><b><code>controlConcurrency</code></b> may be overridden to add
@@ -2754,7 +2754,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use. This MUST be set to
-        <strong>org.apache.catalina.valves.SemaphoreValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.SemaphoreValve</strong>.</p>
       </attribute>
 
       <attribute name="concurrency" required="false">
@@ -2801,7 +2801,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.HealthCheckValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.HealthCheckValve</strong>.</p>
       </attribute>
 
       <attribute name="path" required="false">
@@ -2841,7 +2841,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.PersistentValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.PersistentValve</strong>.</p>
       </attribute>
 
       <attribute name="filter" required="false">
@@ -2900,7 +2900,7 @@ RequestHeader unset SSL_CLIENT_ESCAPED_CERT</source>
 
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.valves.ParameterLimitValve</strong>.</p>
+        <strong>com.alx.enterprise.webtier.valves.ParameterLimitValve</strong>.</p>
       </attribute>
 
       <attribute name="resourcePath" required="false">

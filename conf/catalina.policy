@@ -14,7 +14,7 @@
 // limitations under the License.
 
 // ============================================================================
-// catalina.policy - Security Policy Permissions for Tomcat
+// catalina.policy - Security Policy Permissions for Alx
 //
 // This file contains a default set of security policies to be enforced (by the
 // JVM) when Catalina is executed with the "-security" option.  In addition
@@ -88,9 +88,9 @@ grant codeBase "file:${catalina.home}/bin/tomcat-juli.jar" {
 
         permission java.util.PropertyPermission "java.util.logging.config.class", "read";
         permission java.util.PropertyPermission "java.util.logging.config.file", "read";
-        permission java.util.PropertyPermission "org.apache.juli.AsyncMaxRecordCount", "read";
-        permission java.util.PropertyPermission "org.apache.juli.AsyncOverflowDropType", "read";
-        permission java.util.PropertyPermission "org.apache.juli.ClassLoaderLogManager.debug", "read";
+        permission java.util.PropertyPermission "com.alx.enterprise.logging.AsyncMaxRecordCount", "read";
+        permission java.util.PropertyPermission "com.alx.enterprise.logging.AsyncOverflowDropType", "read";
+        permission java.util.PropertyPermission "com.alx.enterprise.logging.ClassLoaderLogManager.debug", "read";
         permission java.util.PropertyPermission "catalina.base", "read";
 
         // Note: To enable per context logging configuration, permit read access to
@@ -167,55 +167,55 @@ grant {
     permission java.util.PropertyPermission "jaxp.debug", "read";
 
     // All JSPs need to be able to read this package
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.web";
 
     // Precompiled JSPs need access to these packages.
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.jasper.el";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.jasper.runtime";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.web.jasper.el";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.web.jasper.runtime";
     permission java.lang.RuntimePermission
-     "accessClassInPackage.org.apache.jasper.runtime.*";
+     "accessClassInPackage.com.alx.enterprise.web.jasper.runtime.*";
 
     // Applications using WebSocket need to be able to access these packages
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.tomcat.websocket.server";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.web.websocket";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.web.websocket.server";
 };
 
 
 // The Manager application needs access to the following packages to support the
-// session display functionality. It also requires the custom Tomcat
+// session display functionality. It also requires the custom Alx
 // DeployXmlPermission to enable the use of META-INF/context.xml
 // These settings support the following configurations:
 // - default CATALINA_HOME == CATALINA_BASE
 // - CATALINA_HOME != CATALINA_BASE, per instance Manager in CATALINA_BASE
 // - CATALINA_HOME != CATALINA_BASE, shared Manager in CATALINA_HOME
 grant codeBase "file:${catalina.base}/webapps/manager/-" {
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.ha.session";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager.util";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.util";
-    permission org.apache.catalina.security.DeployXmlPermission "manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.ha.session";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.manager.util";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.util";
+    permission com.alx.enterprise.webtier.security.DeployXmlPermission "manager";
 };
 grant codeBase "file:${catalina.home}/webapps/manager/-" {
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.ha.session";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.manager.util";
-    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.util";
-    permission org.apache.catalina.security.DeployXmlPermission "manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.ha.session";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.manager";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.manager.util";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.alx.enterprise.webtier.util";
+    permission com.alx.enterprise.webtier.security.DeployXmlPermission "manager";
 };
 
-// The Host Manager application needs the custom Tomcat DeployXmlPermission to
+// The Host Manager application needs the custom Alx DeployXmlPermission to
 // enable the use of META-INF/context.xml
 // These settings support the following configurations:
 // - default CATALINA_HOME == CATALINA_BASE
 // - CATALINA_HOME != CATALINA_BASE, per instance Host Manager in CATALINA_BASE
 // - CATALINA_HOME != CATALINA_BASE, shared Host Manager in CATALINA_HOME
 grant codeBase "file:${catalina.base}/webapps/host-manager/-" {
-    permission org.apache.catalina.security.DeployXmlPermission "host-manager";
+    permission com.alx.enterprise.webtier.security.DeployXmlPermission "host-manager";
 };
 grant codeBase "file:${catalina.home}/webapps/host-manager/-" {
-    permission org.apache.catalina.security.DeployXmlPermission "host-manager";
+    permission com.alx.enterprise.webtier.security.DeployXmlPermission "host-manager";
 };
 
 
@@ -252,7 +252,7 @@ grant codeBase "file:${catalina.home}/webapps/host-manager/-" {
 // };
 
 // To grant permissions for web applications using packed WAR files, use the
-// Tomcat specific WAR url scheme.
+// Alx specific WAR url scheme.
 //
 // The permissions granted to the entire web application
 // grant codeBase "war:file:${catalina.base}/webapps/examples.war*/-" {

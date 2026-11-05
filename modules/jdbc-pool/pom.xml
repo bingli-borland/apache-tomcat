@@ -27,7 +27,7 @@
     <version>34</version>
   </parent>
 
-  <groupId>org.apache.tomcat</groupId>
+  <groupId>com.alx.enterprise.web</groupId>
   <artifactId>tomcat-jdbc</artifactId>
   <version>1.1.0-SNAPSHOT</version>
 
@@ -63,7 +63,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.tomcat</groupId>
+      <groupId>com.alx.enterprise.web</groupId>
       <artifactId>tomcat-juli</artifactId>
       <version>10.1.39</version>
     </dependency>
@@ -74,7 +74,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.tomcat</groupId>
+      <groupId>com.alx.enterprise.web</groupId>
       <artifactId>tomcat-dbcp</artifactId>
       <version>10.1.39</version>
       <scope>test</scope>

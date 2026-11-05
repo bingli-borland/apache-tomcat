@@ -27,7 +27,7 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.jasper.el.ELContextImpl;
+import com.alx.enterprise.web.jasper.el.ELContextImpl;
 
 public class TestBeanELResolver {
 
@@ -360,7 +360,7 @@ public class TestBeanELResolver {
     /**
      * Tests that a valid FeatureDescriptors are not returned if base is not Map.
      */
-    @Deprecated(forRemoval = true, since = "Tomcat 10.1.0")
+    @Deprecated(forRemoval = true, since = "Alx 10.1.0")
     @Test
     public void testGetFeatureDescriptors01() {
         BeanELResolver resolver = new BeanELResolver();
@@ -375,7 +375,7 @@ public class TestBeanELResolver {
     /**
      * Tests that a valid FeatureDescriptors are returned.
      */
-    @Deprecated(forRemoval = true, since = "Tomcat 10.1.0")
+    @Deprecated(forRemoval = true, since = "Alx 10.1.0")
     @Test
     public void testGetFeatureDescriptors02() {
         BeanELResolver resolver = new BeanELResolver();

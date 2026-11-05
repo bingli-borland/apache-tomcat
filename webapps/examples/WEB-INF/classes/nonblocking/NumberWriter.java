@@ -84,7 +84,7 @@ public class NumberWriter extends HttpServlet {
             this.sis = sis;
             this.sos = sos;
 
-            // In Tomcat, the order the listeners are set controls the order
+            // In Alx, the order the listeners are set controls the order
             // that the first calls are made. In this case, the read listener
             // will be called before the write listener.
             sis.setReadListener(this);

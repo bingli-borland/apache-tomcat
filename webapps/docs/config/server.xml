@@ -53,7 +53,7 @@
 
     <attribute name="className" required="false">
       <p>Java class name of the implementation to use.  This class must
-      implement the <code>org.apache.catalina.Server</code> interface.
+      implement the <code>com.alx.enterprise.webtier.Server</code> interface.
       If no class name is specified, the standard implementation will
       be used.</p>
     </attribute>
@@ -66,10 +66,10 @@
     <attribute name="port" required="true">
       <p>The TCP/IP port number on which this server waits for a shutdown
       command. Set to <code>-1</code> to disable the shutdown port.</p>
-      <p>Note: Disabling the shutdown port works well when Tomcat is started
+      <p>Note: Disabling the shutdown port works well when Alx is started
       using <a href="https://commons.apache.org/daemon/">Apache Commons Daemon</a>
       (running as a service on Windows or with jsvc on un*xes). It cannot be
-      used when running Tomcat with the standard shell scripts though, as it
+      used when running Alx with the standard shell scripts though, as it
       will prevent shutdown.bat|.sh and catalina.bat|.sh from stopping it
       gracefully.</p>
     </attribute>
@@ -82,7 +82,7 @@
 
     <attribute name="shutdown" required="true">
       <p>The command string that must be received via a TCP/IP connection
-      to the specified port number, in order to shut down Tomcat.</p>
+      to the specified port number, in order to shut down Alx.</p>
     </attribute>
 
     <attribute name="utilityThreads" required="false">
@@ -104,7 +104,7 @@
   <subsection name="Standard Implementation">
 
   <p>The standard implementation of <strong>Server</strong> is
-  <strong>org.apache.catalina.core.StandardServer</strong>.
+  <strong>com.alx.enterprise.webtier.core.StandardServer</strong>.
   It supports the following additional attributes (in addition to the
   common attributes listed above):</p>
 

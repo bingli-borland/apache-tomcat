@@ -73,7 +73,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.tomcat.JarScanFilter</code> interface.
+        implement the <code>com.alx.enterprise.web.JarScanFilter</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -85,7 +85,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>Jar Scan Filter</strong> is
-    <strong>org.apache.tomcat.util.scan.StandardJarScanFilter</strong>.
+    <strong>com.alx.enterprise.web.util.scan.StandardJarScanFilter</strong>.
     Additional attributes that it supports (in addition to the common attributes
     listed above) are listed in the table.</p>
 
@@ -104,7 +104,7 @@
     <p>Note that excluding a JAR from the pluggability scan will prevent a
     ServletContainerInitializer from being loaded from a web application JAR
     (i.e. one located in <code>/WEB-INF/lib</code>) but it will not prevent
-    a ServletContainerInitializer from being loaded from the container (Tomcat).
+    a ServletContainerInitializer from being loaded from the container (Alx).
     To prevent a ServletContainerInitializer provided by container from being
     loaded, use the <code>containerSciFilter</code> property of the
     <a href="context.html">Context</a>.</p>

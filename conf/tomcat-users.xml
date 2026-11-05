@@ -24,7 +24,7 @@
   to operate the "/manager/html" web application.  If you wish to use this app,
   you must define such a user - the username and password are arbitrary.
 
-  Built-in Tomcat manager roles:
+  Built-in Alx manager roles:
     - manager-gui    - allows access to the HTML GUI and the status pages
     - manager-script - allows access to the HTTP API and the status pages
     - manager-jmx    - allows access to the JMX proxy and the status pages

@@ -38,7 +38,7 @@
   cluster wide WAR file deployment.
   While the <code>Cluster</code> configuration is fairly complex, the default configuration will work
   for most people out of the box. </p><p>
-  The Tomcat Cluster implementation is very extensible, and hence we have exposed a myriad of options,
+  The Alx Cluster implementation is very extensible, and hence we have exposed a myriad of options,
   making the configuration seem like a lot, but don't lose faith, instead you have a tremendous control
   over what is going on.</p>
 </section>
@@ -49,7 +49,7 @@ network is used for all of the cluster related network traffic. It is not safe
 to run a cluster on a insecure, untrusted network.</p>
 
 <p>There are many options for providing a secure, trusted network for use by a
-Tomcat cluster. These include:</p>
+Alx cluster. These include:</p>
 <ul>
   <li>private LAN</li>
   <li>a Virtual Private Network (VPN)</li>
@@ -57,9 +57,9 @@ Tomcat cluster. These include:</p>
 </ul>
 
 <p>When correctly configured, the <a
-href="cluster-interceptor.html#org.apache.catalina.tribes.group.interceptors.EncryptInterceptor_Attributes">EncryptInterceptor</a>
+href="cluster-interceptor.html#com.alx.enterprise.webtier.tribes.group.interceptors.EncryptInterceptor_Attributes">EncryptInterceptor</a>
 provides confidentiality and integrity protection but it does not protect
-against all risks associated with running a Tomcat cluster on an untrusted
+against all risks associated with running a Alx cluster on an untrusted
 network, particularly DoS attacks.</p>
 
 </section>
@@ -67,7 +67,7 @@ network, particularly DoS attacks.</p>
   <p>
    You can place the <code>&lt;Cluster&gt;</code> element inside either the <code>&lt;Engine&gt;</code>
    container or the <code>&lt;Host&gt;</code> container.<br/>
-   Placing it in the engine, means that you will support clustering in all virtual hosts of Tomcat,
+   Placing it in the engine, means that you will support clustering in all virtual hosts of Alx,
    and share the messaging component. When you place the <code>&lt;Cluster&gt;</code> inside the <code>&lt;Engine&gt;</code>
    element, the cluster will append the host name of each session manager to the managers name so that two contexts with
    the same name but sitting inside two different hosts will be distinguishable.
@@ -76,9 +76,9 @@ network, particularly DoS attacks.</p>
 <section name="Context Attribute Replication">
   <p>To configure context attribute replication, simply do this by swapping out the context implementation
   used for your application context.</p>
-  <source>&lt;Context className=&quot;org.apache.catalina.ha.context.ReplicatedContext&quot;/&gt;</source>
+  <source>&lt;Context className=&quot;com.alx.enterprise.webtier.ha.context.ReplicatedContext&quot;/&gt;</source>
   <p>
-    This context extends the Tomcat <code><a href="context.html">StandardContext</a></code>
+    This context extends the Alx <code><a href="context.html">StandardContext</a></code>
     so all the options from the <a href="context.html">base implementation</a> are valid.
   </p>
 </section>
@@ -86,8 +86,8 @@ network, particularly DoS attacks.</p>
   <p><b><a href="cluster-manager.html">Manager</a>:</b> <br/>
     The session manager element identifies what kind of session manager is used in this cluster implementation.
     This manager configuration is identical to the one you would use in a regular <code><a href="context.html#Nested_Components">&lt;Context&gt;</a></code> configuration.
-    <br/>The default value is the <code>org.apache.catalina.ha.session.DeltaManager</code> that is closely coupled with
-    the <code>SimpleTcpCluster</code> implementation. Other managers like the <code>org.apache.catalina.ha.session.BackupManager</code>
+    <br/>The default value is the <code>com.alx.enterprise.webtier.ha.session.DeltaManager</code> that is closely coupled with
+    the <code>SimpleTcpCluster</code> implementation. Other managers like the <code>com.alx.enterprise.webtier.ha.session.BackupManager</code>
     are/could be loosely coupled and don't rely on the <code>SimpleTcpCluster</code> for its data replication.
   </p>
   <p><b><a href="cluster-channel.html">Channel</a>:</b> <br/>
@@ -99,12 +99,12 @@ network, particularly DoS attacks.</p>
     You can always find out more about <a href="../tribes/introduction.html">Apache Tribes</a>
   </p>
   <p><b><a href="cluster-valve.html">Valve</a>:</b> <br/>
-    The Tomcat Cluster implementation uses <code>Tomcat <a href="valve.html">Valves</a></code> to
+    The Alx Cluster implementation uses <code>Tomcat <a href="valve.html">Valves</a></code> to
     track when requests enter and exit the servlet container. It uses these valves to be able to make
     intelligent decisions on when to replicate data, which is always at the end of a request.
   </p>
   <p><b><a href="cluster-deployer.html">Deployer</a>:</b> <br/>
-    The Deployer component is the Tomcat Farm Deployer. It allows you to deploy and undeploy applications
+    The Deployer component is the Alx Farm Deployer. It allows you to deploy and undeploy applications
     cluster wide.
   </p>
   <p><b><a href="cluster-listener.html">ClusterListener</a>:</b> <br/>
@@ -118,7 +118,7 @@ network, particularly DoS attacks.</p>
   <attributes>
     <attribute name="className" required="true">
       <p>The main cluster class, currently only one is available,
-         <code>org.apache.catalina.ha.tcp.SimpleTcpCluster</code>
+         <code>com.alx.enterprise.webtier.ha.tcp.SimpleTcpCluster</code>
       </p>
     </attribute>
     <attribute name="channelSendOptions" required="true">
@@ -172,7 +172,7 @@ network, particularly DoS attacks.</p>
                   Channel.MBR_RX_SEQ (4) |
                   Channel.MBR_TX_SEQ (8);</source>
       <p>When using the static membership service
-      <code>org.apache.catalina.tribes.membership.StaticMembershipService</code>
+      <code>com.alx.enterprise.webtier.tribes.membership.StaticMembershipService</code>
       you must ensure that this attribute is configured to use the default
       value.</p>
     </attribute>

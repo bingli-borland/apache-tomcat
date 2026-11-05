@@ -59,7 +59,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use. This class must
-        implement the <code>org.apache.tomcat.util.http.CookieProcessor</code>
+        implement the <code>com.alx.enterprise.web.util.http.CookieProcessor</code>
         interface. If not specified, the standard value (defined below) will be
         used.</p>
       </attribute>
@@ -72,7 +72,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>CookieProcessor</strong> is
-    <code>org.apache.tomcat.util.http.Rfc6265CookieProcessor</code>.</p>
+    <code>com.alx.enterprise.web.util.http.Rfc6265CookieProcessor</code>.</p>
 
     <p>This cookie processor is based on RFC6265 with the following changes to
     support better interoperability:</p>
@@ -104,7 +104,7 @@
         interpreted when the name value pair does not contain an equals sign.
         The default value is <code>name</code> which means that the cookie will
         be treated as a cookie with a name but no value. The other option is
-        <code>ignore</code> which means the cookie will be ignored. From Tomcat
+        <code>ignore</code> which means the cookie will be ignored. From Alx
         12 onwards the default will be <code>ignore</code>.</p>
       </attribute>
 

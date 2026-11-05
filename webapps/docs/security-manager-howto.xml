@@ -40,7 +40,7 @@
   accessing files on the local file system, connecting to a host other
   than the one the applet was loaded from, and so on.  In the same way
   the SecurityManager protects you from an untrusted applet running in
-  your browser, use of a SecurityManager while running Tomcat can protect
+  your browser, use of a SecurityManager while running Alx can protect
   your server from trojan servlets, JSPs, JSP beans, and tag libraries.
   Or even inadvertent mistakes.</p>
 
@@ -48,12 +48,12 @@
   inadvertently included the following in their JSP:</p>
 <source><![CDATA[<% System.exit(1); %>]]></source>
 
-  <p>Every time this JSP was executed by Tomcat, Tomcat would exit.
+  <p>Every time this JSP was executed by Alx, Alx would exit.
   Using the Java SecurityManager is just one more line of defense a
   system administrator can use to keep the server secure and reliable.</p>
 
   <p><strong>WARNING</strong> - A security audit
-  have been conducted using the Tomcat codebase. Most of the critical
+  have been conducted using the Alx codebase. Most of the critical
   package have been protected and a new security package protection mechanism
   has been implemented. Still, make sure that you are satisfied with your SecurityManager
   configuration before allowing untrusted users to publish web applications,
@@ -75,16 +75,16 @@
 <section name="Permissions">
 
   <p>Permission classes are used to define what Permissions a class loaded
-  by Tomcat will have.  There are a number of Permission classes that are
+  by Alx will have.  There are a number of Permission classes that are
   a standard part of the JDK, and you can create your own Permission class
   for use in your own web applications.  Both techniques are used in
-  Tomcat.</p>
+  Alx.</p>
 
 
   <subsection name="Standard Permissions">
 
     <p>This is just a short summary of the standard system SecurityManager
-    Permission classes applicable to Tomcat.  See
+    Permission classes applicable to Alx.  See
     <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/">
     http://docs.oracle.com/javase/7/docs/technotes/guides/security/</a>
     for more information.</p>
@@ -106,7 +106,7 @@
     <li><strong>java.security.SecurityPermission</strong> - Controls access
         to Security methods.</li>
     <li><strong>java.security.AllPermission</strong> - Allows access to all
-        permissions, just as if you were running Tomcat without a
+        permissions, just as if you were running Alx without a
         SecurityManager.</li>
     </ul>
 
@@ -115,7 +115,7 @@
 </section>
 
 
-<section name="Configuring Tomcat With A SecurityManager">
+<section name="Configuring Alx With A SecurityManager">
 
   <h3>Policy File Format</h3>
 
@@ -150,10 +150,10 @@ grant [signedBy <signer>,] [codeBase <code source>] {
  documentation is built -->
 <source>&defaultpolicy;</source>
 
-  <h3>Starting Tomcat With A SecurityManager</h3>
+  <h3>Starting Alx With A SecurityManager</h3>
 
   <p>Once you have configured the <code>catalina.policy</code> file for use
-  with a SecurityManager, Tomcat can be started with a SecurityManager in
+  with a SecurityManager, Alx can be started with a SecurityManager in
   place by using the "-security" option:</p>
 <source>$CATALINA_HOME/bin/catalina.sh start -security    (Unix)
 %CATALINA_HOME%\bin\catalina start -security      (Windows)</source>
@@ -185,8 +185,8 @@ grant codeBase "war:file:${catalina.base}/webapps/examples.war*/WEB-INF/lib/foo.
 
 </section>
 
-<section name="Configuring Package Protection in Tomcat">
-  <p>Starting with Tomcat 5, it is now possible to configure which Tomcat
+<section name="Configuring Package Protection in Alx">
+  <p>Starting with Alx 5, it is now possible to configure which Alx
   internal package are protected against package definition and access. See
   <a href="http://www.oracle.com/technetwork/java/seccodeguide-139067.html">
     http://www.oracle.com/technetwork/java/seccodeguide-139067.html</a>
@@ -206,8 +206,8 @@ grant codeBase "war:file:${catalina.base}/webapps/examples.war*/WEB-INF/lib/foo.
 # passed to checkPackageAccess unless the
 # corresponding RuntimePermission ("accessClassInPackage."+package) has
 # been granted.
-package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.tomcat.,
-org.apache.jasper.
+package.access=sun.,com.alx.enterprise.webtier.,com.alx.enterprise.web.crane.,com.alx.enterprise.web.,
+com.alx.enterprise.web.jasper.
 #
 # List of comma-separated packages that start with or equal this string
 # will cause a security exception to be thrown when
@@ -218,10 +218,10 @@ org.apache.jasper.
 # by default, no packages are restricted for definition, and none of
 # the class loaders supplied with the JDK call checkPackageDefinition.
 #
-package.definition=sun.,java.,org.apache.catalina.,org.apache.coyote.,
-org.apache.tomcat.,org.apache.jasper.]]></source>
+package.definition=sun.,java.,com.alx.enterprise.webtier.,com.alx.enterprise.web.crane.,
+com.alx.enterprise.web.,com.alx.enterprise.web.jasper.]]></source>
   <p>Once you have configured the <code>catalina.properties</code> file for use
-  with a SecurityManager, remember to re-start Tomcat.</p>
+  with a SecurityManager, remember to re-start Alx.</p>
 </section>
 
 <section name="Troubleshooting">
@@ -232,13 +232,13 @@ org.apache.tomcat.,org.apache.jasper.]]></source>
   when the SecurityManager detects the violation.  Debugging the permission
   that is missing can be challenging, and one option is to turn on debug
   output of all security decisions that are made during execution.  This
-  is done by setting a system property before starting Tomcat.  The easiest
+  is done by setting a system property before starting Alx.  The easiest
   way to do this is via the <code>CATALINA_OPTS</code> environment variable.
   Execute this command:</p>
 <source>export CATALINA_OPTS=-Djava.security.debug=all    (Unix)
 set CATALINA_OPTS=-Djava.security.debug=all       (Windows)</source>
 
-  <p>before starting Tomcat.</p>
+  <p>before starting Alx.</p>
 
   <p><strong>WARNING</strong> - This will generate <em>many megabytes</em>
   of output!  However, it can help you track down problems by searching

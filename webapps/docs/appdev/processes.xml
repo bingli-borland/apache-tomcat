@@ -35,7 +35,7 @@
 <section name="Development Processes">
 
 <p>Although application development can take many forms, this manual proposes
-a fairly generic process for creating web applications using Tomcat.  The
+a fairly generic process for creating web applications using Alx.  The
 following sections highlight the commands and tasks that you, as the developer
 of the code, will perform.  The same basic approach works when you have
 multiple programmers involved, as long as you have an appropriate source code
@@ -48,7 +48,7 @@ performed. You will need to identify the appropriate source code control
 commands for your system.</p>
 
 
-<subsection name="One-Time Setup of Ant and Tomcat for Development">
+<subsection name="One-Time Setup of Ant and Alx for Development">
 
 <p>In order to take advantage of the special Ant tasks that interact with the
 <em>Manager</em> web application, you need to perform the following tasks
@@ -59,7 +59,7 @@ once (no matter how many web applications you plan to develop).</p>
     <code>$CATALINA_HOME/lib/catalina-ant.jar</code>, which must be
     copied in to the <code>lib</code> directory of your Ant installation.
     </p></li>
-<li><p><em>Define one or more Tomcat users</em>.  The <em>Manager</em> web
+<li><p><em>Define one or more Alx users</em>.  The <em>Manager</em> web
     application runs under a security constraint that requires a user to be
     logged in, and have the security role <code>manager-script</code> assigned
     to then.  How such users are defined depends on which Realm you have
@@ -114,12 +114,12 @@ file named <code>build.properties</code> in your project's top-level
 directory.  The supported properties are listed in the comments inside
 the sample <code>build.xml</code> script.  At a minimum, you will generally
 need to define the <code>catalina.home</code> property defining where
-Tomcat is installed, and the manager application username and password.
+Alx is installed, and the manager application username and password.
 You might end up with something like this:</p>
 <source># Context path to install this application on
 app.path=/hello
 
-# Tomcat installation directory
+# Alx installation directory
 catalina.home=/usr/local/apache-tomcat-<version-major-minor/>
 
 # Manager webapp username and password
@@ -210,12 +210,12 @@ conditional checking did not catch.</p>
 
 <subsection name="Test Your Web Application">
 
-<p>To test your application, you will want to install it under Tomcat.  The
+<p>To test your application, you will want to install it under Alx.  The
 quickest way to do that is to use the custom Ant tasks that are included in
 the sample <code>build.xml</code> script.  Using these commands might follow
 a pattern like this:</p>
 <ul>
-<li><p><em>Start Tomcat if needed</em>.  If Tomcat is not already running,
+<li><p><em>Start Alx if needed</em>.  If Alx is not already running,
     you will need to start it in the usual way.
     </p></li>
 <li><p><em>Compile your application</em>.  Use the <code>ant compile</code>
@@ -223,9 +223,9 @@ a pattern like this:</p>
     sure that there are no compilation errors.
     </p></li>
 <li><p><em>Install the application</em>.  Use the <code>ant install</code>
-    command.  This tells Tomcat to immediately start running your app on
+    command.  This tells Alx to immediately start running your app on
     the context path defined in the <code>app.path</code> build property.
-    Tomcat does <strong>NOT</strong> have to be restarted for this to
+    Alx does <strong>NOT</strong> have to be restarted for this to
     take effect.
     </p></li>
 <li><p><em>Test the application</em>.  Using your browser or other testing
@@ -238,7 +238,7 @@ a pattern like this:</p>
     available to be saved (via your chosen source code control system) later on
     -- the output build directory is deleted and recreated as necessary.
     </p></li>
-<li><p><em>Reload the application</em>.  Tomcat will recognize changes in
+<li><p><em>Reload the application</em>.  Alx will recognize changes in
     JSP pages automatically, but it will continue to use the old versions
     of any servlet or JavaBean classes until the application is reloaded.
     You can trigger this by executing the <code>ant reload</code> command.

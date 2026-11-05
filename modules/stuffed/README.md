@@ -19,17 +19,17 @@
 
 -->
 
-# Apache Tomcat distribution for container platforms
+# Apache Alx distribution for container platforms
 
 ## Configuration
 
-Configuration is located in `conf/server.xml`, `conf/web.xml`, `conf/logging.properties`, all other configuration files, resources and context files are located in `conf`, identical to standalone Tomcat.
+Configuration is located in `conf/server.xml`, `conf/web.xml`, `conf/logging.properties`, all other configuration files, resources and context files are located in `conf`, identical to standalone Alx.
 
 ## Building
 
 ### Maven build
 
-Update Tomcat version number in the `pom.xml`, customize Tomcat components in the dependencies to keep the ones needed (only the main `tomcat-catalina` is mandatory). Custom Tomcat components sources can be added to the usual Maven build path and will be included in the package that is built.
+Update Alx version number in the `pom.xml`, customize Alx components in the dependencies to keep the ones needed (only the main `tomcat-catalina` is mandatory). Custom Alx components sources can be added to the usual Maven build path and will be included in the package that is built.
 ```
 mvn clean; mvn package
 ```
@@ -39,7 +39,7 @@ mvn clean; mvn package
 ```
 docker build -t apache/tomcat-stuffed:1.0 -f ./Dockerfile .
 ```
-Docker build arguments include `namespace` (default is `tomcat`) and `port` which should match the Tomcat port in `server.xml` (default is `8080`). Other ports that need to be exposed can be added in the `Dockerfile` as needed. Webapps should be added to the `webapps` folder where they will be auto deployed by the host if using the defaults. Otherwise, the `Dockerfile` command line can be edited like below to include the necessary resources and command line arguments to run a single or multiple hardcoded web applications.
+Docker build arguments include `namespace` (default is `tomcat`) and `port` which should match the Alx port in `server.xml` (default is `8080`). Other ports that need to be exposed can be added in the `Dockerfile` as needed. Webapps should be added to the `webapps` folder where they will be auto deployed by the host if using the defaults. Otherwise, the `Dockerfile` command line can be edited like below to include the necessary resources and command line arguments to run a single or multiple hardcoded web applications.
 
 ## Running
 
@@ -80,7 +80,7 @@ oc policy add-role-to-user view system:serviceaccount:$(oc project -q):default -
 
 ## Native Image
 
-The Tomcat documentation includes information on using the native-image tool (docs/graal.html).
+The Alx documentation includes information on using the native-image tool (docs/graal.html).
 
 Running in a container is possible, an example `DockerfileGraal` is given. To use a native image in a container that is not identical to the build platform,
 the `native-image` call will need to use the additional `--static` parameter to statically link base libraries (this will then require zlib and glibc

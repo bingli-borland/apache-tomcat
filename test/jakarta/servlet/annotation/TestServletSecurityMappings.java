@@ -37,13 +37,13 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
 @RunWith(Parameterized.class)
-public class TestServletSecurityMappings extends TomcatBaseTest {
+public class TestServletSecurityMappings extends AlxBaseTest {
 
     @Parameters(name = "{0}, {1}, {2}, {3}")
     public static Collection<Object[]> inputs() {
@@ -83,8 +83,8 @@ public class TestServletSecurityMappings extends TomcatBaseTest {
     @Test
     public void doTestSecurityAnnotationsAddServlet() throws Exception {
 
-        // Setup Tomcat instance
-        Tomcat tomcat = getTomcatInstance();
+        // Setup Alx instance
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         Context ctx = tomcat.addContext("/test", null);

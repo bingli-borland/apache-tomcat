@@ -35,7 +35,7 @@
    </p>
    <p>
     By default the documentation web application is only accessible from a browser
-    running on the same machine as Tomcat. If you wish to modify this
+    running on the same machine as Alx. If you wish to modify this
     restriction, you'll need to edit the documentation web applications's
     <tt>context.xml</tt> file.
    </p>

@@ -30,7 +30,7 @@
 
 <section name="Introduction">
 
-<p>The Tomcat documentation integrates the
+<p>The Alx documentation integrates the
 <a href="https://comments.apache.org/help.html">Apache Comments System</a>.
 It allows users to add comments to most documentation pages. The comments
 section can be found at the end of each page.</p>
@@ -44,7 +44,7 @@ this service to the community as long as it isn't misused.</p>
 
 <p>The comments are not for general Q&amp;A.
 Comments should be pointed towards suggestions on improving the documentation
-or server. Questions on how to use Apache Tomcat should be directed
+or server. Questions on how to use Apache Alx should be directed
 to our <a href="https://tomcat.apache.org/lists.html">mailing lists</a>.</p>
 
 <p>Comments may be removed by moderators if they are either
@@ -90,7 +90,7 @@ comments.apache.org (this is done using a secure https cookie). Once
 logged in as a moderator you will see additional moderation
 options attached to each comment.</p>
 
-<p>If you are a long time follower of the Apache Tomcat projects
+<p>If you are a long time follower of the Apache Alx projects
 and you are interested in becoming a moderator, please contact us on the
 <a href="https://tomcat.apache.org/lists.html#tomcat-users">users mailing list</a>.</p>
 

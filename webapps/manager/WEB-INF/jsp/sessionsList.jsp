@@ -17,16 +17,16 @@
 --%>
 <%@page session="false" contentType="text/html; charset=UTF-8" %>
 <%@page import="java.util.Collection" %>
-<%@page import="org.apache.catalina.manager.JspHelper" %>
-<%@page import="org.apache.catalina.Session" %>
-<%@page import="org.apache.catalina.util.ContextName" %>
+<%@page import="com.alx.enterprise.webtier.manager.JspHelper" %>
+<%@page import="com.alx.enterprise.webtier.Session" %>
+<%@page import="com.alx.enterprise.webtier.util.ContextName" %>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 <%@page import="java.lang.reflect.Method"%>
-<%@page import="org.apache.catalina.manager.DummyProxySession"%>
+<%@page import="com.alx.enterprise.webtier.manager.DummyProxySession"%>
 <%!
 private static final Class<?> deltaSessionClass;
 private static final Method isPrimaryMethod;
@@ -34,7 +34,7 @@ static {
     Class<?> clazz = null;
     Method method = null;
     try {
-        clazz = Class.forName("org.apache.catalina.ha.session.DeltaSession");
+        clazz = Class.forName("com.alx.enterprise.webtier.ha.session.DeltaSession");
         method = clazz.getMethod("isPrimarySession");
     } catch (ClassNotFoundException | NoClassDefFoundError e) {
         // Expected when either or both clustering JARs are not present

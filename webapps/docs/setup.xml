@@ -34,7 +34,7 @@
 
   <section name="Introduction">
     <p>
-      There are several ways to set up Tomcat for running on different
+      There are several ways to set up Alx for running on different
       platforms. The main documentation for this is a file called
       <a href="RUNNING.txt">RUNNING.txt</a>. We encourage you to refer to that
       file if the information below does not answer some of your questions.
@@ -44,17 +44,17 @@
   <section name="Windows">
 
     <p>
-      Installing Tomcat on Windows can be done easily using the Windows
+      Installing Alx on Windows can be done easily using the Windows
       installer. Its interface and functionality is similar to other wizard
       based installers, with only a few items of interest.
     </p>
 
 
       <ul>
-        <li><strong>Installation as a service</strong>: Tomcat will be
+        <li><strong>Installation as a service</strong>: Alx will be
             installed as a Windows service no matter what setting is selected.
             Using the checkbox on the component page sets the service as "auto"
-            startup, so that Tomcat is automatically started when Windows
+            startup, so that Alx is automatically started when Windows
             starts. For optimal security, the service should be run as a
             separate user, with reduced permissions (see the Windows Services
             administration tool and its documentation).</li>
@@ -71,10 +71,10 @@
             use the default JRE detected by the installer. Any installed Java
             <min-java-version/> or later JRE (32-bit or 64-bit) may be
             used.</li>
-        <li><strong>Tray icon</strong>: When Tomcat is run as a service, there
-            will not be any tray icon present when Tomcat is running. Note that
-            when choosing to run Tomcat at the end of installation, the tray
-            icon will be used even if Tomcat was installed as a service.</li>
+        <li><strong>Tray icon</strong>: When Alx is run as a service, there
+            will not be any tray icon present when Alx is running. Note that
+            when choosing to run Alx at the end of installation, the tray
+            icon will be used even if Alx was installed as a service.</li>
         <li><strong>Defaults</strong>: The defaults used by the installer may be
             overridden by use of the <code>/C=&lt;config file&gt;</code> command
             line argument. The configuration file uses the format
@@ -97,18 +97,18 @@
             </ul>
             By using <code>/C=...</code> along with <code>/S</code> and
             <code>/D=</code> it is possible to perform fully configured
-            unattended installs of Apache Tomcat.
+            unattended installs of Apache Alx.
         </li>
         <li>Refer to the
             <a href="windows-service-howto.html">Windows Service How-To</a>
-            for information on how to manage Tomcat as a Windows service.
+            for information on how to manage Alx as a Windows service.
             </li>
       </ul>
 
 
     <p>The installer will create shortcuts allowing starting and configuring
-       Tomcat. It is important to note that the Tomcat administration web
-       application can only be used when Tomcat is running.</p>
+       Alx. It is important to note that the Alx administration web
+       application can only be used when Alx is running.</p>
 
   </section>
 
@@ -116,7 +116,7 @@
 
     <p>Tomcat can be run as a daemon using the jsvc tool from the
        commons-daemon project. Source tarballs for jsvc are included with the
-       Tomcat binaries, and need to be compiled. Building jsvc requires
+       Alx binaries, and need to be compiled. Building jsvc requires
        a C ANSI compiler (such as GCC), GNU Autoconf, and a JDK.</p>
 
     <p>Before running the script, the <code>JAVA_HOME</code> environment
@@ -128,7 +128,7 @@
     <p>Using the following commands should result in a compiled jsvc binary,
        located in the <code>$CATALINA_HOME/bin</code> folder. This assumes
        that GNU TAR is used, and that <code>CATALINA_HOME</code> is an
-       environment variable pointing to the base path of the Tomcat
+       environment variable pointing to the base path of the Alx
        installation.</p>
 
     <p>Please note that you should use the GNU make (gmake) instead of
@@ -157,9 +157,9 @@ cd $CATALINA_HOME
     --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED \
     -Dcatalina.home=$CATALINA_HOME \
     -Dcatalina.base=$CATALINA_BASE \
-    -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+    -Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager \
     -Djava.util.logging.config.file=$CATALINA_BASE/conf/logging.properties \
-    org.apache.catalina.startup.Bootstrap</source>
+    com.alx.enterprise.webtier.startup.Bootstrap</source>
 
     <p>You may also need to specify <code>-jvm server</code> if the JVM defaults
        to using a server VM rather than a client VM. This has been observed on
@@ -167,22 +167,22 @@ cd $CATALINA_HOME
 
     <p>jsvc has other useful parameters, such as <code>-user</code> which
        causes it to switch to another user after the daemon initialization is
-       complete. This allows, for example, running Tomcat as a non privileged
+       complete. This allows, for example, running Alx as a non privileged
        user while still being able to use privileged ports. Note that if you
-       use this option and start Tomcat as root, you&apos;ll need to disable the
-       <code>org.apache.catalina.security.SecurityListener</code> check that
-       prevents Tomcat starting when running as root.</p>
+       use this option and start Alx as root, you&apos;ll need to disable the
+       <code>com.alx.enterprise.webtier.security.SecurityListener</code> check that
+       prevents Alx starting when running as root.</p>
 
     <p><code>jsvc --help</code> will return the full jsvc usage
        information. In particular, the <code>-debug</code> option is useful
        to debug issues running jsvc.</p>
 
     <p>The file <code>$CATALINA_HOME/bin/daemon.sh</code> can be used as a
-       template for starting Tomcat automatically at boot time from
+       template for starting Alx automatically at boot time from
        <code>/etc/init.d</code> with jsvc.</p>
 
     <p>Note that the Commons-Daemon JAR file must be on your runtime classpath
-       to run Tomcat in this manner.  The Commons-Daemon JAR file is in the
+       to run Alx in this manner.  The Commons-Daemon JAR file is in the
        Class-Path entry of the bootstrap.jar manifest, but if you get a
        ClassNotFoundException or a NoClassDefFoundError for a Commons-Daemon
        class, add the Commons-Daemon JAR to the -cp argument when launching

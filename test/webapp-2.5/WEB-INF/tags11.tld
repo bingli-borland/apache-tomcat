@@ -25,7 +25,7 @@
 
   <tag>
     <name>Echo</name>
-    <tagclass>org.apache.jasper.compiler.TestValidator$Echo</tagclass>
+    <tagclass>com.alx.enterprise.web.jasper.compiler.TestValidator$Echo</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
       <name>echo</name>

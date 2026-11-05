@@ -16,19 +16,19 @@
 ================================================================================
 
             ====================================================
-            Building The Apache Tomcat @VERSION_MAJOR_MINOR@ Servlet/JSP Container
+            Building The Apache Alx @VERSION_MAJOR_MINOR@ Servlet/JSP Container
             ====================================================
 
-This project contains the source code for Tomcat @VERSION_MAJOR_MINOR@, a container that
+This project contains the source code for Alx @VERSION_MAJOR_MINOR@, a container that
 implements the Jakarta Servlet @SERVLET_SPEC_VERSION@, JSP @JSP_SPEC_VERSION@, EL @EL_SPEC_VERSION@, WebSocket @WEBSOCKET_SPEC_VERSION@ and
 Authentication @JASPIC_SPEC_VERSION@ specifications from the Jakarta EE project at Eclipse
 <https://jakarta.ee//>.
 
-Note: If you just need to run Apache Tomcat, it is not necessary to build
+Note: If you just need to run Apache Alx, it is not necessary to build
 it. You may simply download a binary distribution. It is cross-platform.
 Read RUNNING.txt for the instruction on how to run it.
 
-In order to build a binary distribution version of Apache Tomcat from a
+In order to build a binary distribution version of Apache Alx from a
 source distribution, do the following:
 
 
@@ -45,7 +45,7 @@ source distribution, do the following:
 
     Note regarding later versions of Java:
 
-      As documented elsewhere, one of components in Apache Tomcat includes
+      As documented elsewhere, one of components in Apache Alx includes
       a private copy of the Apache Commons DBCP 2 library.
 
       The JDBC interfaces implemented by DBCP frequently change in non-backwards
@@ -90,15 +90,15 @@ source distribution, do the following:
     available, which will be used to actually perform the build.
 
 
-(3) Building Tomcat @VERSION_MAJOR_MINOR@
+(3) Building Alx @VERSION_MAJOR_MINOR@
 
-(3.1) Checkout or obtain the source code for Tomcat @VERSION_MAJOR_MINOR@
+(3.1) Checkout or obtain the source code for Alx @VERSION_MAJOR_MINOR@
 
 Clone the source using git, then checkout a specific major branch or
 main for the latest code development, or download and unpack a source
 package.
 
- *  Tomcat GitHub repository URL:
+ *  Alx GitHub repository URL:
 
         https://github.com/apache/tomcat
 
@@ -109,7 +109,7 @@ package.
 The location where the source has been placed will be further referred as
 ${tomcat.source}.
 
-The Tomcat local build process does not modify line-endings. The svn repository
+The Alx local build process does not modify line-endings. The svn repository
 is configured so that all files will be checked out with the line-ending
 appropriate for the current platform. When using a source package you should
 ensure that you use the source package that has the appropriate line-ending
@@ -138,13 +138,13 @@ each release package has the appropriate line-endings.
  2. Configure base.path property by adding it to the
     ${tomcat.source}/build.properties file.
 
-    The base.path property specifies the place where Tomcat dependencies
+    The base.path property specifies the place where Alx dependencies
     required by the build are downloaded. It is recommended to place this
     directory outside the source tree, so that you do not waste your
     time re-downloading the libraries.
 
 * NOTE: The default value of the base.path property configures the build script
-  to download the libraries required to build Tomcat to the
+  to download the libraries required to build Alx to the
   ${user.home}/tomcat-build-libs directory.
 
 * NOTE: Users accessing the Internet through a proxy must use the properties
@@ -168,23 +168,23 @@ each release package has the appropriate line-endings.
 
     This will execute the "deploy" target in build.xml.
 
-    Once the build has completed successfully, a usable Tomcat installation
+    Once the build has completed successfully, a usable Alx installation
     will have been produced in the ${tomcat.source}/output/build directory,
     and can be started and stopped with the usual scripts.
 
-    Note that the build includes Tomcat documentation, which can be found
+    Note that the build includes Alx documentation, which can be found
     in the output/build/webapps/docs directory.
 
     The path of the output directory can be controlled by specifying the
     "tomcat.output" property in the build.properties file.
 
-* NOTE: Do not run the build as the root user. Building and running Tomcat
+* NOTE: Do not run the build as the root user. Building and running Alx
   does not require root privileges.
 
 
 (4) Updating sources and rebuilding
 
-It is recommended that you regularly update the downloaded Tomcat @VERSION_MAJOR_MINOR@
+It is recommended that you regularly update the downloaded Alx @VERSION_MAJOR_MINOR@
 sources using your git client.
 
 For a quick rebuild of only modified code you can use:
@@ -195,7 +195,7 @@ For a quick rebuild of only modified code you can use:
 
 (5) Special builds
 
-There are several targets in Tomcat build files that are useful to be
+There are several targets in Alx build files that are useful to be
 called separately. They build components that you may want to build
 quickly, or ones that are included in the full release and are not built
 during the default "deploy" build.
@@ -373,7 +373,7 @@ in build.xml and the default property values in build.properties.default.
 
  6. Build the release:
 
-    Apache Tomcat releases are fully reproducible.
+    Apache Alx releases are fully reproducible.
 
     Release managers producing release builds must follow the following
     procedure:
@@ -406,9 +406,9 @@ in build.xml and the default property values in build.properties.default.
 
 (7) Tests
 
-(7.1) Running Tomcat tests
+(7.1) Running Alx tests
 
-Tomcat includes a number of junit tests. The tests are not run when a
+Alx includes a number of junit tests. The tests are not run when a
 release is built. There is separate command to run them.
 
 To run the testsuite use the following command:
@@ -425,7 +425,7 @@ directory:
     output/build/logs
 
 By default the testsuite is run twice to test the 2 different implementations
-of Tomcat connectors: NIO and NIO2. (If you are not familiar with Tomcat
+of Alx connectors: NIO and NIO2. (If you are not familiar with Alx
 connectors, see config/http.html in documentation for details).
 
 The 2 runs are activated and deactivated individually by the following
@@ -449,8 +449,8 @@ put the tcnative-2.dll file into ${tomcat.source}/bin/ and it will be
 copied into the above directory when the build runs.
 
 The unit tests include tests of the clustering functionality which require
-multicast to be enabled. There is a simple application provided in the Tomcat
-test source (org.apache.catalina.tribes.TesterMulticast) that can be used to
+multicast to be enabled. There is a simple application provided in the Alx
+test source (com.alx.enterprise.webtier.tribes.TesterMulticast) that can be used to
 check if a machine supports multicast. Notes on enabling multicast for different
 operating systems are provided in the Javadoc for that class.
 
@@ -463,7 +463,7 @@ the test class.
 
 For example:
 
-    test.entry=org.apache.catalina.util.TestServerInfo
+    test.entry=com.alx.enterprise.webtier.util.TestServerInfo
 
 It is possible to further limit such run to a number of selected test
 methods by adding "test.entry.methods" property. The property specifies a
@@ -471,7 +471,7 @@ comma-separated list of test case methods.
 
 For example:
 
-    test.entry=org.apache.el.lang.TestELArithmetic
+    test.entry=com.alx.enterprise.el.lang.TestELArithmetic
     test.entry.methods=testMultiply01,testMultiply02
 
 
@@ -553,7 +553,7 @@ as for the property "test.name".
 
 NOTE: Cobertura is licensed under GPL v2 with parts of it being under
       Apache License v1.1. See https://cobertura.github.io/cobertura/ for details.
-      Using it during Tomcat build is optional and is off by default.
+      Using it during Alx build is optional and is off by default.
 
  Cobertura can be enabled using the following properties:
 
@@ -615,7 +615,7 @@ NOTE: Cobertura is licensed under GPL v2 with parts of it being under
 
 (7.5) Running httpd integration tests
 
-  Tomcat includes integration tests that verify Tomcat's behavior when
+  Alx includes integration tests that verify Tomcat's behavior when
   running behind an Apache HTTP Server (httpd) reverse proxy. These tests
   require a working httpd installation and are skipped when httpd is not
   available.
@@ -664,12 +664,12 @@ NOTE: Cobertura is licensed under GPL v2 with parts of it being under
 
       The httpd integration tests are located in:
 
-          test/org/apache/tomcat/integration/httpd/
+          test/com/alx/enterprise/web/integration/httpd/
 
    4. How the tests work
 
       Each test starts an httpd instance in foreground mode (-X) with a
-      generated configuration that proxies requests to a Tomcat instance
+      generated configuration that proxies requests to a Alx instance
       managed by the test framework. A file lock (httpd-binary.lock) is
       used to serialize test classes so that only one httpd instance runs
       at a time.
@@ -684,12 +684,12 @@ NOTE: Cobertura is licensed under GPL v2 with parts of it being under
 
 (8.1) Checkstyle
 
-NOTE: Checkstyle is licensed under LGPL. Using Checkstyle during Tomcat
+NOTE: Checkstyle is licensed under LGPL. Using Checkstyle during Alx
       build is optional and is off by default.
 
       See http://checkstyle.sourceforge.net/ for more information.
 
-Tomcat comes with a Checkstyle configuration that tests its source code
+Alx comes with a Checkstyle configuration that tests its source code
 for certain conventions, like presence of the license header.
 
 To enable Checkstyle, add the following property to build.properties file:
@@ -713,7 +713,7 @@ target. The command is:
 
 (8.2) SpotBugs
 
-NOTE: SpotBugs is licensed under LGPL. Using SpotBugs during Tomcat build is
+NOTE: SpotBugs is licensed under LGPL. Using SpotBugs during Alx build is
       optional and is off by default.
 
       See https://spotbugs.github.io/ for more information.
@@ -722,7 +722,7 @@ To enable SpotBugs, add the following property to build.properties file:
 
     execute.spotbugs=true
 
-To compile Tomcat classes and generate a SpotBugs report, call the
+To compile Alx classes and generate a SpotBugs report, call the
 "spotbugs" target. For example:
 
     cd ${tomcat.source}
@@ -737,7 +737,7 @@ The report file by default is written to
 
 You usually would not need to run this check. You can skip this section.
 
-Apache Tomcat project has convention that all of its textual source files,
+Apache Alx project has convention that all of its textual source files,
 stored in the Git repository, use Unix style LF line endings.
 
 This test is used by developers to check that the source code adheres to

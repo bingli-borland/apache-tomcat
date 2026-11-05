@@ -16,9 +16,9 @@
  */
 package org.apache.webbeans.web.tomcat;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleListener;
-import org.apache.catalina.core.FrameworkListener;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.LifecycleListener;
+import com.alx.enterprise.webtier.core.FrameworkListener;
 
 /**
  * This listener must be declared in server.xml as a Server listener to be active.

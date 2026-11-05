@@ -48,7 +48,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
             </div>
             <div id="upper" class="curved container">
                 <div id="congrats" class="curved container">
-                    <h2>If you're seeing this, you've successfully installed Tomcat. Congratulations!</h2>
+                    <h2>If you're seeing this, you've successfully installed Alx. Congratulations!</h2>
                 </div>
                 <div id="notice">
                     <img id="tomcat-logo" src="tomcat.svg" alt="[tomcat logo]" />
@@ -102,11 +102,11 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
             <div id="lower">
                 <div id="low-manage" class="">
                     <div class="curved container">
-                        <h3>Managing Tomcat</h3>
+                        <h3>Managing Alx</h3>
                         <p>For security, access to the <a href="/manager/html">manager webapp</a> is restricted.
                         Users are defined in:</p>
                         <pre>$CATALINA_HOME/conf/tomcat-users.xml</pre>
-                        <p>In Tomcat @VERSION_MAJOR_MINOR@ access to the manager application is split between
+                        <p>In Alx @VERSION_MAJOR_MINOR@ access to the manager application is split between
                            different users. &nbsp; <a href="${tomcatDocUrl}manager-howto.html">Read more...</a></p>
                         <br />
                         <h4><a href="${tomcatDocUrl}RELEASE-NOTES.txt">Release Notes</a></h4>

@@ -27,50 +27,50 @@
         <version>34</version>
     </parent>
 
-    <groupId>org.apache.tomcat</groupId>
+    <groupId>com.alx.enterprise.web</groupId>
     <artifactId>tomcat-stuffed</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>org.apache.catalina.startup.Tomcat</mainClass>
+        <mainClass>com.alx.enterprise.webtier.startup.Alx</mainClass>
         <tomcat.version>10.1.39</tomcat.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-catalina</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
         <!-- Optional: Jasper -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-jasper</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
         <!-- Optional: Clustering -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-catalina-ha</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
         <!-- Optional: Websockets -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-websocket</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
         <!-- Optional: DBCP based pool -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-dbcp</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
         <!-- Optional: Store configuration listener -->
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
+            <groupId>com.alx.enterprise.web</groupId>
             <artifactId>tomcat-storeconfig</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
@@ -78,7 +78,7 @@
 
     <build>
         <plugins>
-            <!-- Build any extra classes for your custom Tomcat components if needed -->
+            <!-- Build any extra classes for your custom Alx components if needed -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

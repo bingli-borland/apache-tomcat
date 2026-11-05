@@ -32,31 +32,31 @@ import jakarta.servlet.WriteListener;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.apache.catalina.startup.SimpleHttpClient.CRLF;
-import org.apache.catalina.Context;
-import org.apache.catalina.Wrapper;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.startup.SimpleHttpClient;
-import org.apache.catalina.startup.TesterServlet;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
-import org.apache.tomcat.util.collections.CaseInsensitiveKeyMap;
-import org.apache.tomcat.util.http.Method;
-import org.apache.tomcat.util.net.TesterSupport.SimpleServlet;
+import static com.alx.enterprise.webtier.startup.SimpleHttpClient.CRLF;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.Wrapper;
+import com.alx.enterprise.webtier.core.StandardContext;
+import com.alx.enterprise.webtier.startup.SimpleHttpClient;
+import com.alx.enterprise.webtier.startup.TesterServlet;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
+import com.alx.enterprise.web.util.collections.CaseInsensitiveKeyMap;
+import com.alx.enterprise.web.util.http.Method;
+import com.alx.enterprise.web.util.net.TesterSupport.SimpleServlet;
 
-public class TestHttpServlet extends TomcatBaseTest {
+public class TestHttpServlet extends AlxBaseTest {
 
     @Test
     public void testBug53454() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         StandardContext ctx = (StandardContext) getProgrammaticRootContext();
 
         // Map the test Servlet
         LargeBodyServlet largeBodyServlet = new LargeBodyServlet();
-        Tomcat.addServlet(ctx, "largeBodyServlet", largeBodyServlet);
+        Alx.addServlet(ctx, "largeBodyServlet", largeBodyServlet);
         ctx.addServletMapping("/", "largeBodyServlet");
 
         tomcat.start();
@@ -87,17 +87,17 @@ public class TestHttpServlet extends TomcatBaseTest {
      */
     @Test
     public void testBug57602() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         StandardContext ctx = (StandardContext) getProgrammaticRootContext();
 
         Bug57602ServletOuter outer = new Bug57602ServletOuter();
-        Tomcat.addServlet(ctx, "Bug57602ServletOuter", outer);
+        Alx.addServlet(ctx, "Bug57602ServletOuter", outer);
         ctx.addServletMapping("/outer", "Bug57602ServletOuter");
 
         Bug57602ServletInner inner = new Bug57602ServletInner();
-        Tomcat.addServlet(ctx, "Bug57602ServletInner", inner);
+        Alx.addServlet(ctx, "Bug57602ServletInner", inner);
         ctx.addServletMapping("/inner", "Bug57602ServletInner");
 
         tomcat.start();
@@ -159,12 +159,12 @@ public class TestHttpServlet extends TomcatBaseTest {
 
 
     private void doTestHead(Servlet servlet) throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         StandardContext ctx = (StandardContext) getProgrammaticRootContext();
 
-        Wrapper w = Tomcat.addServlet(ctx, "TestServlet", servlet);
+        Wrapper w = Alx.addServlet(ctx, "TestServlet", servlet);
         // Not all need/use this but it is simpler to set it for all
         w.setAsyncSupported(true);
         ctx.addServletMapping("/test", "TestServlet");
@@ -226,13 +226,13 @@ public class TestHttpServlet extends TomcatBaseTest {
 
 
     private void doTestDoOptions(Servlet servlet, String expectedAllow) throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         StandardContext ctx = (StandardContext) getProgrammaticRootContext();
 
         // Map the test Servlet
-        Tomcat.addServlet(ctx, "servlet", servlet);
+        Alx.addServlet(ctx, "servlet", servlet);
         ctx.addServletMapping("/", "servlet");
 
         tomcat.start();
@@ -265,7 +265,7 @@ public class TestHttpServlet extends TomcatBaseTest {
 
 
     /*
-     * See org.apache.coyote.http2.TestHttpServlet for the HTTP/2 version of this test. It was placed in that package
+     * See com.alx.enterprise.web.crane.http2.TestHttpServlet for the HTTP/2 version of this test. It was placed in that package
      * because it needed access to package private classes.
      */
 
@@ -305,14 +305,14 @@ public class TestHttpServlet extends TomcatBaseTest {
 
     @Test
     public void testTrace() throws Exception {
-        Tomcat tomcat = getTomcatInstance();
+        Alx tomcat = getTomcatInstance();
         tomcat.getConnector().setAllowTrace(true);
 
         // No file system docBase required
         StandardContext ctx = (StandardContext) getProgrammaticRootContext();
 
         // Map the test Servlet
-        Tomcat.addServlet(ctx, "servlet", new SimpleServlet());
+        Alx.addServlet(ctx, "servlet", new SimpleServlet());
         ctx.addServletMapping("/", "servlet");
 
         tomcat.start();
@@ -373,10 +373,10 @@ public class TestHttpServlet extends TomcatBaseTest {
 
         private Exception doRequest() {
 
-            Tomcat tomcat = getTomcatInstance();
+            Alx tomcat = getTomcatInstance();
 
             Context root = tomcat.addContext("", TEMP_DIR);
-            Tomcat.addServlet(root, "TesterServlet", new TesterServlet());
+            Alx.addServlet(root, "TesterServlet", new TesterServlet());
             root.addServletMapping("/test", "TesterServlet");
 
             try {

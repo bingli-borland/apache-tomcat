@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page extends="org.apache.jasper.runtime.TesterHttpJspBase" %>
+<%@ page extends="com.alx.enterprise.web.jasper.runtime.TesterHttpJspBase" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <html>
 <body>

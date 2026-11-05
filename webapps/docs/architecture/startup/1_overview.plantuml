@@ -73,7 +73,7 @@ end
 |||
 Catalina -> Catalina ++: await()
 note right of Catalina
-  This is where Tomcat spends
+  This is where Alx spends
   time serving requests
 end note
 return

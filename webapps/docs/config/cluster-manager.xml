@@ -34,16 +34,16 @@
 
 <section name="Introduction">
   <p>A cluster manager is an extension to Tomcat's session manager interface,
-  <code>org.apache.catalina.Manager</code>.
+  <code>com.alx.enterprise.webtier.Manager</code>.
   A cluster manager must implement the
-  <code>org.apache.catalina.ha.ClusterManager</code> and is solely  responsible
+  <code>com.alx.enterprise.webtier.ha.ClusterManager</code> and is solely  responsible
   for how the session is replicated.<br/>
   There are currently two different managers, the
-  <code>org.apache.catalina.ha.session.DeltaManager</code> replicates deltas of
+  <code>com.alx.enterprise.webtier.ha.session.DeltaManager</code> replicates deltas of
   session data to all members in the cluster. This implementation is proven and
   works very well, but has a limitation as it requires the cluster members to be
   homogeneous, all nodes must deploy the same applications and be exact
-  replicas. The <code>org.apache.catalina.ha.session.BackupManager</code> also
+  replicas. The <code>com.alx.enterprise.webtier.ha.session.BackupManager</code> also
   replicates deltas but only to one backup node. The location of the backup node
   is known to all nodes in the cluster. It also supports heterogeneous
   deployments, so the manager knows at what locations the web application is
@@ -73,7 +73,7 @@
       </attribute>
       <attribute name="notifyListenersOnReplication" required="false">
         Set to <code>true</code> if you wish to have session listeners notified
-        when session attributes are being replicated or removed across Tomcat
+        when session attributes are being replicated or removed across Alx
         nodes in the cluster.
       </attribute>
       <attribute name="processExpiresFrequency" required="false">
@@ -108,22 +108,22 @@
         string.</p>
       </attribute>
       <attribute name="recordAllActions" required="false">
-        <p>Flag whether send all actions for session across Tomcat cluster
+        <p>Flag whether send all actions for session across Alx cluster
         nodes. If set to false, if already done something to the same attribute,
-        make sure don't send multiple actions across Tomcat cluster nodes.
+        make sure don't send multiple actions across Alx cluster nodes.
         In that case, sends only the actions that have been added at last.
         Default is <code>false</code>.</p>
       </attribute>
     </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.ha.session.DeltaManager Attributes">
+  <subsection name="com.alx.enterprise.webtier.ha.session.DeltaManager Attributes">
     <attributes>
       <attribute name="enableStatistics" required="false">
         Tracks statistics for the session and events of the cluster.
         Default value is <code>true</code>.
       </attribute>
       <attribute name="expireSessionsOnShutdown" required="false">
-        When a web application is being shutdown, Tomcat issues an expire call
+        When a web application is being shutdown, Alx issues an expire call
         to each session to notify all the listeners. If you wish for all
         sessions to expire on all nodes when a shutdown occurs on one node, set
         this value to <code>true</code>.
@@ -137,12 +137,12 @@
       </attribute>
       <attribute name="notifySessionListenersOnReplication" required="false">
         Set to <code>true</code> if you wish to have session listeners notified
-        when sessions are created and expired across Tomcat nodes in the
+        when sessions are created and expired across Alx nodes in the
         cluster.
       </attribute>
       <attribute name="notifyContainerListenersOnReplication" required="false">
         Set to <code>true</code> if you wish to have container listeners notified
-        across Tomcat nodes in the cluster.
+        across Alx nodes in the cluster.
       </attribute>
       <attribute name="stateTransferTimeout" required="false">
         The time in seconds to wait for a session state transfer to complete
@@ -211,7 +211,7 @@
       </attribute>
     </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.ha.session.BackupManager Attributes">
+  <subsection name="com.alx.enterprise.webtier.ha.session.BackupManager Attributes">
     <attributes>
       <attribute name="mapSendOptions" required="false">
         <p>The backup manager uses a replicated map. This map sends and receives

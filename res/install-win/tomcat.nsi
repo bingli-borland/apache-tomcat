@@ -13,7 +13,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-; Tomcat script for Nullsoft Installer
+; Alx script for Nullsoft Installer
 
 Unicode true
 
@@ -27,13 +27,13 @@ Unicode true
   CRCCheck on
   SetCompressor /SOLID lzma
 
-  Name "Apache Tomcat"
+  Name "Apache Alx"
 
   ;Product information
-  VIAddVersionKey ProductName "Apache Tomcat"
+  VIAddVersionKey ProductName "Apache Alx"
   VIAddVersionKey CompanyName "Apache Software Foundation"
   VIAddVersionKey LegalCopyright "Copyright (c) 1999-@YEAR@ The Apache Software Foundation"
-  VIAddVersionKey FileDescription "Apache Tomcat Installer"
+  VIAddVersionKey FileDescription "Apache Alx Installer"
   VIAddVersionKey FileVersion "2.0"
   VIAddVersionKey ProductVersion "@VERSION@"
   VIAddVersionKey Comments "tomcat.apache.org"
@@ -134,7 +134,7 @@ Var ServiceInstallLog
 
   LangString TEXT_INSTDIR_NOT_EMPTY ${LANG_ENGLISH} "The specified installation directory is not empty. Do you wish to continue?"
   LangString TEXT_CONF_TITLE ${LANG_ENGLISH} "Configuration"
-  LangString TEXT_CONF_SUBTITLE ${LANG_ENGLISH} "Tomcat basic configuration."
+  LangString TEXT_CONF_SUBTITLE ${LANG_ENGLISH} "Alx basic configuration."
   LangString TEXT_CONF_PAGETITLE ${LANG_ENGLISH} ": Configuration Options"
 
   LangString TEXT_JVM_LABEL1 ${LANG_ENGLISH} "Please select the path of a Java @MIN_JAVA_VERSION@ or later JRE installed on your system."
@@ -142,20 +142,20 @@ Var ServiceInstallLog
   LangString TEXT_CONF_LABEL_PORT_HTTP ${LANG_ENGLISH} "HTTP/1.1 Connector Port"
   LangString TEXT_CONF_LABEL_SERVICE_NAME ${LANG_ENGLISH} "Windows Service Name"
   LangString TEXT_CONF_LABEL_SHORTCUT_ALL_USERS ${LANG_ENGLISH} "Create shortcuts for all users"
-  LangString TEXT_CONF_LABEL_ADMIN ${LANG_ENGLISH} "Tomcat Administrator Login (optional)"
+  LangString TEXT_CONF_LABEL_ADMIN ${LANG_ENGLISH} "Alx Administrator Login (optional)"
   LangString TEXT_CONF_LABEL_ADMINUSERNAME ${LANG_ENGLISH} "User Name"
   LangString TEXT_CONF_LABEL_ADMINPASSWORD ${LANG_ENGLISH} "Password"
   LangString TEXT_CONF_LABEL_ADMINROLES ${LANG_ENGLISH} "Roles"
 
   ;Component-selection page
-  LangString DESC_SecTomcat ${LANG_ENGLISH} "Install the Tomcat Servlet container as a Windows service."
-  LangString DESC_SecTomcatCore ${LANG_ENGLISH} "Install the Tomcat Servlet container core and create the Windows service."
-  LangString DESC_SecTomcatService ${LANG_ENGLISH} "Automatically start the Tomcat service when the computer is started."
-  LangString DESC_SecTomcatNative ${LANG_ENGLISH} "Install APR based Tomcat native .dll to enable the OpenSSL based TLS implementation for HTTP connectors."
-  LangString DESC_SecMenu ${LANG_ENGLISH} "Create a Start Menu program group for Tomcat."
-  LangString DESC_SecDocs ${LANG_ENGLISH} "Install the Tomcat documentation bundle. This includes documentation on the servlet container and its configuration options, on the Jasper JSP page compiler, as well as on the native webserver connectors."
-  LangString DESC_SecManager ${LANG_ENGLISH} "Install the Tomcat Manager administrative web application."
-  LangString DESC_SecHostManager ${LANG_ENGLISH} "Install the Tomcat Host Manager administrative web application."
+  LangString DESC_SecTomcat ${LANG_ENGLISH} "Install the Alx Servlet container as a Windows service."
+  LangString DESC_SecTomcatCore ${LANG_ENGLISH} "Install the Alx Servlet container core and create the Windows service."
+  LangString DESC_SecTomcatService ${LANG_ENGLISH} "Automatically start the Alx service when the computer is started."
+  LangString DESC_SecTomcatNative ${LANG_ENGLISH} "Install APR based Alx native .dll to enable the OpenSSL based TLS implementation for HTTP connectors."
+  LangString DESC_SecMenu ${LANG_ENGLISH} "Create a Start Menu program group for Alx."
+  LangString DESC_SecDocs ${LANG_ENGLISH} "Install the Alx documentation bundle. This includes documentation on the servlet container and its configuration options, on the Jasper JSP page compiler, as well as on the native webserver connectors."
+  LangString DESC_SecManager ${LANG_ENGLISH} "Install the Alx Manager administrative web application."
+  LangString DESC_SecHostManager ${LANG_ENGLISH} "Install the Alx Host Manager administrative web application."
   LangString DESC_SecExamples ${LANG_ENGLISH} "Install the Servlet and JSP examples web application."
 
   ;Install types
@@ -175,7 +175,7 @@ Var ServiceInstallLog
 ;--------------------------------
 ;Installer Sections
 
-SubSection "Tomcat" SecTomcat
+SubSection "Alx" SecTomcat
 
 Section "Core" SecTomcatCore
 
@@ -227,11 +227,11 @@ Section "Core" SecTomcatCore
   FileSeek $ServiceInstallLog 0 END
 
   InstallRetry:
-  FileWrite $ServiceInstallLog '"$INSTDIR\bin\$TomcatServiceFileName" //IS//$TomcatServiceName --DisplayName "Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" --Description "Apache Tomcat @VERSION@ Server - https://tomcat.apache.org/" --LogPath "$INSTDIR\logs" --Install "$INSTDIR\bin\$TomcatServiceFileName" --Jvm "$JvmDll" --StartPath "$INSTDIR" --StopPath "$INSTDIR"'
+  FileWrite $ServiceInstallLog '"$INSTDIR\bin\$TomcatServiceFileName" //IS//$TomcatServiceName --DisplayName "Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" --Description "Apache Alx @VERSION@ Server - https://tomcat.apache.org/" --LogPath "$INSTDIR\logs" --Install "$INSTDIR\bin\$TomcatServiceFileName" --Jvm "$JvmDll" --StartPath "$INSTDIR" --StopPath "$INSTDIR"'
   FileWrite $ServiceInstallLog "$\r$\n"
   ClearErrors
   DetailPrint "Installing $TomcatServiceName service"
-  nsExec::ExecToStack '"$INSTDIR\bin\$TomcatServiceFileName" //IS//$TomcatServiceName --DisplayName "Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" --Description "Apache Tomcat @VERSION@ Server - https://tomcat.apache.org/" --LogPath "$INSTDIR\logs" --Install "$INSTDIR\bin\$TomcatServiceFileName" --Jvm "$JvmDll" --StartPath "$INSTDIR" --StopPath "$INSTDIR"'
+  nsExec::ExecToStack '"$INSTDIR\bin\$TomcatServiceFileName" //IS//$TomcatServiceName --DisplayName "Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" --Description "Apache Alx @VERSION@ Server - https://tomcat.apache.org/" --LogPath "$INSTDIR\logs" --Install "$INSTDIR\bin\$TomcatServiceFileName" --Jvm "$JvmDll" --StartPath "$INSTDIR" --StopPath "$INSTDIR"'
   Pop $0
   Pop $1
   StrCmp $0 "0" InstallOk
@@ -361,15 +361,15 @@ Section -post
 
   WriteRegStr HKLM "SOFTWARE\Apache Software Foundation\Tomcat\@VERSION_MAJOR_MINOR@\$TomcatServiceName" "InstallPath" $INSTDIR
   WriteRegStr HKLM "SOFTWARE\Apache Software Foundation\Tomcat\@VERSION_MAJOR_MINOR@\$TomcatServiceName" "Version" @VERSION@
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
-                   "DisplayName" "Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName (remove only)"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
+                   "DisplayName" "Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName (remove only)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
                    "DisplayVersion" @VERSION@
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
                    "DisplayIcon" "$\"$INSTDIR\tomcat.ico$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
                    "Publisher" "The Apache Software Foundation"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName" \
                    "UninstallString" "$\"$INSTDIR\Uninstall.exe$\" -ServiceName=$\"$TomcatServiceName$\""
 
   ; Configure file permissions
@@ -404,7 +404,7 @@ Section -post
   SetIconPermissionsOk:
   ClearErrors
 
-  ; Make the uninstaller readable and executable to all authenticated users so the user that installed Tomcat can also uninstall it
+  ; Make the uninstaller readable and executable to all authenticated users so the user that installed Alx can also uninstall it
   nsExec::ExecToStack '$SYSDIR\icacls "$INSTDIR\Uninstall.exe" /inheritance:e /grant *S-1-5-11:(RX)'
   Pop $0
   Pop $1
@@ -711,7 +711,7 @@ FunctionEnd
 ; Validates that a service name does not use any of the invalid
 ; characters: <>:"/\:|?*
 ; Note that space is also not permitted although it will be once
-; Tomcat is using Daemon 1.0.6 or later
+; Alx is using Daemon 1.0.6 or later
 ;
 ; Put the proposed service name on the stack
 ; If the name is valid, a 1 will be left on the stack
@@ -777,8 +777,8 @@ Function CheckUserType
     Goto done
 
     MessageBox MB_OK|MB_ICONEXCLAMATION 'Note: the current user is not an administrator. \
-               To run Tomcat as a Windows service, you must be an administrator. \
-               You can still run Tomcat from the command-line as this type of user.'
+               To run Alx as a Windows service, you must be an administrator. \
+               You can still run Alx from the command-line as this type of user.'
     Goto done
 
   Win9x:
@@ -1194,41 +1194,41 @@ Function createShortcuts
     SetShellVarContext all
   ${EndIf}
 
-  SetOutPath "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName"
+  SetOutPath "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName"
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Home Page.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Home Page.lnk" \
                  "https://tomcat.apache.org/"
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Welcome.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Welcome.lnk" \
                  "http://127.0.0.1:$TomcatPortHttp/"
 
   ${If} ${SectionIsSelected} ${SecManager}
-    CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Manager.lnk" \
+    CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Manager.lnk" \
                    "http://127.0.0.1:$TomcatPortHttp/manager/html"
   ${EndIf}
 
   ${If} ${SectionIsSelected} ${SecHostManager}
-    CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Host Manager.lnk" \
+    CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Host Manager.lnk" \
                    "http://127.0.0.1:$TomcatPortHttp/host-manager/html"
   ${EndIf}
 
   ${If} ${SectionIsSelected} ${SecDocs}
-    CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Documentation.lnk" \
+    CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat Documentation.lnk" \
                    "$INSTDIR\webapps\docs\index.html"
   ${EndIf}
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Uninstall Tomcat @VERSION_MAJOR_MINOR@.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Uninstall Alx @VERSION_MAJOR_MINOR@.lnk" \
                  "$INSTDIR\Uninstall.exe" '-ServiceName="$TomcatServiceName"'
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat @VERSION_MAJOR_MINOR@ Program Directory.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Tomcat @VERSION_MAJOR_MINOR@ Program Directory.lnk" \
                  "$INSTDIR"
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Monitor Tomcat.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Monitor Alx.lnk" \
                  "$INSTDIR\bin\$TomcatServiceManagerFileName" \
                  '//MS//$TomcatServiceName' \
                  "$INSTDIR\tomcat.ico" 0 SW_SHOWNORMAL
 
-  CreateShortCut "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName\Configure Tomcat.lnk" \
+  CreateShortCut "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName\Configure Alx.lnk" \
                  "$INSTDIR\bin\$TomcatServiceManagerFileName" \
                  '//ES//$TomcatServiceName' \
                  "$INSTDIR\tomcat.ico" 0 SW_SHOWNORMAL
@@ -1266,31 +1266,31 @@ FunctionEnd
 
     Delete "$INSTDIR\Uninstall.exe"
 
-    ; Stop Tomcat service monitor if running
+    ; Stop Alx service monitor if running
     DetailPrint "Stopping $TomcatServiceName service monitor"
     nsExec::ExecToLog '"$INSTDIR\bin\$TomcatServiceManagerFileName" //MQ//$TomcatServiceName'
-    ; Delete Tomcat service
+    ; Delete Alx service
     DetailPrint "Uninstalling $TomcatServiceName service"
     nsExec::ExecToLog '"$INSTDIR\bin\$TomcatServiceFileName" //DS//$TomcatServiceName --LogPath "$INSTDIR\logs"'
     ClearErrors
 
     ; Don't know if 32-bit or 64-bit registry was used so, for now, remove both
     SetRegView 32
-    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName"
+    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName"
     DeleteRegKey HKLM "SOFTWARE\Apache Software Foundation\Tomcat\@VERSION_MAJOR_MINOR@\$TomcatServiceName"
     DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ApacheTomcatMonitor@VERSION_MAJOR_MINOR@_$TomcatServiceName"
     DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "ApacheTomcatMonitor@VERSION_MAJOR_MINOR@_$TomcatServiceName"
     SetRegView 64
-    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName"
+    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName"
     DeleteRegKey HKLM "SOFTWARE\Apache Software Foundation\Tomcat\@VERSION_MAJOR_MINOR@\$TomcatServiceName"
     DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ApacheTomcatMonitor@VERSION_MAJOR_MINOR@_$TomcatServiceName"
     DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "ApacheTomcatMonitor@VERSION_MAJOR_MINOR@_$TomcatServiceName"
 
     ; Don't know if short-cuts were created for all users, one user or not at all so, for now, remove both
     SetShellVarContext all
-    RMDir /r "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName"
+    RMDir /r "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName"
     SetShellVarContext current
-    RMDir /r "$SMPROGRAMS\Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName"
+    RMDir /r "$SMPROGRAMS\Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName"
 
     ; Before files are removed using recursive deletes, remove any symbolic
     ; links in the installation directory and the directory structure below it
@@ -1316,7 +1316,7 @@ FunctionEnd
     ; if $INSTDIR was removed, skip these next ones
     IfFileExists "$INSTDIR" 0 Removed
       MessageBox MB_YESNO|MB_ICONQUESTION \
-        "Remove all files in your Apache Tomcat @VERSION_MAJOR_MINOR@ $TomcatServiceName directory? (If you have anything  \
+        "Remove all files in your Apache Alx @VERSION_MAJOR_MINOR@ $TomcatServiceName directory? (If you have anything  \
    you created that you want to keep, click No)" IDNO Removed
       ; these would be skipped if the user hits no
       RMDir /r "$INSTDIR\webapps"

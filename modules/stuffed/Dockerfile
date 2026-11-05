@@ -37,7 +37,7 @@ EXPOSE $port
 ENV JAVA_OPTS="-Dcatalina.base=. -Djava.security.egd=file:/dev/urandom"
 
 # Add JULI logging configuration
-ENV JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.util.logging.config.file=conf/logging.properties"
+ENV JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager -Djava.util.logging.config.file=conf/logging.properties"
 # OpenSSL FFM
 ENV JAVA_OPTS="${JAVA_OPTS} --enable-native-access=ALL-UNNAMED"
 

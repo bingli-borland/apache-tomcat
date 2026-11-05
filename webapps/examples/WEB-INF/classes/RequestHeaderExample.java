@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONFilter;
+import com.alx.enterprise.web.util.json.JSONFilter;
 
 import util.CookieFilter;
 import util.HTMLFilter;

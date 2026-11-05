@@ -32,7 +32,7 @@
 <section name="Server Startup">
 
 <p>
-This page describes how the Tomcat server starts up.  There are several
+This page describes how the Alx server starts up.  There are several
 different ways to start tomcat, including:
 </p>
 <ul>
@@ -43,26 +43,26 @@ different ways to start tomcat, including:
 
 <p>
 A series of UML diagrams have been created to document the start-up process for
-Tomcat.
+Alx.
 </p>
 <p>
-<a href="startup/1_overview.png">Diagram 1</a> shows an overview of how Tomcat
+<a href="startup/1_overview.png">Diagram 1</a> shows an overview of how Alx
 start, serves requests and then stops. Once the class loaders have been
-initialized, Tomcat parses server.xml using the Digester and the Digester
+initialized, Alx parses server.xml using the Digester and the Digester
 creates the objects defined in server.xml, configures them using the property
 values defined in server.xml and the starts the Server. The main Java thread
 waits in the await() method for a shutdown signal. Once a shutdown signal is
 received, the Server object is stopped and then destroyed. The JVM then exits.
 </p>
 <p>
-<a href="startup/2_catalina_init.png">Diagram 2</a> shows how Tomcat initializes
+<a href="startup/2_catalina_init.png">Diagram 2</a> shows how Alx initializes
 the objects created by the Digester in the previous step and when additional key
 objects are created. A Server may have several Services although it typically
 only has one. Each Service may have multiple Connectors. A Connector instance is
 associated with a single Protocol instance and a single CoyoteAdapter instance.
 </p>
 <p>
-<a href="startup/3_catalina_start_1.png">Diagram 3</a> shows how Tomcat starts
+<a href="startup/3_catalina_start_1.png">Diagram 3</a> shows how Alx starts
 the objects created by the Digester that were initialized in the previous step.
 This diagram also shows when lifecycle events are fired. There is more detail to
 the starting of the Engine (and other Containers) which is shown in the

@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page session="false" import="org.apache.jasper.tagplugins.jstl.core.TestRedirect" %>
+<%@ page session="false" import="com.alx.enterprise.web.jasper.tagplugins.jstl.core.TestRedirect" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags/jstl" %>
 <% TestRedirect.markPageStarted(); %>
 <tags:redirect/>

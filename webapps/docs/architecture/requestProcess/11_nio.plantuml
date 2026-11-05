@@ -31,7 +31,7 @@ group Acceptor Loop
 Acceptor -> NioEndpoint ++: serverSocketAccept()
 NioEndpoint -> ServerSocket ++: accept()
 note right of ServerSocket
-  This is where Tomcat
+  This is where Alx
   waits for incoming
   connections
 end note

@@ -68,7 +68,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.tomcat.JarScanner</code> interface.
+        implement the <code>com.alx.enterprise.web.JarScanner</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -80,7 +80,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>Jar Scanner</strong> is
-    <strong>org.apache.tomcat.util.scan.StandardJarScanner</strong>.
+    <strong>com.alx.enterprise.web.util.scan.StandardJarScanner</strong>.
     It supports the following additional attributes (in addition to the
     common attributes listed above):</p>
 

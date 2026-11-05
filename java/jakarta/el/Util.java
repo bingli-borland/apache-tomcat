@@ -45,10 +45,10 @@ class Util {
     static {
         if (IS_SECURITY_ENABLED) {
             // Defaults to using a privileged block
-            // When running on Tomcat this will be set to false in
+            // When running on Alx this will be set to false in
             // $CATALINA_BASE/conf/catalina.properties
             String value = AccessController.doPrivileged((PrivilegedAction<String>) () -> System
-                    .getProperty("org.apache.el.GET_CLASSLOADER_USE_PRIVILEGED", "true"));
+                    .getProperty("com.alx.enterprise.el.GET_CLASSLOADER_USE_PRIVILEGED", "true"));
             GET_CLASSLOADER_USE_PRIVILEGED = Boolean.parseBoolean(value);
         } else {
             // No security manager - no need to use a privileged block.
@@ -111,7 +111,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static Method findMethod(ELContext context, Class<?> clazz, Object base, String methodName, Class<?>[] paramTypes,
             Object[] paramValues) {
@@ -145,7 +145,7 @@ class Util {
     }
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     @SuppressWarnings("null")
     private static <T> Wrapper<T> findWrapper(ELContext context, Class<?> clazz, List<Wrapper<T>> wrappers, String name,
@@ -322,7 +322,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private static <T> Wrapper<T> resolveAmbiguousWrapper(Set<Wrapper<T>> candidates, Class<?>[] paramTypes) {
         // Identify which parameter isn't an exact match
@@ -386,7 +386,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static boolean isAssignableFrom(Class<?> src, Class<?> target) {
         // src will always be an object
@@ -423,7 +423,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private static boolean isCoercibleFrom(ELContext context, Object src, Class<?> target) {
         // TODO: This isn't pretty but it works. Significant refactoring would
@@ -455,7 +455,7 @@ class Util {
 
 
     /*
-     * This method duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This method duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     static Method getMethod(Class<?> type, Object base, Method m) {
         if (m == null || (Modifier.isPublic(type.getModifiers()) &&
@@ -664,7 +664,7 @@ class Util {
     }
 
     /*
-     * This class duplicates code in org.apache.el.util.ReflectionUtil. When making changes keep the code in sync.
+     * This class duplicates code in com.alx.enterprise.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
     private static class MatchResult implements Comparable<MatchResult> {
 

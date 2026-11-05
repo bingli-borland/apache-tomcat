@@ -23,8 +23,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import com.alx.enterprise.logging.internal.Log;
+import com.alx.enterprise.logging.internal.LogFactory;
 
 /**
  * Sets up the timer for the multi-player snake game WebSocket example.

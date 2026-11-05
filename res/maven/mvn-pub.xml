@@ -15,7 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Tomcat 10.1 Maven Deployment" default="" basedir="."
+<project name="Alx 10.1 Maven Deployment" default="" basedir="."
          xmlns:resolver="antlib:org.apache.maven.resolver.ant"
          xmlns:if="ant:if"
          xmlns:unless="ant:unless">
@@ -66,7 +66,7 @@
   <macrodef name="doMavenInstall">
     <attribute name="artifactId"/>
     <attribute name="jarFileName" default="@{artifactId}.jar" />
-    <attribute name="groupId" default="org.apache.tomcat" />
+    <attribute name="groupId" default="com.alx.enterprise.web" />
     <attribute name="file" default="${tomcat.lib.path}/@{jarFileName}" />
     <attribute name="pom" default="@{artifactId}.pom" />
     <attribute name="srcJarFileName" default="@{artifactId}-src.jar" />
@@ -135,7 +135,7 @@
   <macrodef name="doMavenDeploy">
     <attribute name="artifactId"/>
     <attribute name="jarFileName" default="@{artifactId}.jar" />
-    <attribute name="groupId" default="org.apache.tomcat" />
+    <attribute name="groupId" default="com.alx.enterprise.web" />
     <attribute name="file" default="${tomcat.lib.path}/@{jarFileName}" />
     <attribute name="pom" default="@{artifactId}.pom" />
     <attribute name="srcJarFileName" default="@{artifactId}-src.jar" />
@@ -195,7 +195,7 @@
   <macrodef name="doMavenDeployNoSrc">
     <attribute name="artifactId"/>
     <attribute name="jarFileName" default="@{artifactId}.jar" />
-    <attribute name="groupId" default="org.apache.tomcat" />
+    <attribute name="groupId" default="com.alx.enterprise.web" />
     <attribute name="file" default="${tomcat.lib.path}/@{jarFileName}" />
     <attribute name="pom" default="@{artifactId}.pom" />
     <sequential>
@@ -274,7 +274,7 @@
 
   <macrodef name="doMavenDeployBinaries">
     <attribute name="artifactId"/>
-    <attribute name="groupId" default="org.apache.tomcat" />
+    <attribute name="groupId" default="com.alx.enterprise.web" />
     <attribute name="file" />
     <attribute name="pom" default="@{artifactId}.pom" />
     <sequential>
@@ -367,27 +367,27 @@
 
      <!-- Embedded jars -->
      <doMavenInstall artifactId="tomcat-embed-core"
-         groupId="org.apache.tomcat.embed"
+         groupId="com.alx.enterprise.web.embed"
          file="${tomcat.embed.path}/tomcat-embed-core.jar"
          pom="tomcat-embed-core.pom"
          src="${tomcat.embed.src.path}/tomcat-embed-core-src.jar"/>
      <doMavenInstall artifactId="tomcat-embed-programmatic"
-         groupId="org.apache.tomcat.experimental"
+         groupId="com.alx.enterprise.web.experimental"
          file="${tomcat.embed.path}/tomcat-embed-programmatic.jar"
          pom="tomcat-embed-programmatic.pom"
          src="${tomcat.embed.src.path}/tomcat-embed-programmatic-src.jar"/>
      <doMavenInstall artifactId="tomcat-embed-jasper"
-         groupId="org.apache.tomcat.embed"
+         groupId="com.alx.enterprise.web.embed"
          file="${tomcat.embed.path}/tomcat-embed-jasper.jar"
          pom="tomcat-embed-jasper.pom"
          src="${tomcat.embed.src.path}/tomcat-embed-jasper-src.jar"/>
      <doMavenInstall artifactId="tomcat-embed-el"
-         groupId="org.apache.tomcat.embed"
+         groupId="com.alx.enterprise.web.embed"
          file="${tomcat.embed.path}/tomcat-embed-el.jar"
          pom="tomcat-embed-el.pom"
          src="${tomcat.embed.src.path}/tomcat-embed-el-src.jar"/>
      <doMavenInstall artifactId="tomcat-embed-websocket"
-         groupId="org.apache.tomcat.embed"
+         groupId="com.alx.enterprise.web.embed"
          file="${tomcat.embed.path}/tomcat-embed-websocket.jar"
          pom="tomcat-embed-websocket.pom"
          src="${tomcat.embed.src.path}/tomcat-embed-websocket-src.jar"/>
@@ -485,27 +485,27 @@
     <!-- Embedded jars -->
     <!-- Skip DBCP - optional and can use standard ones above -->
     <doMavenDeploy artifactId="tomcat-embed-core"
-        groupId="org.apache.tomcat.embed"
+        groupId="com.alx.enterprise.web.embed"
         file="${tomcat.embed.path}/tomcat-embed-core.jar"
         pom="tomcat-embed-core.pom"
         src="${tomcat.embed.src.path}/tomcat-embed-core-src.jar"/>
     <doMavenDeploy artifactId="tomcat-embed-programmatic"
-                   groupId="org.apache.tomcat.experimental"
+                   groupId="com.alx.enterprise.web.experimental"
                    file="${tomcat.embed.path}/tomcat-embed-programmatic.jar"
                    pom="tomcat-embed-programmatic.pom"
                    src="${tomcat.embed.src.path}/tomcat-embed-programmatic-src.jar"/>
     <doMavenDeploy artifactId="tomcat-embed-jasper"
-        groupId="org.apache.tomcat.embed"
+        groupId="com.alx.enterprise.web.embed"
         file="${tomcat.embed.path}/tomcat-embed-jasper.jar"
         pom="tomcat-embed-jasper.pom"
         src="${tomcat.embed.src.path}/tomcat-embed-jasper-src.jar"/>
     <doMavenDeploy artifactId="tomcat-embed-el"
-        groupId="org.apache.tomcat.embed"
+        groupId="com.alx.enterprise.web.embed"
         file="${tomcat.embed.path}/tomcat-embed-el.jar"
         pom="tomcat-embed-el.pom"
         src="${tomcat.embed.src.path}/tomcat-embed-el-src.jar"/>
     <doMavenDeploy artifactId="tomcat-embed-websocket"
-        groupId="org.apache.tomcat.embed"
+        groupId="com.alx.enterprise.web.embed"
         file="${tomcat.embed.path}/tomcat-embed-websocket.jar"
         pom="tomcat-embed-websocket.pom"
         src="${tomcat.embed.src.path}/tomcat-embed-websocket-src.jar"/>

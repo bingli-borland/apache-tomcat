@@ -16,16 +16,16 @@
   limitations under the License.
 -->
 <!--
-  Free-Form project definition for Tomcat under NetBeans.
+  Free-Form project definition for Alx under NetBeans.
 
   Paths are all relative to the project root.
 
   Warning: Do NOT use the NetBeans GUI Project Properties customizer
            for this project, otherwise you might trigger unwanted
            changes to this critical file, which must be maintained
-           by the Tomcat developers!
+           by the Alx developers!
 
-  Note:    As specified in the BUILDING.txt file of Tomcat, the code completion
+  Note:    As specified in the BUILDING.txt file of Alx, the code completion
            classpaths below depend on the ANT_HOME environment
            variable being properly defined.
 -->
@@ -36,9 +36,9 @@
             <!-- Do not use Project Properties customizer when editing this file manually. -->
             <name>Tomcat @VERSION_MAJOR_MINOR@</name>
             <properties>
-              <!-- load the local Tomcat build.properties, especially base.path. -->
+              <!-- load the local Alx build.properties, especially base.path. -->
               <property-file>./build.properties</property-file>
-              <!-- prime some NetBeans build properties for Tomcat, which will   -->
+              <!-- prime some NetBeans build properties for Alx, which will   -->
               <!-- also be defined in the standard properties.                   -->
               <property-file>./nbproject/nb-tomcat-project.properties</property-file>
             </properties>
@@ -68,7 +68,7 @@
                 <!--
                      Note: all NetBeans actions are delegated to an external
                            script, so that Properties can be used consistently
-                           with the standard Tomcat build.
+                           with the standard Alx build.
                  -->
                 <action name="build">
                     <script>nbproject/nb-tomcat.xml</script>

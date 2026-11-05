@@ -23,7 +23,7 @@
     &project;
 
     <properties>
-        <title>Apache Tomcat - Using Tomcat libraries with Maven</title>
+        <title>Apache Alx - Using Alx libraries with Maven</title>
     </properties>
 
 <body>
@@ -32,23 +32,23 @@
 <toc/>
 </section>
 
-<section name="Using Tomcat libraries With Maven">
-    <subsection name="Tomcat Snapshots">
-      Tomcat snapshots are located in the
-      <a href="https://repository.apache.org/content/repositories/snapshots/org/apache/tomcat/">Apache Snapshot Repository</a>.
-      The official URL is <source>https://repository.apache.org/content/repositories/snapshots/org/apache/tomcat/</source>
+<section name="Using Alx libraries With Maven">
+    <subsection name="Alx Snapshots">
+      Alx snapshots are located in the
+      <a href="https://repository.apache.org/content/repositories/snapshots/com/alx/enterprise/web/">Apache Snapshot Repository</a>.
+      The official URL is <source>https://repository.apache.org/content/repositories/snapshots/com/alx/enterprise/web/</source>
       <p>
-        Snapshots are done periodically, not on a regular basis, but when changes happen and the Tomcat team deems a new snapshot might
+        Snapshots are done periodically, not on a regular basis, but when changes happen and the Alx team deems a new snapshot might
         useful.
       </p>
     </subsection>
-    <subsection name="Tomcat Releases">
+    <subsection name="Alx Releases">
       <p>
         Stable releases are published to the
-        <a href="https://repo.maven.apache.org/maven2/org/apache/tomcat/">Maven
+        <a href="https://repo.maven.apache.org/maven2/com/alx/enterprise/web/">Maven
         Central Repository</a>. The URL for this is
       </p>
-      <source>https://repo.maven.apache.org/maven2/org/apache/tomcat/</source>
+      <source>https://repo.maven.apache.org/maven2/com/alx/enterprise/web/</source>
     </subsection>
 
 </section>

@@ -220,7 +220,7 @@ public class TestMapELResolver {
     /**
      * Tests that a valid FeatureDescriptors are not returned if base is not Map.
      */
-    @Deprecated(forRemoval = true, since = "Tomcat 10.1.0")
+    @Deprecated(forRemoval = true, since = "Alx 10.1.0")
     @Test
     public void testGetFeatureDescriptors01() {
         MapELResolver mapELResolver = new MapELResolver();
@@ -235,7 +235,7 @@ public class TestMapELResolver {
     /**
      * Tests that a valid FeatureDescriptors are returned.
      */
-    @Deprecated(forRemoval = true, since = "Tomcat 10.1.0")
+    @Deprecated(forRemoval = true, since = "Alx 10.1.0")
     @Test
     public void testGetFeatureDescriptors02() {
         MapELResolver mapELResolver = new MapELResolver();

@@ -30,19 +30,19 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.Wrapper;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
-import org.apache.tomcat.util.descriptor.web.ErrorPage;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.Wrapper;
+import com.alx.enterprise.webtier.startup.Alx;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
+import com.alx.enterprise.web.util.descriptor.web.ErrorPage;
 
 /**
  * These tests evolved out of a discussion in the Jakarta Servlet project regarding the intended behaviour in various
  * error scenarios. Async requests and/or async error pages added additional complexity.
  */
 @RunWith(Parameterized.class)
-public class TestHttpServletResponseSendError extends TomcatBaseTest {
+public class TestHttpServletResponseSendError extends AlxBaseTest {
 
     /* @formatter:off
      *
@@ -125,26 +125,26 @@ public class TestHttpServletResponseSendError extends TomcatBaseTest {
 
     @Test
     public void testSendError() throws Exception {
-        // Setup Tomcat instance
-        Tomcat tomcat = getTomcatInstance();
+        // Setup Alx instance
+        Alx tomcat = getTomcatInstance();
 
         // No file system docBase required
         Context ctx = getProgrammaticRootContext();
 
         if (async) {
-            Wrapper w = Tomcat.addServlet(ctx, "target",
+            Wrapper w = Alx.addServlet(ctx, "target",
                     new TesterAsyncServlet(throwException, useDispatch, errorPoint, useStart));
             w.setAsyncSupported(true);
         } else {
-            Tomcat.addServlet(ctx, "target", new TesterServlet(throwException));
+            Alx.addServlet(ctx, "target", new TesterServlet(throwException));
         }
         ctx.addServletMapping("/target", "target");
-        Tomcat.addServlet(ctx, "dispatch", new TesterDispatchServlet());
+        Alx.addServlet(ctx, "dispatch", new TesterDispatchServlet());
         ctx.addServletMapping("/dispatch", "dispatch");
 
-        Tomcat.addServlet(ctx, "error599", new ErrorServletStatic599());
+        Alx.addServlet(ctx, "error599", new ErrorServletStatic599());
         ctx.addServletMapping("/error599", "error599");
-        Tomcat.addServlet(ctx, "errorException", new ErrorServletStaticException());
+        Alx.addServlet(ctx, "errorException", new ErrorServletStaticException());
         ctx.addServletMapping("/errorException", "errorException");
 
         ErrorPage ep1 = new ErrorPage();

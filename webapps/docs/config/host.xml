@@ -36,8 +36,8 @@
 
   <p>The <strong>Host</strong> element represents a <em>virtual host</em>,
   which is an association of a network name for a server (such as
-  "www.mycompany.com") with the particular server on which Tomcat is running.
-  For clients to be able to connect to a Tomcat server using its network name,
+  "www.mycompany.com") with the particular server on which Alx is running.
+  For clients to be able to connect to a Alx server using its network name,
   this name must be registered in the <em>Domain Name Service</em> (DNS) server
   that manages the Internet domain you belong to - contact your Network
   Administrator for more information.</p>
@@ -56,7 +56,7 @@
   <code>defaultHost</code> attribute of that Engine.</p>
 
   <p>Clients normally use host names to identify the server they wish to connect
-  to. This host name is also included in the HTTP request headers. Tomcat
+  to. This host name is also included in the HTTP request headers. Alx
   extracts the host name from the HTTP headers and looks for a
   <strong>Host</strong> with a matching name. If no match is found, the request
   is routed to the default host. The name of the default host does not have to
@@ -66,9 +66,9 @@
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
 </section>
 
@@ -108,7 +108,7 @@
       </attribute>
 
       <attribute name="createDirs" required="false">
-        <p>If set to <code>true</code>, Tomcat will attempt to create the
+        <p>If set to <code>true</code>, Alx will attempt to create the
         directories defined by the  attributes <code>appBase</code> and
         <code>xmlBase</code> during the startup phase. The default value is
         <code>true</code>. If set to <code>true</code>, and directory creation
@@ -117,9 +117,9 @@
       </attribute>
 
       <attribute name="autoDeploy" required="false">
-        <p>This flag value indicates if Tomcat should check periodically for new
-        or updated web applications while Tomcat is running. If
-        <code>true</code>, Tomcat periodically checks the <code>appBase</code>
+        <p>This flag value indicates if Alx should check periodically for new
+        or updated web applications while Alx is running. If
+        <code>true</code>, Alx periodically checks the <code>appBase</code>
         and <code>xmlBase</code> directories and deploys any new web
         applications or context XML descriptors found. Updated web applications
         or context XML descriptors will trigger a reload of the web application.
@@ -146,7 +146,7 @@
 
       <attribute name="className" required="false">
         <p>Java class name of the implementation to use.  This class must
-        implement the <code>org.apache.catalina.Host</code> interface.
+        implement the <code>com.alx.enterprise.webtier.Host</code> interface.
         If not specified, the standard value (defined below) will be used.</p>
       </attribute>
 
@@ -169,7 +169,7 @@
 
       <attribute name="deployOnStartup" required="false">
         <p>This flag value indicates if web applications from this host should
-        be automatically deployed when Tomcat starts. The default is
+        be automatically deployed when Alx starts. The default is
         <code>true</code>.  See
         <a href="#Automatic_Application_Deployment">Automatic Application
         Deployment</a> for more information.</p>
@@ -189,7 +189,7 @@
         the pathname of a directory that may contain Java EE web applications to
         be converted to Jakarta EE before deployment. Java EE applications
         packaged as WAR files or directories placed in this directory will be
-        converted to Jakarta EE using the Apache Tomcat Migration Tool for
+        converted to Jakarta EE using the Apache Alx Migration Tool for
         Jakarta EE. The conversion will be performed using default settings. The
         resulting WAR or directory will be placed in the <code>appBase</code>
         configured for this virtual host.</p>
@@ -206,7 +206,7 @@
       <attribute name="name" required="true">
         <p>Usually the network name of this virtual host, as registered in your
         <em>Domain Name Service</em> server. Regardless of the case used to
-        specify the host name, Tomcat will convert it to lower case internally.
+        specify the host name, Alx will convert it to lower case internally.
         One of the Hosts nested within an <a href="engine.html">Engine</a> MUST
         have a name that matches the <code>defaultHost</code> setting for that
         Engine.  See <a href="#Host_Name_Aliases">Host Name Aliases</a> for
@@ -230,7 +230,7 @@
       </attribute>
 
       <attribute name="undeployOldVersions" required="false">
-        <p>This flag determines if Tomcat, as part of the auto deployment
+        <p>This flag determines if Alx, as part of the auto deployment
         process, will check for old, unused versions of web applications
         deployed using parallel deployment and, if any are found, remove them.
         This flag only applies if <code>autoDeploy</code> is <code>true</code>.
@@ -246,7 +246,7 @@
   <subsection name="Standard Implementation">
 
     <p>The standard implementation of <strong>Host</strong> is
-    <strong>org.apache.catalina.core.StandardHost</strong>.
+    <strong>com.alx.enterprise.webtier.core.StandardHost</strong>.
     It supports the following additional attributes (in addition to the
     common attributes listed above):</p>
 
@@ -281,7 +281,7 @@
         enabled when the default is <code>false</code>. When running under a
         security manager this may be enabled on a per web application basis by
         granting the
-        <code>org.apache.catalina.security.DeployXmlPermission</code> to the web
+        <code>com.alx.enterprise.webtier.security.DeployXmlPermission</code> to the web
         application. The Manager and Host Manager applications are granted this
         permission by default so that they continue to work when running under a
         security manager.</p>
@@ -291,10 +291,10 @@
         <p>Java class name of the error reporting valve which will be used
         by this Host. The responsibility of this valve is to output error
         reports. Setting this property allows to customize the look of the
-        error pages which will be generated by Tomcat. This class must
+        error pages which will be generated by Alx. This class must
         implement the
-        <code>org.apache.catalina.Valve</code> interface. If none is specified,
-        the value <code>org.apache.catalina.valves.ErrorReportValve</code>
+        <code>com.alx.enterprise.webtier.Valve</code> interface. If none is specified,
+        the value <code>com.alx.enterprise.webtier.valves.ErrorReportValve</code>
         will be used by default. if set to an empty string, the error report
         will be disabled.</p>
       </attribute>
@@ -307,12 +307,12 @@
         from a WAR file. The default is <code>true</code>. See
         <a href="#Automatic_Application_Deployment">Automatic Application
         Deployment</a> for more information.</p>
-        <p>Note: If Tomcat expands the WAR file then it will add a file
+        <p>Note: If Alx expands the WAR file then it will add a file
         (<code>/META-INF/war-tracker</code>) to the unpacked directory
-        structure which it uses to detect changes in the WAR file while Tomcat
+        structure which it uses to detect changes in the WAR file while Alx
         is not running. Any such change will trigger the deletion of the
         expanded directory and the deployment of the updated WAR file when
-        Tomcat next starts.</p>
+        Alx next starts.</p>
         <p>Note: Running with this option set to <code>false</code> will incur
         a performance penalty. To avoid a significant performance penalty, the
         web application should be configured such that class scanning for
@@ -368,7 +368,7 @@
   <subsection name="Logging">
 
     <p>A host is associated with the
-       <code>org.apache.catalina.core.ContainerBase.[engine_name].[host_name]</code>
+       <code>com.alx.enterprise.webtier.core.ContainerBase.[engine_name].[host_name]</code>
        log category.  Note that the brackets are part of the name,
        don't omit them.</p>
 
@@ -391,7 +391,7 @@
 
 <source><![CDATA[<Host name="localhost" ...>
   ...
-  <Valve className="org.apache.catalina.valves.AccessLogValve"
+  <Valve className="com.alx.enterprise.webtier.valves.AccessLogValve"
          prefix="localhost_access_log" suffix=".txt"
          pattern="common"/>
   ...
@@ -408,20 +408,20 @@
 
     <p>If you are using the standard <strong>Host</strong> implementation with
     default settings then applications in the <em>appBase</em> or with context
-    files in the <em>configBase</em> are automatically deployed when Tomcat
+    files in the <em>configBase</em> are automatically deployed when Alx
     starts (the <code>deployOnStartup</code> property defaults to
     <code>true</code>) and reloaded or redeployed (as appropriate) when a change
-    is detected while Tomcat is running (the <code>autoDeploy</code> attribute
+    is detected while Alx is running (the <code>autoDeploy</code> attribute
     also defaults to <code>true</code>).</p>
 
     <p><code>deployOnStartup</code> and <code>autoDeploy</code> trigger
     execution of exactly the same code so the behaviour is very similar.
-    However, there is one key difference. When Tomcat starts it has no knowledge
+    However, there is one key difference. When Alx starts it has no knowledge
     of which files are the same, which have been changed and which are new. It
-    therefore treats all files as new. While Tomcat is running, it can
+    therefore treats all files as new. While Alx is running, it can
     differentiate between unchanged, modified and new files. This leads to some
-    differences in behaviour between files being modified while Tomcat is
-    running and files being modified while Tomcat is stopped.</p>
+    differences in behaviour between files being modified while Alx is
+    running and files being modified while Alx is stopped.</p>
 
     <p>When you use automatic deployment, related files (a web application may
     have a context.xml file, a WAR and a directory) that exist in the
@@ -535,7 +535,7 @@
     <strong>Host</strong> is started or stopped, you can declare it by
     nesting a <strong>Listener</strong> element inside this element.  The
     class name you specify must implement the
-    <code>org.apache.catalina.LifecycleListener</code> interface, and
+    <code>com.alx.enterprise.webtier.LifecycleListener</code> interface, and
     it will be notified about the occurrence of the corresponding
     lifecycle events.  Configuration of such a listener looks like this:</p>
 
@@ -567,9 +567,9 @@
 
 <source><![CDATA[<Host name="localhost" ...>
   ...
-  <Valve className="org.apache.catalina.valves.RemoteHostValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteHostValve"
          allow=".*\.mycompany\.com|www\.yourcompany\.com"/>
-  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+  <Valve className="com.alx.enterprise.webtier.valves.RemoteCIDRValve"
          deny="192.168.1.0/24"/>
   ...
 </Host>]]></source>
@@ -591,7 +591,7 @@
 
 <source><![CDATA[<Host name="localhost" ...>
   ...
-  <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
+  <Valve className="com.alx.enterprise.webtier.authenticator.SingleSignOn"/>
   ...
 </Host>]]></source>
 
@@ -641,9 +641,9 @@
 
 <source><![CDATA[<Host name="localhost" ...>
   ...
-  <Listener className="org.apache.catalina.startup.UserConfig"
+  <Listener className="com.alx.enterprise.webtier.startup.UserConfig"
             directoryName="public_html"
-            userClass="org.apache.catalina.startup.PasswdUserDatabase"/>
+            userClass="com.alx.enterprise.webtier.startup.PasswdUserDatabase"/>
   ...
 </Host>]]></source>
 
@@ -654,10 +654,10 @@
 
 <source><![CDATA[<Host name="localhost" ...>
   ...
-  <Listener className="org.apache.catalina.startup.UserConfig"
+  <Listener className="com.alx.enterprise.webtier.startup.UserConfig"
             directoryName="public_html"
             homeBase="c:\Homes"
-            userClass="org.apache.catalina.startup.HomesUserDatabase"/>
+            userClass="com.alx.enterprise.webtier.startup.HomesUserDatabase"/>
   ...
 </Host>]]></source>
 
@@ -685,7 +685,7 @@
   <subsection name="Custom context.xml and web.xml">
     <p>You can override the default values found in <code>conf/context.xml</code> and
     <code>conf/web.xml</code> files from <code>$CATALINA_BASE</code> for each virtual host.
-    Tomcat will look for files named <code>context.xml.default</code> and <code>web.xml.default</code>
+    Alx will look for files named <code>context.xml.default</code> and <code>web.xml.default</code>
     in the directory specified by <code>xmlBase</code> and merge the files into
     those found in the default ones.</p>
   </subsection>

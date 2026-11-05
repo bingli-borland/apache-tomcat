@@ -1,0 +1,98 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.alx.enterprise.webtier.storeconfig;
+
+import java.io.PrintWriter;
+
+import com.alx.enterprise.webtier.deploy.NamingResourcesImpl;
+import com.alx.enterprise.logging.internal.Log;
+import com.alx.enterprise.logging.internal.LogFactory;
+import com.alx.enterprise.web.util.descriptor.web.ContextEjb;
+import com.alx.enterprise.web.util.descriptor.web.ContextEnvironment;
+import com.alx.enterprise.web.util.descriptor.web.ContextLocalEjb;
+import com.alx.enterprise.web.util.descriptor.web.ContextResource;
+import com.alx.enterprise.web.util.descriptor.web.ContextResourceEnvRef;
+import com.alx.enterprise.web.util.descriptor.web.ContextResourceLink;
+import com.alx.enterprise.web.util.descriptor.web.ContextService;
+
+/**
+ * Store server.xml element NamingResources
+ */
+public class NamingResourcesSF extends StoreFactoryBase {
+
+    /**
+     * Default constructor.
+     */
+    public NamingResourcesSF() {
+    }
+
+    private static final Log log = LogFactory.getLog(NamingResourcesSF.class);
+
+    @Override
+    public void store(PrintWriter aWriter, int indent, Object aElement) throws Exception {
+        StoreDescription elementDesc = getRegistry().findDescription(aElement.getClass());
+        if (elementDesc != null) {
+            if (log.isTraceEnabled()) {
+                log.trace(sm.getString("factory.storeTag", elementDesc.getTag(), aElement));
+            }
+            // Note: The elements go directly inside another one without any specific parent
+            storeChildren(aWriter, indent, aElement, elementDesc);
+        } else {
+            log.warn(sm.getString("storeFactory.noDescriptor", aElement.getClass(), "NamingResources"));
+        }
+    }
+
+    /**
+     * Store the specified NamingResources properties.
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void storeChildren(PrintWriter aWriter, int indent, Object aElement, StoreDescription elementDesc)
+            throws Exception {
+
+        if (aElement instanceof NamingResourcesImpl) {
+            NamingResourcesImpl resources = (NamingResourcesImpl) aElement;
+            // Store nested <Ejb> elements
+            ContextEjb[] ejbs = resources.findEjbs();
+            storeElementArray(aWriter, indent, ejbs);
+            // Store nested <Environment> elements
+            ContextEnvironment[] envs = resources.findEnvironments();
+            storeElementArray(aWriter, indent, envs);
+            // Store nested <LocalEjb> elements
+            ContextLocalEjb[] lejbs = resources.findLocalEjbs();
+            storeElementArray(aWriter, indent, lejbs);
+
+            // Store nested <Resource> elements
+            ContextResource[] dresources = resources.findResources();
+            storeElementArray(aWriter, indent, dresources);
+
+            // Store nested <ResourceEnvRef> elements
+            ContextResourceEnvRef[] resEnv = resources.findResourceEnvRefs();
+            storeElementArray(aWriter, indent, resEnv);
+
+            // Store nested <ResourceLink> elements
+            ContextResourceLink[] resourceLinks = resources.findResourceLinks();
+            storeElementArray(aWriter, indent, resourceLinks);
+
+            // Store nested <ServiceRef> elements
+            ContextService[] services = resources.findServices();
+            storeElementArray(aWriter, indent, services);
+        }
+    }
+}
+

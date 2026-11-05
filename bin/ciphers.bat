@@ -53,6 +53,6 @@ shift
 goto setArgs
 :doneSetArgs
 
-call "%EXECUTABLE%" org.apache.tomcat.util.net.openssl.ciphers.OpenSSLCipherConfigurationParser %CMD_LINE_ARGS%
+call "%EXECUTABLE%" com.alx.enterprise.web.util.net.openssl.ciphers.OpenSSLCipherConfigurationParser %CMD_LINE_ARGS%
 
 :end

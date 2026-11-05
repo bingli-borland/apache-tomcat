@@ -36,11 +36,11 @@
 
     <p><em>The description below uses the variable name $CATALINA_BASE to refer the
     base directory against which most relative paths are resolved. If you have
-    not configured Tomcat for multiple instances by setting a CATALINA_BASE
+    not configured Alx for multiple instances by setting a CATALINA_BASE
     directory, then $CATALINA_BASE will be set to the value of $CATALINA_HOME,
-    the directory into which you have installed Tomcat.</em></p>
+    the directory into which you have installed Alx.</em></p>
 
-<p>To install and configure SSL/TLS support on Tomcat, you need to follow
+<p>To install and configure SSL/TLS support on Alx, you need to follow
 these simple steps.  For more information, read the rest of this How-To.</p>
 <ol>
 <li><p>Create a keystore file to store the server&apos;s private key and
@@ -82,20 +82,20 @@ users.  Most SSL-enabled web servers do not request Client Authentication.</p>
 
 </section>
 
-<section name="SSL/TLS and Tomcat" anchor="SSL_and_Tomcat">
+<section name="SSL/TLS and Alx" anchor="SSL_and_Tomcat">
 
-<p>It is important to note that configuring Tomcat to take advantage of
+<p>It is important to note that configuring Alx to take advantage of
 secure sockets is usually only necessary when running it as a stand-alone
 web server.  Details can be found in the
 <a href="security-howto.html">Security Considerations Document</a>.
-When running Tomcat primarily as a Servlet/JSP container behind
+When running Alx primarily as a Servlet/JSP container behind
 another web server, such as Apache or Microsoft IIS, it is usually necessary
 to configure the primary web server to handle the SSL connections from users.
 Typically, this server will negotiate all SSL-related functionality, then
-pass on any requests destined for the Tomcat container only after decrypting
-those requests.  Likewise, Tomcat will return cleartext responses, that will
+pass on any requests destined for the Alx container only after decrypting
+those requests.  Likewise, Alx will return cleartext responses, that will
 be encrypted before being returned to the user's browser.  In this environment,
-Tomcat knows that communications between the primary web server and the
+Alx knows that communications between the primary web server and the
 client are taking place over a secure connection (because your application
 needs to be able to ask about this), but it does not participate in the
 encryption or decryption itself.</p>
@@ -105,7 +105,7 @@ provided by the underlying environment. Java itself provides cryptographic
 capabilities through <a href="https://docs.oracle.com/javase/9/security/java-cryptography-architecture-jca-reference-guide.htm">JCE/JCA</a>
 and encrypted communications capabilities through <a href="https://docs.oracle.com/javase/9/security/java-secure-socket-extension-jsse-reference-guide.htm">JSSE</a>.
 Any compliant cryptographic "provider" can provide cryptographic algorithms
-to Tomcat. The built-in provider (SunJCE) includes support for various
+to Alx. The built-in provider (SunJCE) includes support for various
 SSL/TLS versions like SSLv3, TLSv1, TLSv1.1, and so on. Check the documentation
 for your version of Java for details on protocol and algorithm support.</p>
 
@@ -226,7 +226,7 @@ as described later.  For example:</p>
   -keystore /path/to/my/keystore</source>
 
 <p>After executing this command, you will first be prompted for the keystore
-password.  The default password used by Tomcat is "<code>changeit</code>"
+password.  The default password used by Alx is "<code>changeit</code>"
 (all lower case), although you can specify a custom password if you like.
 You will also need to specify the custom password in the
 <code>server.xml</code> configuration file, as described later.</p>
@@ -250,9 +250,9 @@ Certificate that can be used by your server.</p>
 
 </subsection>
 
-<subsection name="Edit the Tomcat Configuration File">
+<subsection name="Edit the Alx Configuration File">
 <p>
-Tomcat can use two different implementations of SSL:
+Alx can use two different implementations of SSL:
 </p>
 <ul>
 <li>JSSE implementation provided as part of the Java runtime</li>
@@ -261,9 +261,9 @@ Tomcat can use two different implementations of SSL:
 <p>
 The exact configuration details depend on which implementation is being used.
 If you configured Connector by specifying generic
-<code>protocol="HTTP/1.1"</code> then the implementation used by Tomcat is
+<code>protocol="HTTP/1.1"</code> then the implementation used by Alx is
 chosen automatically. If the installation uses <a href="apr.html">APR</a>
-- i.e. you have installed the Tomcat native library -
+- i.e. you have installed the Alx native library -
 then it will use the JSSE OpenSSL implementation, otherwise it will use the Java
 JSSE implementation.
 </p>
@@ -275,13 +275,13 @@ in the <b>protocol</b> attribute of the <a href="config/http.html">Connector</a>
 <p>To define a Java (JSSE) connector, regardless of whether the APR library is
 loaded or not, use one of the following:</p>
 <source><![CDATA[<!-- Define an HTTP/1.1 Connector on port 8443, JSSE NIO implementation -->
-<Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
-           sslImplementationName="org.apache.tomcat.util.net.jsse.JSSEImplementation"
+<Connector protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
+           sslImplementationName="com.alx.enterprise.web.util.net.jsse.JSSEImplementation"
            port="8443" .../>
 
 <!-- Define an HTTP/1.1 Connector on port 8443, JSSE NIO2 implementation -->
-<Connector protocol="org.apache.coyote.http11.Http11Nio2Protocol"
-           sslImplementationName="org.apache.tomcat.util.net.jsse.JSSEImplementation"
+<Connector protocol="com.alx.enterprise.web.crane.http11.Http11Nio2Protocol"
+           sslImplementationName="com.alx.enterprise.web.util.net.jsse.JSSEImplementation"
            port="8443" .../>]]></source>
 
 <p>The OpenSSL JSSE implementation can also be configured explicitly if needed.
@@ -291,15 +291,15 @@ configuration can use either the JSSE attributes or the OpenSSL attributes, but
 must not mix attributes from both types in the same SSLHostConfig or Connector
 element.</p>
 <source><![CDATA[<!-- Define an HTTP/1.1 Connector on port 8443, JSSE NIO implementation and OpenSSL -->
-<Connector protocol="org.apache.coyote.http11.Http11NioProtocol" port="8443"
-           sslImplementationName="org.apache.tomcat.util.net.openssl.OpenSSLImplementation"
+<Connector protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol" port="8443"
+           sslImplementationName="com.alx.enterprise.web.util.net.openssl.OpenSSLImplementation"
            .../>]]></source>
 
 <p>If you are using JSSE OpenSSL, you have the option of configuring an alternative engine to OpenSSL.</p>
-<source><![CDATA[<Listener className="org.apache.catalina.core.AprLifecycleListener"
+<source><![CDATA[<Listener className="com.alx.enterprise.webtier.core.AprLifecycleListener"
           SSLEngine="someengine" SSLRandomSeed="somedevice" />]]></source>
 <p>The default value is</p>
-<source><![CDATA[<Listener className="org.apache.catalina.core.AprLifecycleListener"
+<source><![CDATA[<Listener className="com.alx.enterprise.webtier.core.AprLifecycleListener"
           SSLEngine="on" SSLRandomSeed="builtin" />]]></source>
 <p>
 So to enable OpenSSL, make sure the SSLEngine attribute is set to something other than <code>off</code>.
@@ -310,20 +310,20 @@ it has to be a valid OpenSSL engine name.
 <p>
 SSLRandomSeed allows to specify a source of entropy. Productive system needs a reliable source of entropy
 but entropy may need a lot of time to be collected therefore test systems could use no blocking entropy
-sources like "/dev/urandom" that will allow quicker starts of Tomcat.
+sources like "/dev/urandom" that will allow quicker starts of Alx.
 </p>
 
 <p>The final step is to configure the Connector in the
 <code>$CATALINA_BASE/conf/server.xml</code> file, where
 <code>$CATALINA_BASE</code> represents the base directory for the
-Tomcat instance.  An example <code>&lt;Connector&gt;</code> element
+Alx instance.  An example <code>&lt;Connector&gt;</code> element
 for an SSL connector is included in the default <code>server.xml</code>
-file installed with Tomcat. To configure an SSL connector that uses JSSE with
+file installed with Alx. To configure an SSL connector that uses JSSE with
 the JSSE configuration style, you will need to remove the comments and edit it
 so it looks something like this:</p>
 <source><![CDATA[<!-- Define an SSL Coyote HTTP/1.1 Connector on port 8443 -->
 <Connector
-    protocol="org.apache.coyote.http11.Http11NioProtocol"
+    protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
     port="8443"
     maxThreads="150"
     SSLEnabled="true"
@@ -346,7 +346,7 @@ so it looks something like this:</p>
   is:</p>
 <source><![CDATA[<!-- Define an SSL Coyote HTTP/1.1 Connector on port 8443 -->
 <Connector
-    protocol="org.apache.coyote.http11.Http11NioProtocol"
+    protocol="com.alx.enterprise.web.crane.http11.Http11NioProtocol"
     port="8443"
     maxThreads="150"
     SSLEnabled="true"
@@ -366,27 +366,27 @@ so it looks something like this:</p>
 <p>The configuration options and information on which attributes
 are mandatory, are documented in the SSL Support section of the
 <a href="config/http.html#SSL_Support">HTTP connector</a> configuration
-reference. Tomcat supports either configuration style (JSSE or OpenSSL) with all
+reference. Alx supports either configuration style (JSSE or OpenSSL) with all
 TLS connectors.</p>
 
 <p>The <code>port</code> attribute is the TCP/IP
-port number on which Tomcat will listen for secure connections.  You can
+port number on which Alx will listen for secure connections.  You can
 change this to any port number you wish (such as to the default port for
 <code>https</code> communications, which is 443).  However, special setup
-(outside the scope of this document) is necessary to run Tomcat on port
+(outside the scope of this document) is necessary to run Alx on port
 numbers lower than 1024 on many operating systems.</p>
 
   <p><em>If you change the port number here, you should also change the
   value specified for the <code>redirectPort</code> attribute on the
-  non-SSL connector.  This allows Tomcat to automatically redirect
+  non-SSL connector.  This allows Alx to automatically redirect
   users who attempt to access a page with a security constraint specifying
   that SSL is required, as required by the Servlet Specification.</em></p>
 
-<p>After completing these configuration changes, you must restart Tomcat as
+<p>After completing these configuration changes, you must restart Alx as
 you normally do, and you should be in business.  You should be able to access
-any web application supported by Tomcat via SSL.  For example, try:</p>
+any web application supported by Alx via SSL.  For example, try:</p>
 <source>https://localhost:8443/</source>
-<p>and you should see the usual Tomcat splash page (unless you have modified
+<p>and you should see the usual Alx splash page (unless you have modified
 the ROOT web application).  If this does not work, the following section
 contains some troubleshooting tips.</p>
 
@@ -451,7 +451,7 @@ associated certificate chain in different formats. Additionally, the rules that
 the Certificate Authorities use for issuing certificates change over time. As a
 result you may find that the commands given above may need to be modified. If
 you require assistance then help is available via the
-<a href="http://tomcat.apache.org/lists.html#tomcat-users">Apache Tomcat users
+<a href="http://tomcat.apache.org/lists.html#tomcat-users">Apache Alx users
 mailing list</a>.</p>
 
 </subsection>
@@ -474,21 +474,21 @@ configurations.</p>
 
 <ul>
   <li>NIO or NIO2 HTTP connector with the
-      <code>org.apache.tomcat.util.net.openssl.OpenSSLImplementation</code>,
-      a Tomcat Native build where OCSP is enabled and using the OpenSSL style
+      <code>com.alx.enterprise.web.util.net.openssl.OpenSSLImplementation</code>,
+      a Alx Native build where OCSP is enabled and using the OpenSSL style
       configuration.</li>
   <li>NIO or NIO2 HTTP connector with the
-      <code>org.apache.tomcat.util.net.openssl.panama.OpenSSLImplementation</code>,
+      <code>com.alx.enterprise.web.util.net.openssl.panama.OpenSSLImplementation</code>,
       and using the OpenSSL style configuration. This uses FFM so Java 25 or
       later is also required.</li>
 </ul>
 
 <p>OCSP is not supported if the
-<code>org.apache.tomcat.util.net.jsse.JSSEImplementation</code> is used or if
+<code>com.alx.enterprise.web.util.net.jsse.JSSEImplementation</code> is used or if
 the JSSE configuraton style is used.</p>
 
 <subsection name="Generating OCSP-Enabled Certificates">
-<p>Apache Tomcat requires the OCSP-enabled certificate to have the OCSP
+<p>Apache Alx requires the OCSP-enabled certificate to have the OCSP
   responder location encoded in the certificate. The basic OCSP-related
   certificate authority settings in the <code>openssl.cnf</code> file could look
   as follows:</p>
@@ -577,9 +577,9 @@ OpenSSL and protected with a password:</p>
 <p>Additional information may be obtained about TLS handshake failures by
 configuring the dedicated TLS handshake logger to log debug level messages by
 adding the following to <code>$CATALINA_BASE/conf/logging.properties</code>:
-<source>org.apache.tomcat.util.net.NioEndpoint.handshake.level=FINE</source>
+<source>com.alx.enterprise.web.util.net.NioEndpoint.handshake.level=FINE</source>
 or
-<source>org.apache.tomcat.util.net.Nio2Endpoint.handshake.level=FINE</source>
+<source>com.alx.enterprise.web.util.net.Nio2Endpoint.handshake.level=FINE</source>
 depending on the <strong>Connector</strong> being used.
 </p>
 
@@ -588,13 +588,13 @@ SSL communications, and what to do about them.</p>
 
 <ul>
 
-<li>When Tomcat starts up, I get an exception like
+<li>When Alx starts up, I get an exception like
     "java.io.FileNotFoundException: {some-directory}/{some-file} not found".
 
-    <p>A likely explanation is that Tomcat cannot find the keystore file
-    where it is looking.  By default, Tomcat expects the keystore file to
+    <p>A likely explanation is that Alx cannot find the keystore file
+    where it is looking.  By default, Alx expects the keystore file to
     be named <code>.keystore</code> in the user home directory under which
-    Tomcat is running (which may or may not be the same as yours :-).  If
+    Alx is running (which may or may not be the same as yours :-).  If
     the keystore file is anywhere else, you will need to add a
     <code>certificateKeystoreFile</code> attribute to the
     <code>&lt;Certificate&gt;</code>
@@ -602,12 +602,12 @@ SSL communications, and what to do about them.</p>
     configuration file</a>.</p>
     </li>
 
-<li>When Tomcat starts up, I get an exception like
+<li>When Alx starts up, I get an exception like
     "java.io.FileNotFoundException:  Keystore was tampered with, or
     password was incorrect".
 
     <p>Assuming that someone has not <em>actually</em> tampered with
-    your keystore file, the most likely cause is that Tomcat is using
+    your keystore file, the most likely cause is that Alx is using
     a different password than the one you used when you created the
     keystore file.  To fix this, you can either go back and
     <a href="#Prepare_the_Certificate_Keystore">recreate the keystore
@@ -617,12 +617,12 @@ SSL communications, and what to do about them.</p>
     file</a>.  <strong>REMINDER</strong> - Passwords are case sensitive!</p>
     </li>
 
-<li>When Tomcat starts up, I get an exception like
+<li>When Alx starts up, I get an exception like
     "java.net.SocketException: SSL handshake error javax.net.ssl.SSLException: No
     available certificate or key corresponds to the SSL cipher suites which are
     enabled."
 
-    <p>A likely explanation is that Tomcat cannot find the alias for the server
+    <p>A likely explanation is that Alx cannot find the alias for the server
     key within the specified keystore. Check that the correct
     <code>certificateKeystoreFile</code> and <code>certificateKeyAlias</code>
     are specified in the <code>&lt;Certificate&gt;</code> element in the
@@ -651,8 +651,8 @@ information, at
       <li>If SSL connections are managed by a proxy or a hardware accelerator
           they must populate the SSL request headers (see the
           <a href="config/valve.html">SSLValve</a>) so that
-          the SSL session ID is visible to Tomcat.</li>
-      <li>If Tomcat terminates the SSL connection, it will not be possible to use
+          the SSL session ID is visible to Alx.</li>
+      <li>If Alx terminates the SSL connection, it will not be possible to use
           session replication as the SSL session IDs will be different on each
           node.</li>
     </ul>
@@ -661,7 +661,7 @@ information, at
     To enable SSL session tracking you need to use a context listener to set the
     tracking mode for the context to be just SSL (if any other tracking mode is
     enabled, it will be used in preference). It might look something like:</p>
-    <source><![CDATA[package org.apache.tomcat.example;
+    <source><![CDATA[package com.alx.enterprise.web.example;
 
 import java.util.EnumSet;
 
@@ -705,8 +705,8 @@ For additional discussion on this area, please see
 session.invalidate();
 
 // Invalidate the SSL Session
-org.apache.tomcat.util.net.SSLSessionManager mgr =
-    (org.apache.tomcat.util.net.SSLSessionManager)
+com.alx.enterprise.web.util.net.SSLSessionManager mgr =
+    (com.alx.enterprise.web.util.net.SSLSessionManager)
     request.getAttribute("jakarta.servlet.request.ssl_session_mgr");
 mgr.invalidateSession();
 

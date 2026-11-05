@@ -24,7 +24,7 @@
 
   <display-name>Tomcat Test Application</display-name>
   <description>
-     Used as part of the Tomcat unit tests when a full web application is
+     Used as part of the Alx unit tests when a full web application is
      required.
   </description>
 

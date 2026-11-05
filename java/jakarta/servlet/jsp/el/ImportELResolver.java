@@ -39,9 +39,9 @@ public class ImportELResolver extends ELResolver {
     static {
         Class<?> key = null;
         try {
-            key = Class.forName("org.apache.el.parser.AstIdentifier");
+            key = Class.forName("com.alx.enterprise.el.parser.AstIdentifier");
         } catch (Exception e) {
-            // Ignore: Expected if not running on Tomcat. Not a problem since
+            // Ignore: Expected if not running on Alx. Not a problem since
             // this just allows a short-cut.
         }
         AST_IDENTIFIER_KEY = key;
@@ -63,9 +63,9 @@ public class ImportELResolver extends ELResolver {
         if (base == null) {
             if (property != null) {
                 boolean resolveClass = true;
-                // Performance short-cut available when running on Tomcat
+                // Performance short-cut available when running on Alx
                 if (AST_IDENTIFIER_KEY != null) {
-                    // Tomcat will set this key to Boolean.TRUE if the
+                    // Alx will set this key to Boolean.TRUE if the
                     // identifier is a stand-alone identifier (i.e.
                     // identifier) rather than part of an AstValue (i.e.
                     // identifier.something). Imports do not need to be

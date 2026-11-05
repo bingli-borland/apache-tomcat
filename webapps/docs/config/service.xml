@@ -54,7 +54,7 @@
 
     <attribute name="className" required="false">
       <p>Java class name of the implementation to use.  This class must
-      implement the <code>org.apache.catalina.Service</code> interface.
+      implement the <code>com.alx.enterprise.webtier.Service</code> interface.
       If no class name is specified, the standard implementation will
       be used.</p>
     </attribute>
@@ -74,7 +74,7 @@
   <subsection name="Standard Implementation">
 
   <p>The standard implementation of <strong>Service</strong> is
-  <strong>org.apache.catalina.core.StandardService</strong>.
+  <strong>com.alx.enterprise.webtier.core.StandardService</strong>.
   It supports the following additional attributes (in addition to the
   common attributes listed above):</p>
 

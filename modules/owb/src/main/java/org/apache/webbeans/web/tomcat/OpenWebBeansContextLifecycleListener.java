@@ -20,13 +20,13 @@ package org.apache.webbeans.web.tomcat;
 
 import java.util.LinkedList;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.Lifecycle;
-import org.apache.catalina.LifecycleEvent;
-import org.apache.catalina.LifecycleListener;
-import org.apache.catalina.Pipeline;
-import org.apache.catalina.Valve;
-import org.apache.tomcat.InstanceManager;
+import com.alx.enterprise.webtier.Context;
+import com.alx.enterprise.webtier.Lifecycle;
+import com.alx.enterprise.webtier.LifecycleEvent;
+import com.alx.enterprise.webtier.LifecycleListener;
+import com.alx.enterprise.webtier.Pipeline;
+import com.alx.enterprise.webtier.Valve;
+import com.alx.enterprise.web.InstanceManager;
 import org.apache.webbeans.servlet.WebBeansConfigurationListener;
 
 

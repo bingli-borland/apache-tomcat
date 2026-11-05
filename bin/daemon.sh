@@ -113,7 +113,7 @@ fi
 # Only set CATALINA_HOME if not already set
 test ".$CATALINA_HOME" = . && CATALINA_HOME=`cd "$DIRNAME/.." >/dev/null; pwd`
 test ".$CATALINA_BASE" = . && CATALINA_BASE="$CATALINA_HOME"
-test ".$CATALINA_MAIN" = . && CATALINA_MAIN=org.apache.catalina.startup.Bootstrap
+test ".$CATALINA_MAIN" = . && CATALINA_MAIN=com.alx.enterprise.webtier.startup.Bootstrap
 # If not explicitly set, look for jsvc in CATALINA_BASE first then CATALINA_HOME
 if [ -z "$JSVC" ]; then
     JSVC="$CATALINA_BASE/bin/jsvc"
@@ -159,7 +159,7 @@ if [ -z "$CATALINA_LOGGING_CONFIG" ]; then
   fi
 fi
 
-test ".$LOGGING_MANAGER" = . && LOGGING_MANAGER="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+test ".$LOGGING_MANAGER" = . && LOGGING_MANAGER="-Djava.util.logging.manager=com.alx.enterprise.logging.ClassLoaderLogManager"
 JAVA_OPTS="$JAVA_OPTS $LOGGING_MANAGER"
 
 # Set -pidfile
@@ -252,7 +252,7 @@ case "$1" in
       if [ "$?" = 0 ]; then
         "$JAVA_BIN" \
         -classpath "$CATALINA_HOME/lib/catalina.jar" \
-        org.apache.catalina.util.ServerInfo
+        com.alx.enterprise.webtier.util.ServerInfo
       fi
       exit $?
     ;;
@@ -260,10 +260,10 @@ case "$1" in
       echo "Unknown command: '$1'"
       echo "Usage: $PROGRAM ( commands ... )"
       echo "commands:"
-      echo "  run               Start Tomcat without detaching from console"
-      echo "  start             Start Tomcat"
-      echo "  stop              Stop Tomcat"
-      echo "  version           What version of commons daemon and Tomcat"
+      echo "  run               Start Alx without detaching from console"
+      echo "  start             Start Alx"
+      echo "  stop              Stop Alx"
+      echo "  version           What version of commons daemon and Alx"
       echo "                    are you running?"
       exit 1
     ;;

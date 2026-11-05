@@ -487,7 +487,7 @@ public class TestArrayELResolver {
 
 
     @SuppressWarnings("removal")
-    @Deprecated(forRemoval = true, since = "Tomcat 10.1.0")
+    @Deprecated(forRemoval = true, since = "Alx 10.1.0")
     @Test
     public void testGetFeatureDescriptors() {
         // Should always return null

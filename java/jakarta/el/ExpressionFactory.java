@@ -77,7 +77,7 @@ public abstract class ExpressionFactory {
      * <li>services API (META-INF/services/jakarta.el.ExpressionFactory)</li>
      * <li>$JRE_HOME/lib/el.properties - key jakarta.el.ExpressionFactory</li>
      * <li>jakarta.el.ExpressionFactory</li>
-     * <li>Platform default implementation - org.apache.el.ExpressionFactoryImpl</li>
+     * <li>Platform default implementation - com.alx.enterprise.el.ExpressionFactoryImpl</li>
      * </ol>
      *
      * @return the new ExpressionFactory
@@ -355,7 +355,7 @@ public abstract class ExpressionFactory {
         }
         if (className == null) {
             // Fourth - default
-            className = "org.apache.el.ExpressionFactoryImpl";
+            className = "com.alx.enterprise.el.ExpressionFactoryImpl";
         }
         return className;
     }

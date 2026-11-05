@@ -39,18 +39,18 @@
   uses these valves to make intelligent decision around data and when data should be replicated.
   </p>
   <p>
-  A cluster valve must implement the <code>org.apache.catalina.ha.ClusterValve</code> interface.
-  This is a simple interface that extends the <code>org.apache.catalina.Valve</code> interface.
+  A cluster valve must implement the <code>com.alx.enterprise.webtier.ha.ClusterValve</code> interface.
+  This is a simple interface that extends the <code>com.alx.enterprise.webtier.Valve</code> interface.
   </p>
 </section>
 
-<section name="org.apache.catalina.ha.tcp.ReplicationValve">
+<section name="com.alx.enterprise.webtier.ha.tcp.ReplicationValve">
   The <code>ReplicationValve</code> will notify the cluster at the end of an HTTP request
   so that the cluster can make a decision whether there is data to be replicated or not.
   <subsection name="Attributes">
     <attributes>
       <attribute name="className" required="true">
-        Set value to <code>org.apache.catalina.ha.tcp.ReplicationValve</code>
+        Set value to <code>com.alx.enterprise.webtier.ha.tcp.ReplicationValve</code>
       </attribute>
       <attribute name="filter" required="false">
         For known file extensions or urls, you can use this Valve to notify the
@@ -71,7 +71,7 @@
         <code>Boolean.FALSE</code>
       </attribute>
       <attribute name="primaryIndicatorName" required="false">
-        Default value is <code>org.apache.catalina.ha.tcp.isPrimarySession</code>
+        Default value is <code>com.alx.enterprise.webtier.ha.tcp.isPrimarySession</code>
         The value defined here is the name of the request attribute that contains the boolean value
         if the session is primary on this server or not.
       </attribute>
@@ -83,7 +83,7 @@
   </subsection>
 </section>
 
-<section name="org.apache.catalina.ha.session.JvmRouteBinderValve">
+<section name="com.alx.enterprise.webtier.ha.session.JvmRouteBinderValve">
   In case of a mod_jk failover, the <code>JvmRouteBinderValve</code> will replace the
   <code>jvmWorker</code> attribute in the session Id, to make future requests stick to this
   node. If you want fallback capability, don't enable this valve, but if you want your failover to stick,
@@ -91,7 +91,7 @@
   <subsection name="Attributes">
     <attributes>
       <attribute name="className" required="true">
-        <code>org.apache.catalina.ha.session.JvmRouteBinderValve</code>
+        <code>com.alx.enterprise.webtier.ha.session.JvmRouteBinderValve</code>
       </attribute>
       <attribute name="enabled" required="false">
         Default value is <code>true</code>
@@ -99,13 +99,13 @@
       </attribute>
       <attribute name="sessionIdAttribute" required="false">
         Old sessionid before failover is registered in request attributes with  this attribute.
-        Default attribute name is <code>org.apache.catalina.ha.session.JvmRouteOriginalSessionID</code>.
+        Default attribute name is <code>com.alx.enterprise.webtier.ha.session.JvmRouteOriginalSessionID</code>.
       </attribute>
     </attributes>
   </subsection>
 </section>
 
-<section name="org.apache.catalina.ha.authenticator.ClusterSingleSignOn">
+<section name="com.alx.enterprise.webtier.ha.authenticator.ClusterSingleSignOn">
   The <code>ClusterSingleSignOn</code> supports feature of single sign on in cluster.
   By using <code>ClusterSingleSignOn</code>, the security identity authenticated
   by one web application is recognized by other web applications on the same virtual host,
@@ -121,7 +121,7 @@
     <attributes>
       <attribute name="className" required="true">
         <p>Java class name of the implementation to use.  This MUST be set to
-        <strong>org.apache.catalina.ha.authenticator.ClusterSingleSignOn</strong>.</p>
+        <strong>com.alx.enterprise.webtier.ha.authenticator.ClusterSingleSignOn</strong>.</p>
       </attribute>
       <attribute name="cookieDomain" required="false">
         <p>Sets the host domain to be used for sso cookies.</p>

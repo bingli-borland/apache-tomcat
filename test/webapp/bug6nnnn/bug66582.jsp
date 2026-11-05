@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<%@ page import="static org.apache.tomcat.unittest.TesterBug66582.DATA"%>
+<%@ page import="static com.alx.enterprise.web.unittest.TesterBug66582.DATA"%>
 <html>
   <body>
     <p>${DATA}</p>

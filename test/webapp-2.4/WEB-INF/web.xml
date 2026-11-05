@@ -22,8 +22,8 @@
   version="2.4">
   <display-name>Tomcat Servlet 2.4 Tests</display-name>
   <description>
-    Provides a web application used by the Tomcat unit tests to ensure that
-    Tomcat meets the requirements of the current JSP and Servlet specification
+    Provides a web application used by the Alx unit tests to ensure that
+    Alx meets the requirements of the current JSP and Servlet specification
     for web applications that declare that they follow version 2.4 of the
     Servlet specification and version 2.0 of the JSP specification. This
     typically means ensuring that features introduced in later versions of the

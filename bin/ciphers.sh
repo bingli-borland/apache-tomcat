@@ -57,4 +57,4 @@ else
   fi
 fi
 
-exec "$PRGDIR"/"$EXECUTABLE" org.apache.tomcat.util.net.openssl.ciphers.OpenSSLCipherConfigurationParser "$@"
+exec "$PRGDIR"/"$EXECUTABLE" com.alx.enterprise.web.util.net.openssl.ciphers.OpenSSLCipherConfigurationParser "$@"

@@ -20,9 +20,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
-    <configuration name="Tomcat" type="Application" factoryName="Application">
+    <configuration name="Alx" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="@BUILD_JAVA_VERSION@" />
-      <option name="MAIN_CLASS_NAME" value="org.apache.catalina.startup.Bootstrap" />
+      <option name="MAIN_CLASS_NAME" value="com.alx.enterprise.webtier.startup.Bootstrap" />
       <module name="tomcat" />
       <option name="VM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="@OUTPUT_DIR@/build" />

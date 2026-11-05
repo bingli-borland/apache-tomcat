@@ -25,10 +25,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.startup.TomcatBaseTest;
-import org.apache.tomcat.util.buf.ByteChunk;
+import com.alx.enterprise.webtier.startup.AlxBaseTest;
+import com.alx.enterprise.web.util.buf.ByteChunk;
 
-public class TestSessionCookieConfig extends TomcatBaseTest {
+public class TestSessionCookieConfig extends AlxBaseTest {
 
     /*
      * Not strictly testing the SessionCookieConfig class

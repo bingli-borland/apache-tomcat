@@ -35,7 +35,7 @@
 <section name="Introduction">
   The cluster channel is the main component of a small framework we've nicknamed Apache Tribes.<br/>
   The channel manages a set of sub components and together they create a group communication framework.<br/>
-  This framework is then used internally by the components that need to send messages between different Tomcat instances.
+  This framework is then used internally by the components that need to send messages between different Alx instances.
   <br/>
   A few examples of these components would be the SimpleTcpCluster that does the messaging for the DeltaManager,
   or the BackupManager that uses a different replication strategy. The ReplicatedContext object does also
@@ -85,7 +85,7 @@
   <attributes>
 
     <attribute name="className" required="true">
-       The default value here is <code>org.apache.catalina.tribes.group.GroupChannel</code> and is
+       The default value here is <code>com.alx.enterprise.webtier.tribes.group.GroupChannel</code> and is
        currently the only implementation available.
     </attribute>
 
@@ -95,7 +95,7 @@
 
   </subsection>
 
-  <subsection name="org.apache.catalina.tribes.group.GroupChannel Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.GroupChannel Attributes">
 
     <attributes>
 

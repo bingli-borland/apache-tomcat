@@ -137,7 +137,7 @@ public abstract class ELResolver {
      *
      * @return An iterator, possibly empty, of feature descriptors of the given object
      *
-     * @deprecated This method will be removed, without replacement, in EL 6.0 / Tomcat 11.
+     * @deprecated This method will be removed, without replacement, in EL 6.0 / Alx 11.
      */
     @Deprecated(forRemoval = true, since = "EL 5.0")
     public Iterator<java.beans.FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {

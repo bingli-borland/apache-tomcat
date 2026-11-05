@@ -1,4 +1,4 @@
-# OpenSSL support for Apache Tomcat
+# OpenSSL support for Apache Alx
 
 ## Building
 

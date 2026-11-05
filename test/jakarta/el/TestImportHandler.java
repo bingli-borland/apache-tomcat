@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.apache.catalina.authenticator.DigestAuthenticator;
-import org.apache.tomcat.util.res.StringManager;
+import com.alx.enterprise.webtier.authenticator.DigestAuthenticator;
+import com.alx.enterprise.web.util.res.StringManager;
 
 public class TestImportHandler {
 
@@ -59,8 +59,8 @@ public class TestImportHandler {
     public void testResolveClass03() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importPackage("org.apache.tomcat.util");
-        handler.importPackage("org.apache.jasper.runtime");
+        handler.importPackage("com.alx.enterprise.web.util");
+        handler.importPackage("com.alx.enterprise.web.jasper.runtime");
 
         for (int i = 1; i <= 3; i++) {
             try {
@@ -126,7 +126,7 @@ public class TestImportHandler {
     public void testImportClass01() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importClass("org.apache.tomcat.util.res.StringManager");
+        handler.importClass("com.alx.enterprise.web.util.res.StringManager");
 
         Class<?> result = handler.resolveClass("StringManager");
 
@@ -140,7 +140,7 @@ public class TestImportHandler {
     @Test
     public void testImportClass02() {
         ImportHandler handler = new ImportHandler();
-        handler.importClass("org.apache.tomcat.util.res.StringManagerX");
+        handler.importClass("com.alx.enterprise.web.util.res.StringManagerX");
         Class<?> result = handler.resolveClass("StringManagerX");
         Assert.assertNull(result);
     }
@@ -153,10 +153,10 @@ public class TestImportHandler {
     public void testImportClass03() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importClass("org.apache.tomcat.util.ExceptionUtils");
+        handler.importClass("com.alx.enterprise.web.util.ExceptionUtils");
         for (int i = 1; i <= 3; i++) {
             try {
-                handler.importClass("org.apache.jasper.util.ExceptionUtils");
+                handler.importClass("com.alx.enterprise.web.jasper.util.ExceptionUtils");
                 Assert.fail("Expected ELException but got none on iteration " + i);
             } catch (ELException ex) {
                 // Expected
@@ -172,8 +172,8 @@ public class TestImportHandler {
     public void testImportClass04() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importClass("org.apache.tomcat.util.res.StringManager");
-        handler.importClass("org.apache.tomcat.util.res.StringManager");
+        handler.importClass("com.alx.enterprise.web.util.res.StringManager");
+        handler.importClass("com.alx.enterprise.web.util.res.StringManager");
 
         Class<?> result = handler.resolveClass("StringManager");
 
@@ -188,7 +188,7 @@ public class TestImportHandler {
     public void testImportPackage01_57574() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importPackage("org.apache.tomcat.foo");
+        handler.importPackage("com.alx.enterprise.web.foo");
 
         // No exception is expected
     }
@@ -201,11 +201,11 @@ public class TestImportHandler {
     public void testImportStatic01() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importStatic("org.apache.tomcat.util.scan.Constants.Package");
+        handler.importStatic("com.alx.enterprise.web.util.scan.Constants.Package");
 
         Class<?> result = handler.resolveStatic("Package");
 
-        Assert.assertEquals(org.apache.tomcat.util.scan.Constants.class, result);
+        Assert.assertEquals(com.alx.enterprise.web.util.scan.Constants.class, result);
     }
 
 
@@ -216,7 +216,7 @@ public class TestImportHandler {
     public void testImportStatic02() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importStatic("org.apache.tomcat.util.buf.Constants.PackageXX");
+        handler.importStatic("com.alx.enterprise.web.util.buf.Constants.PackageXX");
     }
 
 
@@ -227,11 +227,11 @@ public class TestImportHandler {
     public void testImportStatic03() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importStatic("org.apache.tomcat.util.buf.Ascii.toLower");
+        handler.importStatic("com.alx.enterprise.web.util.buf.Ascii.toLower");
 
         Class<?> result = handler.resolveStatic("toLower");
 
-        Assert.assertEquals(org.apache.tomcat.util.buf.Ascii.class, result);
+        Assert.assertEquals(com.alx.enterprise.web.util.buf.Ascii.class, result);
     }
 
 
@@ -242,10 +242,10 @@ public class TestImportHandler {
     public void testImportStatic04() {
         ImportHandler handler = new ImportHandler();
 
-        handler.importStatic("org.apache.tomcat.util.scan.Constants.Package");
+        handler.importStatic("com.alx.enterprise.web.util.scan.Constants.Package");
         for (int i = 1; i <= 3; i++) {
             try {
-                handler.importStatic("org.apache.tomcat.util.threads.Constants.Package");
+                handler.importStatic("com.alx.enterprise.web.util.threads.Constants.Package");
                 Assert.fail("Expected ELException but got none on iteration " + i);
             } catch (ELException ex) {
                 // Expected
@@ -277,7 +277,7 @@ public class TestImportHandler {
     public void testResolveInnerClass() {
         ImportHandler importHandler = new ImportHandler();
 
-        importHandler.importClass("org.apache.catalina.authenticator.DigestAuthenticator.AuthDigest");
+        importHandler.importClass("com.alx.enterprise.webtier.authenticator.DigestAuthenticator.AuthDigest");
         Class<?> clazz = importHandler.resolveClass("AuthDigest");
 
         Assert.assertEquals(DigestAuthenticator.AuthDigest.class, clazz);

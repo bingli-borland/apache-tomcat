@@ -54,45 +54,45 @@
 <section name="Available Interceptors">
   <p>
     Tribes has been designed as a general clustering solutiuon. Not all interceptors are expected to be of use
-    in Tomcat cluster configurations. The interceptors expected to be of use in Tomcat clusters are described in
+    in Alx cluster configurations. The interceptors expected to be of use in Alx clusters are described in
     more detail in the following sections. They are:
    </p>
    <ul>
-    <li><code>org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.EncryptInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.TcpFailureDetector</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.DomainFilterInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.EncryptInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.FragmentationInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.MessageDispatchInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.StaticMembershipInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.TcpFailureDetector</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.TcpPingInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.ThroughputInterceptor</code></li>
    </ul>
    <p>
-    The interceptors not expected to be of use in Tomcat clusters are described in the Javadoc for each interceptor.
+    The interceptors not expected to be of use in Alx clusters are described in the Javadoc for each interceptor.
     They are:
    </p>
    <ul>
-    <li><code>org.apache.catalina.tribes.group.interceptors.NonBlockingCoordinator</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.OrderInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.SimpleCoordinator</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.TwoPhaseCommitInterceptor</code></li>
-    <li><code>org.apache.catalina.tribes.group.interceptors.GzipInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.NonBlockingCoordinator</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.OrderInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.SimpleCoordinator</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.TwoPhaseCommitInterceptor</code></li>
+    <li><code>com.alx.enterprise.webtier.tribes.group.interceptors.GzipInterceptor</code></li>
    </ul>
 </section>
 
 <section name="Static Membership">
   <p>
    In addition to dynamic discovery, Apache Tribes also supports static membership, with membership verification.
-   To achieve this add the <code>org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor</code>
-   after the <code>org.apache.catalina.tribes.group.interceptors.TcpFailureDetector</code> interceptor.
+   To achieve this add the <code>com.alx.enterprise.webtier.tribes.group.interceptors.StaticMembershipInterceptor</code>
+   after the <code>com.alx.enterprise.webtier.tribes.group.interceptors.TcpFailureDetector</code> interceptor.
    Inside the <code>StaticMembershipInterceptor</code> you can add the static members you wish to have.
    The <code>TcpFailureDetector</code> will do a health check on the static members,and also monitor them for crashes
    so they will have the same level of notification mechanism as the members that are automatically discovered.</p>
-   <source><![CDATA[     <Interceptor className="org.apache.catalina.tribes.group.interceptors.StaticMembershipInterceptor">
-       <LocalMember className="org.apache.catalina.tribes.membership.StaticMember"
+   <source><![CDATA[     <Interceptor className="com.alx.enterprise.webtier.tribes.group.interceptors.StaticMembershipInterceptor">
+       <LocalMember className="com.alx.enterprise.webtier.tribes.membership.StaticMember"
                   domain="staging-cluster"
                   uniqueId="{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1}"/>
-       <Member className="org.apache.catalina.tribes.membership.StaticMember"
+       <Member className="com.alx.enterprise.webtier.tribes.membership.StaticMember"
                   port="5678"
                   securePort="-1"
                   host="tomcat01.mydomain.com"
@@ -116,7 +116,7 @@
    </attributes>
   </subsection>
 
-  <subsection name="org.apache.catalina.tribes.group.interceptors.DomainFilterInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.DomainFilterInterceptor Attributes">
    <attributes>
      <attribute name="domain" required="true">
        The logical cluster domain that this Interceptor accepts.
@@ -131,7 +131,7 @@
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.FragmentationInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.FragmentationInterceptor Attributes">
    <attributes>
      <attribute name="expire" required="false">
        How long do we keep the fragments in memory and wait for the rest to arrive.
@@ -143,10 +143,10 @@
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.MessageDispatchInterceptor Attributes">
    <attributes>
      <attribute name="optionFlag" required="false">
-       The default and hard coded value is <code>8 (org.apache.catalina.tribes.Channel.SEND_OPTIONS_ASYNCHRONOUS)</code>.
+       The default and hard coded value is <code>8 (com.alx.enterprise.webtier.tribes.Channel.SEND_OPTIONS_ASYNCHRONOUS)</code>.
        The dispatcher will trigger on this value only, as it is predefined by Tribes.
      </attribute>
      <attribute name="alwaysSend" required="false">
@@ -169,7 +169,7 @@
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.TcpFailureDetector Attributes">
    <attributes>
      <attribute name="connectTimeout" required="false">
        Specifies the timeout, in milliseconds, to use when attempting a TCP connection
@@ -195,7 +195,7 @@
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.TcpPingInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.TcpPingInterceptor Attributes">
    <attributes>
      <attribute name="interval" required="false">
        If useThread == true, defines the interval of sending a ping message.
@@ -209,17 +209,17 @@
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.ThroughputInterceptor Attributes">
    <attributes>
      <attribute name="interval" required="false">
        Defines the interval in number of messages when we are to report the throughput statistics.
-       The report is logged to the <code>org.apache.juli.logging.LogFactory.getLog(ThroughputInterceptor.class)</code>
+       The report is logged to the <code>com.alx.enterprise.logging.internal.LogFactory.getLog(ThroughputInterceptor.class)</code>
        logger under the <code>INFO</code> level.
        Default value is to report every <code>10000</code> messages.
      </attribute>
    </attributes>
   </subsection>
-  <subsection name="org.apache.catalina.tribes.group.interceptors.EncryptInterceptor Attributes">
+  <subsection name="com.alx.enterprise.webtier.tribes.group.interceptors.EncryptInterceptor Attributes">
    <p>
      The EncryptInterceptor adds encryption to the channel messages carrying
      session data between nodes. For the EncryptInterceptor to be effective it
@@ -310,7 +310,7 @@
     </p>
     <attributes>
       <attribute name="className" required="true">
-        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+        Only one implementation available:<code>com.alx.enterprise.webtier.tribes.membership.StaticMember</code>
       </attribute>
       <attribute name="port" required="false">
         There is no need to set.
@@ -343,7 +343,7 @@
     </p>
     <attributes>
       <attribute name="className" required="true">
-        Only one implementation available:<code>org.apache.catalina.tribes.membership.StaticMember</code>
+        Only one implementation available:<code>com.alx.enterprise.webtier.tribes.membership.StaticMember</code>
       </attribute>
       <attribute name="port" required="true">
         The port that this static member listens to for cluster messages

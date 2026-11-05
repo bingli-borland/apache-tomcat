@@ -16,14 +16,14 @@
 -include: build-defaults.bnd
 
 Bundle-Name: tomcat-util-scan
-Bundle-SymbolicName: org.apache.tomcat-util-scan
+Bundle-SymbolicName: com.alx.enterprise.web-util-scan
 Export-Package: \
-    org.apache.tomcat.util.descriptor,\
-    org.apache.tomcat.util.descriptor.tagplugin,\
-    org.apache.tomcat.util.descriptor.tld,\
-    org.apache.tomcat.util.descriptor.web,\
-    org.apache.tomcat.util.digester,\
-    org.apache.tomcat.util.scan
+    com.alx.enterprise.web.util.descriptor,\
+    com.alx.enterprise.web.util.descriptor.tagplugin,\
+    com.alx.enterprise.web.util.descriptor.tld,\
+    com.alx.enterprise.web.util.descriptor.web,\
+    com.alx.enterprise.web.util.digester,\
+    com.alx.enterprise.web.util.scan
 X-Compile-Source-JDK: ${compile.release}
 X-Compile-Target-JDK: ${compile.release}
 

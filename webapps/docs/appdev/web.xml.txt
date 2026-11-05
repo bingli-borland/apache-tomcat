@@ -63,7 +63,7 @@
 
     <!-- Servlet definitions for the servlets that make up
          your web application, including initialization
-         parameters.  With Tomcat, you can also send requests
+         parameters.  With Alx, you can also send requests
          to servlets not listed here with a request like this:
 
            http://localhost:8080/{context-path}/servlet/{classname}

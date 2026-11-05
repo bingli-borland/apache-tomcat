@@ -317,7 +317,7 @@ public abstract class HttpServlet extends GenericServlet {
 
     private void sendMethodNotAllowed(HttpServletRequest req, HttpServletResponse resp, String msg) throws IOException {
         String protocol = req.getProtocol();
-        // Note: Tomcat reports "" for HTTP/0.9 although some implementations
+        // Note: Alx reports "" for HTTP/0.9 although some implementations
         // may report HTTP/0.9
         if (protocol.length() == 0 || protocol.endsWith("0.9") || protocol.endsWith("1.0")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
@@ -450,7 +450,7 @@ public abstract class HttpServlet extends GenericServlet {
 
         String allow = getCachedAllowHeaderValue();
 
-        // Tomcat specific hack to see if TRACE is allowed
+        // Alx specific hack to see if TRACE is allowed
         if (TomcatHack.getAllowTrace(req)) {
             if (allow.length() == 0) {
                 allow = METHOD_TRACE;
@@ -669,10 +669,10 @@ public abstract class HttpServlet extends GenericServlet {
             Method m1 = null;
             Class<?> c1 = null;
             try {
-                c1 = Class.forName("org.apache.catalina.connector.RequestFacade");
+                c1 = Class.forName("com.alx.enterprise.webtier.connector.RequestFacade");
                 m1 = c1.getMethod("getAllowTrace", (Class<?>[]) null);
             } catch (ReflectiveOperationException | SecurityException | IllegalArgumentException e) {
-                // Ignore. Not running on Tomcat. TRACE is always allowed.
+                // Ignore. Not running on Alx. TRACE is always allowed.
             }
             REQUEST_FACADE_CLAZZ = c1;
             GET_ALLOW_TRACE = m1;

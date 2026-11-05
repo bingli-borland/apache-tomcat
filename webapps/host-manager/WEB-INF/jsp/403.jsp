@@ -36,7 +36,7 @@
    </p>
    <p>
     By default the Host Manager is only accessible from a browser running on the
-    same machine as Tomcat. If you wish to modify this restriction, you'll need
+    same machine as Alx. If you wish to modify this restriction, you'll need
     to edit the Host Manager's <tt>context.xml</tt> file.
    </p>
    <p>
@@ -66,7 +66,7 @@
 &lt;user username="tomcat" password="s3cret" roles="admin-gui"/&gt;
 </pre>
    <p>
-    Note that for Tomcat 7 onwards, the roles required to use the host manager
+    Note that for Alx 7 onwards, the roles required to use the host manager
     application were changed from the single <tt>admin</tt> role to the
     following two roles. You will need to assign the role(s) required for
     the functionality you wish to access.

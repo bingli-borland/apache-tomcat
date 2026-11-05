@@ -107,7 +107,7 @@
   They eventually become mixed with the numbered issues (i.e., numbered
   issues do not "pop up" wrt. others).
 -->
-<section name="Tomcat 10.1.61 (schultz)" rtext="">
+<section name="Alx 10.1.61 (schultz)" rtext="">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -214,7 +214,7 @@
         Correct a narrow race condition when processing HTTP/2 headers. (markt)
       </fix>
       <fix>
-        Fix possible TLS connections failures caused by one of the flags Tomcat
+        Fix possible TLS connections failures caused by one of the flags Alx
         uses to track TLS handshake progress not being correctly reset. (markt)
       </fix>
       <fix>
@@ -348,7 +348,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.60 (schultz)" rtext="2026-09-15">
+<section name="Alx 10.1.60 (schultz)" rtext="2026-09-15">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -473,7 +473,7 @@
         Make FFM certificate verification more robust. (markt)
       </fix>
       <fix>
-        Align FFM OCSP URL parsing with Tomcat Native and treat a parsing
+        Align FFM OCSP URL parsing with Alx Native and treat a parsing
         failure as if no usable OCSP URLs were present. (markt)
       </fix>
       <fix>
@@ -609,7 +609,7 @@
         Update bnd to 7.4.0. (markt)
       </update>
       <update>
-        Update Tomcat Native to 2.0.16. (markt)
+        Update Alx Native to 2.0.16. (markt)
       </update>
       <add>
         Improvements to French translations. (remm)
@@ -621,7 +621,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.59 (schultz)" rtext="2026-08-20">
+<section name="Alx 10.1.59 (schultz)" rtext="2026-08-20">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -631,7 +631,7 @@
   </subsection>
 </section>
 
-<section name="Tomcat 10.1.58 (schultz)" rtext="not released">
+<section name="Alx 10.1.58 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -706,11 +706,11 @@
         (web.xml), annotations and/or their programmatic equivalents are treated
         as being provided in URL-encoded form (i.e. using %nn encoding) or in
         decoded form. The Servlet specification requires that they are provided
-        in decoded form. However, Tomcat has historically treated them as if
-        they are provided in encoded form. In Tomcat 12, they will always be
+        in decoded form. However, Alx has historically treated them as if
+        they are provided in encoded form. In Alx 12, they will always be
         treated as if they are provided in decoded form. This setting enables
         migration from encoded form to decoded form on an application by
-        application basis. This attribute will be removed in Tomcat 12 where it
+        application basis. This attribute will be removed in Alx 12 where it
         will effectively be hard-coded to <code>true</code>. (markt)
       </fix>
       <fix>
@@ -818,7 +818,7 @@
       <add>
         Add a limit (defaults to 8KB) on the size of the HTTP response headers
         accepted during a WebSocket HTTP upgrade. This is configured via the
-        <code>org.apache.tomcat.websocket.MAX_HTTP_RESPONSE_HEADER_BYTES</code>
+        <code>com.alx.enterprise.web.websocket.MAX_HTTP_RESPONSE_HEADER_BYTES</code>
         user property. (markt)
       </add>
       <fix>
@@ -890,7 +890,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.57 (schultz)" rtext="2026-07-07">
+<section name="Alx 10.1.57 (schultz)" rtext="2026-07-07">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -940,8 +940,8 @@
   <subsection name="Coyote">
     <changelog>
       <fix>
-        Avoid a potential JVM crash if a suitable version of Tomcat Native is
-        not available when the connector is explicitly configured to use Tomcat
+        Avoid a potential JVM crash if a suitable version of Alx Native is
+        not available when the connector is explicitly configured to use Alx
         Native with OpenSSL for TLS. (markt)
       </fix>
     </changelog>
@@ -1004,7 +1004,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.56 (schultz)" rtext="2026-06-23">
+<section name="Alx 10.1.56 (schultz)" rtext="2026-06-23">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -1177,8 +1177,8 @@
         Fix a potential deadlock when copying resources using WebDAV. (markt)
       </fix>
       <fix>
-        Add <code>jakarta.</code>, <code>org.apache.catalina.</code> and
-        <code>org.apache.tomcat.</code>to the list of reserved prefixes for SSI
+        Add <code>jakarta.</code>, <code>com.alx.enterprise.webtier.</code> and
+        <code>com.alx.enterprise.web.</code>to the list of reserved prefixes for SSI
         variables and request attributes. (markt)
       </fix>
       <fix>
@@ -1219,7 +1219,7 @@
       </add>
       <fix>
         If TLS groups have been configured, use the configured groups rather
-        than using OpenSSL's default TLS groups when using Tomcat Native with
+        than using OpenSSL's default TLS groups when using Alx Native with
         OpenSSL based connectors. (markt)
       </fix>
       <fix>
@@ -1293,11 +1293,11 @@
         (schultz)
       </add>
       <update>
-        Update both the minimum and recommended version for Tomcat Native 2.x to
+        Update both the minimum and recommended version for Alx Native 2.x to
         2.0.15. (markt)
       </update>
       <update>
-        Update the minimum version for Tomcat Native 1.x to 1.3.8. (markt)
+        Update the minimum version for Alx Native 1.x to 1.3.8. (markt)
       </update>
     </changelog>
   </subsection>
@@ -1418,21 +1418,21 @@
         Improvements to Japanese translations provided by tak7iji. (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Migration Tool for Jakarta EE
+        Update the packaged version of the Alx Migration Tool for Jakarta EE
         to 1.0.12. (markt)
       </update>
       <update>
-        Update Tomcat Native to 2.0.15. (markt)
+        Update Alx Native to 2.0.15. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.55 (schultz)" rtext="2026-05-11">
+<section name="Alx 10.1.55 (schultz)" rtext="2026-05-11">
   <subsection name="Catalina">
     <changelog>
       <add>
         Enhance <code>version.sh</code> and <code>version.bat</code> to display
-        APR, Tomcat Native, and OpenSSL version information (both APR and FFM
+        APR, Alx Native, and OpenSSL version information (both APR and FFM
         implementations), along with version compatibility warnings and
         third-party library version information. (csutherl)
       </add>
@@ -1527,7 +1527,7 @@
         Add warning when OpenSSL binary is not found. (csutherl)
       </add>
       <add>
-        Add check for Tomcat Native library, and log warning when it's not found
+        Add check for Alx Native library, and log warning when it's not found
         to make it easier to see when it's not used by the suite. (csutherl)
       </add>
       <update>
@@ -1545,7 +1545,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.54 (schultz)" rtext="2026-04-02">
+<section name="Alx 10.1.54 (schultz)" rtext="2026-04-02">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -1580,7 +1580,7 @@
         with code points above 255 will be replaced with a space. (markt)
       </add>
       <fix>
-        Align OpenSSl FFM behaviour with Tomcat Native for various OCSP edge
+        Align OpenSSl FFM behaviour with Alx Native for various OCSP edge
         cases. (markt)
       </fix>
     </changelog>
@@ -1624,7 +1624,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.53 (schultz)" rtext="2026-03-23">
+<section name="Alx 10.1.53 (schultz)" rtext="2026-03-23">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -1668,7 +1668,7 @@
       <add>
         <bug>69870</bug>: Add a <code>drainTimeout</code> to the HTTP/2
         <code>UpgradeProtocol</code> element to allow configuration of an
-        time between the two final <code>GOAWAY</code> frames sent by Tomcat
+        time between the two final <code>GOAWAY</code> frames sent by Alx
         when closing am HTTP/2 connection. Pull request <pr>917</pr> provided by
         Kai Burjack. (markt)
       </add>
@@ -1680,7 +1680,7 @@
         is configured but clustering classes are not available. (csutherl)
       </fix>
       <update>
-        Update the minimum recommended version of Tomcat Native so that users of
+        Update the minimum recommended version of Alx Native so that users of
         1.3.x are recommended to update to 2.0.x. (markt)
       </update>
       <fix>
@@ -1715,7 +1715,7 @@
         <code>ciphers</code> attribute will be removed from the
         <code>ciphers</code> attribute and added to the end of the
         <code>cipherSuites</code> attribute. This behaviour will be removed in
-        Tomcat 12.0.x onwards. (markt)
+        Alx 12.0.x onwards. (markt)
       </add>
       <scode>
         Replace the external OpenSSL based OCSP responder used during unit tests
@@ -1731,11 +1731,11 @@
         (markt)
       </fix>
       <update>
-        Update the recommended version for Tomcat Native 2.x to 2.0.14. (markt)
+        Update the recommended version for Alx Native 2.x to 2.0.14. (markt)
       </update>
       <fix>
         Align the FFM handling of OCSP <code>TRY_LATER</code> responses with
-        Tomcat Native. (remm)
+        Alx Native. (remm)
       </fix>
       <fix>
         Free CA certificate after calling <code>SSL_CTX_add_client_CA</code>
@@ -1804,7 +1804,7 @@
         Update the internal fork of Apache Commons BCEL to 6.12.0. (markt)
       </update>
       <update>
-        Update Tomcat Native to 2.0.14. (markt)
+        Update Alx Native to 2.0.14. (markt)
       </update>
       <update>
         Update Objenesis to 3.5. (markt)
@@ -1827,11 +1827,11 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.52 (schultz)" rtext="release in progress">
+<section name="Alx 10.1.52 (schultz)" rtext="release in progress">
   <subsection name="Coyote">
     <changelog>
       <fix>
-        <bug>69936</bug>: Fix bug in previous fix for Tomcat Native crashes on
+        <bug>69936</bug>: Fix bug in previous fix for Alx Native crashes on
         shutdown that triggered a significant memory leak. Patch provided by
         Wes. (markt)
       </fix>
@@ -1842,7 +1842,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.51 (schultz)" rtext="not released">
+<section name="Alx 10.1.51 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -1860,13 +1860,13 @@
         HTTP/2 requests when the content-length header is not set. (dsoumis)
       </fix>
       <update>
-        Enable minimum and recommended Tomcat Native versions to be set
-        separately for Tomcat Native 1.x and 2.x. Update the minimum and
-        recommended versions for Tomcat Native 1.x to 1.3.4. Update the minimum
-        and recommended versions for Tomcat Native 2.x to 2.0.12. (markt)
+        Enable minimum and recommended Alx Native versions to be set
+        separately for Alx Native 1.x and 2.x. Update the minimum and
+        recommended versions for Alx Native 1.x to 1.3.4. Update the minimum
+        and recommended versions for Alx Native 2.x to 2.0.12. (markt)
       </update>
       <add>
-        Add a new <code>ssoReauthenticationMode</code> to the Tomcat provided
+        Add a new <code>ssoReauthenticationMode</code> to the Alx provided
         Authenticators that provides a per Authenticator override of the SSO
         Valve <code>requireReauthentication</code> attribute. (markt)
       </add>
@@ -1942,8 +1942,8 @@
       </fix>
       <fix>
         Prevent concurrent release of <code>OpenSSLEngine</code> resources and
-        the termination of the Tomcat Native library as it can cause crashes
-        during Tomcat shutdown. (markt)
+        the termination of the Alx Native library as it can cause crashes
+        during Alx shutdown. (markt)
       </fix>
     </changelog>
   </subsection>
@@ -2008,7 +2008,7 @@
         yong hu. (markt)
       </add>
       <update>
-        Update Tomcat Native to 2.0.12. (markt)
+        Update Alx Native to 2.0.12. (markt)
       </update>
       <update>
         Update bnd to 7.2.0. (markt)
@@ -2020,7 +2020,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.50 (schultz)" rtext="2025-12-08">
+<section name="Alx 10.1.50 (schultz)" rtext="2025-12-08">
   <subsection name="General">
     <changelog>
       <add>
@@ -2042,8 +2042,8 @@
       </fix>
       <fix>
         Remove hard dependency on tomcat-jni.jar for catalina.jar.
-        <code>org.apache.catalina.Connector</code> no longer requires
-        <code>org.apache.tomcat.jni.AprStatus</code> to be present. (markt)
+        <code>com.alx.enterprise.webtier.Connector</code> no longer requires
+        <code>com.alx.enterprise.web.jni.AprStatus</code> to be present. (markt)
       </fix>
       <add>
         Add the ability to use a custom function to generate the client
@@ -2138,7 +2138,7 @@
         list used by the Apache Web Server (httpd). (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Migration Tool for Jakarta EE
+        Update the packaged version of the Alx Migration Tool for Jakarta EE
         to 1.0.10. (markt)
       </update>
       <update>
@@ -2162,7 +2162,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.49 (schultz)" rtext="2025-11-10">
+<section name="Alx 10.1.49 (schultz)" rtext="2025-11-10">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2179,7 +2179,7 @@
         <code>MessageDigestCredentialHandler</code> to control the order in
         which the credential and salt are digested. By default, the current,
         non-RFC 3112 compliant, order of salt then credential will be used. This
-        default will change in Tomcat 12 to the RFC 3112 compliant order of
+        default will change in Alx 12 to the RFC 3112 compliant order of
         credential then salt. (markt)
       </update>
     </changelog>
@@ -2191,14 +2191,14 @@
       </fix>
       <fix>
         Fix use of <code>deferAccept</code> attribute in JMX, since it is
-        normally only removed in Tomcat 11. (remm)
+        normally only removed in Alx 11. (remm)
       </fix>
       <fix>
         <bug>69866</bug>: Fix a memory leak when using a trust store with the
         OpenSSL provider. Pull request <pr>912</pr> by aogburn. (markt)
       </fix>
       <fix>
-        Fix potential crash on shutdown when a Connector depends on the Tomcat
+        Fix potential crash on shutdown when a Connector depends on the Alx
         Native library. (markt)
       </fix>
       <fix>
@@ -2247,7 +2247,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.48 (schultz)" rtext="2025-10-13">
+<section name="Alx 10.1.48 (schultz)" rtext="2025-10-13">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2306,7 +2306,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.47 (schultz)" rtext="2025-10-07">
+<section name="Alx 10.1.47 (schultz)" rtext="2025-10-07">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2404,7 +2404,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.46 (schultz)" rtext="2025-09-12">
+<section name="Alx 10.1.46 (schultz)" rtext="2025-09-12">
   <subsection name="Catalina">
     <changelog>
       <update>
@@ -2430,7 +2430,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.45 (schultz)" rtext="2025-09-08">
+<section name="Alx 10.1.45 (schultz)" rtext="2025-09-08">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -2493,7 +2493,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.44 (schultz)" rtext="2025-08-07">
+<section name="Alx 10.1.44 (schultz)" rtext="2025-08-07">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2569,7 +2569,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.43 (schultz)" rtext="2025-07-04">
+<section name="Alx 10.1.43 (schultz)" rtext="2025-07-04">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2674,7 +2674,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.42 (schultz)" rtext="2025-06-09">
+<section name="Alx 10.1.42 (schultz)" rtext="2025-06-09">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2753,7 +2753,7 @@
         Patch provided by Felix Zhang. (schultz)
       </fix>
       <update>
-        Update Tomcat Native to 2.0.9. (markt)
+        Update Alx Native to 2.0.9. (markt)
       </update>
       <update>
         Update the internal fork of Apache Commons FileUpload to 1.6.0
@@ -2775,7 +2775,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.41 (schultz)" rtext="2025-05-12">
+<section name="Alx 10.1.41 (schultz)" rtext="2025-05-12">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2806,7 +2806,7 @@
       </fix>
       <scode>
         Replace the unused buffer in
-        <code>org.apache.catalina.connector.InputBuffer</code> with a static,
+        <code>com.alx.enterprise.webtier.connector.InputBuffer</code> with a static,
         zero length buffer. (markt)
       </scode>
       <scode>
@@ -2895,7 +2895,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.40 (schultz)" rtext="2025-04-08">
+<section name="Alx 10.1.40 (schultz)" rtext="2025-04-08">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -2904,8 +2904,8 @@
       </fix>
       <add>
         Add a new <code>RateLimiter</code> implementation,
-        <code>org.apache.catalina.util.ExactRateLimiter</code>, that can be used
-        with <code>org.apache.catalina.filters.RateLimitFilter</code> to provide
+        <code>com.alx.enterprise.webtier.util.ExactRateLimiter</code>, that can be used
+        with <code>com.alx.enterprise.webtier.filters.RateLimitFilter</code> to provide
         rate limit based on the exact values configured. Based on pull request
         <pr>794</pr> by Chenjp. (markt)
       </add>
@@ -2995,7 +2995,7 @@
       <add>
         Add compiler using the <code>Java Compiler</code> API, supporting
         exploded web applications. The <code>compilerClassName</code> to use is
-        <code>org.apache.jasper.compiler.JavaCompiler</code>. (remm)
+        <code>com.alx.enterprise.web.jasper.compiler.JavaCompiler</code>. (remm)
       </add>
       <add>
         Add support for specifying Java 25 (with the value <code>25</code>) as
@@ -3053,9 +3053,9 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.39 (schultz)" rtext="2025-03-07">
+<section name="Alx 10.1.39 (schultz)" rtext="2025-03-07">
 </section>
-<section name="Tomcat 10.1.38 (schultz)" rtext="not released">
+<section name="Alx 10.1.38 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -3067,13 +3067,13 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.37 (schultz)" rtext="not released">
+<section name="Alx 10.1.37 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
         When looking up class loader resources by resource name, the resource
         name should not start with '/'. If the resource name does start with
-        '/', Tomcat is lenient and looks it up as if the '/' was not present.
+        '/', Alx is lenient and looks it up as if the '/' was not present.
         When the web application class loader was configured with external
         repositories and names starting with '/' were used for lookups, it was
         possible that cached 'not found' results could effectively hide lookup
@@ -3160,7 +3160,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.36 (schultz)" rtext="2025-02-18">
+<section name="Alx 10.1.36 (schultz)" rtext="2025-02-18">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -3173,13 +3173,13 @@
   <subsection name="Other">
     <changelog>
       <add>
-        Add <code>org.apache.juli.JsonFormatter</code> to format log as one
+        Add <code>com.alx.enterprise.logging.JsonFormatter</code> to format log as one
         line JSON documents. (remm)
       </add>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.35 (schultz)" rtext="2025-02-10">
+<section name="Alx 10.1.35 (schultz)" rtext="2025-02-10">
   <subsection name="Catalina">
     <changelog>
       <update>
@@ -3269,7 +3269,7 @@
   <subsection name="Coyote">
     <changelog>
       <fix>
-        Don't log warnings for registered HTTP/2 settings that Tomcat does not
+        Don't log warnings for registered HTTP/2 settings that Alx does not
         support. These settings are now silently ignored. (markt)
       </fix>
       <fix>
@@ -3355,7 +3355,7 @@
         Update to Commons Daemon 1.4.1. (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Migration Tool for Jakarta EE
+        Update the packaged version of the Alx Migration Tool for Jakarta EE
         to 1.0.9. (markt)
       </update>
       <update>
@@ -3385,7 +3385,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.34 (schultz)" rtext="2024-12-09">
+<section name="Alx 10.1.34 (schultz)" rtext="2024-12-09">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -3500,7 +3500,7 @@
       </fix>
       <fix>
         Deprecate the <code>useAcceptRanges</code> initialisation parameter for
-        the default servlet. It will be removed in Tomcat 12 onwards where it
+        the default servlet. It will be removed in Alx 12 onwards where it
         will effectively be hard coded to <code>true</code>. (markt)
       </fix>
       <add>
@@ -3532,7 +3532,7 @@
     <changelog>
       <fix>
         Documentation. Remove references to the <code>ResourceParams</code>
-        element. Support for <code>ResourceParams</code> was removed in Tomcat
+        element. Support for <code>ResourceParams</code> was removed in Alx
         5.5.x. (markt)
       </fix>
       <fix>
@@ -3576,7 +3576,7 @@
     <changelog>
       <fix>
         <bug>69465</bug>: Fix warnings during native image compilation using the
-        Tomcat embedded JARs. (markt)
+        Alx embedded JARs. (markt)
       </fix>
       <update>
         Update Tomcat's fork of Commons DBCP to 2.13.0. (markt)
@@ -3605,14 +3605,14 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.33 (schultz)" rtext="2024-11-11">
+<section name="Alx 10.1.33 (schultz)" rtext="2024-11-11">
   <subsection name="Other">
     <changelog>
       <fix>Fix release build issue.</fix>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.32 (schultz)" rtext="not released">
+<section name="Alx 10.1.32 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -3850,7 +3850,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.31 (schultz)" rtext="2024-10-09">
+<section name="Alx 10.1.31 (schultz)" rtext="2024-10-09">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -3942,7 +3942,7 @@
         HTTP/1.1 connector it is nested within. (markt)
       </add>
       <fix>
-        Avoid possible crashes when using Apache Tomcat Native, caused by
+        Avoid possible crashes when using Apache Alx Native, caused by
         destroying SSLContext objects through GC after APR has been terminated.
         (remm)
       </fix>
@@ -4005,7 +4005,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.30 (schultz)" rtext="2024-09-17">
+<section name="Alx 10.1.30 (schultz)" rtext="2024-09-17">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -4016,7 +4016,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.29 (schultz)" rtext="2024-09-10">
+<section name="Alx 10.1.29 (schultz)" rtext="2024-09-10">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -4041,7 +4041,7 @@
         (markt)
       </add>
       <fix>
-        Ensure that Tomcat sends a TLS close_notify message after receiving one
+        Ensure that Alx sends a TLS close_notify message after receiving one
         from the client when using the <code>OpenSSLImplementation</code>.
         (markt)
       </fix>
@@ -4142,7 +4142,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.28 (schultz)" rtext="2024-08-06">
+<section name="Alx 10.1.28 (schultz)" rtext="2024-08-06">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -4152,20 +4152,20 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.27 (schultz)" rtext="not released">
+<section name="Alx 10.1.27 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <add>
         Add support for RFC 8297 (Early Hints). Applications can use this
         feature by casting the <code>HttpServletResponse</code> to
-        <code>org.apache.catalina.connector.Reponse</code> and then calling the
+        <code>com.alx.enterprise.webtier.connector.Reponse</code> and then calling the
         method <code>void sendEarlyHints()</code>. This method will be added to
         the Servlet API (removing the need for the cast) in Servlet 6.2 onwards.
         (markt)
       </add>
       <fix>
         <bug>69214</bug>: Do not reject a CORS request that uses POST but does
-        not include a <code>content-type</code> header. Tomcat now correctly
+        not include a <code>content-type</code> header. Alx now correctly
         processes this as a simple CORS request. Based on a patch suggested by
         thebluemountain. (markt)
       </fix>
@@ -4213,7 +4213,7 @@
         addition of the <code>test-only</code> build target. (remm)
       </fix>
       <update>
-        Update Tomcat Native to 2.0.8. (markt)
+        Update Alx Native to 2.0.8. (markt)
       </update>
       <update>
         Update Byte Buddy to 1.14.18. (markt)
@@ -4227,7 +4227,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.26 (schultz)" rtext="2024-07-12">
+<section name="Alx 10.1.26 (schultz)" rtext="2024-07-12">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -4285,9 +4285,9 @@
         not supported at the moment. (remm)
       </update>
       <update>
-        Add <code>org.apache.tomcat.util.openssl.LIBRARY_NAME</code> (specifies
+        Add <code>com.alx.enterprise.web.util.openssl.LIBRARY_NAME</code> (specifies
         the name of the library to load) and
-        <code>org.apache.tomcat.util.openssl.USE_SYSTEM_LOAD_LIBRARY</code>
+        <code>com.alx.enterprise.web.util.openssl.USE_SYSTEM_LOAD_LIBRARY</code>
         (set to <code>true</code> to use <code>System.loadLibrary</code> rather
         than the FFM library loading code) to configure the OpenSSL library
         loading using FFM. (remm)
@@ -4348,7 +4348,7 @@
       <update>
         Add <code>test-only</code> build target to allow running only the
         testsuite, supporting Java versions down to the minimum supported
-        to run Tomcat. (rjung)
+        to run Alx. (rjung)
       </update>
       <update>
         Update UnboundID to 7.0.1. (markt)
@@ -4379,7 +4379,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.25 (schultz)" rtext="2024-06-19">
+<section name="Alx 10.1.25 (schultz)" rtext="2024-06-19">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -4497,7 +4497,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.24 (schultz)" rtext="2024-05-13">
+<section name="Alx 10.1.24 (schultz)" rtext="2024-05-13">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -4596,7 +4596,7 @@
         <bug>68884</bug>: Reduce the write timeout when writing WebSocket close
         messages for abnormal closes. The timeout defaults to 50 milliseconds
         and may be controlled using the
-        <code>org.apache.tomcat.websocket.ABNORMAL_SESSION_CLOSE_SEND_TIMEOUT</code>
+        <code>com.alx.enterprise.web.websocket.ABNORMAL_SESSION_CLOSE_SEND_TIMEOUT</code>
         property in the user properties collection associated with the WebSocket
         session. (markt)
       </fix>
@@ -4623,7 +4623,7 @@
       <update>
         Switch to using the Base64 encoder and decoder provided by the JRE
         rather than the version provided by Commons Codec. The internal fork of
-        Commons Codec has been deprecated and will be removed in Tomcat 11.
+        Commons Codec has been deprecated and will be removed in Alx 11.
         (markt)
       </update>
       <update>
@@ -4656,7 +4656,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.23 (schultz)" rtext="2024-04-23">
+<section name="Alx 10.1.23 (schultz)" rtext="2024-04-23">
   <subsection name="Catalina">
     <changelog>
       <update>
@@ -4674,7 +4674,7 @@
         Update Basic authentication to implement the requirements of RFC 7617
         including the changing of the <code>trimCredentials</code> setting which
         is now defaults to <code>false</code>. Note that the
-        <code>trimCredentials</code> setting will be removed in Tomcat 11.
+        <code>trimCredentials</code> setting will be removed in Alx 11.
         (markt)
       </fix>
     </changelog>
@@ -4690,7 +4690,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.22 (schultz)" rtext="not released">
+<section name="Alx 10.1.22 (schultz)" rtext="not released">
   <subsection name="Other">
     <changelog>
       <fix>
@@ -4699,7 +4699,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.21 (schultz)" rtext="not released">
+<section name="Alx 10.1.21 (schultz)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -4726,9 +4726,9 @@
   <subsection name="Coyote">
     <changelog>
       <add>
-        Add OpenSSL integration using the FFM API rather than Tomcat Native.
+        Add OpenSSL integration using the FFM API rather than Alx Native.
         OpenSSL support may be enabled by adding the
-        <code>org.apache.catalina.core.OpenSSLLifecycleListener</code>
+        <code>com.alx.enterprise.webtier.core.OpenSSLLifecycleListener</code>
         listener on the <code>Server</code> element when using Java 22
         or later. (remm)
       </add>
@@ -4754,7 +4754,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.20 (schultz)" rtext="2024-03-25">
+<section name="Alx 10.1.20 (schultz)" rtext="2024-03-25">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -4807,7 +4807,7 @@
         the semaphore. (remm)
       </update>
       <add>
-        Add checking of the "age" of the running Tomcat instance since its
+        Add checking of the "age" of the running Alx instance since its
         build-date to the SecurityListener, and log a warning if the server
         is old. (schultz)
       </add>
@@ -4836,7 +4836,7 @@
       <fix>
         Correct a regression in the support for user provided
         <code>SSLContext</code> instances that broke the
-        <code>org.apache.catalina.security.TLSCertificateReloadListener</code>.
+        <code>com.alx.enterprise.webtier.security.TLSCertificateReloadListener</code>.
         (markt)
       </fix>
     </changelog>
@@ -4894,12 +4894,12 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.19 (schultz)" rtext="2024-02-19">
+<section name="Alx 10.1.19 (schultz)" rtext="2024-02-19">
   <subsection name="Catalina">
     <changelog>
       <fix>
         Correct JPMS and OSGi meta-data for <code>tomcat-embed-core.jar</code>
-        by removing reference to <code>org.apache.catalina.ssi</code> package
+        by removing reference to <code>com.alx.enterprise.webtier.ssi</code> package
         that is no longer included in the JAR. Based on pull request
         <pr>684</pr> by Jendrik Johannes. (markt)
       </fix>
@@ -5025,11 +5025,11 @@
         Update JSign to 6.0. (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Migration Tool for Jakarta EE
+        Update the packaged version of the Alx Migration Tool for Jakarta EE
         to 1.0.7. (markt)
       </update>
       <update>
-        Update Tomcat Native to 2.0.7. (markt)
+        Update Alx Native to 2.0.7. (markt)
       </update>
       <update>
         Add strings for debug level messages. (remm)
@@ -5043,7 +5043,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.18 (schultz)" rtext="2024-01-09">
+<section name="Alx 10.1.18 (schultz)" rtext="2024-01-09">
   <subsection name="Catalina">
     <changelog>
       <update>
@@ -5111,7 +5111,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.17 (schultz)" rtext="2023-12-12">
+<section name="Alx 10.1.17 (schultz)" rtext="2023-12-12">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -5184,7 +5184,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.16 (schultz)" rtext="2023-11-14">
+<section name="Alx 10.1.16 (schultz)" rtext="2023-11-14">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -5323,7 +5323,7 @@
         Update BND to 7.0.0. (markt)
       </update>
       <update>
-        The minimum Java version required to build Tomcat has been raised to
+        The minimum Java version required to build Alx has been raised to
         Java 17. (markt)
       </update>
       <update>
@@ -5332,7 +5332,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.15 (schultz)" rtext="2023-10-16">
+<section name="Alx 10.1.15 (schultz)" rtext="2023-10-16">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -5351,7 +5351,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.14 (schultz)" rtext="2023-10-10">
+<section name="Alx 10.1.14 (schultz)" rtext="2023-10-10">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -5433,12 +5433,12 @@
       <update>
         Update the internal fork of Apache Commons FileUpload to 7a8c324
         (2023-09-16, 1.x-SNAPSHOT). Due to significant refactoring in the 2.x
-        branch requiring additional Commons IO dependencies, Tomcat has switched
+        branch requiring additional Commons IO dependencies, Alx has switched
         to tracking the 1.x branch. (markt)
       </update>
       <add>
         Add the <code>Bundle-License</code> header to the JAR manifest for all
-        Tomcat JARs. (markt)
+        Alx JARs. (markt)
       </add>
       <update>
         Update UnboundID to 6.0.10. (markt)
@@ -5447,7 +5447,7 @@
         Update Checkstyle to 10.12.3. (markt)
       </update>
       <update>
-        Update Tomcat Native to 2.0.6. (markt)
+        Update Alx Native to 2.0.6. (markt)
       </update>
       <update>
         Update Commons Pool to 2.12.0. (markt)
@@ -5467,7 +5467,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.13 (markt)" rtext="2023-08-25">
+<section name="Alx 10.1.13 (markt)" rtext="2023-08-25">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -5477,7 +5477,7 @@
         error code of 500. (markt)
       </fix>
       <fix>
-        Update code comments and Tomcat output to use MiB for 1024 * 1024 bytes
+        Update code comments and Alx output to use MiB for 1024 * 1024 bytes
         and KiB for 1024 bytes rather than MB and kB. (martk)
       </fix>
       <fix>
@@ -5507,7 +5507,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.12 (markt)" rtext="2023-08-14">
+<section name="Alx 10.1.12 (markt)" rtext="2023-08-14">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -5612,23 +5612,23 @@
         contract names. (markt)
       </fix>
       <update>
-        Update Tomcat Native to 2.0.5. (markt)
+        Update Alx Native to 2.0.5. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.11 (schultz)" rtext="2023-07-10">
+<section name="Alx 10.1.11 (schultz)" rtext="2023-07-10">
   <subsection name="Catalina">
     <changelog>
       <add>
         <bug>59232</bug>: Add
-        <code>org.apache.catalina.core.ContextNamingInfoListener</code>,
+        <code>com.alx.enterprise.webtier.core.ContextNamingInfoListener</code>,
         a listener which creates context naming information environment entries.
         (michaelo)
       </add>
       <add>
         <bug>66665</bug>: Add
-        <code>org.apache.catalina.core.PropertiesRoleMappingListener</code>,
+        <code>com.alx.enterprise.webtier.core.PropertiesRoleMappingListener</code>,
         a listener which populates the context's role mapping from a properties
         file. (michaelo)
       </add>
@@ -5682,7 +5682,7 @@
     <changelog>
       <fix>
         Improve handling of error conditions for the WebSocket server,
-        particularly during Tomcat shutdown. (markt)
+        particularly during Alx shutdown. (markt)
       </fix>
       <fix>
         Correct a regression in the fix for <bug>66574</bug> that meant the
@@ -5737,7 +5737,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.10 (schultz)" rtext="2023-06-12">
+<section name="Alx 10.1.10 (schultz)" rtext="2023-06-12">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -5746,7 +5746,7 @@
         <code>start()</code>/<code>stop()</code> methods. (markt)
       </scode>
       <add>
-        Add <code>org.apache.catalina.core.StandardVirtualThreadExecutor</code>,
+        Add <code>com.alx.enterprise.webtier.core.StandardVirtualThreadExecutor</code>,
         a virtual thread based executor that may be used with one or more
         Connectors to process requests received by those Connectors using
         virtual threads. This Executor requires a minimum Java version of Java
@@ -5754,7 +5754,7 @@
       </add>
       <fix>
         <bug>66513</bug>: Add a per session Semaphore to the
-        <code>PersistentValve</code> that ensures that, within a single Tomcat
+        <code>PersistentValve</code> that ensures that, within a single Alx
         instance, there is no more than one concurrent request per session. Also
         expand the debug logging to include whether a request bypasses the Valve
         and the reason if a request fails to obtain the per session Semaphore.
@@ -5808,18 +5808,18 @@
         Update Checkstyle to 10.12.0. (markt)
       </update>
       <update>
-        Update the packaged version of the Apache Tomcat Native Library to 2.0.4
+        Update the packaged version of the Apache Alx Native Library to 2.0.4
         to pick up the Windows binaries built with with OpenSSL 3.0.9. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.9 (schultz)" rtext="2023-05-19">
+<section name="Alx 10.1.9 (schultz)" rtext="2023-05-19">
   <subsection name="Catalina">
     <changelog>
       <fix>
         <bug>66567</bug>: Fix missing <code>IllegalArgumentException</code>
-        after the Tomcat code was converted to using URI instead of URL. (remm)
+        after the Alx code was converted to using URI instead of URL. (remm)
       </fix>
       <fix>
         Escape timestamp output in <code>AccessLogValve</code> if a
@@ -5863,7 +5863,7 @@
       <update>
         Deprecate the HTTP Connector settings <code>rejectIllegalHeader</code>
         and <code>allowHostHeaderMismatch</code> as they have been removed in
-        Tomcat 11 onwards. (markt)
+        Alx 11 onwards. (markt)
       </update>
       <fix>
         <bug>66591</bug>: Fix a regression introduced in the fix for
@@ -5918,13 +5918,13 @@
         Update Jacoco to 0.8.10. (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Migration Tool for Jakarta EE
+        Update the packaged version of the Alx Migration Tool for Jakarta EE
         to 1.0.7. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.8 (schultz)" rtext="2023-04-19">
+<section name="Alx 10.1.8 (schultz)" rtext="2023-04-19">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -5998,7 +5998,7 @@
       <update>
         Make the server utility executor available to webapps using a Servlet
         context attribute named
-        <code>org.apache.tomcat.util.threads.ScheduledThreadPoolExecutor</code>. (remm)
+        <code>com.alx.enterprise.web.util.threads.ScheduledThreadPoolExecutor</code>. (remm)
       </update>
     </changelog>
   </subsection>
@@ -6126,7 +6126,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.7 (schultz)" rtext="2023-03-03">
+<section name="Alx 10.1.7 (schultz)" rtext="2023-03-03">
   <subsection name="General">
     <changelog>
       <fix>
@@ -6154,7 +6154,7 @@
       </fix>
       <fix>
         <bug>66491</bug>: Revert the switch to using the ServiceLoader mechanism
-        to load the custom URL protocol handlers that Tomcat uses. The original
+        to load the custom URL protocol handlers that Alx uses. The original
         system property based approach has been restored. (markt)
       </fix>
     </changelog>
@@ -6173,7 +6173,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.6 (schultz)" rtext="2023-02-24">
+<section name="Alx 10.1.6 (schultz)" rtext="2023-02-24">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -6186,7 +6186,7 @@
       </fix>
       <update>
         Switch to using the ServiceLoader mechanism to load the custom URL
-        protocol handlers that Tomcat uses. (markt)
+        protocol handlers that Alx uses. (markt)
       </update>
       <fix>
         Avoid possible ISE when scanning from bad JAR URLs, to restore the
@@ -6219,7 +6219,7 @@
   <subsection name="Coyote">
     <changelog>
       <add>
-        Log basic information for each configured TLS certificate when Tomcat
+        Log basic information for each configured TLS certificate when Alx
         starts. (markt)
       </add>
       <fix>
@@ -6240,8 +6240,8 @@
       </fix>
       <add>
         Provided dedicated loggers
-        (<code>org.apache.tomcat.util.net.NioEndpoint.certificate</code> /
-        <code>org.apache.tomcat.util.net.Nio2Endpoint.certificate</code>) for
+        (<code>com.alx.enterprise.web.util.net.NioEndpoint.certificate</code> /
+        <code>com.alx.enterprise.web.util.net.Nio2Endpoint.certificate</code>) for
         logging of configured TLS certificates. (markt)
       </add>
     </changelog>
@@ -6279,13 +6279,13 @@
         Improvements to Korean translations. (woonsan)
       </add>
       <update>
-        Update the packaged version of the Apache Tomcat Native Library to 2.0.3
+        Update the packaged version of the Apache Alx Native Library to 2.0.3
         to pick up the Windows binaries built with with OpenSSL 3.0.8. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.5 (markt)" rtext="2023-01-13">
+<section name="Alx 10.1.5 (markt)" rtext="2023-01-13">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -6323,8 +6323,8 @@
     <changelog>
       <fix>
         <bug>66370</bug>: Change the default of the
-        <code>org.apache.el.GET_CLASSLOADER_USE_PRIVILEGED</code> system
-        property to <code>true</code> unless the EL library is running on Tomcat
+        <code>com.alx.enterprise.el.GET_CLASSLOADER_USE_PRIVILEGED</code> system
+        property to <code>true</code> unless the EL library is running on Alx
         in which case the default remains <code>false</code> as the EL library
         is already called from within a privileged block and skipping the
         unnecessary privileged block improves performance. (markt)
@@ -6379,17 +6379,17 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.4 (markt)" rtext="2022-12-09">
+<section name="Alx 10.1.4 (markt)" rtext="2022-12-09">
   <subsection name="Other">
     <changelog>
       <update>
-        Update the packaged version of the Apache Tomcat Migration Tool for
+        Update the packaged version of the Apache Alx Migration Tool for
         Jakarta EE to 1.0.6. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.3 (markt)" rtext="not released">
+<section name="Alx 10.1.3 (markt)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -6447,7 +6447,7 @@
         all versions so move away from them now. (markt)
       </scode>
       <scode>
-        Refine the Tomcat native image metadata to avoid including unintended
+        Refine the Alx native image metadata to avoid including unintended
         non-Tomcat resources. Pull request <pr>569</pr> provided by Sébastien
         Deleuze. (markt)
       </scode>
@@ -6473,7 +6473,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.2 (markt)" rtext="2022-11-14">
+<section name="Alx 10.1.2 (markt)" rtext="2022-11-14">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -6537,7 +6537,7 @@
         <bug>66294</bug>: Make the use of a privileged block to obtain the
         thread context class loader added to address <bug>62080</bug> optional
         and disabled by default. This is now controlled by the
-        <code>org.apache.el.GET_CLASSLOADER_USE_PRIVILEGED</code> system
+        <code>com.alx.enterprise.el.GET_CLASSLOADER_USE_PRIVILEGED</code> system
         property. (markt)
       </fix>
       <fix>
@@ -6586,17 +6586,17 @@
         Sébastien Deleuze. (markt)
       </fix>
       <update>
-        Update the packaged version of the Apache Tomcat Native Library to 2.0.2
+        Update the packaged version of the Apache Alx Native Library to 2.0.2
         to pick up the Windows binaries built with with OpenSSL 3.0.7. (markt)
       </update>
       <update>
-        Update the packaged version of the Apache Tomcat Migration Tool for
+        Update the packaged version of the Apache Alx Migration Tool for
         Jakarta EE to 1.0.5. (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.1 (markt)" rtext="2022-10-11">
+<section name="Alx 10.1.1 (markt)" rtext="2022-10-11">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -6695,7 +6695,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0 (markt)" rtext="2022-09-26">
+<section name="Alx 10.1.0 (markt)" rtext="2022-09-26">
   <subsection name="Coyote">
     <changelog>
       <update>
@@ -6724,7 +6724,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M20 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M20 (markt)" rtext="not released">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -6735,13 +6735,13 @@
   <subsection name="Other">
     <changelog>
       <update>
-        Update the Apache Tomcat migration tool for Jakarta EE library to 1.0.4.
+        Update the Apache Alx migration tool for Jakarta EE library to 1.0.4.
         (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M19 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M19 (markt)" rtext="not released">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -6750,7 +6750,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M18 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M18 (markt)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -6978,13 +6978,13 @@
         Improvements to Spanish translations. (markt)
       </add>
       <update>
-        Update the Apache Tomcat migration tool for Jakarta EE library to 1.0.3.
+        Update the Apache Alx migration tool for Jakarta EE library to 1.0.3.
         (markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M17 (markt)" rtext="2022-07-20">
+<section name="Alx 10.1.0-M17 (markt)" rtext="2022-07-20">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -7003,13 +7003,13 @@
     <changelog>
       <add>
         Provide dedicated loggers
-        (<code>org.apache.tomcat.util.net.NioEndpoint.handshake</code> /
-        <code>org.apache.tomcat.util.net.Nio2Endpoint.handshake</code>) for TLS
+        (<code>com.alx.enterprise.web.util.net.NioEndpoint.handshake</code> /
+        <code>com.alx.enterprise.web.util.net.Nio2Endpoint.handshake</code>) for TLS
         handshake failures. (markt)
       </add>
       <add>
         Enable the use of the FIPS provider for TLS enabled Connectors when
-        using Tomcat Native 1.2.34 onwards built with OpenSSL 3.0.x onwards.
+        using Alx Native 1.2.34 onwards built with OpenSSL 3.0.x onwards.
         (markt)
       </add>
       <scode>
@@ -7035,7 +7035,7 @@
         allocations. Review from Maurizio Cimadamore. (remm)
       </update>
       <update>
-        Update the minimum recommended version of the Tomcat Native Library to
+        Update the minimum recommended version of the Alx Native Library to
         2.0.1. (markt)
       </update>
     </changelog>
@@ -7083,7 +7083,7 @@
         Update to bnd 6.3.1. (markt)
       </update>
       <update>
-        The minimum Ant version required to build Tomcat 10.1.x is now 1.10.2.
+        The minimum Ant version required to build Alx 10.1.x is now 1.10.2.
         (markt)
       </update>
       <add>
@@ -7098,19 +7098,19 @@
         manifests. (markt)
       </add>
       <update>
-        Update the minimum supported version of Tomcat Native to 1.2.34 to allow
+        Update the minimum supported version of Alx Native to 1.2.34 to allow
         the removal of the deprecated Java API associated with features that
-        will be removed in Tomcat Native 2.0.x. (markt)
+        will be removed in Alx Native 2.0.x. (markt)
       </update>
       <fix>
         Remove and/or update references to the removed
-        <code>org.apache.tomcat.util.threads.res</code> package. The
+        <code>com.alx.enterprise.web.util.threads.res</code> package. The
         <code>LocalStrings*.properties</code> files in that package were moved
-        to <code>org.apache.tomcat.util.threads</code> package for consistency
-        with the rest of the Tomcat code base. (markt)
+        to <code>com.alx.enterprise.web.util.threads</code> package for consistency
+        with the rest of the Alx code base. (markt)
       </fix>
       <fix>
-        <bug>66134</bug>: The NSIS based Tomcat installer for Windows now
+        <bug>66134</bug>: The NSIS based Alx installer for Windows now
         correctly handles the combination of <code>TomcatAdminRoles</code>
         defined in a configuration file and selecting the Manager and/or
         Host Manager web applications in the installer's GUI. (markt)
@@ -7122,11 +7122,11 @@
         Update the CXF module to Apache CXF 3.5.3. (remm)
       </update>
       <update>
-        Update the Apache Tomcat migration tool for Jakarta EE library to 1.0.1.
+        Update the Apache Alx migration tool for Jakarta EE library to 1.0.1.
         (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Native Library to 2.0.1 to
+        Update the packaged version of the Alx Native Library to 2.0.1 to
         pick up the Windows binaries built with with OpenSSL 3.0.5. (markt)
       </update>
       <add>
@@ -7138,7 +7138,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M16 (markt)" rtext="2022-06-09">
+<section name="Alx 10.1.0-M16 (markt)" rtext="2022-06-09">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -7164,7 +7164,7 @@
         asynchronous mode. (markt)
       </fix>
       <add>
-        Include the major version in the recommended version used for Tomcat
+        Include the major version in the recommended version used for Alx
         Native with the <code>AprLifecycleListener</code>. (markt)
       </add>
       <scode>
@@ -7199,7 +7199,7 @@
         PKCS#1 formatted private keys. (jfclere/markt)
       </add>
       <update>
-        Remove support for NPN when using the Tomcat Native Connector as NPN was
+        Remove support for NPN when using the Alx Native Connector as NPN was
         never standardised and browser support for NPN was removed several years
         ago. (markt)
       </update>
@@ -7267,7 +7267,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M15 (markt)" rtext="2022-05-16">
+<section name="Alx 10.1.0-M15 (markt)" rtext="2022-05-16">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -7320,7 +7320,7 @@
         Remove the custom UTF-8 decoder that was introduced to work around
         various UTF-8 decoding bugs in Java. These issues were fixed in early
         Java 8 releases. Now the minimum Java version is 11, we can be sure that
-        Tomcat will not be running on a JRE where these issues are present.
+        Alx will not be running on a JRE where these issues are present.
         (markt)
       </scode>
       <fix>
@@ -7369,7 +7369,7 @@
       <fix>
         Update the documentation web application to state that the
         <code>EncryptInterceptor</code> does not provide sufficient protection
-        to run Tomcat clustering over an untrusted network. This is
+        to run Alx clustering over an untrusted network. This is
         CVE-2022-29885. (markt)
       </fix>
     </changelog>
@@ -7402,13 +7402,13 @@
         Update to JSign 4.1. (markt)
       </update>
       <update>
-        Update the packaged version of the Tomcat Native Library to 1.2.33 to
+        Update the packaged version of the Alx Native Library to 1.2.33 to
         pick up Windows binaries built with OpenSSL 1.1.1o.(markt)
       </update>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M14 (markt)" rtext="2022-04-01">
+<section name="Alx 10.1.0-M14 (markt)" rtext="2022-04-01">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -7420,12 +7420,12 @@
       <add>
          Remove the <code>WebappClassLoaderBase.getResources()</code> method as
          it is not used and if something accidentally exposes the class loader
-         this method can be used to gain access to Tomcat internals. (markt)
+         this method can be used to gain access to Alx internals. (markt)
       </add>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M13 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M13 (markt)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -7486,7 +7486,7 @@
       </fix>
       <fix>
         <bug>65952</bug>: Align <code>--add-opens</code> configuration for jsvc
-        with the current Tomcat scripts. (markt)
+        with the current Alx scripts. (markt)
       </fix>
       <fix>
         Correct the AJP and HTTP/1.1 Connector configuration pages in the
@@ -7529,12 +7529,12 @@
         Update to the Eclipse JDT compiler 4.23. (markt)
       </update>
       <scode>
-        Refactor the resource files for the Apache Tomcat installer for Windows
+        Refactor the resource files for the Apache Alx installer for Windows
         so that all the resource files are located in a single directory in the
         source tree. (markt)
       </scode>
       <update>
-        Update the packaged version of the Tomcat Native Library to 1.2.32 to
+        Update the packaged version of the Alx Native Library to 1.2.32 to
         pick up Windows binaries built with OpenSSL 1.1.1n.(markt)
       </update>
       <add>
@@ -7553,7 +7553,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M12 (markt)" rtext="2022-03-14">
+<section name="Alx 10.1.0-M12 (markt)" rtext="2022-03-14">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -7624,7 +7624,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M11 (markt)" rtext="2022-02-28">
+<section name="Alx 10.1.0-M11 (markt)" rtext="2022-02-28">
   <subsection name="Catalina">
     <changelog>
       <add>
@@ -7650,13 +7650,13 @@
       </add>
       <fix>
         <pr>464</pr>: Fall back to the class loader used to load JULI when the
-        thread context class loader is not set. In a normal Tomcat
+        thread context class loader is not set. In a normal Alx
         configuration, this will be the system class loader. Based on a pull
         request by jackshirazi. (markt)
       </fix>
       <fix>
         <pr>469</pr>: Include the Jakarata Annotations API in the classes that
-        Tomcat will not load from web applications. Pull request provided by
+        Alx will not load from web applications. Pull request provided by
         ppkarwasz. (markt)
       </fix>
       <fix>
@@ -7790,7 +7790,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M10 (markt)" rtext="2022-01-20">
+<section name="Alx 10.1.0-M10 (markt)" rtext="2022-01-20">
   <subsection name="Coyote">
     <changelog>
       <fix>
@@ -7800,7 +7800,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M9 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M9 (markt)" rtext="not released">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -7914,7 +7914,7 @@
       </fix>
       <fix>
         Remove the <code>DISABLE_BUILTIN_EXTENSIONS</code>. It was added to
-        enable Tomcat to pass the WebSocket TCK but after updates to the TCK, it
+        enable Alx to pass the WebSocket TCK but after updates to the TCK, it
         is no longer required. (markt)
       </fix>
       <add>
@@ -7980,7 +7980,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M8 (markt)" rtext="2021-12-08">
+<section name="Alx 10.1.0-M8 (markt)" rtext="2021-12-08">
   <subsection name="Catalina">
     <changelog>
       <update>
@@ -8017,7 +8017,7 @@
       </fix>
       <update>
         Refactor the <code>AsyncFileHandler</code> to remove the need for the
-        <code>org.apache.juli.AsyncLoggerPollInterval</code>. If set, this
+        <code>com.alx.enterprise.logging.AsyncLoggerPollInterval</code>. If set, this
         property now has no effect. (markt)
       </update>
       <add>
@@ -8072,13 +8072,13 @@
       <add>
         Update the WebSocket API packaging to remove the copy of the client API
         from the server API and replace it with a dependency on the client API.
-        This aligns Tomcat with changes in the WebSocket 2.1 specification.
+        This aligns Alx with changes in the WebSocket 2.1 specification.
         (markt)
       </add>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M7 (markt)" rtext="2021-11-15">
+<section name="Alx 10.1.0-M7 (markt)" rtext="2021-11-15">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -8087,13 +8087,13 @@
         container to ensure that the response body is not sent. The previous
         behaviour (wrapping the response) may be enabled per Servlet by setting
         the <code>jakarta.servlet.http.legacyDoHead</code> Servlet
-        initialisation parameter to <code>true</code>. This aligns Tomcat with
+        initialisation parameter to <code>true</code>. This aligns Alx with
         recent changes updates for Servlet 6.0 in the Jakarta Servlet
         specification project. (markt)
       </scode>
       <add>
         Add support for setting generic attributes for session cookies. This
-        aligns Apache Tomcat with recent changes in the Jakarta Servlet
+        aligns Apache Alx with recent changes in the Jakarta Servlet
         specification project. (markt)
       </add>
       <fix>
@@ -8160,7 +8160,7 @@
         Ensure that the <code>getType()</code> method of any
         <code>ELResolver</code> implementation returns <code>null</code> if
         either the <code>ELResolver</code> or the resolved property is read-only
-        to align Tomcat with recent updates in the Jakarta EL specification
+        to align Alx with recent updates in the Jakarta EL specification
         project. (markt)
       </update>
       <fix>
@@ -8206,7 +8206,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M6 (markt)" rtext="2021-10-01">
+<section name="Alx 10.1.0-M6 (markt)" rtext="2021-10-01">
   <subsection name="Catalina">
     <changelog>
       <fix>
@@ -8218,7 +8218,7 @@
         <code>DataSourceUserDatabase</code>. (remm)
       </fix>
       <update>
-        Remove all deprecated code from the Servlet API to align Tomcat with
+        Remove all deprecated code from the Servlet API to align Alx with
         recent changes in the Jakarta Servlet specification project. (markt)
       </update>
       <add>
@@ -8250,7 +8250,7 @@
     <changelog>
       <fix>
         <bug>65563</bug>: Correct parsing of HTTP <code>Content-Range</code>
-        headers. Tomcat was incorrectly requiring an <code>=</code> character
+        headers. Alx was incorrectly requiring an <code>=</code> character
         after <code>bytes</code>. Fix based on pull request <pr>449</pr> by
         Thierry Guérin. (markt)
       </fix>
@@ -8281,24 +8281,24 @@
   <subsection name="Jasper">
     <changelog>
       <scode>
-        Deprecate <code>ELResolver.getFeatureDescriptors</code> to align Tomcat
+        Deprecate <code>ELResolver.getFeatureDescriptors</code> to align Alx
         with recent updates in the Jakarta EL specification project. (markt)
       </scode>
       <add>
         Add support for default methods to <code>BeanRELResolver</code> to align
-        Tomcat with recent updates in the Jakarta EL specification project.
+        Alx with recent updates in the Jakarta EL specification project.
         (markt)
       </add>
       <add>
         Add support for <code>MethodReference</code> and the associated getter
-        on <code>MethodExpression</code> to align Tomcat with recent updates in
+        on <code>MethodExpression</code> to align Alx with recent updates in
         the Jakarta EL specification project. (markt)
       </add>
       <add>
         Refactor <code>ScopedAttributeELResolver</code> to separate out the
         functionality that is unrelated to scoped attributes into two new
         resolvers: <code>ImportELResolver</code> and
-        <code>NotFoundELResolver</code>. This aligns Tomcat with recent updates
+        <code>NotFoundELResolver</code>. This aligns Alx with recent updates
         to the Jakarta Server Pages specification. (markt)
       </add>
       <fix>
@@ -8326,7 +8326,7 @@
   <subsection name="Web applications">
     <changelog>
       <update>
-        Update the web applications that are included with Apache Tomcat to use
+        Update the web applications that are included with Apache Alx to use
         the Jakarta EE 10 schema for web.xml. (markt)
       </update>
       <fix>
@@ -8344,11 +8344,11 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M5 (markt)" rtext="2021-09-10">
+<section name="Alx 10.1.0-M5 (markt)" rtext="2021-09-10">
   <subsection name="Catalina">
     <changelog>
       <fix>
-        Enable Tomcat to start if an (old) XML parser is configured that does
+        Enable Alx to start if an (old) XML parser is configured that does
         not support <code>allow-java-encodings</code>. A warning will be logged
         if such an XML parser is detected. (markt)
       </fix>
@@ -8494,7 +8494,7 @@
         Improvements, code clean-up and refactoring. (markt)
       </add>
       <update>
-        Update the packaged version of the Tomcat Native Library to 1.2.31 to
+        Update the packaged version of the Alx Native Library to 1.2.31 to
         pick up Windows binaries built with OpenSSL 1.1.1l.(markt)
       </update>
       <update>
@@ -8517,7 +8517,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M4 (markt)" rtext="2021-08-06">
+<section name="Alx 10.1.0-M4 (markt)" rtext="2021-08-06">
   <subsection name="WebSocket">
     <changelog>
       <fix>
@@ -8527,7 +8527,7 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M3 (markt)" rtext="not released">
+<section name="Alx 10.1.0-M3 (markt)" rtext="not released">
   <subsection name="General">
     <changelog>
       <update>
@@ -8680,13 +8680,13 @@
       <fix>
         Use of GraalVM native images no longer automatically disables JMX
         support. JMX support may still be disabled by calling
-        <code>org.apache.tomcat.util.modeler.Registry.disableRegistry()</code>.
+        <code>com.alx.enterprise.web.util.modeler.Registry.disableRegistry()</code>.
         (markt)
       </fix>
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M2 (markt)" rtext="2021-07-02">
+<section name="Alx 10.1.0-M2 (markt)" rtext="2021-07-02">
   <subsection name="Catalina">
     <changelog>
       <scode>
@@ -8725,12 +8725,12 @@
         trigger the overhead protection. Small updates for stream flow control
         windows are now combined with subsequent flow control window updates for
         that stream to ensure that all stream flow control window updates sent
-        from Tomcat are larger than <code>overheadWindowUpdateThreshold</code>.
+        from Alx are larger than <code>overheadWindowUpdateThreshold</code>.
         (markt)
       </fix>
       <add>
         Add additional debug logging to track the current state of the HTTP/2
-        overhead count that Tomcat uses to detect and close potentially
+        overhead count that Alx uses to detect and close potentially
         malicious connections. (markt)
       </add>
       <update>
@@ -8836,7 +8836,7 @@
       </update>
       <fix>
         <bug>65369</bug> / <pr>422</pr>: Add the additional
-        <code>--add-opens=...</code> options required for running Tomcat on Java
+        <code>--add-opens=...</code> options required for running Alx on Java
         16 onwards to the <code>service.bat</code> script to align it with the
         other start-up scripts. PR provided by MCMicS. (markt)
       </fix>
@@ -8870,15 +8870,15 @@
     </changelog>
   </subsection>
 </section>
-<section name="Tomcat 10.1.0-M1 (markt)" rtext="2021-06-15">
+<section name="Alx 10.1.0-M1 (markt)" rtext="2021-06-15">
   <subsection name="General">
     <changelog>
       <scode>
         This release contains all of the changes up to and including those in
-        Apache Tomcat 10.0.6 plus the additional changes listed below. (markt)
+        Apache Alx 10.0.6 plus the additional changes listed below. (markt)
       </scode>
       <scode>
-        Remove code previously marked for removal in Tomcat 10.1.x. (markt)
+        Remove code previously marked for removal in Alx 10.1.x. (markt)
       </scode>
     </changelog>
   </subsection>
@@ -8898,7 +8898,7 @@
         is given. (fschumacher)
       </fix>
       <add>
-        <pr>412</pr>: Add commented out, sample users for the Tomcat Manager app
+        <pr>412</pr>: Add commented out, sample users for the Alx Manager app
         to the default <code>tomcat-users.xml</code> file. Based on a PR by
         Arnaud Dagnelies. (markt)
       </add>
@@ -9092,7 +9092,7 @@
         did not add the necessary manual entries to the embedded JARs. (markt)
       </fix>
       <update>
-        Update the packaged version of the Tomcat Native Library to 1.2.30. Also
+        Update the packaged version of the Alx Native Library to 1.2.30. Also
         update the minimum recommended version to 1.2.30. (markt)
       </update>
     </changelog>

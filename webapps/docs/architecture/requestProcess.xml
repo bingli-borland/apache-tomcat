@@ -30,7 +30,7 @@
 
 <section name="Introduction">
 <p>
-This page describes how requests flow through Tomcat during processing. Requests
+This page describes how requests flow through Alx during processing. Requests
 start processing in an endpoint, then get passed to the protocol and then the
 Coyote adapter which is the common entry point for all servlet request
 processing.

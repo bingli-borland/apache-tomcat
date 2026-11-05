@@ -35,8 +35,8 @@
 
 <section name="Introduction">
   <p>The following attributes are made available to web applications at runtime.
-  Many of these attributes provide access to Tomcat internals. Attributes that
-  expose Tomcat internals may be explicitly requested by name but are often
+  Many of these attributes provide access to Alx internals. Attributes that
+  expose Alx internals may be explicitly requested by name but are often
   deliberately not included when requesting a list of available attributes.</p>
 </section>
 
@@ -61,7 +61,7 @@
       used for an SSL connection.</p>
     </property>
     <property name="jakarta.servlet.request.ssl_session_mgr">
-      <p>A Tomcat specific extension to the Servlet specification that provides
+      <p>A Alx specific extension to the Servlet specification that provides
       the session manager being used for an SSL connection.</p>
     </property>
     <property name="jakarta.servlet.request.X509Certificate">
@@ -69,79 +69,79 @@
       X509Certificate objects representing the certificate chain presented by
       our client, if any.</p>
     </property>
-    <property name="org.apache.catalina.ASYNC_SUPPORTED">
+    <property name="com.alx.enterprise.webtier.ASYNC_SUPPORTED">
       <p>Does the processing chain (Servlet, Filters, Valves) for the current
       request support asynchronous processing? Each component in the chain must
       support asynchronous processing for this to be <code>true</code>.</p>
     </property>
-    <property name="org.apache.catalina.NAMED">
+    <property name="com.alx.enterprise.webtier.NAMED">
       <p>The name of the target Servlet for the current named dispatch, if
       any.</p>
     </property>
-    <property name="org.apache.catalina.core.DISPATCHER_TYPE">
+    <property name="com.alx.enterprise.webtier.core.DISPATCHER_TYPE">
       <p>The current <code>jakarta.servlet.DispatcherType</code> for the
       request.</p>
     </property>
-    <property name="org.apache.catalina.core.DISPATCHER_REQUEST_PATH">
+    <property name="com.alx.enterprise.webtier.core.DISPATCHER_REQUEST_PATH">
       <p>The current path (Servlet Info + Path Info) to which the request has
       been dispatched.</p>
     </property>
-    <property name="org.apache.catalina.filters.RemoteIpFilter.secure">
+    <property name="com.alx.enterprise.webtier.filters.RemoteIpFilter.secure">
       <p>The request attribute that is set to the value of
       <code>Boolean.TRUE</code> if the RemoteIpFilter determines that this
       request was submitted via a secure channel.</p>
     </property>
-    <property name="org.apache.catalina.parameter_parse_failed">
+    <property name="com.alx.enterprise.webtier.parameter_parse_failed">
       <p>The request attribute that is set to <code>Boolean.TRUE</code> if some
       request parameters have been ignored during request parameters parsing. It
       can happen, for example, if there is a limit on the total count of
       parseable parameters, or if parameter cannot be decoded, or any other
       error happened during parameter parsing.</p>
     </property>
-    <property name="org.apache.catalina.parameter_parse_failed_reason">
+    <property name="com.alx.enterprise.webtier.parameter_parse_failed_reason">
       <p>The reason that the parameter parsing failed.</p>
     </property>
-    <property name="org.apache.catalina.realm.GSS_CREDENTIAL">
+    <property name="com.alx.enterprise.webtier.realm.GSS_CREDENTIAL">
       <p>The GSS credential for the currently authenticated user if they have
       successfully authenticated using SPNEGO authentication.</p>
     </property>
-    <property name="org.apache.tomcat.peerAddr">
+    <property name="com.alx.enterprise.web.peerAddr">
       <p>The request attribute set by the RemoteIpFilter, RemoteIpValve (and may
       be set by other similar components) that identifies the connection peer IP
       address.</p>
     </property>
-    <property name="org.apache.tomcat.remoteAddr">
+    <property name="com.alx.enterprise.web.remoteAddr">
       <p>The request attribute set by the RemoteIpFilter, RemoteIpValve (and may
       be set by other similar components) that identifies for the connector the
       remote IP address claimed to be associated with this request when a
       request is received via one or more proxies. It is typically provided via
       the X-Forwarded-For HTTP header.</p>
     </property>
-    <property name="org.apache.tomcat.request.forwarded">
+    <property name="com.alx.enterprise.web.request.forwarded">
       <p>The request attribute that is set to the value of
       <code>Boolean.TRUE</code> by the RemoteIpFilter, RemoteIpValve (and other
       similar components) that identifies a request which been forwarded via one
       or more proxies.</p>
     </property>
-    <property name="org.apache.tomcat.sendfile.end">
+    <property name="com.alx.enterprise.web.sendfile.end">
       <p>The request attribute that can be used by a servlet to pass to the
       connector the end offset (not included) of the part of a file that is to
       be served by sendfile. The value should be <code>Long</code>. To serve the
       complete file the value should be equal to the length of the file.</p>
     </property>
-    <property name="org.apache.tomcat.sendfile.filename">
+    <property name="com.alx.enterprise.web.sendfile.filename">
       <p>The request attribute that can be used by a servlet to pass to the
       connector the name of the file that is to be served by sendfile. The value
       should be a <code>String</code> that is the canonical path of the file to
       be served.</p>
     </property>
-    <property name="org.apache.tomcat.sendfile.start">
+    <property name="com.alx.enterprise.web.sendfile.start">
       <p>The request attribute that can be used by a servlet to pass to the
       connector the start offset of the part of a file that is to be served by
       sendfile. The value should be a <code>Long</code>. To serve the complete
       file the value should be <code>Long.valueOf(0)</code>.</p>
     </property>
-    <property name="org.apache.tomcat.sendfile.support">
+    <property name="com.alx.enterprise.web.sendfile.support">
       <p>The request attribute that is set to the value of
       <code>Boolean.TRUE</code> if connector processing this request supports
       the use of sendfile.</p>
@@ -153,35 +153,35 @@
   <p>ServletContext attributes are made available to web applications via a call
   to <code>ServletContext.getAttribute(String)</code>.</p>
   <properties>
-    <property name="org.apache.catalina.CredentialHandler">
+    <property name="com.alx.enterprise.webtier.CredentialHandler">
       <p>The CredentialHandler (if any) associated with the Realm (if any)
       that has been explicitly associated with the Context. Realms associated
       with parent containers (Hosts or Engines) are not considered.</p>
     </property>
-    <property name="org.apache.catalina.deploy.alt_dd">
+    <property name="com.alx.enterprise.webtier.deploy.alt_dd">
       <p>The alternate deployment descriptor for this web application.</p>
     </property>
-    <property name="org.apache.catalina.jsp_classpath">
+    <property name="com.alx.enterprise.webtier.jsp_classpath">
       <p>The class path for our application class loader (as an object of type
       String), delimited with the appropriate path delimiter for the
       platform.</p>
     </property>
-    <property name="org.apache.catalina.resources">
+    <property name="com.alx.enterprise.webtier.resources">
       <p>The WebResourceRoot which is associated with the context.</p>
     </property>
-    <property name="org.apache.catalina.webappVersion">
+    <property name="com.alx.enterprise.webtier.webappVersion">
       <p>The web application version string (the text that appears after ##
       when parallel deployment is configured).</p>
     </property>
-    <property name="org.apache.tomcat.InstanceManager">
+    <property name="com.alx.enterprise.web.InstanceManager">
       <p>The InstanceManager used to create Servlets, Filters, Listeners etc.
       for the web application.</p>
     </property>
-    <property name="org.apache.tomcat.JarScanner">
+    <property name="com.alx.enterprise.web.JarScanner">
       <p>The JarScanner instance used to scan the web application for
       annotations, TLDs, web fragments and similar features.</p>
     </property>
-    <property name="org.apache.tomcat.util.threads.ScheduledThreadPoolExecutor">
+    <property name="com.alx.enterprise.web.util.threads.ScheduledThreadPoolExecutor">
       <p>The utility executor for this Context.</p>
     </property>
   </properties>
