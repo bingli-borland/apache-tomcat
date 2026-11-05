@@ -3,7 +3,7 @@
 setlocal
 
 set groupId=com.alx.appserver
-set version=1.0.0
+set version=1.0.1
 @REM you can specify repositoryId and url here,
 @REM or you can specify value in command. Syntax: deploylib.sh [repositoryId] [url]
 ::set repositoryId=

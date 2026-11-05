@@ -7,7 +7,7 @@ fi
 
 ####### constants #########
 groupId=com.alx.appserver
-version=1.0.0
+version=1.0.1
 
 ############# methods ##################
 validateResult() {

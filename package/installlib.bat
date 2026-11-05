@@ -4,7 +4,7 @@
 setlocal
 
 set groupId=com.alx.appserver
-set version=1.0.0
+set version=1.0.1
 
 set libDir=%cd%/lib
 if not exist "%libDir%" (

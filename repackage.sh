@@ -17,7 +17,7 @@
 #
 
 # 设置版本号
-VERSION="1.0.0"
+VERSION="1.0.1"
 TAR_NAME="ALX-APPSERVER-SPRINGBOOT-${VERSION}"
 cd output/embed
 # 创建临时目录结构

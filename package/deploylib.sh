@@ -7,7 +7,7 @@ fi
 
 ####### constants #########
 groupId=com.alx.appserver
-version=1.0.0
+version=1.0.1
 # you can specify repositoryId and url here,
 # or you can specify value in command. Syntax: deploylib.sh [repositoryId] [url]
 #repositoryId=
