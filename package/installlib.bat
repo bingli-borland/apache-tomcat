@@ -4,7 +4,7 @@
 setlocal
 
 set groupId=com.alx.appserver
-set version=1.0.0
+set version=1.0.3
 
 set libDir=%cd%/lib
 if not exist "%libDir%" (
@@ -14,6 +14,9 @@ if not exist "%libDir%" (
 
 call mvn install:install-file -Dfile="%libDir%/alxas-core-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-core -Dversion=%version% -Dpackaging=jar >> install.log
 call :validateResult %groupId%:alxas-core:%version%
+
+call mvn install:install-file -Dfile="%libDir%/spring-boot-starter-alx-3.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-3.x-%version%.pom" >> install.log
+call :validateResult %groupId%:spring-boot-starter-alx-3.x:%version%
 
 call mvn install:install-file -Dfile="%libDir%/alxas-websocket-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-websocket -Dversion=%version% -Dpackaging=jar  >> install.log
 call :validateResult %groupId%:alxas-websocket:%version%

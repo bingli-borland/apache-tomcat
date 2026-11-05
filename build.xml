@@ -4490,6 +4490,7 @@ Read the Building page on the Apache Alx documentation site for details on how t
     <attribute name="libs" description="libraries to use for bnd classpath analysis relative to ${tomcat.output}"
                default="build/lib/*.jar,build/bin/tomcat-juli.jar" />
     <sequential>
+      <mkdir dir="@{meta-inf}" />
       <local name="jar.uptodate"/>
       <uptodate property="jar.uptodate" targetfile="@{jarfile}" >
         <srcfiles dir="@{filesDir}">

@@ -7,7 +7,7 @@ fi
 
 ####### constants #########
 groupId=com.alx.appserver
-version=1.0.0
+version=1.0.3
 # you can specify repositoryId and url here,
 # or you can specify value in command. Syntax: deploylib.sh [repositoryId] [url]
 #repositoryId=
@@ -47,6 +47,9 @@ fi
 
 mvn deploy:deploy-file -Dfile="$libDir/alxas-core-$version.jar" -DgroupId=$groupId -DartifactId=alxas-core -Dversion=$version -Dpackaging=jar -DrepositoryId=$repositoryId -Durl=$url >> deploy.log
 validateResult $groupId:alxas-core:$version
+
+mvn deploy:deploy-file -Dfile="$libDir/spring-boot-starter-alx-3.x-$version.jar" -DpomFile="$libDir/spring-boot-starter-alx-3.x-$version.pom" -DrepositoryId=$repositoryId -Durl=$url >> deploy.log
+validateResult $groupId:spring-boot-starter-alx-3.x:$version
 
 mvn deploy:deploy-file -Dfile="$libDir/alxas-websocket-$version.jar" -DgroupId=$groupId -DartifactId=alxas-websocket -Dversion=$version -Dpackaging=jar  -DrepositoryId=$repositoryId -Durl=$url >> deploy.log
 validateResult $groupId:alxas-websocket:$version

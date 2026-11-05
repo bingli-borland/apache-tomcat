@@ -3,7 +3,7 @@
 setlocal
 
 set groupId=com.alx.appserver
-set version=1.0.0
+set version=1.0.3
 @REM you can specify repositoryId and url here,
 @REM or you can specify value in command. Syntax: deploylib.sh [repositoryId] [url]
 ::set repositoryId=
@@ -30,6 +30,9 @@ goto end
 :ok_param
 call mvn deploy:deploy-file -Dfile="%libDir%/alxas-core-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-core -Dversion=%version% -Dpackaging=jar -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
 call :validateResult %groupId%:alxas-core:%version%
+
+call mvn deploy:deploy-file -Dfile="%libDir%/spring-boot-starter-alx-3.x-%version%.jar" -DpomFile="%libDir%/spring-boot-starter-alx-3.x-%version%.pom" -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
+call :validateResult %groupId%:spring-boot-starter-alx-3.x:%version%
 
 call mvn deploy:deploy-file -Dfile="%libDir%/alxas-websocket-%version%.jar" -DgroupId=%groupId% -DartifactId=alxas-websocket -Dversion=%version% -Dpackaging=jar  -DrepositoryId=%repositoryId% -Durl=%url% >> deploy.log
 call :validateResult %groupId%:alxas-websocket:%version%
