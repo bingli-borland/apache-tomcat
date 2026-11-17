@@ -138,6 +138,7 @@ public final class Request {
     private long bytesRead=0;
     // Time of the request - useful to avoid repeated calls to System.currentTime
     private long startTime = -1;
+    private long threadId = 0;
     private int available = 0;
 
     private final RequestInfo reqProcessorMX=new RequestInfo(this);
@@ -566,6 +567,7 @@ public final class Request {
         allDataReadEventSent.set(false);
 
         startTime = -1;
+        threadId = 0;
     }
 
     // -------------------- Info  --------------------
@@ -583,6 +585,22 @@ public final class Request {
 
     public boolean isProcessing() {
         return reqProcessorMX.getStage()==org.apache.coyote.Constants.STAGE_SERVICE;
+    }
+
+    public long getThreadId() {
+        return threadId;
+    }
+
+    public void setRequestThread() {
+        threadId = Thread.currentThread().getId();
+    }
+
+    public void clearRequestThread() {
+        threadId = 0;
+    }
+
+    public boolean isRequestThread() {
+        return Thread.currentThread().getId() == threadId;
     }
 
     /**

@@ -45,6 +45,16 @@
   issues do not "pop up" wrt. others).
 -->
 <section name="Tomcat 8.0.54 (violetagg)" rtext="In development">
+  <subsection name="Coyote">
+    <changelog>
+      <fix>
+        <bug>65757</bug>: Correctly identify the request thread when handling
+        asynchronous non-blocking I/O, including when a container thread is
+        processing another request. Reset the request thread identifier when
+        processing completes to support sequential request processing.
+      </fix>
+    </changelog>
+  </subsection>
   <subsection name="Catalina">
     <changelog>
       <fix>

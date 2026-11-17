@@ -263,7 +263,7 @@ public class InputBuffer extends Reader
         // is not required.
         if (!coyoteRequest.isFinished() && isReady()) {
             coyoteRequest.action(ActionCode.DISPATCH_READ, null);
-            if (!ContainerThreadMarker.isContainerThread()) {
+            if (!coyoteRequest.isRequestThread()) {
                 // Not on a container thread so need to execute the dispatch
                 coyoteRequest.action(ActionCode.DISPATCH_EXECUTE, null);
             }
@@ -296,7 +296,7 @@ public class InputBuffer extends Reader
             // If this is a non-container thread, need to trigger a read
             // which will eventually lead to a call to onAllDataRead() via a
             // container thread.
-            if (!ContainerThreadMarker.isContainerThread()) {
+            if (!coyoteRequest.isRequestThread()) {
                 coyoteRequest.action(ActionCode.DISPATCH_READ, null);
                 coyoteRequest.action(ActionCode.DISPATCH_EXECUTE, null);
             }

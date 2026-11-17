@@ -36,7 +36,10 @@ import org.apache.tomcat.util.security.PrivilegedSetTccl;
  * STARTED          - ServletRequest.startAsync() has been called and the
  *                    request in which that call was made has finished
  *                    processing.
- * READ_WRITE_OP    - Performing an asynchronous read or write.
+ * READ_WRITE_OP    - Performing an asynchronous read or write. A call to
+ *                    complete() or dispatch() from a non-container thread
+ *                    transitions to COMPLETE_PENDING or DISPATCH_PENDING so
+ *                    the operation is applied after the read/write callback.
  * MUST_COMPLETE    - ServletRequest.startAsync() followed by complete() have
  *                    been called during a single Servlet.service() method. The
  *                    complete() will be processed as soon as the request
@@ -282,7 +285,9 @@ public class AsyncStateMachine {
 
 
     public synchronized boolean asyncComplete() {
-        if (!ContainerThreadMarker.isContainerThread() && state == AsyncState.STARTING) {
+        Request request = processor.getRequest();
+        if ((request == null || !request.isRequestThread()) && 
+            (state == AsyncState.STARTING || state == AsyncState.READ_WRITE_OP)) {
             state = AsyncState.COMPLETE_PENDING;
             return false;
         } else {
@@ -328,7 +333,9 @@ public class AsyncStateMachine {
 
 
     public synchronized boolean asyncDispatch() {
-        if (!ContainerThreadMarker.isContainerThread() && state == AsyncState.STARTING) {
+        Request request = processor.getRequest();
+        if ((request == null || !request.isRequestThread()) && 
+            (state == AsyncState.STARTING || state == AsyncState.READ_WRITE_OP)) {
             state = AsyncState.DISPATCH_PENDING;
             return false;
         } else {
@@ -361,7 +368,8 @@ public class AsyncStateMachine {
             // poller poller when the thread exits the
             // AbstractConnectionHandler.process() method so don't do a dispatch
             // here which would add it to the poller a second time.
-            if (!ContainerThreadMarker.isContainerThread()) {
+            Request request = processor.getRequest();
+            if (request == null || !request.isRequestThread()) {
                 doDispatch = true;
             }
         } else {

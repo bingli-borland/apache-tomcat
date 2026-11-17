@@ -273,6 +273,7 @@ public class CoyoteAdapter implements Adapter {
         boolean success = true;
         AsyncContextImpl asyncConImpl = request.getAsyncContextInternal();
         req.getRequestProcessor().setWorkerThreadName(Thread.currentThread().getName());
+        req.setRequestThread();
         try {
             if (!request.isAsync()) {
                 // Error or timeout
@@ -433,6 +434,7 @@ public class CoyoteAdapter implements Adapter {
             }
 
             req.getRequestProcessor().setWorkerThreadName(null);
+            req.clearRequestThread();
             // Recycle the wrapper request and response
             if (!success || (!comet && !request.isAsync())) {
                 request.recycle();
@@ -488,6 +490,8 @@ public class CoyoteAdapter implements Adapter {
 
         boolean comet = false;
         boolean async = false;
+
+        req.setRequestThread();
         boolean postParseSuccess = false;
 
         try {
@@ -575,6 +579,7 @@ public class CoyoteAdapter implements Adapter {
             }
 
             req.getRequestProcessor().setWorkerThreadName(null);
+            req.clearRequestThread();
 
             // Recycle the wrapper request and response
             if (!comet && !async) {

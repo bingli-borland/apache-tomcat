@@ -99,7 +99,7 @@ public abstract class AbstractProcessor<S> implements ActionHook, Processor<S> {
         if (t != null) {
             request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, t);
         }
-        if (blockIo && !ContainerThreadMarker.isContainerThread() && isAsync()) {
+        if (blockIo && !request.isRequestThread() && isAsync()) {
             // The error occurred on a non-container thread during async
             // processing which means not all of the necessary clean-up will
             // have been completed. Dispatch to a container thread to do the
